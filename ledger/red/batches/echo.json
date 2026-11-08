@@ -1,0 +1,191 @@
+{
+ "batch_id": "echo",
+ "batch_index": 4,
+ "created": "2026-11-08T22:54:04Z",
+ "forms": [
+  {
+   "class": "counted_by_design",
+   "expected": 1,
+   "form_id": "range_dash",
+   "instance_index": 1,
+   "text": "the wait ran 10–12 hours across the week",
+   "text_index": 0,
+   "text_sha256": "b141b70a33b1176359b93959b29ab5ee851c25d53f2338b28f1c53e84e1d97be"
+  },
+  {
+   "class": "counted_by_design",
+   "expected": 2,
+   "form_id": "range_worded",
+   "instance_index": 0,
+   "text": "the wait ran 3 to 5 days across the week",
+   "text_index": 1,
+   "text_sha256": "e152414c93f8bd3b53509ea1167af144b672f45e2e38fe4ad8de25963e630d11"
+  },
+  {
+   "class": "counted_by_design",
+   "expected": 1,
+   "form_id": "negative_u2212",
+   "instance_index": 1,
+   "text": "the drift read −0.3 over the window",
+   "text_index": 2,
+   "text_sha256": "b806b31fbe283fa0bbb3f394c47fc709fd898b51f4bb01e38596153cecfc823b"
+  },
+  {
+   "class": "counted_by_design",
+   "expected": 2,
+   "form_id": "fraction_slash",
+   "instance_index": 1,
+   "text": "7/12 of the pool answered",
+   "text_index": 3,
+   "text_sha256": "a2e70900cda055a9f971a0ab923d8cdb636e7854a7141a96079c56504a7e70af"
+  },
+  {
+   "class": "excluded_by_design",
+   "expected": 0,
+   "form_id": "year",
+   "instance_index": 2,
+   "text": "the window opened in 2024 and stays open",
+   "text_index": 4,
+   "text_sha256": "12da2a395f806ded22c941fd6faae7adb9cf6a0d2d8873729aca833588e0f5ad"
+  },
+  {
+   "class": "excluded_by_design",
+   "expected": 0,
+   "form_id": "date_iso",
+   "instance_index": 2,
+   "text": "the window opened on 2026_10_24 as planned",
+   "text_index": 5,
+   "text_sha256": "9808080f6fe8daebaab593e943f7c9206e2e8a0511cdf6af42ac521bd9b4e04c"
+  },
+  {
+   "class": "excluded_by_design",
+   "expected": 0,
+   "form_id": "version_string",
+   "instance_index": 1,
+   "text": "the release named 7.50.0 is the pin we read",
+   "text_index": 6,
+   "text_sha256": "8fe12033e9f96df2c2247cfbfa359147fac3a81c5a1e4ad2dac206466a8c39c8"
+  },
+  {
+   "class": "excluded_by_design",
+   "expected": 0,
+   "form_id": "sha_fragment",
+   "instance_index": 0,
+   "text": "the pinned commit is 3437340b on the main branch",
+   "text_index": 7,
+   "text_sha256": "a72fe440968b569e072f3c154b2934708764f51a1337a1e34157857a4fe3d2af"
+  },
+  {
+   "class": "excluded_by_design",
+   "expected": 0,
+   "form_id": "markdown_list_marker",
+   "instance_index": 2,
+   "text": "9. the item on the list",
+   "text_index": 8,
+   "text_sha256": "d97c95c3cf0107d44c74fec5b52f5a7ac6e3b2e2602de3201ceba5d651b74f53"
+  },
+  {
+   "class": "excluded_by_design",
+   "expected": 0,
+   "form_id": "number_words",
+   "instance_index": 1,
+   "text": "twelve of them answered the call",
+   "text_index": 9,
+   "text_sha256": "92d10c1060c014f55e94935d3f65820bb30b6fcdf48a91a3c7b221e629ac85a1"
+  },
+  {
+   "class": "open_question",
+   "expected": "?",
+   "form_id": "suffix_magnitude",
+   "instance_index": 1,
+   "text": "the table holds 12k rows now",
+   "text_index": 10,
+   "text_sha256": "398ad9fcdc3e60b2855165867e3bf94dedeeff8c67283e2b68d5e5975ce11df4"
+  },
+  {
+   "class": "open_question",
+   "expected": "?",
+   "form_id": "bare_magnitude_words",
+   "instance_index": 1,
+   "text": "the table holds about 12 thousand rows now",
+   "text_index": 11,
+   "text_sha256": "4a0f9d9742df20368e8c709409e1fce7002f43678bf9bc646a0bba524b24b56c"
+  },
+  {
+   "class": "open_question",
+   "expected": "?",
+   "form_id": "sentence_final",
+   "instance_index": 0,
+   "text": "the count was 42.",
+   "text_index": 12,
+   "text_sha256": "e4fe618c5da55ed79aa74937854f26726fbbb1e303e58d7ca264aee0bfa6e76b"
+  },
+  {
+   "class": "open_question",
+   "expected": "?",
+   "form_id": "accounting_sign",
+   "instance_index": 2,
+   "text": "the books closed at (0.5) this period",
+   "text_index": 13,
+   "text_sha256": "53ab189aed726c13e35b1c5f6e1d58b51b86c4dd4c77d2b1ca0ead29e95f7c48"
+  },
+  {
+   "class": "open_question",
+   "expected": "?",
+   "form_id": "unicode_digits",
+   "instance_index": 2,
+   "text": "the count came to ３.５ in the end",
+   "text_index": 14,
+   "text_sha256": "6ca7a880ea7b85de63716d412848b692687002ce5c347e8103854f85fc048d86"
+  },
+  {
+   "class": "open_question",
+   "expected": "?",
+   "form_id": "code_span",
+   "instance_index": 1,
+   "text": "the field reads `0.55` in the source",
+   "text_index": 15,
+   "text_sha256": "12f18b6b53b1e28d298e4912eb32d3164f596148749b49cfdcb9032120c05599"
+  },
+  {
+   "class": "open_question",
+   "expected": "?",
+   "form_id": "ordinal",
+   "instance_index": 1,
+   "text": "the 21st row carried the mark",
+   "text_index": 16,
+   "text_sha256": "e05ce7c3516d893d8b77e233c7ba4e396507615d9d453e4a36b5d5686e736f86"
+  },
+  {
+   "class": "open_question",
+   "expected": "?",
+   "form_id": "scientific",
+   "instance_index": 2,
+   "text": "the rate sat near 1E9 over the run",
+   "text_index": 17,
+   "text_sha256": "2d95072df69be618774386773e0ff5feda87f00654d7c30103ca26311ffbbbe6"
+  },
+  {
+   "class": "open_question",
+   "expected": "?",
+   "form_id": "clock_time",
+   "instance_index": 0,
+   "text": "the job ran at 14:30 on the box",
+   "text_index": 18,
+   "text_sha256": "a8e3c3182e99a2ee0e31c28b647eb13e61520168e2efa26b5591e60446205583"
+  },
+  {
+   "class": "open_question",
+   "expected": "?",
+   "form_id": "url_numeral",
+   "instance_index": 2,
+   "text": "the note is at https://example.org/r/318 for reading",
+   "text_index": 19,
+   "text_sha256": "c8a26b252f8929f1180fc5376c1995013b8e2e74cd3aeb52c72e52a09e0915aa"
+  }
+ ],
+ "forms_sha256": "c9102921daaf612f4dd182ea61c69d668a5614b09fbfba00ed4d7b9f80b38a3d",
+ "prereg_sha256": "658bab0adc2e25b118672a0b3112afb913fffc7cdfdb463231e31a6fcb29d256",
+ "schema": "red.batch/v0",
+ "seed": "red-ledger-3c/v0"
+}

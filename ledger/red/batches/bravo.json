@@ -1,0 +1,191 @@
+{
+ "batch_id": "bravo",
+ "batch_index": 1,
+ "created": "2026-11-08T22:51:57Z",
+ "forms": [
+  {
+   "class": "open_question",
+   "expected": "?",
+   "form_id": "code_span",
+   "instance_index": 0,
+   "text": "the field reads `42` in the source",
+   "text_index": 0,
+   "text_sha256": "9785cb046873985c3efb4e0fc5ba13e960daa94cb62804b3a2a65e324090c309"
+  },
+  {
+   "class": "open_question",
+   "expected": "?",
+   "form_id": "ordinal",
+   "instance_index": 0,
+   "text": "the 3rd row carried the mark",
+   "text_index": 1,
+   "text_sha256": "d97083f8093ac3e8053996416727e3e757d78c90d415a4ac79e778749e79d890"
+  },
+  {
+   "class": "open_question",
+   "expected": "?",
+   "form_id": "scientific",
+   "instance_index": 0,
+   "text": "the rate sat near 1e6 over the run",
+   "text_index": 2,
+   "text_sha256": "882a03329c8ba4ad6491fa2bb9e6ad9b3970ca8f909f2bc344af8135e8c237c7"
+  },
+  {
+   "class": "open_question",
+   "expected": "?",
+   "form_id": "clock_time",
+   "instance_index": 0,
+   "text": "the job ran at 14:30 on the box",
+   "text_index": 3,
+   "text_sha256": "a8e3c3182e99a2ee0e31c28b647eb13e61520168e2efa26b5591e60446205583"
+  },
+  {
+   "class": "open_question",
+   "expected": "?",
+   "form_id": "url_numeral",
+   "instance_index": 2,
+   "text": "the note is at https://example.org/r/318 for reading",
+   "text_index": 4,
+   "text_sha256": "c8a26b252f8929f1180fc5376c1995013b8e2e74cd3aeb52c72e52a09e0915aa"
+  },
+  {
+   "class": "counted_by_design",
+   "expected": 1,
+   "form_id": "plain_integer",
+   "instance_index": 1,
+   "text": "the count came to 7 in the end",
+   "text_index": 5,
+   "text_sha256": "cb148f5c44f23e0a6460582309e26e67aef436655ff520d1e6051cfb1a771e25"
+  },
+  {
+   "class": "counted_by_design",
+   "expected": 1,
+   "form_id": "decimal",
+   "instance_index": 1,
+   "text": "the ratio settled at 3.25 after the rerun",
+   "text_index": 6,
+   "text_sha256": "c3b5b648f64d91f08911167243c43be25e4000b2c3a6b95ea452517a4e61b6a3"
+  },
+  {
+   "class": "counted_by_design",
+   "expected": 1,
+   "form_id": "thousands_separators",
+   "instance_index": 1,
+   "text": "all 23,247 of them were read",
+   "text_index": 7,
+   "text_sha256": "7daca079df5ade4e3179cc78f77381c3d817a857c445d66abe1e9024479887f7"
+  },
+  {
+   "class": "counted_by_design",
+   "expected": 1,
+   "form_id": "percent",
+   "instance_index": 2,
+   "text": "the share stood at 87% of the pool",
+   "text_index": 8,
+   "text_sha256": "4c90fa685d106823cf0518ad36a6456c4094d11d64ff3e569a03b799747b246d"
+  },
+  {
+   "class": "counted_by_design",
+   "expected": 1,
+   "form_id": "currency_led",
+   "instance_index": 2,
+   "text": "the fee came to £250 per seat",
+   "text_index": 9,
+   "text_sha256": "9f58f9a5e47b7b124076be29227310981756e3cfc344e660869ab99f5416e8de"
+  },
+  {
+   "class": "counted_by_design",
+   "expected": 1,
+   "form_id": "range_dash",
+   "instance_index": 2,
+   "text": "the wait ran 40-60 ms across the week",
+   "text_index": 10,
+   "text_sha256": "7785c99ba3f5c22c3634e4ee9a317d0eaa225748224c996b027774831df8cc3a"
+  },
+  {
+   "class": "counted_by_design",
+   "expected": 2,
+   "form_id": "range_worded",
+   "instance_index": 2,
+   "text": "the wait ran 40 to 60 ms across the week",
+   "text_index": 11,
+   "text_sha256": "0e447b973a9521b9c4e766e7af76b960ff3c20cfe3db44b4030351734b11e22c"
+  },
+  {
+   "class": "counted_by_design",
+   "expected": 1,
+   "form_id": "negative_u2212",
+   "instance_index": 2,
+   "text": "the drift read −7 over the window",
+   "text_index": 12,
+   "text_sha256": "4f77019da7a7c2d22ef3135d6e43edde86c30a6056207db0629a92057cdaaf6d"
+  },
+  {
+   "class": "counted_by_design",
+   "expected": 2,
+   "form_id": "fraction_slash",
+   "instance_index": 1,
+   "text": "7/12 of the pool answered",
+   "text_index": 13,
+   "text_sha256": "a2e70900cda055a9f971a0ab923d8cdb636e7854a7141a96079c56504a7e70af"
+  },
+  {
+   "class": "excluded_by_design",
+   "expected": 0,
+   "form_id": "year",
+   "instance_index": 1,
+   "text": "the window opened in 1999 and stays open",
+   "text_index": 14,
+   "text_sha256": "c133c88b40ec985cedbf2ece81f0437cabc0c2478b3a28e645a284e95ce64ec6"
+  },
+  {
+   "class": "excluded_by_design",
+   "expected": 0,
+   "form_id": "date_iso",
+   "instance_index": 0,
+   "text": "the window opened on 2026-11-08 as planned",
+   "text_index": 15,
+   "text_sha256": "44c8fd8c795036c92ceaa59001dbc0f79c7d261e2f96786df4c3ddd72c6be63e"
+  },
+  {
+   "class": "excluded_by_design",
+   "expected": 0,
+   "form_id": "version_string",
+   "instance_index": 0,
+   "text": "the release named v7.49.0 is the pin we read",
+   "text_index": 16,
+   "text_sha256": "a2f20667f0431c0f7209822de81cfba348ba18a6adea0f1c1e84373064f112d1"
+  },
+  {
+   "class": "excluded_by_design",
+   "expected": 0,
+   "form_id": "sha_fragment",
+   "instance_index": 0,
+   "text": "the pinned commit is 3437340b on the main branch",
+   "text_index": 17,
+   "text_sha256": "a72fe440968b569e072f3c154b2934708764f51a1337a1e34157857a4fe3d2af"
+  },
+  {
+   "class": "excluded_by_design",
+   "expected": 0,
+   "form_id": "markdown_list_marker",
+   "instance_index": 0,
+   "text": "1. the item on the list",
+   "text_index": 18,
+   "text_sha256": "b12853a8813f00a340abd51f02e32b69e8b098c83014f39b58fa9a1b8a005bb0"
+  },
+  {
+   "class": "excluded_by_design",
+   "expected": 0,
+   "form_id": "number_words",
+   "instance_index": 2,
+   "text": "forty of them answered the call",
+   "text_index": 19,
+   "text_sha256": "afa3de3b50605424469570b29311f8d1dbc38977e6e4c070cf43e4697e4eccc9"
+  }
+ ],
+ "forms_sha256": "c9102921daaf612f4dd182ea61c69d668a5614b09fbfba00ed4d7b9f80b38a3d",
+ "prereg_sha256": "658bab0adc2e25b118672a0b3112afb913fffc7cdfdb463231e31a6fcb29d256",
+ "schema": "red.batch/v0",
+ "seed": "red-ledger-3c/v0"
+}

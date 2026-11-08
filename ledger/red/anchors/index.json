@@ -1,0 +1,43 @@
+{
+ "anchor_line": "the chain's own kind: anchor line for a date is written after 00:00 new york of the next day (planter.py anchor-line); an anchor text written before the day closes is provisional: a later line of that day would move the day's head",
+ "anchors": [
+  {
+   "anchor_line_seq": null,
+   "bitcoin_seen_at": null,
+   "block": null,
+   "calendars": [
+    "https://alice.btc.calendar.opentimestamps.org",
+    "https://bob.btc.calendar.opentimestamps.org",
+    "https://btc.calendar.catallaxy.com",
+    "https://finney.calendar.eternitywall.com"
+   ],
+   "date": "2026-11-08",
+   "file": "anchors/2026-11-08.txt",
+   "head": "fc22d2ee00b17f7a21172288cb30758d2113d7abcd9d3357d387ad4797bfb019",
+   "late": false,
+   "ots": "anchors/2026-11-08.txt.ots",
+   "ots_sha256": "93a8c5acc85402e6a9962479910b9e16ef16e8e48897bf5ccd15b156abaf5014",
+   "posted_at": null,
+   "seq": 106,
+   "stamped_at": "2026-11-08T22:56:17Z",
+   "status": "pending",
+   "text": "gate anchor 2026-11-08 head fc22d2ee00b17f7a21172288cb30758d2113d7abcd9d3357d387ad4797bfb019 seq 106",
+   "text_sha256": "f03ab11d15f7f79418adad312999b3bd96959c2f7ff7dc7a94ea7dbc8fa3da11"
+  }
+ ],
+ "counts": {
+  "anchors": 1,
+  "bitcoin": 0,
+  "mismatch": 0,
+  "pending": 1,
+  "unknown": 0,
+  "unstamped": 0
+ },
+ "notes": [
+  "stamped 2026-11-08"
+ ],
+ "posted_to": "no chat: the anchor text is this file, stamped, and committed to the exhibit branch",
+ "schema": "red.anchors/v0",
+ "what_a_proof_attests": "that the bytes of the .txt file existed before the Bitcoin block named in the proof; not that the chain is complete, nor that any text was sent anywhere (none was)",
+ "written_at": "2026-11-08T22:56:17Z"
+}

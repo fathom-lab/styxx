@@ -1,0 +1,1804 @@
+{
+ "amendment_sha256": "409d0808e7efddc2bfec90c6f4dfd745d6d971ef1d96bca06d7cc4df81e57b5f",
+ "anchors": {
+  "anchor_lines_in_chain": 0,
+  "counts": {
+   "anchors": 1,
+   "bitcoin": 0,
+   "mismatch": 0,
+   "pending": 1,
+   "unknown": 0,
+   "unstamped": 0
+  },
+  "dates": [
+   "2026-11-08"
+  ]
+ },
+ "batches": {
+  "ids": [
+   "alpha",
+   "bravo",
+   "charlie",
+   "delta",
+   "echo"
+  ],
+  "n": 5,
+  "size": 20
+ },
+ "built_at": "2026-11-08T23:32:57Z",
+ "continuity": {
+  "added_bytes": 273330,
+  "extends": null,
+  "previous_commit": null
+ },
+ "decisions": {
+  "allow": 41,
+  "allow_marked": 64
+ },
+ "file_sha256": "40430e31d4f07df12a496edaaec040b4a50f4a39fe42f3f2c2bf68680dad6d68",
+ "first_line": "a second chain under the protocol: every text in it was planted by a script from a sealed list; nothing here was sent to anyone.",
+ "forms": 25,
+ "forms_by_class": {
+  "counted_by_design": 9,
+  "excluded_by_design": 6,
+  "open_question": 10
+ },
+ "forms_sha256": "c9102921daaf612f4dd182ea61c69d668a5614b09fbfba00ed4d7b9f80b38a3d",
+ "gate_copy_made_at": "2026-11-08T22:46:08Z",
+ "gate_copy_note": "the gate's code as copied at 2026-11-08T22:46:08Z: ledger.py and helpers/numerals.py byte-equal to the live files at build time (yes); the live gate.py and gate_verify.py changed at 2026-11-08T22:50:27Z (another build's v1 send schema), so every red send line is a v0 line and darkflobi's newest are v1",
+ "gate_copy_sha256": {
+  "config.json": "57921af631fcca1e030a950c14bf1cce25d5d81aca7d96609d7bc572ae95689c",
+  "gate.py": "c17e3d06c52ac929a1bfdc673451b04661fc70c1f24992b21d9f3deb99b239cc",
+  "gate_verify.py": "5ab8454c15918734a7946bf493959506ed37f65e4234b2d499d9977c9a404ee3",
+  "helpers/numerals.py": "6e56ef95554522b3ce10ae30cb1c9b33b111a412a96690dc32b48ac524b28f86",
+  "ledger.py": "dfdecee0c37ca18327f074121d752ca51ed49231109172b31ce7ee67195b9e2e"
+ },
+ "gate_sha256_note": "seqs 1-106 carry 20192b8d6f0db61e… = the copy's *.py + helpers/*.py PLUS the LIVE plugin folder as it stood at 22:51Z (no STYXX_GATE_PLUGIN_DIR set; moves when the live plugin is redeployed). a change of this digest between two red lines is RED_AMENDMENT rule 6 (the plugin folder it folds in), dated, not a change of the gate code; the copy-only digest (no plugin folder) is 7c8bddf45e3a4fb1…",
+ "gate_sha256_on_lines": [
+  {
+   "from_seq": 1,
+   "gate_sha256": "20192b8d6f0db61e8eb8fcc9dffdb96ee9f09cf3cb390417beb7d8cdea302542",
+   "is": "the copy's *.py + helpers/*.py PLUS the LIVE plugin folder as it stood at 22:51Z (no STYXX_GATE_PLUGIN_DIR set; moves when the live plugin is redeployed)",
+   "to_seq": 106
+  }
+ ],
+ "head": "fc22d2ee00b17f7a21172288cb30758d2113d7abcd9d3357d387ad4797bfb019",
+ "header_certifies": "one line per outbound attempt and per gate event, chained; hashes and verdicts, never message text or chat ids; timestamps are the gate's statement, not evidence of order",
+ "header_created": "2026-11-08T22:51:20Z",
+ "header_note": "the certifies sentence is ledger.py's fixed one, inherited by the copy; what this chain is stands in first_line",
+ "identifier_shapes_found": 0,
+ "kill_gates": {
+  "a": {
+   "hits": [],
+   "lines_checked": 106,
+   "published_digests": 1565
+  },
+  "b": {
+   "fires": true,
+   "probe_disclosure": "the counted-by-design and excluded-by-design classes were checked against the pinned extract_numbers outside the gate before the catalogue froze (BUILD_LOG_3c.md section 2; one smoke text of 22:46Z went through the copy and its chain was deleted before the started line): the null result is the gate agreeing with that probe, not a recall measurement over unseen forms. what can move here is the open-question totals, a form added at a later started line without a probe, and any later reader",
+   "text": "0 misses of 36 counted-by-design plantings among 100 planted forms: a null result with its denominators, not a failure of the instrument. the counted-by-design and excluded-by-design classes were checked against the pinned extract_numbers outside the gate before the catalogue froze (BUILD_LOG_3c.md section 2; one smoke text of 22:46Z went through the copy and its chain was deleted before the started line): the null result is the gate agreeing with that probe, not a recall measurement over unseen forms. what can move here is the open-question totals, a form added at a later started line without a probe, and any later reader"
+  },
+  "c": {
+   "fires": false,
+   "of": 5,
+   "seals_counted": 0
+  }
+ },
+ "kinds": {
+  "send": 105,
+  "started": 1
+ },
+ "lines": 106,
+ "live_gate_sha256_at_build": {
+  "gate.py": "40586451bf657f6bb6dac454dbdd37f1f375b0ae2bda23d7fd659f5a88908023",
+  "gate_verify.py": "90164f2d121feac792701a7ada0734ce2ba6d03ad2ea60d534e4b99bb2d57949",
+  "helpers/numerals.py": "6e56ef95554522b3ce10ae30cb1c9b33b111a412a96690dc32b48ac524b28f86",
+  "ledger.py": "dfdecee0c37ca18327f074121d752ca51ed49231109172b31ce7ee67195b9e2e"
+ },
+ "node_check": {
+  "head": "fc22d2ee00b17f7a21172288cb30758d2113d7abcd9d3357d387ad4797bfb019",
+  "lines": 106,
+  "ok": true
+ },
+ "open_question_flags": {
+  "accounting_sign": {
+   "flag": "V15_ACCOUNTING_SIGN off by decision (#242); the amount inside the parentheses is a plain token",
+   "kind": "off_by_decision"
+  },
+  "bare_magnitude_words": {
+   "flag": "V15_MAGNITUDE_BARE off by decision (#242); the mantissa alone is a token at the pin",
+   "kind": "off_by_decision"
+  },
+  "clock_time": {
+   "flag": "V15_FORM_NOISE off by decision (#242); no rule at the pin names a clock time",
+   "kind": "no_rule"
+  },
+  "code_span": {
+   "flag": "disclosed unread by the v0.13 band (numerals inside code)",
+   "kind": "disclosed_unread"
+  },
+  "ordinal": {
+   "flag": "disclosed unread by the v0.13 band (letter-glued numbers)",
+   "kind": "disclosed_unread"
+  },
+  "scientific": {
+   "flag": "disclosed unread by the v0.13 band (scientific notation)",
+   "kind": "disclosed_unread"
+  },
+  "sentence_final": {
+   "flag": "V15_SENTENCE_FINAL off by decision (#242); the v0.13 band's trailing-period counts it meanwhile",
+   "kind": "off_by_decision"
+  },
+  "suffix_magnitude": {
+   "flag": "V15_MAGNITUDE_BARE off by decision (#242); the $-led case is V15_MAGNITUDE, on in v2, unreachable at the pin",
+   "kind": "off_by_decision"
+  },
+  "unicode_digits": {
+   "flag": "disclosed unread by the v0.13 band (non-ASCII digits)",
+   "kind": "disclosed_unread"
+  },
+  "url_numeral": {
+   "flag": "no rule names a url at the pin or in v2",
+   "kind": "no_rule"
+  }
+ },
+ "pin": "3437340b9e944644372e41d9fcab735d47e20fa0",
+ "planter_send_lines": 105,
+ "prereg_sha256": "658bab0adc2e25b118672a0b3112afb913fffc7cdfdb463231e31a6fcb29d256",
+ "probe_disclosure": "the counted-by-design and excluded-by-design classes were checked against the pinned extract_numbers outside the gate before the catalogue froze (BUILD_LOG_3c.md section 2; one smoke text of 22:46Z went through the copy and its chain was deleted before the started line): the null result is the gate agreeing with that probe, not a recall measurement over unseen forms. what can move here is the open-question totals, a form added at a later started line without a probe, and any later reader",
+ "recount": {
+  "by_class": {
+   "counted_by_design": {
+    "counted": 36,
+    "extra": 0,
+    "extra_list": [],
+    "missed": 0,
+    "missed_list": [],
+    "n": 36,
+    "no_verdict": 0
+   },
+   "excluded_by_design": {
+    "confirmed": 24,
+    "digit_free": {
+     "confirmed": 6,
+     "n": 6,
+     "no_verdict": 0,
+     "not_held": 0
+    },
+    "n": 24,
+    "no_verdict": 0,
+    "not_held": 0,
+    "not_held_list": [],
+    "reader_rule": {
+     "confirmed": 18,
+     "n": 18,
+     "no_verdict": 0,
+     "not_held": 0
+    }
+   },
+   "open_question": {
+    "n": 40,
+    "no_verdict": 0,
+    "observed_by_form": {
+     "accounting_sign": {
+      "flag": {
+       "flag": "V15_ACCOUNTING_SIGN off by decision (#242); the amount inside the parentheses is a plain token",
+       "kind": "off_by_decision"
+      },
+      "mark": "read in part; the flag is off",
+      "n": 4,
+      "seqs": [
+       {
+        "seq": 21,
+        "total": 1
+       },
+       {
+        "seq": 48,
+        "total": 1
+       },
+       {
+        "seq": 74,
+        "total": 1
+       },
+       {
+        "seq": 100,
+        "total": 1
+       }
+      ],
+      "totals": {
+       "1": 4
+      }
+     },
+     "bare_magnitude_words": {
+      "flag": {
+       "flag": "V15_MAGNITUDE_BARE off by decision (#242); the mantissa alone is a token at the pin",
+       "kind": "off_by_decision"
+      },
+      "mark": "read in part; the flag is off",
+      "n": 4,
+      "seqs": [
+       {
+        "seq": 19,
+        "total": 1
+       },
+       {
+        "seq": 46,
+        "total": 1
+       },
+       {
+        "seq": 72,
+        "total": 1
+       },
+       {
+        "seq": 98,
+        "total": 1
+       }
+      ],
+      "totals": {
+       "1": 4
+      }
+     },
+     "clock_time": {
+      "flag": {
+       "flag": "V15_FORM_NOISE off by decision (#242); no rule at the pin names a clock time",
+       "kind": "no_rule"
+      },
+      "mark": "reads outside any rule",
+      "n": 4,
+      "seqs": [
+       {
+        "seq": 27,
+        "total": 2
+       },
+       {
+        "seq": 53,
+        "total": 3
+       },
+       {
+        "seq": 79,
+        "total": 2
+       },
+       {
+        "seq": 105,
+        "total": 2
+       }
+      ],
+      "totals": {
+       "2": 3,
+       "3": 1
+      }
+     },
+     "code_span": {
+      "flag": {
+       "flag": "disclosed unread by the v0.13 band (numerals inside code)",
+       "kind": "disclosed_unread"
+      },
+      "mark": "counted though disclosed unread",
+      "n": 4,
+      "seqs": [
+       {
+        "seq": 24,
+        "total": 1
+       },
+       {
+        "seq": 50,
+        "total": 1
+       },
+       {
+        "seq": 76,
+        "total": 1
+       },
+       {
+        "seq": 102,
+        "total": 1
+       }
+      ],
+      "totals": {
+       "1": 4
+      }
+     },
+     "ordinal": {
+      "flag": {
+       "flag": "disclosed unread by the v0.13 band (letter-glued numbers)",
+       "kind": "disclosed_unread"
+      },
+      "mark": "unread, as disclosed",
+      "n": 4,
+      "seqs": [
+       {
+        "seq": 25,
+        "total": 0
+       },
+       {
+        "seq": 51,
+        "total": 0
+       },
+       {
+        "seq": 77,
+        "total": 0
+       },
+       {
+        "seq": 103,
+        "total": 0
+       }
+      ],
+      "totals": {
+       "0": 4
+      }
+     },
+     "scientific": {
+      "flag": {
+       "flag": "disclosed unread by the v0.13 band (scientific notation)",
+       "kind": "disclosed_unread"
+      },
+      "mark": "unread, as disclosed",
+      "n": 4,
+      "seqs": [
+       {
+        "seq": 26,
+        "total": 0
+       },
+       {
+        "seq": 52,
+        "total": 0
+       },
+       {
+        "seq": 78,
+        "total": 0
+       },
+       {
+        "seq": 104,
+        "total": 0
+       }
+      ],
+      "totals": {
+       "0": 4
+      }
+     },
+     "sentence_final": {
+      "flag": {
+       "flag": "V15_SENTENCE_FINAL off by decision (#242); the v0.13 band's trailing-period counts it meanwhile",
+       "kind": "off_by_decision"
+      },
+      "mark": "read in part; the flag is off",
+      "n": 4,
+      "seqs": [
+       {
+        "seq": 20,
+        "total": 1
+       },
+       {
+        "seq": 47,
+        "total": 1
+       },
+       {
+        "seq": 73,
+        "total": 2
+       },
+       {
+        "seq": 99,
+        "total": 1
+       }
+      ],
+      "totals": {
+       "1": 3,
+       "2": 1
+      }
+     },
+     "suffix_magnitude": {
+      "flag": {
+       "flag": "V15_MAGNITUDE_BARE off by decision (#242); the $-led case is V15_MAGNITUDE, on in v2, unreachable at the pin",
+       "kind": "off_by_decision"
+      },
+      "mark": "unread; the flag is off",
+      "n": 4,
+      "seqs": [
+       {
+        "seq": 18,
+        "total": 0
+       },
+       {
+        "seq": 45,
+        "total": 0
+       },
+       {
+        "seq": 71,
+        "total": 0
+       },
+       {
+        "seq": 97,
+        "total": 0
+       }
+      ],
+      "totals": {
+       "0": 4
+      }
+     },
+     "unicode_digits": {
+      "flag": {
+       "flag": "disclosed unread by the v0.13 band (non-ASCII digits)",
+       "kind": "disclosed_unread"
+      },
+      "mark": "counted though disclosed unread",
+      "n": 4,
+      "seqs": [
+       {
+        "seq": 22,
+        "total": 1
+       },
+       {
+        "seq": 49,
+        "total": 1
+       },
+       {
+        "seq": 75,
+        "total": 1
+       },
+       {
+        "seq": 101,
+        "total": 1
+       }
+      ],
+      "totals": {
+       "1": 4
+      }
+     },
+     "url_numeral": {
+      "flag": {
+       "flag": "no rule names a url at the pin or in v2",
+       "kind": "no_rule"
+      },
+      "mark": "reads outside any rule",
+      "n": 4,
+      "seqs": [
+       {
+        "seq": 28,
+        "total": 1
+       },
+       {
+        "seq": 54,
+        "total": 1
+       },
+       {
+        "seq": 80,
+        "total": 1
+       },
+       {
+        "seq": 106,
+        "total": 1
+       }
+      ],
+      "totals": {
+       "1": 4
+      }
+     }
+    }
+   }
+  },
+  "by_form": [
+   {
+    "class": "open_question",
+    "digit_free": false,
+    "expected": "?",
+    "flag": {
+     "flag": "V15_ACCOUNTING_SIGN off by decision (#242); the amount inside the parentheses is a plain token",
+     "kind": "off_by_decision"
+    },
+    "form_id": "accounting_sign",
+    "n": 4,
+    "outcomes": {
+     "observed": 4
+    },
+    "plantings": [
+     {
+      "batch": "alpha",
+      "instance_index": 0,
+      "outcome": "observed",
+      "seq": 21,
+      "total": 1
+     },
+     {
+      "batch": "charlie",
+      "instance_index": 2,
+      "outcome": "observed",
+      "seq": 48,
+      "total": 1
+     },
+     {
+      "batch": "delta",
+      "instance_index": 1,
+      "outcome": "observed",
+      "seq": 74,
+      "total": 1
+     },
+     {
+      "batch": "echo",
+      "instance_index": 2,
+      "outcome": "observed",
+      "seq": 100,
+      "total": 1
+     }
+    ],
+    "totals": {
+     "1": 4
+    }
+   },
+   {
+    "class": "open_question",
+    "digit_free": false,
+    "expected": "?",
+    "flag": {
+     "flag": "V15_MAGNITUDE_BARE off by decision (#242); the mantissa alone is a token at the pin",
+     "kind": "off_by_decision"
+    },
+    "form_id": "bare_magnitude_words",
+    "n": 4,
+    "outcomes": {
+     "observed": 4
+    },
+    "plantings": [
+     {
+      "batch": "alpha",
+      "instance_index": 2,
+      "outcome": "observed",
+      "seq": 19,
+      "total": 1
+     },
+     {
+      "batch": "charlie",
+      "instance_index": 2,
+      "outcome": "observed",
+      "seq": 46,
+      "total": 1
+     },
+     {
+      "batch": "delta",
+      "instance_index": 1,
+      "outcome": "observed",
+      "seq": 72,
+      "total": 1
+     },
+     {
+      "batch": "echo",
+      "instance_index": 1,
+      "outcome": "observed",
+      "seq": 98,
+      "total": 1
+     }
+    ],
+    "totals": {
+     "1": 4
+    }
+   },
+   {
+    "class": "open_question",
+    "digit_free": false,
+    "expected": "?",
+    "flag": {
+     "flag": "V15_FORM_NOISE off by decision (#242); no rule at the pin names a clock time",
+     "kind": "no_rule"
+    },
+    "form_id": "clock_time",
+    "n": 4,
+    "outcomes": {
+     "observed": 4
+    },
+    "plantings": [
+     {
+      "batch": "bravo",
+      "instance_index": 0,
+      "outcome": "observed",
+      "seq": 27,
+      "total": 2
+     },
+     {
+      "batch": "charlie",
+      "instance_index": 2,
+      "outcome": "observed",
+      "seq": 53,
+      "total": 3
+     },
+     {
+      "batch": "delta",
+      "instance_index": 1,
+      "outcome": "observed",
+      "seq": 79,
+      "total": 2
+     },
+     {
+      "batch": "echo",
+      "instance_index": 0,
+      "outcome": "observed",
+      "seq": 105,
+      "total": 2
+     }
+    ],
+    "totals": {
+     "2": 3,
+     "3": 1
+    }
+   },
+   {
+    "class": "open_question",
+    "digit_free": false,
+    "expected": "?",
+    "flag": {
+     "flag": "disclosed unread by the v0.13 band (numerals inside code)",
+     "kind": "disclosed_unread"
+    },
+    "form_id": "code_span",
+    "n": 4,
+    "outcomes": {
+     "observed": 4
+    },
+    "plantings": [
+     {
+      "batch": "bravo",
+      "instance_index": 0,
+      "outcome": "observed",
+      "seq": 24,
+      "total": 1
+     },
+     {
+      "batch": "charlie",
+      "instance_index": 0,
+      "outcome": "observed",
+      "seq": 50,
+      "total": 1
+     },
+     {
+      "batch": "delta",
+      "instance_index": 2,
+      "outcome": "observed",
+      "seq": 76,
+      "total": 1
+     },
+     {
+      "batch": "echo",
+      "instance_index": 1,
+      "outcome": "observed",
+      "seq": 102,
+      "total": 1
+     }
+    ],
+    "totals": {
+     "1": 4
+    }
+   },
+   {
+    "class": "counted_by_design",
+    "digit_free": false,
+    "expected": 1,
+    "flag": null,
+    "form_id": "currency_led",
+    "n": 4,
+    "outcomes": {
+     "counted": 4
+    },
+    "plantings": [
+     {
+      "batch": "alpha",
+      "instance_index": 0,
+      "outcome": "counted",
+      "seq": 7,
+      "total": 1
+     },
+     {
+      "batch": "bravo",
+      "instance_index": 2,
+      "outcome": "counted",
+      "seq": 33,
+      "total": 1
+     },
+     {
+      "batch": "charlie",
+      "instance_index": 2,
+      "outcome": "counted",
+      "seq": 59,
+      "total": 1
+     },
+     {
+      "batch": "delta",
+      "instance_index": 0,
+      "outcome": "counted",
+      "seq": 85,
+      "total": 1
+     }
+    ],
+    "totals": {
+     "1": 4
+    }
+   },
+   {
+    "class": "excluded_by_design",
+    "digit_free": false,
+    "expected": 0,
+    "flag": null,
+    "form_id": "date_iso",
+    "n": 4,
+    "outcomes": {
+     "confirmed": 4
+    },
+    "plantings": [
+     {
+      "batch": "alpha",
+      "instance_index": 0,
+      "outcome": "confirmed",
+      "seq": 13,
+      "total": 0
+     },
+     {
+      "batch": "bravo",
+      "instance_index": 0,
+      "outcome": "confirmed",
+      "seq": 39,
+      "total": 0
+     },
+     {
+      "batch": "delta",
+      "instance_index": 2,
+      "outcome": "confirmed",
+      "seq": 66,
+      "total": 0
+     },
+     {
+      "batch": "echo",
+      "instance_index": 2,
+      "outcome": "confirmed",
+      "seq": 92,
+      "total": 0
+     }
+    ],
+    "totals": {
+     "0": 4
+    }
+   },
+   {
+    "class": "counted_by_design",
+    "digit_free": false,
+    "expected": 1,
+    "flag": null,
+    "form_id": "decimal",
+    "n": 4,
+    "outcomes": {
+     "counted": 4
+    },
+    "plantings": [
+     {
+      "batch": "alpha",
+      "instance_index": 0,
+      "outcome": "counted",
+      "seq": 4,
+      "total": 1
+     },
+     {
+      "batch": "bravo",
+      "instance_index": 1,
+      "outcome": "counted",
+      "seq": 30,
+      "total": 1
+     },
+     {
+      "batch": "charlie",
+      "instance_index": 0,
+      "outcome": "counted",
+      "seq": 56,
+      "total": 1
+     },
+     {
+      "batch": "delta",
+      "instance_index": 2,
+      "outcome": "counted",
+      "seq": 82,
+      "total": 1
+     }
+    ],
+    "totals": {
+     "1": 4
+    }
+   },
+   {
+    "class": "counted_by_design",
+    "digit_free": false,
+    "expected": 2,
+    "flag": null,
+    "form_id": "fraction_slash",
+    "n": 4,
+    "outcomes": {
+     "counted": 4
+    },
+    "plantings": [
+     {
+      "batch": "alpha",
+      "instance_index": 2,
+      "outcome": "counted",
+      "seq": 11,
+      "total": 2
+     },
+     {
+      "batch": "bravo",
+      "instance_index": 1,
+      "outcome": "counted",
+      "seq": 37,
+      "total": 2
+     },
+     {
+      "batch": "charlie",
+      "instance_index": 0,
+      "outcome": "counted",
+      "seq": 63,
+      "total": 2
+     },
+     {
+      "batch": "echo",
+      "instance_index": 1,
+      "outcome": "counted",
+      "seq": 90,
+      "total": 2
+     }
+    ],
+    "totals": {
+     "2": 4
+    }
+   },
+   {
+    "class": "excluded_by_design",
+    "digit_free": false,
+    "expected": 0,
+    "flag": null,
+    "form_id": "markdown_list_marker",
+    "n": 4,
+    "outcomes": {
+     "confirmed": 4
+    },
+    "plantings": [
+     {
+      "batch": "alpha",
+      "instance_index": 1,
+      "outcome": "confirmed",
+      "seq": 16,
+      "total": 0
+     },
+     {
+      "batch": "bravo",
+      "instance_index": 0,
+      "outcome": "confirmed",
+      "seq": 42,
+      "total": 0
+     },
+     {
+      "batch": "delta",
+      "instance_index": 0,
+      "outcome": "confirmed",
+      "seq": 69,
+      "total": 0
+     },
+     {
+      "batch": "echo",
+      "instance_index": 2,
+      "outcome": "confirmed",
+      "seq": 95,
+      "total": 0
+     }
+    ],
+    "totals": {
+     "0": 4
+    }
+   },
+   {
+    "class": "counted_by_design",
+    "digit_free": false,
+    "expected": 1,
+    "flag": null,
+    "form_id": "negative_u2212",
+    "n": 4,
+    "outcomes": {
+     "counted": 4
+    },
+    "plantings": [
+     {
+      "batch": "alpha",
+      "instance_index": 1,
+      "outcome": "counted",
+      "seq": 10,
+      "total": 1
+     },
+     {
+      "batch": "bravo",
+      "instance_index": 2,
+      "outcome": "counted",
+      "seq": 36,
+      "total": 1
+     },
+     {
+      "batch": "charlie",
+      "instance_index": 1,
+      "outcome": "counted",
+      "seq": 62,
+      "total": 1
+     },
+     {
+      "batch": "echo",
+      "instance_index": 1,
+      "outcome": "counted",
+      "seq": 89,
+      "total": 1
+     }
+    ],
+    "totals": {
+     "1": 4
+    }
+   },
+   {
+    "class": "excluded_by_design",
+    "digit_free": true,
+    "expected": 0,
+    "flag": null,
+    "form_id": "number_words",
+    "n": 4,
+    "outcomes": {
+     "confirmed": 4
+    },
+    "plantings": [
+     {
+      "batch": "alpha",
+      "instance_index": 1,
+      "outcome": "confirmed",
+      "seq": 17,
+      "total": 0
+     },
+     {
+      "batch": "bravo",
+      "instance_index": 2,
+      "outcome": "confirmed",
+      "seq": 43,
+      "total": 0
+     },
+     {
+      "batch": "delta",
+      "instance_index": 2,
+      "outcome": "confirmed",
+      "seq": 70,
+      "total": 0
+     },
+     {
+      "batch": "echo",
+      "instance_index": 1,
+      "outcome": "confirmed",
+      "seq": 96,
+      "total": 0
+     }
+    ],
+    "totals": {
+     "0": 4
+    }
+   },
+   {
+    "class": "open_question",
+    "digit_free": false,
+    "expected": "?",
+    "flag": {
+     "flag": "disclosed unread by the v0.13 band (letter-glued numbers)",
+     "kind": "disclosed_unread"
+    },
+    "form_id": "ordinal",
+    "n": 4,
+    "outcomes": {
+     "observed": 4
+    },
+    "plantings": [
+     {
+      "batch": "bravo",
+      "instance_index": 0,
+      "outcome": "observed",
+      "seq": 25,
+      "total": 0
+     },
+     {
+      "batch": "charlie",
+      "instance_index": 0,
+      "outcome": "observed",
+      "seq": 51,
+      "total": 0
+     },
+     {
+      "batch": "delta",
+      "instance_index": 2,
+      "outcome": "observed",
+      "seq": 77,
+      "total": 0
+     },
+     {
+      "batch": "echo",
+      "instance_index": 1,
+      "outcome": "observed",
+      "seq": 103,
+      "total": 0
+     }
+    ],
+    "totals": {
+     "0": 4
+    }
+   },
+   {
+    "class": "counted_by_design",
+    "digit_free": false,
+    "expected": 1,
+    "flag": null,
+    "form_id": "percent",
+    "n": 4,
+    "outcomes": {
+     "counted": 4
+    },
+    "plantings": [
+     {
+      "batch": "alpha",
+      "instance_index": 1,
+      "outcome": "counted",
+      "seq": 6,
+      "total": 1
+     },
+     {
+      "batch": "bravo",
+      "instance_index": 2,
+      "outcome": "counted",
+      "seq": 32,
+      "total": 1
+     },
+     {
+      "batch": "charlie",
+      "instance_index": 2,
+      "outcome": "counted",
+      "seq": 58,
+      "total": 1
+     },
+     {
+      "batch": "delta",
+      "instance_index": 1,
+      "outcome": "counted",
+      "seq": 84,
+      "total": 1
+     }
+    ],
+    "totals": {
+     "1": 4
+    }
+   },
+   {
+    "class": "counted_by_design",
+    "digit_free": false,
+    "expected": 1,
+    "flag": null,
+    "form_id": "plain_integer",
+    "n": 4,
+    "outcomes": {
+     "counted": 4
+    },
+    "plantings": [
+     {
+      "batch": "alpha",
+      "instance_index": 0,
+      "outcome": "counted",
+      "seq": 3,
+      "total": 1
+     },
+     {
+      "batch": "bravo",
+      "instance_index": 1,
+      "outcome": "counted",
+      "seq": 29,
+      "total": 1
+     },
+     {
+      "batch": "charlie",
+      "instance_index": 2,
+      "outcome": "counted",
+      "seq": 55,
+      "total": 1
+     },
+     {
+      "batch": "delta",
+      "instance_index": 2,
+      "outcome": "counted",
+      "seq": 81,
+      "total": 1
+     }
+    ],
+    "totals": {
+     "1": 4
+    }
+   },
+   {
+    "class": "counted_by_design",
+    "digit_free": false,
+    "expected": 1,
+    "flag": null,
+    "form_id": "range_dash",
+    "n": 4,
+    "outcomes": {
+     "counted": 4
+    },
+    "plantings": [
+     {
+      "batch": "alpha",
+      "instance_index": 1,
+      "outcome": "counted",
+      "seq": 8,
+      "total": 1
+     },
+     {
+      "batch": "bravo",
+      "instance_index": 2,
+      "outcome": "counted",
+      "seq": 34,
+      "total": 1
+     },
+     {
+      "batch": "charlie",
+      "instance_index": 0,
+      "outcome": "counted",
+      "seq": 60,
+      "total": 1
+     },
+     {
+      "batch": "echo",
+      "instance_index": 1,
+      "outcome": "counted",
+      "seq": 87,
+      "total": 1
+     }
+    ],
+    "totals": {
+     "1": 4
+    }
+   },
+   {
+    "class": "counted_by_design",
+    "digit_free": false,
+    "expected": 2,
+    "flag": null,
+    "form_id": "range_worded",
+    "n": 4,
+    "outcomes": {
+     "counted": 4
+    },
+    "plantings": [
+     {
+      "batch": "alpha",
+      "instance_index": 2,
+      "outcome": "counted",
+      "seq": 9,
+      "total": 2
+     },
+     {
+      "batch": "bravo",
+      "instance_index": 2,
+      "outcome": "counted",
+      "seq": 35,
+      "total": 2
+     },
+     {
+      "batch": "charlie",
+      "instance_index": 1,
+      "outcome": "counted",
+      "seq": 61,
+      "total": 2
+     },
+     {
+      "batch": "echo",
+      "instance_index": 0,
+      "outcome": "counted",
+      "seq": 88,
+      "total": 2
+     }
+    ],
+    "totals": {
+     "2": 4
+    }
+   },
+   {
+    "class": "open_question",
+    "digit_free": false,
+    "expected": "?",
+    "flag": {
+     "flag": "disclosed unread by the v0.13 band (scientific notation)",
+     "kind": "disclosed_unread"
+    },
+    "form_id": "scientific",
+    "n": 4,
+    "outcomes": {
+     "observed": 4
+    },
+    "plantings": [
+     {
+      "batch": "bravo",
+      "instance_index": 0,
+      "outcome": "observed",
+      "seq": 26,
+      "total": 0
+     },
+     {
+      "batch": "charlie",
+      "instance_index": 1,
+      "outcome": "observed",
+      "seq": 52,
+      "total": 0
+     },
+     {
+      "batch": "delta",
+      "instance_index": 2,
+      "outcome": "observed",
+      "seq": 78,
+      "total": 0
+     },
+     {
+      "batch": "echo",
+      "instance_index": 2,
+      "outcome": "observed",
+      "seq": 104,
+      "total": 0
+     }
+    ],
+    "totals": {
+     "0": 4
+    }
+   },
+   {
+    "class": "open_question",
+    "digit_free": false,
+    "expected": "?",
+    "flag": {
+     "flag": "V15_SENTENCE_FINAL off by decision (#242); the v0.13 band's trailing-period counts it meanwhile",
+     "kind": "off_by_decision"
+    },
+    "form_id": "sentence_final",
+    "n": 4,
+    "outcomes": {
+     "observed": 4
+    },
+    "plantings": [
+     {
+      "batch": "alpha",
+      "instance_index": 1,
+      "outcome": "observed",
+      "seq": 20,
+      "total": 1
+     },
+     {
+      "batch": "charlie",
+      "instance_index": 0,
+      "outcome": "observed",
+      "seq": 47,
+      "total": 1
+     },
+     {
+      "batch": "delta",
+      "instance_index": 2,
+      "outcome": "observed",
+      "seq": 73,
+      "total": 2
+     },
+     {
+      "batch": "echo",
+      "instance_index": 0,
+      "outcome": "observed",
+      "seq": 99,
+      "total": 1
+     }
+    ],
+    "totals": {
+     "1": 3,
+     "2": 1
+    }
+   },
+   {
+    "class": "excluded_by_design",
+    "digit_free": true,
+    "expected": 0,
+    "flag": null,
+    "form_id": "sha_fragment",
+    "n": 4,
+    "outcomes": {
+     "confirmed": 4
+    },
+    "plantings": [
+     {
+      "batch": "alpha",
+      "instance_index": 1,
+      "outcome": "confirmed",
+      "seq": 15,
+      "total": 0
+     },
+     {
+      "batch": "bravo",
+      "instance_index": 0,
+      "outcome": "confirmed",
+      "seq": 41,
+      "total": 0
+     },
+     {
+      "batch": "delta",
+      "instance_index": 1,
+      "outcome": "confirmed",
+      "seq": 68,
+      "total": 0
+     },
+     {
+      "batch": "echo",
+      "instance_index": 0,
+      "outcome": "confirmed",
+      "seq": 94,
+      "total": 0
+     }
+    ],
+    "totals": {
+     "0": 4
+    }
+   },
+   {
+    "class": "open_question",
+    "digit_free": false,
+    "expected": "?",
+    "flag": {
+     "flag": "V15_MAGNITUDE_BARE off by decision (#242); the $-led case is V15_MAGNITUDE, on in v2, unreachable at the pin",
+     "kind": "off_by_decision"
+    },
+    "form_id": "suffix_magnitude",
+    "n": 4,
+    "outcomes": {
+     "observed": 4
+    },
+    "plantings": [
+     {
+      "batch": "alpha",
+      "instance_index": 3,
+      "outcome": "observed",
+      "seq": 18,
+      "total": 0
+     },
+     {
+      "batch": "charlie",
+      "instance_index": 0,
+      "outcome": "observed",
+      "seq": 45,
+      "total": 0
+     },
+     {
+      "batch": "delta",
+      "instance_index": 2,
+      "outcome": "observed",
+      "seq": 71,
+      "total": 0
+     },
+     {
+      "batch": "echo",
+      "instance_index": 1,
+      "outcome": "observed",
+      "seq": 97,
+      "total": 0
+     }
+    ],
+    "totals": {
+     "0": 4
+    }
+   },
+   {
+    "class": "counted_by_design",
+    "digit_free": false,
+    "expected": 1,
+    "flag": null,
+    "form_id": "thousands_separators",
+    "n": 4,
+    "outcomes": {
+     "counted": 4
+    },
+    "plantings": [
+     {
+      "batch": "alpha",
+      "instance_index": 0,
+      "outcome": "counted",
+      "seq": 5,
+      "total": 1
+     },
+     {
+      "batch": "bravo",
+      "instance_index": 1,
+      "outcome": "counted",
+      "seq": 31,
+      "total": 1
+     },
+     {
+      "batch": "charlie",
+      "instance_index": 1,
+      "outcome": "counted",
+      "seq": 57,
+      "total": 1
+     },
+     {
+      "batch": "delta",
+      "instance_index": 0,
+      "outcome": "counted",
+      "seq": 83,
+      "total": 1
+     }
+    ],
+    "totals": {
+     "1": 4
+    }
+   },
+   {
+    "class": "open_question",
+    "digit_free": false,
+    "expected": "?",
+    "flag": {
+     "flag": "disclosed unread by the v0.13 band (non-ASCII digits)",
+     "kind": "disclosed_unread"
+    },
+    "form_id": "unicode_digits",
+    "n": 4,
+    "outcomes": {
+     "observed": 4
+    },
+    "plantings": [
+     {
+      "batch": "alpha",
+      "instance_index": 2,
+      "outcome": "observed",
+      "seq": 22,
+      "total": 1
+     },
+     {
+      "batch": "charlie",
+      "instance_index": 1,
+      "outcome": "observed",
+      "seq": 49,
+      "total": 1
+     },
+     {
+      "batch": "delta",
+      "instance_index": 1,
+      "outcome": "observed",
+      "seq": 75,
+      "total": 1
+     },
+     {
+      "batch": "echo",
+      "instance_index": 2,
+      "outcome": "observed",
+      "seq": 101,
+      "total": 1
+     }
+    ],
+    "totals": {
+     "1": 4
+    }
+   },
+   {
+    "class": "open_question",
+    "digit_free": false,
+    "expected": "?",
+    "flag": {
+     "flag": "no rule names a url at the pin or in v2",
+     "kind": "no_rule"
+    },
+    "form_id": "url_numeral",
+    "n": 4,
+    "outcomes": {
+     "observed": 4
+    },
+    "plantings": [
+     {
+      "batch": "bravo",
+      "instance_index": 2,
+      "outcome": "observed",
+      "seq": 28,
+      "total": 1
+     },
+     {
+      "batch": "charlie",
+      "instance_index": 0,
+      "outcome": "observed",
+      "seq": 54,
+      "total": 1
+     },
+     {
+      "batch": "delta",
+      "instance_index": 2,
+      "outcome": "observed",
+      "seq": 80,
+      "total": 1
+     },
+     {
+      "batch": "echo",
+      "instance_index": 2,
+      "outcome": "observed",
+      "seq": 106,
+      "total": 1
+     }
+    ],
+    "totals": {
+     "1": 4
+    }
+   },
+   {
+    "class": "excluded_by_design",
+    "digit_free": false,
+    "expected": 0,
+    "flag": null,
+    "form_id": "version_string",
+    "n": 4,
+    "outcomes": {
+     "confirmed": 4
+    },
+    "plantings": [
+     {
+      "batch": "alpha",
+      "instance_index": 0,
+      "outcome": "confirmed",
+      "seq": 14,
+      "total": 0
+     },
+     {
+      "batch": "bravo",
+      "instance_index": 0,
+      "outcome": "confirmed",
+      "seq": 40,
+      "total": 0
+     },
+     {
+      "batch": "delta",
+      "instance_index": 2,
+      "outcome": "confirmed",
+      "seq": 67,
+      "total": 0
+     },
+     {
+      "batch": "echo",
+      "instance_index": 1,
+      "outcome": "confirmed",
+      "seq": 93,
+      "total": 0
+     }
+    ],
+    "totals": {
+     "0": 4
+    }
+   },
+   {
+    "class": "excluded_by_design",
+    "digit_free": false,
+    "expected": 0,
+    "flag": null,
+    "form_id": "year",
+    "n": 4,
+    "outcomes": {
+     "confirmed": 4
+    },
+    "plantings": [
+     {
+      "batch": "alpha",
+      "instance_index": 1,
+      "outcome": "confirmed",
+      "seq": 12,
+      "total": 0
+     },
+     {
+      "batch": "bravo",
+      "instance_index": 1,
+      "outcome": "confirmed",
+      "seq": 38,
+      "total": 0
+     },
+     {
+      "batch": "charlie",
+      "instance_index": 2,
+      "outcome": "confirmed",
+      "seq": 64,
+      "total": 0
+     },
+     {
+      "batch": "echo",
+      "instance_index": 2,
+      "outcome": "confirmed",
+      "seq": 91,
+      "total": 0
+     }
+    ],
+    "totals": {
+     "0": 4
+    }
+   }
+  ],
+  "denominators_sum": true,
+  "planted": 100
+ },
+ "schema": "red.stats/v1",
+ "seals": {
+  "contiguous": 5,
+  "detail": [
+   {
+    "batch_id": "alpha",
+    "file_sha256": "ce6acaad7d8a19b524feecb859c1d01d1f9793fb85cb8f2ca1ba20f7c0135153",
+    "ok": true,
+    "recorded_seal_text_matches": true,
+    "seal_before_all": true,
+    "seal_line_seq": 2,
+    "seal_numerals": {
+     "bound": 0,
+     "total": 0,
+     "trailer_forms_unverified": 0,
+     "trailer_quote_numerals": 0,
+     "trailer_quote_seqs": [],
+     "trailer_quotes": 0,
+     "unbound": 0,
+     "unbound_shapes": [],
+     "uncovered": 0
+    },
+    "seal_numerals_total": 0,
+    "seal_text": "red batch alpha sha256 ce6acaad7d8a19b524feecb859c1d01d1f9793fb85cb8f2ca1ba20f7c0135153",
+    "seal_text_sha256": "dc5f6bfb5eb1909fe9b9587841143745164cf473a7d7156d389dac26f9ef1f34",
+    "sha_fragment_counted": false,
+    "texts": 20,
+    "texts_bad": [],
+    "texts_contiguous_after_seal": true,
+    "texts_on_their_lines": 20,
+    "void": false
+   },
+   {
+    "batch_id": "bravo",
+    "file_sha256": "e2809af345981e423674c29341dfbfa030ccc9198e574dc165412b27516056ad",
+    "ok": true,
+    "recorded_seal_text_matches": true,
+    "seal_before_all": true,
+    "seal_line_seq": 23,
+    "seal_numerals": {
+     "bound": 0,
+     "total": 0,
+     "trailer_forms_unverified": 0,
+     "trailer_quote_numerals": 0,
+     "trailer_quote_seqs": [],
+     "trailer_quotes": 0,
+     "unbound": 0,
+     "unbound_shapes": [],
+     "uncovered": 0
+    },
+    "seal_numerals_total": 0,
+    "seal_text": "red batch bravo sha256 e2809af345981e423674c29341dfbfa030ccc9198e574dc165412b27516056ad",
+    "seal_text_sha256": "f964ee585d134c8876cdacd26508145ef216a53d53ba942916b7f4acf1aee9b3",
+    "sha_fragment_counted": false,
+    "texts": 20,
+    "texts_bad": [],
+    "texts_contiguous_after_seal": true,
+    "texts_on_their_lines": 20,
+    "void": false
+   },
+   {
+    "batch_id": "charlie",
+    "file_sha256": "8b7619737be359e3b9b361621f82e906079d66756211cabcbbe6310f642d6b3d",
+    "ok": true,
+    "recorded_seal_text_matches": true,
+    "seal_before_all": true,
+    "seal_line_seq": 44,
+    "seal_numerals": {
+     "bound": 0,
+     "total": 0,
+     "trailer_forms_unverified": 0,
+     "trailer_quote_numerals": 0,
+     "trailer_quote_seqs": [],
+     "trailer_quotes": 0,
+     "unbound": 0,
+     "unbound_shapes": [],
+     "uncovered": 0
+    },
+    "seal_numerals_total": 0,
+    "seal_text": "red batch charlie sha256 8b7619737be359e3b9b361621f82e906079d66756211cabcbbe6310f642d6b3d",
+    "seal_text_sha256": "f6e8efb3e467251b4cb51197363b044cfda1bd511a71b9267694d2947c943cb3",
+    "sha_fragment_counted": false,
+    "texts": 20,
+    "texts_bad": [],
+    "texts_contiguous_after_seal": true,
+    "texts_on_their_lines": 20,
+    "void": false
+   },
+   {
+    "batch_id": "delta",
+    "file_sha256": "0a8a7534b1eba59da0988e2753d3ce73bed15b1ea0b808b6e27bc745da93a557",
+    "ok": true,
+    "recorded_seal_text_matches": true,
+    "seal_before_all": true,
+    "seal_line_seq": 65,
+    "seal_numerals": {
+     "bound": 0,
+     "total": 0,
+     "trailer_forms_unverified": 0,
+     "trailer_quote_numerals": 0,
+     "trailer_quote_seqs": [],
+     "trailer_quotes": 0,
+     "unbound": 0,
+     "unbound_shapes": [],
+     "uncovered": 0
+    },
+    "seal_numerals_total": 0,
+    "seal_text": "red batch delta sha256 0a8a7534b1eba59da0988e2753d3ce73bed15b1ea0b808b6e27bc745da93a557",
+    "seal_text_sha256": "d8663a7f95e19ae1253cbd0d3126eb86d2c3ba7aab644f997a71d8f1fc3eaa2e",
+    "sha_fragment_counted": false,
+    "texts": 20,
+    "texts_bad": [],
+    "texts_contiguous_after_seal": true,
+    "texts_on_their_lines": 20,
+    "void": false
+   },
+   {
+    "batch_id": "echo",
+    "file_sha256": "72fc1688579e2ae497db2e27247cdd3f7bd3fe77bbae148741b53f470b331286",
+    "ok": true,
+    "recorded_seal_text_matches": true,
+    "seal_before_all": true,
+    "seal_line_seq": 86,
+    "seal_numerals": {
+     "bound": 0,
+     "total": 0,
+     "trailer_forms_unverified": 0,
+     "trailer_quote_numerals": 0,
+     "trailer_quote_seqs": [],
+     "trailer_quotes": 0,
+     "unbound": 0,
+     "unbound_shapes": [],
+     "uncovered": 0
+    },
+    "seal_numerals_total": 0,
+    "seal_text": "red batch echo sha256 72fc1688579e2ae497db2e27247cdd3f7bd3fe77bbae148741b53f470b331286",
+    "seal_text_sha256": "a202dc049f5e35379fe53823b587ba2e6ad30ee8974cf6071e281215f7988324",
+    "sha_fragment_counted": false,
+    "texts": 20,
+    "texts_bad": [],
+    "texts_contiguous_after_seal": true,
+    "texts_on_their_lines": 20,
+    "void": false
+   }
+  ],
+  "n": 5,
+  "rederived": 5,
+  "seqs": [
+   2,
+   23,
+   44,
+   65,
+   86
+  ],
+  "sha_fragment_counted": 0,
+  "totals": [
+   0,
+   0,
+   0,
+   0,
+   0
+  ],
+  "two_exclusions_note": "a seal total of 0 confirms two designed exclusions at once (the 64-hex digest: sha scrub; the token sha256: compound-identifier); detail[].seal_numerals keeps unbound_shapes so a positive is attributable (RED_AMENDMENT rule 8)"
+ },
+ "send_line_accounting": {
+  "planted": 100,
+  "rule": "RED_AMENDMENT 2026-11-08 rule 4: every send line is a seal, a planted text, or unattributed (listed)",
+  "seal": 5,
+  "send_lines": 105,
+  "sums": true,
+  "unattributed": 0,
+  "unattributed_list": []
+ },
+ "send_lines": 105,
+ "vectors": {
+  "exit": 0,
+  "line": "vectors 10 of 10 under the same verifier (the verifier's conformance to the format, not a property of the red chain)",
+  "of": 10,
+  "passed": 10,
+  "ran": true,
+  "stdout_tail": "ok   identity\nok   rewrite-one-field\nok   rewrite-prev\nok   drop-a-line\nok   drop-a-line-withheld\nok   drop-a-line-withheld-wrong-digest\nok   cr-byte\nok   duplicate-key\nok   truncate-last-line\nok   flip-and-rechain\n10 of 10 vectors answered as the file says\n"
+ },
+ "voided_batches": {
+  "by_id": {},
+  "list": [],
+  "n": 0,
+  "of": 5,
+  "rule": "RED_AMENDMENT 2026-11-08 rule 3: void and counted; lines stay on the chain; plantings out of the recount"
+ }
+}

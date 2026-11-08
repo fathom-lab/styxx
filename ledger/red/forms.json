@@ -1,0 +1,306 @@
+{
+ "forms": [
+  {
+   "class": "counted_by_design",
+   "expected": 1,
+   "id": "plain_integer",
+   "instances": [
+    "42",
+    "7",
+    "318"
+   ],
+   "note": "a bare digit run; the plainest token `_NUM` has",
+   "template": "the count came to {x} in the end"
+  },
+  {
+   "class": "counted_by_design",
+   "expected": 1,
+   "id": "decimal",
+   "instances": [
+    "0.55",
+    "3.25",
+    "12.5"
+   ],
+   "note": "digits, a point, digits",
+   "template": "the ratio settled at {x} after the rerun"
+  },
+  {
+   "class": "counted_by_design",
+   "expected": 1,
+   "id": "thousands_separators",
+   "instances": [
+    "1,234",
+    "23,247",
+    "1,000,000"
+   ],
+   "note": "comma groups of three; `_NUM`'s thousands alternative",
+   "template": "all {x} of them were read"
+  },
+  {
+   "class": "counted_by_design",
+   "expected": 1,
+   "id": "percent",
+   "instances": [
+    "12%",
+    "0.5%",
+    "87%"
+   ],
+   "note": "the digits before `%`; the sign is not a word character, so the token ends cleanly",
+   "template": "the share stood at {x} of the pool"
+  },
+  {
+   "class": "counted_by_design",
+   "expected": 1,
+   "id": "currency_led",
+   "instances": [
+    "$42",
+    "€12",
+    "£250"
+   ],
+   "note": "a currency symbol glued before a plain amount; the symbol is not a word character",
+   "template": "the fee came to {x} per seat"
+  },
+  {
+   "class": "counted_by_design",
+   "expected": 1,
+   "id": "range_dash",
+   "instances": [
+    "3-5 days",
+    "10–12 hours",
+    "40-60 ms"
+   ],
+   "note": "the lower bound is a token; the upper is dropped by the named rule `range-second-half`, so the design count is 1",
+   "template": "the wait ran {x} across the week"
+  },
+  {
+   "class": "counted_by_design",
+   "expected": 2,
+   "id": "range_worded",
+   "instances": [
+    "3 to 5 days",
+    "10 to 12 hours",
+    "40 to 60 ms"
+   ],
+   "note": "two tokens by construction: no rule joins `a to b`; the design count is 2",
+   "template": "the wait ran {x} across the week"
+  },
+  {
+   "class": "counted_by_design",
+   "expected": 1,
+   "id": "negative_u2212",
+   "instances": [
+    "−12.5",
+    "−0.3",
+    "−7"
+   ],
+   "note": "the typographic minus U+2212, normalised to `-` before `_NUM` (v0.6.2 signed extraction)",
+   "template": "the drift read {x} over the window"
+  },
+  {
+   "class": "counted_by_design",
+   "expected": 2,
+   "id": "fraction_slash",
+   "instances": [
+    "1/3",
+    "7/12",
+    "2/5"
+   ],
+   "note": "numerator and denominator are both tokens by design (the slash-pair and derived-percent rules read both); the design count is 2",
+   "template": "{x} of the pool answered"
+  },
+  {
+   "class": "excluded_by_design",
+   "expected": 0,
+   "id": "year",
+   "instances": [
+    "2026",
+    "1999",
+    "2024"
+   ],
+   "note": "a four-digit year is dropped by the `year` rule",
+   "template": "the window opened in {x} and stays open"
+  },
+  {
+   "class": "excluded_by_design",
+   "expected": 0,
+   "id": "date_iso",
+   "instances": [
+    "2026-11-08",
+    "2025-01-31",
+    "2026_10_24"
+   ],
+   "note": "blanked by the date scrub before `_NUM` runs",
+   "template": "the window opened on {x} as planned"
+  },
+  {
+   "class": "excluded_by_design",
+   "expected": 0,
+   "id": "version_string",
+   "instances": [
+    "v7.49.0",
+    "7.50.0",
+    "v0.15.2"
+   ],
+   "note": "blanked by the version scrub (the audit leg reads it instead)",
+   "template": "the release named {x} is the pin we read"
+  },
+  {
+   "class": "excluded_by_design",
+   "expected": 0,
+   "id": "sha_fragment",
+   "instances": [
+    "3437340b",
+    "deadbeef",
+    "a1b2c3d4e5"
+   ],
+   "note": "a hex run of seven or more with a letter in it is blanked by the sha scrub; the seal line's digest rides on the same rule",
+   "template": "the pinned commit is {x} on the main branch"
+  },
+  {
+   "class": "excluded_by_design",
+   "expected": 0,
+   "id": "markdown_list_marker",
+   "instances": [
+    "1.",
+    "2.",
+    "9."
+   ],
+   "note": "an ordered-list marker: `_NUM` stops at the period and the band names it `ordered-list-marker`, not counted",
+   "template": "{x} the item on the list"
+  },
+  {
+   "class": "excluded_by_design",
+   "expected": 0,
+   "id": "number_words",
+   "instances": [
+    "a dozen",
+    "twelve",
+    "forty"
+   ],
+   "note": "no digit in the text: the gate runs no reader over it, and the reader reads digits",
+   "template": "{x} of them answered the call"
+  },
+  {
+   "class": "open_question",
+   "expected": "?",
+   "id": "suffix_magnitude",
+   "instances": [
+    "3.4M",
+    "12k",
+    "7B",
+    "$67.4k"
+   ],
+   "note": "a magnitude letter glued to the digits, with or without a currency symbol: not reached by `_NUM` at the pin; v2's V15_MAGNITUDE reads the currency-led case and V15_MAGNITUDE_BARE (off) the bare one",
+   "template": "the table holds {x} rows now"
+  },
+  {
+   "class": "open_question",
+   "expected": "?",
+   "id": "bare_magnitude_words",
+   "instances": [
+    "3.4 million",
+    "12 thousand",
+    "1.2 billion"
+   ],
+   "note": "a word magnitude after a space: the mantissa alone is a token at the pin (V15_MAGNITUDE_WORDS is v2's)",
+   "template": "the table holds about {x} rows now"
+  },
+  {
+   "class": "open_question",
+   "expected": "?",
+   "id": "sentence_final",
+   "instances": [
+    "42",
+    "0.55",
+    "23,247"
+   ],
+   "note": "a numeral before the sentence period: `_NUM` cannot end on a period; the band counts it as `trailing-period`, and on a thousands form the bare-integer alternative may read the first group alone (v0.13's second mode)",
+   "template": "the count was {x}."
+  },
+  {
+   "class": "open_question",
+   "expected": "?",
+   "id": "accounting_sign",
+   "instances": [
+    "(1,234)",
+    "($42)",
+    "(0.5)"
+   ],
+   "note": "parenthesised negative: the amount is read, the sign is not (V15_ACCOUNTING_SIGN off); the count sees the token, not the sign",
+   "template": "the books closed at {x} this period"
+  },
+  {
+   "class": "open_question",
+   "expected": "?",
+   "id": "unicode_digits",
+   "instances": [
+    "４２",
+    "７",
+    "３.５"
+   ],
+   "note": "fullwidth digits: `\\d` in a str pattern matches them; the band discloses non-ASCII digit forms as uncounted",
+   "template": "the count came to {x} in the end"
+  },
+  {
+   "class": "open_question",
+   "expected": "?",
+   "id": "code_span",
+   "instances": [
+    "42",
+    "0.55",
+    "1,234"
+   ],
+   "note": "a numeral inside backticks: the band discloses numerals inside code as uncounted; a backtick is not a word character",
+   "template": "the field reads `{x}` in the source"
+  },
+  {
+   "class": "open_question",
+   "expected": "?",
+   "id": "ordinal",
+   "instances": [
+    "3rd",
+    "21st",
+    "102nd"
+   ],
+   "note": "letter-glued: `_NUM` stops before the letters and the band's guard does too",
+   "template": "the {x} row carried the mark"
+  },
+  {
+   "class": "open_question",
+   "expected": "?",
+   "id": "scientific",
+   "instances": [
+    "1e6",
+    "2.5e-3",
+    "1E9"
+   ],
+   "note": "scientific notation: the band discloses it as not counted",
+   "template": "the rate sat near {x} over the run"
+  },
+  {
+   "class": "open_question",
+   "expected": "?",
+   "id": "clock_time",
+   "instances": [
+    "14:30",
+    "09:05",
+    "23:59:10"
+   ],
+   "note": "a clock time: no rule at the pin names it; v2's V15_FORM_NOISE (off) would exclude it",
+   "template": "the job ran at {x} on the box"
+  },
+  {
+   "class": "open_question",
+   "expected": "?",
+   "id": "url_numeral",
+   "instances": [
+    "https://example.org/p/42",
+    "https://example.org/run/7",
+    "https://example.org/r/318"
+   ],
+   "note": "a numeral as a path segment of a url: no rule names urls; a slash is not a word character",
+   "template": "the note is at {x} for reading"
+  }
+ ],
+ "schema": "red.forms/v0"
+}
