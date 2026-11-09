@@ -243,34 +243,57 @@ def test_lock_table_names_the_pin_the_snapshot_the_block_and_the_plugins_subtree
 # lock-rows AMENDMENT prints the same table for the five before-D0 files it was written with, and a test below reads it
 # there too; an AMENDMENT after it states its own count in its own lock-rows section
 AMENDMENT_ROW_COUNTS = {"canary_replan": 2, "count_rule": 4, "lint_overclaims": 0, "lock_rows": 0, "posting_skill": 7,
-                        "anchor_native": 9, "token_shapes": 6}
+                        "anchor_native": 9, "token_shapes": 6, "substrate": 26}
 LOCK_ROWS_TABLE_TOPICS = {"canary_replan", "count_rule", "lint_overclaims", "lock_rows", "posting_skill"}
-# the paths the amendments lock, together: the before-D0 move's ten files under W:gate/, the posting skill, and the
-# anchor's nine plugin files (F-1: index.js, native_import.cjs and README.md in both places, and three test files)
+# the paths the amendments lock, together: the before-D0 move's ten files under W:gate/, the posting skill, the
+# anchor's nine plugin files (F-1: index.js, native_import.cjs and README.md in both places, and three test files),
+# the token-shapes file's one path no earlier amendment names (test_verify.py), and the substrate move's eighteen
+# paths no earlier amendment names (page.py, the plugin's manifest in both places, the stub, substrate_split.py,
+# test_substrate.py and the twelve files of the three frozen v0 fixtures)
+_PRE = "~/.clawdbot/extensions/styxx-gate/"
+_FIX = "W:gate/tests/fixtures/"
 AMENDED_PATHS = {
     "W:gate/gate.py", "W:gate/gate_verify.py", "W:gate/README.md", "W:gate/README_exhibit.md",
     "W:gate/canary_plan.py", "W:gate/tests/test_trailer_rule.py", "W:gate/tests/test_prepared_guard.py",
     "W:gate/tests/test_canary_plan.py", "W:gate/tests/test_gate.py", "W:gate/tests/test_gate_round2.py",
     "W:skills/styxx-post/SKILL.md",
-    "W:gate/plugin/index.js", "~/.clawdbot/extensions/styxx-gate/index.js",
-    "W:gate/plugin/native_import.cjs", "~/.clawdbot/extensions/styxx-gate/native_import.cjs",
-    "W:gate/plugin/README.md", "~/.clawdbot/extensions/styxx-gate/README.md", "W:gate/plugin/tests/run_tests.mjs",
+    "W:gate/plugin/index.js", _PRE + "index.js",
+    "W:gate/plugin/native_import.cjs", _PRE + "native_import.cjs",
+    "W:gate/plugin/README.md", _PRE + "README.md", "W:gate/plugin/tests/run_tests.mjs",
     "W:gate/plugin/tests/f1_native_deliver_probe.mjs", "W:gate/plugin/tests/fakes/import_deliver_v040.mjs",
     # the token-shapes AMENDMENT (2026-11-04) re-locks six files; test_verify.py is the one no earlier amendment names
     "W:gate/tests/test_verify.py",
+    # the substrate AMENDMENT (2026-11-08): 26 rows, eighteen of them paths no earlier amendment names
+    "W:gate/page.py", "W:gate/plugin/clawdbot.plugin.json", _PRE + "clawdbot.plugin.json",
+    "W:gate/plugin/tests/stub_gate.py", "W:gate/substrate_split.py", "W:gate/tests/test_substrate.py",
+    *[_FIX + g + "/" + f for g in ("gate_v0_25d53fd6", "gate_v0_4416692c", "gate_v0_c17e3d06")
+      for f in ("gate.py", "gate_verify.py", "helpers/numerals.py", "ledger.py")],
 }
 AMENDMENT_NAME = re.compile(r"AMENDMENT_darkflobi_gate_([a-z0-9_]+?)_(\d{4}_\d{2}_\d{2})\.md")
 _COUNT_RULE = "AMENDMENT_darkflobi_gate_count_rule_2026_10_25.md"
 _POSTING_SKILL = "AMENDMENT_darkflobi_gate_posting_skill_2026_10_25.md"
 _ANCHOR_NATIVE = "AMENDMENT_darkflobi_gate_anchor_native_2026_10_26.md"
 _TOKEN_SHAPES = "AMENDMENT_darkflobi_gate_token_shapes_2026_11_04.md"
-# D9: the earlier amendment rows the token-shapes file supersedes, each declared once, (path, earlier file)
+_SUBSTRATE = "AMENDMENT_darkflobi_gate_substrate_2026_11_08.md"
+# D9: the earlier amendment rows each later file supersedes, each declared once, (path, earlier file). The token-shapes
+# file (2026-11-04) re-locks seven rows of the count-rule and posting-skill files; the substrate file (2026-11-08)
+# re-locks the rows in force when it is read: the token-shapes file's for gate.py and gate_verify.py (never the
+# count-rule or posting-skill rows those already replaced), the count rule's for the gate's README, the anchor-native
+# file's for the plugin's index.js, README.md and run_tests.mjs and for the installed index.js and README.md
 SUPERSESSIONS = {
     ("W:gate/gate.py", _COUNT_RULE), ("W:gate/gate.py", _POSTING_SKILL),
     ("W:gate/gate_verify.py", _COUNT_RULE), ("W:gate/gate_verify.py", _POSTING_SKILL),
     ("W:gate/tests/test_gate.py", _POSTING_SKILL), ("W:gate/tests/test_gate_round2.py", _POSTING_SKILL),
     ("W:gate/tests/test_trailer_rule.py", _COUNT_RULE),
 }
+SUPERSESSIONS_SUBSTRATE = {
+    ("W:gate/gate.py", _TOKEN_SHAPES), ("W:gate/gate_verify.py", _TOKEN_SHAPES),
+    ("W:gate/README.md", _COUNT_RULE),
+    ("W:gate/plugin/index.js", _ANCHOR_NATIVE), (_PRE + "index.js", _ANCHOR_NATIVE),
+    ("W:gate/plugin/README.md", _ANCHOR_NATIVE), (_PRE + "README.md", _ANCHOR_NATIVE),
+    ("W:gate/plugin/tests/run_tests.mjs", _ANCHOR_NATIVE),
+}
+SUPERSESSIONS_BY_FILE = {_TOKEN_SHAPES: SUPERSESSIONS, _SUBSTRATE: SUPERSESSIONS_SUBSTRATE}
 
 
 def _amendment_files() -> list:
@@ -313,14 +336,19 @@ def test_each_amendment_parses_to_the_lock_rows_its_table_states():
     rows, via, _read, clashes = lock.amendment_rows(files)
     assert clashes == [], clashes
     assert set(rows) == AMENDED_PATHS, sorted(set(rows) ^ AMENDED_PATHS)
-    # two files name gate.py with one digest; the token-shapes file supersedes both rows (D9), and its row is in force
-    assert via["W:gate/gate_verify.py"] == via["W:gate/gate.py"] == _TOKEN_SHAPES
-    without = lock.amendment_rows([f for f in files if f.name != _TOKEN_SHAPES])[1]
+    # two files name gate.py with one digest; the token-shapes file supersedes both rows (D9) and the substrate file
+    # supersedes the token-shapes file's row, so the substrate row is in force; without the substrate file the
+    # token-shapes file's; without both, the two files' shared digest
+    assert via["W:gate/gate_verify.py"] == via["W:gate/gate.py"] == _SUBSTRATE
+    without = lock.amendment_rows([f for f in files if f.name != _SUBSTRATE])[1]
+    assert without["W:gate/gate_verify.py"] == without["W:gate/gate.py"] == _TOKEN_SHAPES
+    without = lock.amendment_rows([f for f in files if f.name not in (_SUBSTRATE, _TOKEN_SHAPES)])[1]
     assert without["W:gate/gate.py"] == _COUNT_RULE + " + " + _POSTING_SKILL
     assert via["W:gate/canary_plan.py"] == "AMENDMENT_darkflobi_gate_canary_replan_2026_10_25.md"
     prereg = lock.parse_lock_rows(PREREG.read_text(encoding="utf-8"))
-    # 84 for the before-D0 files, and the anchor's four new paths (F-1: the helper in both places, two test files)
-    assert len(set(prereg) | set(rows)) == 88
+    # 84 for the before-D0 files, the anchor's four new paths (F-1: the helper in both places, two test files), and the
+    # substrate move's fourteen new paths (substrate_split.py, test_substrate.py, the twelve fixture files)
+    assert len(set(prereg) | set(rows)) == 102
     # the lock-rows AMENDMENT states the same counts for the five files it was written with, one row of its table each
     stated = dict(re.findall(r"^[ ]*\| `(AMENDMENT_darkflobi_gate_[a-z0-9_]+\.md)` \| (\d+) \|",
                              topics["lock_rows"].read_text(encoding="utf-8"), flags=re.M))
@@ -1113,9 +1141,10 @@ def test_rows_for_box_reads_every_file_of_the_installed_plugin_folder(tmp_path, 
 
 
 def test_a_later_amendment_supersedes_an_earlier_row_only_when_it_declares_it(tmp_path, capsys):
-    """D9 (AMENDMENT_darkflobi_gate_token_shapes_2026_11_04.md): the files are read by the date their names end with, then
-    by name; a later file's row for a path an earlier amendment names with another digest replaces it only when the later
-    file declares the supersession of each earlier row in force, by path, file and digest. Everything else exits 2."""
+    """D9 (built for the substrate AMENDMENT, carried to main by AMENDMENT_darkflobi_gate_token_shapes_2026_11_04.md): the
+    files are read by the date their names end with, then by name; a later file's row for a path an earlier amendment
+    names with another digest replaces it only when the later file declares the supersession of each earlier row in
+    force, by path, file and digest. Everything else exits 2."""
     lock = _load(LOCK_PY, "lock_hashes")
     w = tmp_path / "W"
     gate = w / "gate"
@@ -1196,8 +1225,18 @@ def test_a_later_amendment_supersedes_an_earlier_row_only_when_it_declares_it(tm
     # the order rests on the dates: a supersession between undated names is refused
     u1 = amend("AMENDMENT_u1.md", row(h1))
     assert clashes(u1, amend("AMENDMENT_u2.md", row(h2), dec(u1.name, h1)))
-    u1.unlink()
     (d / "AMENDMENT_u2.md").unlink()
+    # and so is one where only the earlier name is undated, though the later is dated (review 3 of the substrate
+    # build, its 3.5): the date is needed in both names; an undated name reads ahead of every dated one
+    r = lock.read_amendments([amend(b_name, row(h2), dec(u1.name, h1)), u1])
+    assert r["order"] == [u1.name, b_name] and r["supersessions"] == [], r
+    assert any("needs a date in both names (AMENDMENT_u1.md has none)" in c for c in r["clashes"]), r["clashes"]
+    assert r["rows"]["W:gate/gate.py"][0] == h1, "the undated row stays in force; nothing replaced it"
+    capsys.readouterr()
+    assert lock.check(doc, w, home, amendments=[u1, d / b_name]) == 2
+    assert "AMENDMENT_u1.md has none" in capsys.readouterr().err
+    u1.unlink()
+    (d / b_name).unlink()
     # one name given twice
     b = amend(b_name, row(h2), dec(a.name, h1))
     other = tmp_path / "elsewhere"
@@ -1223,37 +1262,78 @@ def test_a_later_amendment_supersedes_an_earlier_row_only_when_it_declares_it(tm
     out = capsys.readouterr().out
     assert out.count("SUPERSEDED   ") == 2 and f"via={c.name}" in out
     assert clashes(a, b, amend(c.name, row(h3), dec(a.name, h1)))
-
+    # the re-review of tests, 2026-11-02 (RR12): a declaration names the earlier row's value in any of the three forms
+    # ROW_RE reads a row in, a 40-hex pin and the not-built note among them
+    pin_a, pin_b = "a" * 40, "b" * 40
+    pa = amend("AMENDMENT_x_pa_2026_10_25.md", row(pin_a, "W:gate/pin.txt"), row(lock.NOT_BUILT, "W:gate/later.py"))
+    pb = amend("AMENDMENT_x_pb_2026_10_26.md", row(pin_b, "W:gate/pin.txt"), row(h2, "W:gate/later.py"),
+               dec(pa.name, pin_a, "W:gate/pin.txt"), dec(pa.name, lock.NOT_BUILT, "W:gate/later.py"))
+    r = lock.read_amendments([pb, pa])
+    assert r["clashes"] == [], r["clashes"]
+    assert sorted(r["supersessions"]) == sorted([("W:gate/pin.txt", pa.name, pin_a, pb.name, pin_b),
+                                                 ("W:gate/later.py", pa.name, lock.NOT_BUILT, pb.name, h2)])
+    pa.unlink()
+    pb.unlink()
+    # (RR11) the `AMENDMENT <name> rows <n> sha256` line hashes a file's LF bytes, whatever its line ends on disk (git
+    # checks the folder out with CRLF on this box): the digest is the blob's text, not the checkout's
+    lf = amend("AMENDMENT_x_lf_2026_10_28.md", row(h1, "W:gate/other.py"))
+    lf.write_bytes(lf.read_bytes().replace(b"\r\n", b"\n"))
+    crlf = d / "AMENDMENT_x_crlf_2026_10_28.md"
+    crlf.write_bytes(lf.read_bytes().replace(b"\n", b"\r\n"))
+    want = hashlib.sha256(lf.read_bytes()).hexdigest()
+    files = {n: (k, h) for n, k, h in lock.read_amendments([lf, crlf])["files"]}
+    assert b"\r\n" not in lf.read_bytes() and b"\r\n" in crlf.read_bytes()
+    assert files == {lf.name: (1, want), crlf.name: (1, want)}, files
+    capsys.readouterr()
+    lock.check(doc, w, home, amendments=[crlf])
+    assert f"AMENDMENT    {crlf.name}  rows 1  sha256 {want[:16]}" in capsys.readouterr().out
+    lf.unlink()
+    crlf.unlink()
 
 
 def test_the_folder_reads_in_date_order_and_each_supersession_is_declared(tmp_path):
-    """The folder's eight files, given in any order, read by date then name; the token-shapes file declares each of the
-    seven earlier rows it supersedes (D9), states the count, and without its declarations the folder clashes on five paths."""
+    """The folder's eight files, given in any order, read by date then name; the token-shapes file (2026-11-04) declares
+    each of the seven earlier rows it supersedes and the substrate file (2026-11-08) each of the eight rows in force when
+    it is read (D9), each states its count, and without a file's declarations the folder clashes on each of its paths."""
     lock = _load(LOCK_PY, "lock_hashes")
     files = _amendment_files()
     r = lock.read_amendments(list(reversed(files)))
     assert r["clashes"] == [], r["clashes"]
-    assert r["order"][-2:] == [_ANCHOR_NATIVE, _TOKEN_SHAPES], r["order"]
+    assert r["order"][-3:] == [_ANCHOR_NATIVE, _TOKEN_SHAPES, _SUBSTRATE], r["order"]
     assert r["order"] == sorted(r["order"], key=lambda n: (AMENDMENT_NAME.fullmatch(n).group(2), n))
-    got = {(p, e) for p, e, _old, later, _new in r["supersessions"]}
-    assert got == SUPERSESSIONS, sorted(got ^ SUPERSESSIONS)
-    assert all(later == _TOKEN_SHAPES for *_x, later, _new in r["supersessions"])
-    text = (FOLDER / _TOKEN_SHAPES).read_text(encoding="utf-8")
-    own = lock.parse_lock_rows(text)
-    for p, e, old, later, new in r["supersessions"]:
-        assert new == own[p][0] and old == lock.parse_lock_rows((FOLDER / e).read_text(encoding="utf-8"))[p][0]
-    decl = [ln for ln in text.splitlines() if lock.SUPERSEDES_LEAD.match(ln)]
-    assert len(decl) == len(SUPERSESSIONS) and all(lock.SUPERSEDES_RE.match(ln) for ln in decl)
-    stated = re.findall(r"^This file declares (\d+) supersessions? in `lock_hashes\.py`'s declaration form\.$", text,
-                        flags=re.M)
-    assert stated == [str(len(SUPERSESSIONS))], stated
-    # the same folder with the token-shapes file's declarations taken out: a CLASH on each of the five paths
-    bare = tmp_path / "bare"
-    bare.mkdir()
-    for f in files:
-        t = f.read_text(encoding="utf-8")
-        if f.name == _TOKEN_SHAPES:
-            t = "\n".join(ln for ln in t.splitlines() if not lock.SUPERSEDES_LEAD.match(ln)) + "\n"
-        (bare / f.name).write_bytes(t.encode("utf-8"))
-    cl = lock.read_amendments(sorted(bare.glob("AMENDMENT_*.md")))["clashes"]
-    assert len(cl) == len({p for p, _e in SUPERSESSIONS}) == 5, cl
+    got = {(p, e, later) for p, e, _old, later, _new in r["supersessions"]}
+    want = {(p, e, later) for later, sup in SUPERSESSIONS_BY_FILE.items() for p, e in sup}
+    assert got == want, sorted(got ^ want)
+    for later, sup in SUPERSESSIONS_BY_FILE.items():
+        text = (FOLDER / later).read_text(encoding="utf-8")
+        own = lock.parse_lock_rows(text)
+        for p, e, old, lat, new in r["supersessions"]:
+            if lat != later:
+                continue
+            assert new == own[p][0] and old == lock.parse_lock_rows((FOLDER / e).read_text(encoding="utf-8"))[p][0]
+        decl = [ln for ln in text.splitlines() if lock.SUPERSEDES_LEAD.match(ln)]
+        assert len(decl) == len(sup) and all(lock.SUPERSEDES_RE.match(ln) for ln in decl), later
+        stated = re.findall(r"^This file declares (\d+) supersessions? in `lock_hashes\.py`'s declaration form\.$", text,
+                            flags=re.M)
+        assert stated == [str(len(sup))], (later, stated)
+    # gate.py's rows form a chain: the token-shapes file replaced the count rule's and the posting skill's row, and the
+    # substrate file replaces the token-shapes file's, each link declared against the row in force when the file is read
+    chain = {(p, e, lat) for p, e, _o, lat, _n in r["supersessions"] if p == "W:gate/gate.py"}
+    assert chain == {("W:gate/gate.py", _COUNT_RULE, _TOKEN_SHAPES), ("W:gate/gate.py", _POSTING_SKILL, _TOKEN_SHAPES),
+                     ("W:gate/gate.py", _TOKEN_SHAPES, _SUBSTRATE)}
+    # the same folder with one file's declarations taken out: a CLASH on each of that file's paths. The substrate file's
+    # in the whole folder; the token-shapes file's in the folder without the substrate file, whose declarations name the
+    # token-shapes rows and would clash in their turn
+    for later, sup, leave_out in ((_SUBSTRATE, SUPERSESSIONS_SUBSTRATE, ()), (_TOKEN_SHAPES, SUPERSESSIONS, (_SUBSTRATE,))):
+        bare = tmp_path / ("bare_" + later[:-3])
+        bare.mkdir()
+        for f in files:
+            if f.name in leave_out:
+                continue
+            t = f.read_text(encoding="utf-8")
+            if f.name == later:
+                t = "\n".join(ln for ln in t.splitlines() if not lock.SUPERSEDES_LEAD.match(ln)) + "\n"
+            (bare / f.name).write_bytes(t.encode("utf-8"))
+        cl = lock.read_amendments(sorted(bare.glob("AMENDMENT_*.md")))["clashes"]
+        assert len(cl) == len({p for p, _e in sup}), (later, cl)
+    assert len({p for p, _e in SUPERSESSIONS}) == 5 and len({p for p, _e in SUPERSESSIONS_SUBSTRATE}) == 8
