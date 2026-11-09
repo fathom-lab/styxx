@@ -1,7 +1,7 @@
 {
  "amendment_sha256": "409d0808e7efddc2bfec90c6f4dfd745d6d971ef1d96bca06d7cc4df81e57b5f",
  "anchors": {
-  "anchor_lines_in_chain": 0,
+  "anchor_lines_in_chain": 1,
   "counts": {
    "anchors": 1,
    "bitcoin": 0,
@@ -25,17 +25,17 @@
   "n": 5,
   "size": 20
  },
- "built_at": "2026-11-08T23:32:57Z",
+ "built_at": "2026-11-09T05:01:01Z",
  "continuity": {
-  "added_bytes": 273330,
-  "extends": null,
-  "previous_commit": null
+  "added_bytes": 863,
+  "extends": true,
+  "previous_commit": "4e06ecc01196"
  },
  "decisions": {
   "allow": 41,
   "allow_marked": 64
  },
- "file_sha256": "40430e31d4f07df12a496edaaec040b4a50f4a39fe42f3f2c2bf68680dad6d68",
+ "file_sha256": "c999b33fc2a4d409b91a4824dc3fcd83693297ce4b2775cb89d5264ebff17976",
  "first_line": "a second chain under the protocol: every text in it was planted by a script from a sealed list; nothing here was sent to anyone.",
  "forms": 25,
  "forms_by_class": {
@@ -53,16 +53,22 @@
   "helpers/numerals.py": "6e56ef95554522b3ce10ae30cb1c9b33b111a412a96690dc32b48ac524b28f86",
   "ledger.py": "dfdecee0c37ca18327f074121d752ca51ed49231109172b31ce7ee67195b9e2e"
  },
- "gate_sha256_note": "seqs 1-106 carry 20192b8d6f0db61e… = the copy's *.py + helpers/*.py PLUS the LIVE plugin folder as it stood at 22:51Z (no STYXX_GATE_PLUGIN_DIR set; moves when the live plugin is redeployed). a change of this digest between two red lines is RED_AMENDMENT rule 6 (the plugin folder it folds in), dated, not a change of the gate code; the copy-only digest (no plugin folder) is 7c8bddf45e3a4fb1…",
+ "gate_sha256_note": "seqs 1-106 carry 20192b8d6f0db61e… = the copy's *.py + helpers/*.py PLUS the LIVE plugin folder as it stood at 22:51Z (no STYXX_GATE_PLUGIN_DIR set; moves when the live plugin is redeployed); seqs 107-107 carry 6344dec8b9ed1cc1… = the copy's *.py + helpers/*.py + the copy's own plugin folder (STYXX_GATE_PLUGIN_DIR=gate_copy/plugin, from RED_AMENDMENT 2026-11-08 rule 6 on). a change of this digest between two red lines is RED_AMENDMENT rule 6 (the plugin folder it folds in), dated, not a change of the gate code; the copy-only digest (no plugin folder) is 7c8bddf45e3a4fb1…",
  "gate_sha256_on_lines": [
   {
    "from_seq": 1,
    "gate_sha256": "20192b8d6f0db61e8eb8fcc9dffdb96ee9f09cf3cb390417beb7d8cdea302542",
    "is": "the copy's *.py + helpers/*.py PLUS the LIVE plugin folder as it stood at 22:51Z (no STYXX_GATE_PLUGIN_DIR set; moves when the live plugin is redeployed)",
    "to_seq": 106
+  },
+  {
+   "from_seq": 107,
+   "gate_sha256": "6344dec8b9ed1cc108595872d2821ba35cc8930a57cd3d0a4ae7925d5fa16993",
+   "is": "the copy's *.py + helpers/*.py + the copy's own plugin folder (STYXX_GATE_PLUGIN_DIR=gate_copy/plugin, from RED_AMENDMENT 2026-11-08 rule 6 on)",
+   "to_seq": 107
   }
  ],
- "head": "fc22d2ee00b17f7a21172288cb30758d2113d7abcd9d3357d387ad4797bfb019",
+ "head": "95194d08c31ea102fa0bb109e57c2ddda3383740adb8c6ea5340cb2067c33d91",
  "header_certifies": "one line per outbound attempt and per gate event, chained; hashes and verdicts, never message text or chat ids; timestamps are the gate's statement, not evidence of order",
  "header_created": "2026-11-08T22:51:20Z",
  "header_note": "the certifies sentence is ledger.py's fixed one, inherited by the copy; what this chain is stands in first_line",
@@ -70,8 +76,8 @@
  "kill_gates": {
   "a": {
    "hits": [],
-   "lines_checked": 106,
-   "published_digests": 1565
+   "lines_checked": 107,
+   "published_digests": 1587
   },
   "b": {
    "fires": true,
@@ -85,10 +91,11 @@
   }
  },
  "kinds": {
+  "anchor": 1,
   "send": 105,
   "started": 1
  },
- "lines": 106,
+ "lines": 107,
  "live_gate_sha256_at_build": {
   "gate.py": "40586451bf657f6bb6dac454dbdd37f1f375b0ae2bda23d7fd659f5a88908023",
   "gate_verify.py": "90164f2d121feac792701a7ada0734ce2ba6d03ad2ea60d534e4b99bb2d57949",
@@ -96,8 +103,8 @@
   "ledger.py": "dfdecee0c37ca18327f074121d752ca51ed49231109172b31ce7ee67195b9e2e"
  },
  "node_check": {
-  "head": "fc22d2ee00b17f7a21172288cb30758d2113d7abcd9d3357d387ad4797bfb019",
-  "lines": 106,
+  "head": "95194d08c31ea102fa0bb109e57c2ddda3383740adb8c6ea5340cb2067c33d91",
+  "lines": 107,
   "ok": true
  },
  "open_question_flags": {
