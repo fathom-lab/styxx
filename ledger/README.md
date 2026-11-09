@@ -38,7 +38,7 @@ check it without the page (node 20+, no packages):
 
 the anchor texts are the posts at https://t.me/DFledger, one per day at 00:00 new york time.
 
-withheld lines: 5 of 792 (seqs 129, 131, 136, 138, 351). each is an operator-dm line whose numeral-token field carried a
+withheld lines: 5 of 820 (seqs 129, 131, 136, 138, 351). each is an operator-dm line whose numeral-token field carried a
 ten-digit identifier typed in a message; the ledger's header promises never message text or chat ids, and
 the publisher keeps that promise where the gate's own field would not. a withheld line's digest is in
 `withheld.json` (re-derived by the lab over the full file, not by you); the chain is bridged through it,
@@ -56,13 +56,13 @@ them, that they are true, or that a text with no match was never sent; a copy re
 hash to the gate's bytes. the released texts are the agent's bytes as they left the gate, not statements of the
 lab; the publisher changes none of them, and a word in one of them is the agent's, not a claim of this page.
 
-per-line witness: 734 of 792 lines carry a bitcoin-attested proof (the block header's time minus the line's own
-timestamp, cumulative: within 1 h 0, within 6 h 2, within 24 h 6; over 24 h 728; none yet 58; of 792); 58 of 792
-are pending at the calendars (a receipt, no time a stranger can check); 0 of 792 store entries are orphans (a
-digest no longer in the chain; a rewrite leaves these); 0 seqs carry more than one entry_id in the store; 768 of
-792 lines were stamped retroactively (seen more than 1 h after their own timestamp, on 2026-11-08, 2026-11-09):
-their proofs pin them to that stamping day's blocks, not to their own days; stamp batches 5 for 792 lines (the
-tail's own clock, the lab's word). the kill gate is `witness/WITNESS_PREREG.md`, sha256
+per-line witness: 820 of 820 lines carry a bitcoin-attested proof (the block header's time minus the line's own
+timestamp, cumulative: within 1 h 33, within 6 h 88, within 24 h 92; over 24 h 728; none yet 0; of 820); 0 of
+820 are pending at the calendars (a receipt, no time a stranger can check); 0 of 820 store entries are orphans
+(a digest no longer in the chain; a rewrite leaves these); 0 seqs carry more than one entry_id in the store; 768
+of 820 lines were stamped retroactively (seen more than 1 h after their own timestamp, on 2026-11-08,
+2026-11-09): their proofs pin them to that stamping day's blocks, not to their own days; stamp batches 19 for
+820 lines (the tail's own clock, the lab's word). the kill gate is `witness/WITNESS_PREREG.md`, sha256
 43f315594728a7f21f9685cf19810b5303628198d0507c6eece8da51e716503b, sealed 2026-11-08T21:28:19.041Z in
 `witness/seal.jsonl` line 1; window not open: the standing task is not registered. a proof attests that the
 line's digest existed before its block; it does not show that every send got a line, nor the words, nor who
@@ -71,7 +71,7 @@ publisher checks each proof's opentimestamps magic and the digest it commits to 
 page parses no proof and asks no explorer. a published proof's bytes are replaced by their upgraded form on
 later builds; a proof's commitment never changes.
 
-brains: 28 of 372 published send lines carry the gateway's `subject_digest` (28 of 28 from the earliest one
+brains: 42 of 386 published send lines carry the gateway's `subject_digest` (42 of 42 from the earliest one
 carrying it, seq 736), 1 distinct digest(s), 0 digest change(s), 0 of 0 undeclared against the register (1
 row(s), sha256 3ee94b254026930cc817656471089092c1782b24efb782dcd0bc78b09bbcafbd). the digest is computed by the
 gate when it writes the line, over a manifest of the workspace path, the bootstrap files, three config subtrees
@@ -85,4 +85,4 @@ cannot show: that every send got a line (the census at the window's close reads 
 any message said. the gate runs in shadow: every line reads `required_present: false`; a would-refuse is what
 it would have blocked, and it blocked nothing. nothing here is signed and nothing here says a post is true.
 
-built 2026-11-09T05:30:03Z from head `3f9fe35a1b276ed3` (792 lines, 15 anchors through 2026-11-08); the gate's instrument pin `3437340b9e944644372e41d9fcab735d47e20fa0`.
+built 2026-11-09T14:37:21Z from head `d2e7de4d45dbe0be` (820 lines, 15 anchors through 2026-11-08); the gate's instrument pin `3437340b9e944644372e41d9fcab735d47e20fa0`.

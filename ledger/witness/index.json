@@ -1,29 +1,36 @@
 {
  "counts": {
   "bad_record_lines": 0,
-  "bitcoin": 734,
+  "bitcoin": 820,
   "bitcoin_mismatch": 0,
-  "entries_in_store": 792,
+  "entries_in_store": 820,
   "explorers_disagree": 0,
-  "pending": 58,
+  "pending": 0,
   "proof_found_without_record": 0,
-  "records": 1527,
+  "records": 1642,
   "stamp_failed": 0
  },
  "entries": {
   "004f816a7e55ed0d2cc9a4c7f8f6717e34b69d33bfb21c87815a5de9e4a8059e": {
+   "block": 975136,
+   "block_time": 1794201867,
    "calendars": [
     "https://alice.btc.calendar.opentimestamps.org",
     "https://bob.btc.calendar.opentimestamps.org",
     "https://btc.calendar.catallaxy.com",
     "https://finney.calendar.eternitywall.com"
    ],
+   "explorers": [
+    "https://blockstream.info/api",
+    "https://mempool.space/api"
+   ],
    "line_timestamp": "2026-11-09T00:21:12Z",
    "proof": "proofs/004f816a7e55ed0d2cc9a4c7f8f6717e34b69d33bfb21c87815a5de9e4a8059e.ots",
    "seen_at": "2026-11-09T05:00:09.543Z",
    "seq": 749,
    "stamped_at": "2026-11-09T05:00:11.207Z",
-   "status": "pending"
+   "status": "bitcoin",
+   "upgraded_at": "2026-11-09T06:50:04.445Z"
   },
   "00a53ae997d3c2ee35c0c858ab8098f9916bd76d9c2f9990dbe78ea84c3761b6": {
    "block": 975101,
@@ -213,6 +220,27 @@
    "stamped_at": "2026-11-08T21:01:34.091Z",
    "status": "bitcoin",
    "upgraded_at": "2026-11-08T23:06:25.144Z"
+  },
+  "03ae11f9d55510583fb72179a6d611fc4701e66f4faf4a1b3e62d871085e2e0c": {
+   "block": 975147,
+   "block_time": 1794211488,
+   "calendars": [
+    "https://alice.btc.calendar.opentimestamps.org",
+    "https://bob.btc.calendar.opentimestamps.org",
+    "https://btc.calendar.catallaxy.com",
+    "https://finney.calendar.eternitywall.com"
+   ],
+   "explorers": [
+    "https://blockstream.info/api",
+    "https://mempool.space/api"
+   ],
+   "line_timestamp": "2026-11-09T07:06:11Z",
+   "proof": "proofs/03ae11f9d55510583fb72179a6d611fc4701e66f4faf4a1b3e62d871085e2e0c.ots",
+   "seen_at": "2026-11-09T07:10:02.056Z",
+   "seq": 805,
+   "stamped_at": "2026-11-09T07:10:04.400Z",
+   "status": "bitcoin",
+   "upgraded_at": "2026-11-09T08:55:05.792Z"
   },
   "045dc91b847ad7c3480606c186fe3354e3ba68929c2917b1de09ed3731b7120f": {
    "block": 975101,
@@ -446,18 +474,25 @@
    "upgraded_at": "2026-11-08T23:06:25.144Z"
   },
   "07b82f09f68db3af9e0d5e556d4ad911820a06a1d9e92079f5cdcce080a1d471": {
+   "block": 975136,
+   "block_time": 1794201867,
    "calendars": [
     "https://alice.btc.calendar.opentimestamps.org",
     "https://bob.btc.calendar.opentimestamps.org",
     "https://btc.calendar.catallaxy.com",
     "https://finney.calendar.eternitywall.com"
    ],
+   "explorers": [
+    "https://blockstream.info/api",
+    "https://mempool.space/api"
+   ],
    "line_timestamp": "2026-11-09T04:36:14Z",
    "proof": "proofs/07b82f09f68db3af9e0d5e556d4ad911820a06a1d9e92079f5cdcce080a1d471.ots",
    "seen_at": "2026-11-09T05:00:09.543Z",
    "seq": 782,
    "stamped_at": "2026-11-09T05:00:11.207Z",
-   "status": "pending"
+   "status": "bitcoin",
+   "upgraded_at": "2026-11-09T06:50:04.445Z"
   },
   "07f23ee9a92036a9cd6db250632db266078edd45957bf83e92a897f722122ecf": {
    "block": 975101,
@@ -628,18 +663,25 @@
    "upgraded_at": "2026-11-08T23:06:25.144Z"
   },
   "095e35d9e5890fcf142c09d0d97ef30d3d827002ab6786c33590b01a277a2b71": {
+   "block": 975136,
+   "block_time": 1794201867,
    "calendars": [
     "https://alice.btc.calendar.opentimestamps.org",
     "https://bob.btc.calendar.opentimestamps.org",
     "https://btc.calendar.catallaxy.com",
     "https://finney.calendar.eternitywall.com"
    ],
+   "explorers": [
+    "https://blockstream.info/api",
+    "https://mempool.space/api"
+   ],
    "line_timestamp": "2026-11-09T05:00:03Z",
    "proof": "proofs/095e35d9e5890fcf142c09d0d97ef30d3d827002ab6786c33590b01a277a2b71.ots",
    "seen_at": "2026-11-09T05:00:09.543Z",
    "seq": 788,
    "stamped_at": "2026-11-09T05:00:11.207Z",
-   "status": "pending"
+   "status": "bitcoin",
+   "upgraded_at": "2026-11-09T06:50:04.445Z"
   },
   "09f423e6edca7b2063043b1dc1ff4cf40b863c25a6c037052f3981c4cce66078": {
    "block": 975101,
@@ -663,18 +705,25 @@
    "upgraded_at": "2026-11-08T23:06:25.144Z"
   },
   "0afbb791d28069d37cf92f6d06a70989490a7ab1e5453e2e169ec57bd5f14e8c": {
+   "block": 975136,
+   "block_time": 1794201867,
    "calendars": [
     "https://alice.btc.calendar.opentimestamps.org",
     "https://bob.btc.calendar.opentimestamps.org",
     "https://btc.calendar.catallaxy.com",
     "https://finney.calendar.eternitywall.com"
    ],
+   "explorers": [
+    "https://blockstream.info/api",
+    "https://mempool.space/api"
+   ],
    "line_timestamp": "2026-11-09T02:21:11Z",
    "proof": "proofs/0afbb791d28069d37cf92f6d06a70989490a7ab1e5453e2e169ec57bd5f14e8c.ots",
    "seen_at": "2026-11-09T05:00:09.543Z",
    "seq": 764,
    "stamped_at": "2026-11-09T05:00:11.207Z",
-   "status": "pending"
+   "status": "bitcoin",
+   "upgraded_at": "2026-11-09T06:50:04.445Z"
   },
   "0b15ec8dad5ce767f92ec0c0b89192396ddf16b705031dec1d2b68b2a4596f47": {
    "block": 975101,
@@ -908,18 +957,25 @@
    "upgraded_at": "2026-11-08T23:06:25.144Z"
   },
   "0e946cc7508f96a2f937411f39237bb480a2668375df307e25c1777e657885ec": {
+   "block": 975142,
+   "block_time": 1794207722,
    "calendars": [
     "https://alice.btc.calendar.opentimestamps.org",
     "https://bob.btc.calendar.opentimestamps.org",
     "https://btc.calendar.catallaxy.com",
     "https://finney.calendar.eternitywall.com"
    ],
+   "explorers": [
+    "https://blockstream.info/api",
+    "https://mempool.space/api"
+   ],
    "line_timestamp": "2026-11-09T05:21:13Z",
    "proof": "proofs/0e946cc7508f96a2f937411f39237bb480a2668375df307e25c1777e657885ec.ots",
    "seen_at": "2026-11-09T05:25:02.521Z",
    "seq": 791,
    "stamped_at": "2026-11-09T05:25:04.054Z",
-   "status": "pending"
+   "status": "bitcoin",
+   "upgraded_at": "2026-11-09T08:05:04.177Z"
   },
   "0e9ee6c0bafb2d41249d9b36be2d6f154ce389a0f1f415bd662059426bc7665d": {
    "block": 975101,
@@ -985,18 +1041,25 @@
    "upgraded_at": "2026-11-08T23:06:25.144Z"
   },
   "0f6ada0508f5caae56497c681c9a8296b2866873426e411332f56c34be88bc55": {
+   "block": 975136,
+   "block_time": 1794201867,
    "calendars": [
     "https://alice.btc.calendar.opentimestamps.org",
     "https://bob.btc.calendar.opentimestamps.org",
     "https://btc.calendar.catallaxy.com",
     "https://finney.calendar.eternitywall.com"
    ],
+   "explorers": [
+    "https://blockstream.info/api",
+    "https://mempool.space/api"
+   ],
    "line_timestamp": "2026-11-08T23:51:13Z",
    "proof": "proofs/0f6ada0508f5caae56497c681c9a8296b2866873426e411332f56c34be88bc55.ots",
    "seen_at": "2026-11-09T05:00:09.543Z",
    "seq": 744,
    "stamped_at": "2026-11-09T05:00:11.207Z",
-   "status": "pending"
+   "status": "bitcoin",
+   "upgraded_at": "2026-11-09T06:50:04.445Z"
   },
   "1034a9b61f948402b22ac33dde2d0dea98d667884efd419dc78cb88f7405e1c7": {
    "block": 975101,
@@ -1356,18 +1419,25 @@
    "upgraded_at": "2026-11-08T23:06:25.144Z"
   },
   "146c006f797874865e71fe9915b82647f9db1ff1dec0f8eafbfbad4a8deccf28": {
+   "block": 975136,
+   "block_time": 1794201867,
    "calendars": [
     "https://alice.btc.calendar.opentimestamps.org",
     "https://bob.btc.calendar.opentimestamps.org",
     "https://btc.calendar.catallaxy.com",
     "https://finney.calendar.eternitywall.com"
    ],
+   "explorers": [
+    "https://blockstream.info/api",
+    "https://mempool.space/api"
+   ],
    "line_timestamp": "2026-11-09T01:21:12Z",
    "proof": "proofs/146c006f797874865e71fe9915b82647f9db1ff1dec0f8eafbfbad4a8deccf28.ots",
    "seen_at": "2026-11-09T05:00:09.543Z",
    "seq": 757,
    "stamped_at": "2026-11-09T05:00:11.207Z",
-   "status": "pending"
+   "status": "bitcoin",
+   "upgraded_at": "2026-11-09T06:50:04.445Z"
   },
   "148911334355db757959a360683dcae690e08afb76738ce87edc9ab2c5cfafc5": {
    "block": 975101,
@@ -1454,18 +1524,25 @@
    "upgraded_at": "2026-11-08T23:06:25.144Z"
   },
   "159cecf29c4d874d41053d527e257ede1170f2031c7f186ae5687a94153506ad": {
+   "block": 975136,
+   "block_time": 1794201867,
    "calendars": [
     "https://alice.btc.calendar.opentimestamps.org",
     "https://bob.btc.calendar.opentimestamps.org",
     "https://btc.calendar.catallaxy.com",
     "https://finney.calendar.eternitywall.com"
    ],
+   "explorers": [
+    "https://blockstream.info/api",
+    "https://mempool.space/api"
+   ],
    "line_timestamp": "2026-11-09T04:51:15Z",
    "proof": "proofs/159cecf29c4d874d41053d527e257ede1170f2031c7f186ae5687a94153506ad.ots",
    "seen_at": "2026-11-09T05:00:09.543Z",
    "seq": 784,
    "stamped_at": "2026-11-09T05:00:11.207Z",
-   "status": "pending"
+   "status": "bitcoin",
+   "upgraded_at": "2026-11-09T06:50:04.445Z"
   },
   "16ae16d3028bb8775843e704e5ae226bc03cdefc94bb65a40102569293e1faf3": {
    "block": 975101,
@@ -1489,32 +1566,46 @@
    "upgraded_at": "2026-11-08T23:06:25.144Z"
   },
   "16f6fc19c41c9492728b0d4a9534a0181f15c750c8e64f2efe0daafd0cdee6e0": {
+   "block": 975137,
+   "block_time": 1794202178,
    "calendars": [
     "https://alice.btc.calendar.opentimestamps.org",
     "https://bob.btc.calendar.opentimestamps.org",
     "https://btc.calendar.catallaxy.com",
     "https://finney.calendar.eternitywall.com"
+   ],
+   "explorers": [
+    "https://blockstream.info/api",
+    "https://mempool.space/api"
    ],
    "line_timestamp": "2026-11-09T05:06:12Z",
    "proof": "proofs/16f6fc19c41c9492728b0d4a9534a0181f15c750c8e64f2efe0daafd0cdee6e0.ots",
    "seen_at": "2026-11-09T05:10:02.494Z",
    "seq": 790,
    "stamped_at": "2026-11-09T05:10:03.943Z",
-   "status": "pending"
+   "status": "bitcoin",
+   "upgraded_at": "2026-11-09T07:05:04.234Z"
   },
   "172166dab0c10b18ab65210ac9fdc8666512c015ad5ca5aa6510ac16eeba8e9f": {
+   "block": 975136,
+   "block_time": 1794201867,
    "calendars": [
     "https://alice.btc.calendar.opentimestamps.org",
     "https://bob.btc.calendar.opentimestamps.org",
     "https://btc.calendar.catallaxy.com",
     "https://finney.calendar.eternitywall.com"
    ],
+   "explorers": [
+    "https://blockstream.info/api",
+    "https://mempool.space/api"
+   ],
    "line_timestamp": "2026-11-09T02:51:14Z",
    "proof": "proofs/172166dab0c10b18ab65210ac9fdc8666512c015ad5ca5aa6510ac16eeba8e9f.ots",
    "seen_at": "2026-11-09T05:00:09.543Z",
    "seq": 769,
    "stamped_at": "2026-11-09T05:00:11.207Z",
-   "status": "pending"
+   "status": "bitcoin",
+   "upgraded_at": "2026-11-09T06:50:04.445Z"
   },
   "177c0bf8cd179e92b1929183f274e28033242f9d8e2ca65424e4a8b26357c8e8": {
    "block": 975101,
@@ -1601,18 +1692,25 @@
    "upgraded_at": "2026-11-08T23:06:25.144Z"
   },
   "17ed161388a389a25c1c62fc20c791059da23ff7c127826e326b0a09ac1042f8": {
+   "block": 975137,
+   "block_time": 1794202178,
    "calendars": [
     "https://alice.btc.calendar.opentimestamps.org",
     "https://bob.btc.calendar.opentimestamps.org",
     "https://btc.calendar.catallaxy.com",
     "https://finney.calendar.eternitywall.com"
    ],
+   "explorers": [
+    "https://blockstream.info/api",
+    "https://mempool.space/api"
+   ],
    "line_timestamp": "2026-11-09T05:06:12Z",
    "proof": "proofs/17ed161388a389a25c1c62fc20c791059da23ff7c127826e326b0a09ac1042f8.ots",
    "seen_at": "2026-11-09T05:10:02.494Z",
    "seq": 789,
    "stamped_at": "2026-11-09T05:10:03.943Z",
-   "status": "pending"
+   "status": "bitcoin",
+   "upgraded_at": "2026-11-09T07:05:04.234Z"
   },
   "18278ed04b0713088cd539290f6ff2fecc446fd0e6f0f570bf441db8066ddf8f": {
    "block": 975101,
@@ -1741,18 +1839,25 @@
    "upgraded_at": "2026-11-08T23:06:25.144Z"
   },
   "1ae5c8ae4ed7980ac9298095e32cab34c771f5dcd4bb0e783facb813c95ec803": {
+   "block": 975136,
+   "block_time": 1794201867,
    "calendars": [
     "https://alice.btc.calendar.opentimestamps.org",
     "https://bob.btc.calendar.opentimestamps.org",
     "https://btc.calendar.catallaxy.com",
     "https://finney.calendar.eternitywall.com"
    ],
+   "explorers": [
+    "https://blockstream.info/api",
+    "https://mempool.space/api"
+   ],
    "line_timestamp": "2026-11-09T03:21:12Z",
    "proof": "proofs/1ae5c8ae4ed7980ac9298095e32cab34c771f5dcd4bb0e783facb813c95ec803.ots",
    "seen_at": "2026-11-09T05:00:09.543Z",
    "seq": 773,
    "stamped_at": "2026-11-09T05:00:11.207Z",
-   "status": "pending"
+   "status": "bitcoin",
+   "upgraded_at": "2026-11-09T06:50:04.445Z"
   },
   "1b6a7c7b0eb80228c5480106f78c8209cfa3f88dc21fe0ced91bc7d17f6136e0": {
    "block": 975101,
@@ -2510,6 +2615,27 @@
    "status": "bitcoin",
    "upgraded_at": "2026-11-08T23:06:25.144Z"
   },
+  "28705dfae3406562266a70721790e95aa0c9e9fffb1e84b3ac7ef0d7332c8da0": {
+   "block": 975152,
+   "block_time": 1794214820,
+   "calendars": [
+    "https://alice.btc.calendar.opentimestamps.org",
+    "https://bob.btc.calendar.opentimestamps.org",
+    "https://btc.calendar.catallaxy.com",
+    "https://finney.calendar.eternitywall.com"
+   ],
+   "explorers": [
+    "https://blockstream.info/api",
+    "https://mempool.space/api"
+   ],
+   "line_timestamp": "2026-11-09T08:06:12Z",
+   "proof": "proofs/28705dfae3406562266a70721790e95aa0c9e9fffb1e84b3ac7ef0d7332c8da0.ots",
+   "seen_at": "2026-11-09T08:10:02.081Z",
+   "seq": 814,
+   "stamped_at": "2026-11-09T08:10:03.161Z",
+   "status": "bitcoin",
+   "upgraded_at": "2026-11-09T09:35:03.771Z"
+  },
   "2a13705d24a23c96a083f4aac0dfe24a044e78719ffe3a0974e531a534a09fee": {
    "block": 975101,
    "block_time": 1794174086,
@@ -2889,18 +3015,46 @@
    "upgraded_at": "2026-11-08T23:06:25.144Z"
   },
   "2fd8e29d533613571f69d1fd679dffc9f56f9508434ab6e95ed50ab4c2f9632c": {
+   "block": 975136,
+   "block_time": 1794201867,
    "calendars": [
     "https://alice.btc.calendar.opentimestamps.org",
     "https://bob.btc.calendar.opentimestamps.org",
     "https://btc.calendar.catallaxy.com",
     "https://finney.calendar.eternitywall.com"
    ],
+   "explorers": [
+    "https://blockstream.info/api",
+    "https://mempool.space/api"
+   ],
    "line_timestamp": "2026-11-09T04:36:16Z",
    "proof": "proofs/2fd8e29d533613571f69d1fd679dffc9f56f9508434ab6e95ed50ab4c2f9632c.ots",
    "seen_at": "2026-11-09T05:00:09.543Z",
    "seq": 783,
    "stamped_at": "2026-11-09T05:00:11.207Z",
-   "status": "pending"
+   "status": "bitcoin",
+   "upgraded_at": "2026-11-09T06:50:04.445Z"
+  },
+  "303e551306299d978b68aca19ae6d3efb5f1efbb286a605075df606c8b537c05": {
+   "block": 975152,
+   "block_time": 1794214820,
+   "calendars": [
+    "https://alice.btc.calendar.opentimestamps.org",
+    "https://bob.btc.calendar.opentimestamps.org",
+    "https://btc.calendar.catallaxy.com",
+    "https://finney.calendar.eternitywall.com"
+   ],
+   "explorers": [
+    "https://blockstream.info/api",
+    "https://mempool.space/api"
+   ],
+   "line_timestamp": "2026-11-09T08:21:11Z",
+   "proof": "proofs/303e551306299d978b68aca19ae6d3efb5f1efbb286a605075df606c8b537c05.ots",
+   "seen_at": "2026-11-09T08:25:02.069Z",
+   "seq": 815,
+   "stamped_at": "2026-11-09T08:25:03.748Z",
+   "status": "bitcoin",
+   "upgraded_at": "2026-11-09T09:35:03.771Z"
   },
   "30426191613e20171e6e523f73ec6470a84f0727adfd6f60c60ae0d64fff3fe0": {
    "block": 975101,
@@ -3281,18 +3435,25 @@
    "upgraded_at": "2026-11-08T23:06:25.144Z"
   },
   "330264c99701d2b42e4b9d96579041a8f74495d8b1da7608868dc9dad091cbc8": {
+   "block": 975136,
+   "block_time": 1794201867,
    "calendars": [
     "https://alice.btc.calendar.opentimestamps.org",
     "https://bob.btc.calendar.opentimestamps.org",
     "https://btc.calendar.catallaxy.com",
     "https://finney.calendar.eternitywall.com"
    ],
+   "explorers": [
+    "https://blockstream.info/api",
+    "https://mempool.space/api"
+   ],
    "line_timestamp": "2026-11-09T01:36:12Z",
    "proof": "proofs/330264c99701d2b42e4b9d96579041a8f74495d8b1da7608868dc9dad091cbc8.ots",
    "seen_at": "2026-11-09T05:00:09.543Z",
    "seq": 758,
    "stamped_at": "2026-11-09T05:00:11.207Z",
-   "status": "pending"
+   "status": "bitcoin",
+   "upgraded_at": "2026-11-09T06:50:04.445Z"
   },
   "335150043220127f754f1ad66060eaf2f33315ca455da5b1e69c9bc85c79503d": {
    "block": 975101,
@@ -3777,6 +3938,27 @@
    "status": "bitcoin",
    "upgraded_at": "2026-11-08T23:06:25.144Z"
   },
+  "3b22054543ca1ad177104494b27da52bc98aaee6fa0b3e94494ae49c5dea5ac7": {
+   "block": 975155,
+   "block_time": 1794216257,
+   "calendars": [
+    "https://alice.btc.calendar.opentimestamps.org",
+    "https://bob.btc.calendar.opentimestamps.org",
+    "https://btc.calendar.catallaxy.com",
+    "https://finney.calendar.eternitywall.com"
+   ],
+   "explorers": [
+    "https://blockstream.info/api",
+    "https://mempool.space/api"
+   ],
+   "line_timestamp": "2026-11-09T08:51:15Z",
+   "proof": "proofs/3b22054543ca1ad177104494b27da52bc98aaee6fa0b3e94494ae49c5dea5ac7.ots",
+   "seen_at": "2026-11-09T08:55:02.061Z",
+   "seq": 819,
+   "stamped_at": "2026-11-09T08:55:03.641Z",
+   "status": "bitcoin",
+   "upgraded_at": "2026-11-09T10:35:03.406Z"
+  },
   "3b288b80b4cec452353ba2129e8f43432c6a24728075a2615dfc16a3a12ec814": {
    "block": 975101,
    "block_time": 1794174086,
@@ -3881,6 +4063,27 @@
    "stamped_at": "2026-11-08T21:01:34.091Z",
    "status": "bitcoin",
    "upgraded_at": "2026-11-08T23:06:25.144Z"
+  },
+  "3c6ae9d04d895d18849b9f410cb978f38b84fac8ef19caa2117ada1df4bdbb72": {
+   "block": 975142,
+   "block_time": 1794207722,
+   "calendars": [
+    "https://alice.btc.calendar.opentimestamps.org",
+    "https://bob.btc.calendar.opentimestamps.org",
+    "https://btc.calendar.catallaxy.com",
+    "https://finney.calendar.eternitywall.com"
+   ],
+   "explorers": [
+    "https://blockstream.info/api",
+    "https://mempool.space/api"
+   ],
+   "line_timestamp": "2026-11-09T05:51:13Z",
+   "proof": "proofs/3c6ae9d04d895d18849b9f410cb978f38b84fac8ef19caa2117ada1df4bdbb72.ots",
+   "seen_at": "2026-11-09T05:55:02.202Z",
+   "seq": 795,
+   "stamped_at": "2026-11-09T05:55:12.308Z",
+   "status": "bitcoin",
+   "upgraded_at": "2026-11-09T08:05:04.177Z"
   },
   "3d227fead910d64b023f798fb2a37af4095b0c573b625d850788493eb9be6c82": {
    "block": 975101,
@@ -4051,18 +4254,25 @@
    "upgraded_at": "2026-11-08T23:06:25.144Z"
   },
   "3f9fe35a1b276ed34933b75cc0cd075383b8bd5e89ea93aec603cc62f116cf3b": {
+   "block": 975142,
+   "block_time": 1794207722,
    "calendars": [
     "https://alice.btc.calendar.opentimestamps.org",
     "https://bob.btc.calendar.opentimestamps.org",
     "https://btc.calendar.catallaxy.com",
     "https://finney.calendar.eternitywall.com"
    ],
+   "explorers": [
+    "https://blockstream.info/api",
+    "https://mempool.space/api"
+   ],
    "line_timestamp": "2026-11-09T05:21:13Z",
    "proof": "proofs/3f9fe35a1b276ed34933b75cc0cd075383b8bd5e89ea93aec603cc62f116cf3b.ots",
    "seen_at": "2026-11-09T05:25:02.521Z",
    "seq": 792,
    "stamped_at": "2026-11-09T05:25:04.054Z",
-   "status": "pending"
+   "status": "bitcoin",
+   "upgraded_at": "2026-11-09T08:05:04.177Z"
   },
   "4067cf4609a4269e78da47bd1c8345c0c67d6b345ff5e6bfc1877656337323f3": {
    "block": 975101,
@@ -4149,18 +4359,25 @@
    "upgraded_at": "2026-11-08T23:06:25.144Z"
   },
   "425e4a69d66a45f0002ac59a70a5b55116cdc73fbe5b4b93a39c6ba842684b2c": {
+   "block": 975136,
+   "block_time": 1794201867,
    "calendars": [
     "https://alice.btc.calendar.opentimestamps.org",
     "https://bob.btc.calendar.opentimestamps.org",
     "https://btc.calendar.catallaxy.com",
     "https://finney.calendar.eternitywall.com"
    ],
+   "explorers": [
+    "https://blockstream.info/api",
+    "https://mempool.space/api"
+   ],
    "line_timestamp": "2026-11-09T03:51:16Z",
    "proof": "proofs/425e4a69d66a45f0002ac59a70a5b55116cdc73fbe5b4b93a39c6ba842684b2c.ots",
    "seen_at": "2026-11-09T05:00:09.543Z",
    "seq": 777,
    "stamped_at": "2026-11-09T05:00:11.207Z",
-   "status": "pending"
+   "status": "bitcoin",
+   "upgraded_at": "2026-11-09T06:50:04.445Z"
   },
   "428e28f04c8f44ad7bed9c7af7300b667a8a38a58876e6482da81c3633549f3a": {
    "block": 975101,
@@ -4373,18 +4590,25 @@
    "upgraded_at": "2026-11-08T23:06:25.144Z"
   },
   "46b8c8750084431699ed87f7fd798ef9f05aead9dee47126bb4f3c6d25b5727a": {
+   "block": 975136,
+   "block_time": 1794201867,
    "calendars": [
     "https://alice.btc.calendar.opentimestamps.org",
     "https://bob.btc.calendar.opentimestamps.org",
     "https://btc.calendar.catallaxy.com",
     "https://finney.calendar.eternitywall.com"
    ],
+   "explorers": [
+    "https://blockstream.info/api",
+    "https://mempool.space/api"
+   ],
    "line_timestamp": "2026-11-09T02:06:11Z",
    "proof": "proofs/46b8c8750084431699ed87f7fd798ef9f05aead9dee47126bb4f3c6d25b5727a.ots",
    "seen_at": "2026-11-09T05:00:09.543Z",
    "seq": 762,
    "stamped_at": "2026-11-09T05:00:11.207Z",
-   "status": "pending"
+   "status": "bitcoin",
+   "upgraded_at": "2026-11-09T06:50:04.445Z"
   },
   "46ecf3b52cc9ab826180de08d3a942bf029a6fe7d174b0ac0ab469d4bfd27571": {
    "block": 975101,
@@ -4574,6 +4798,27 @@
    "stamped_at": "2026-11-08T21:01:34.091Z",
    "status": "bitcoin",
    "upgraded_at": "2026-11-08T23:06:25.144Z"
+  },
+  "4a0e317e5e1ff603a07d0da976dd7908d60076bbfb310eeb8a970a9264c008c7": {
+   "block": 975142,
+   "block_time": 1794207722,
+   "calendars": [
+    "https://alice.btc.calendar.opentimestamps.org",
+    "https://bob.btc.calendar.opentimestamps.org",
+    "https://btc.calendar.catallaxy.com",
+    "https://finney.calendar.eternitywall.com"
+   ],
+   "explorers": [
+    "https://blockstream.info/api",
+    "https://mempool.space/api"
+   ],
+   "line_timestamp": "2026-11-09T05:36:13Z",
+   "proof": "proofs/4a0e317e5e1ff603a07d0da976dd7908d60076bbfb310eeb8a970a9264c008c7.ots",
+   "seen_at": "2026-11-09T05:40:02.349Z",
+   "seq": 794,
+   "stamped_at": "2026-11-09T05:40:04.155Z",
+   "status": "bitcoin",
+   "upgraded_at": "2026-11-09T08:05:04.177Z"
   },
   "4a51470e78563b6849f35aeb0ed5cc9fb6a9af50364713c1d91b0317d165933c": {
    "block": 975101,
@@ -4785,6 +5030,27 @@
    "status": "bitcoin",
    "upgraded_at": "2026-11-08T23:06:25.144Z"
   },
+  "4e75a5c2f9b99280cafe6e65a0a5327fa645f5384230d5de6c5d0a12081f609a": {
+   "block": 975142,
+   "block_time": 1794207722,
+   "calendars": [
+    "https://alice.btc.calendar.opentimestamps.org",
+    "https://bob.btc.calendar.opentimestamps.org",
+    "https://btc.calendar.catallaxy.com",
+    "https://finney.calendar.eternitywall.com"
+   ],
+   "explorers": [
+    "https://blockstream.info/api",
+    "https://mempool.space/api"
+   ],
+   "line_timestamp": "2026-11-09T05:51:14Z",
+   "proof": "proofs/4e75a5c2f9b99280cafe6e65a0a5327fa645f5384230d5de6c5d0a12081f609a.ots",
+   "seen_at": "2026-11-09T05:55:02.202Z",
+   "seq": 796,
+   "stamped_at": "2026-11-09T05:55:12.308Z",
+   "status": "bitcoin",
+   "upgraded_at": "2026-11-09T08:05:04.177Z"
+  },
   "4e7c47ffe68ae8791c296a34382da72377936e2a633b5d287dc62a8dac3a23a4": {
    "block": 975101,
    "block_time": 1794174086,
@@ -4805,6 +5071,27 @@
    "stamped_at": "2026-11-08T21:01:34.091Z",
    "status": "bitcoin",
    "upgraded_at": "2026-11-08T23:06:25.144Z"
+  },
+  "4ef57fa1b7390a91e06da2c65a4dfe64f1110acd8f8a63023ab34f1dcaa66d66": {
+   "block": 975142,
+   "block_time": 1794207722,
+   "calendars": [
+    "https://alice.btc.calendar.opentimestamps.org",
+    "https://bob.btc.calendar.opentimestamps.org",
+    "https://btc.calendar.catallaxy.com",
+    "https://finney.calendar.eternitywall.com"
+   ],
+   "explorers": [
+    "https://blockstream.info/api",
+    "https://mempool.space/api"
+   ],
+   "line_timestamp": "2026-11-09T06:36:12Z",
+   "proof": "proofs/4ef57fa1b7390a91e06da2c65a4dfe64f1110acd8f8a63023ab34f1dcaa66d66.ots",
+   "seen_at": "2026-11-09T06:40:02.071Z",
+   "seq": 802,
+   "stamped_at": "2026-11-09T06:40:03.463Z",
+   "status": "bitcoin",
+   "upgraded_at": "2026-11-09T08:05:04.177Z"
   },
   "4f225d03aab6a82bef9c7d981ddeac53b72258156333fd26538b6998db6e496d": {
    "block": 975101,
@@ -4891,18 +5178,25 @@
    "upgraded_at": "2026-11-08T23:06:25.144Z"
   },
   "51496b3039f910a54e5d3bc14050ab94dd7e7d8dc86d1c07c9766e04a62f0452": {
+   "block": 975136,
+   "block_time": 1794201867,
    "calendars": [
     "https://alice.btc.calendar.opentimestamps.org",
     "https://bob.btc.calendar.opentimestamps.org",
     "https://btc.calendar.catallaxy.com",
     "https://finney.calendar.eternitywall.com"
    ],
+   "explorers": [
+    "https://blockstream.info/api",
+    "https://mempool.space/api"
+   ],
    "line_timestamp": "2026-11-09T00:06:12Z",
    "proof": "proofs/51496b3039f910a54e5d3bc14050ab94dd7e7d8dc86d1c07c9766e04a62f0452.ots",
    "seen_at": "2026-11-09T05:00:09.543Z",
    "seq": 747,
    "stamped_at": "2026-11-09T05:00:11.207Z",
-   "status": "pending"
+   "status": "bitcoin",
+   "upgraded_at": "2026-11-09T06:50:04.445Z"
   },
   "516cf453871550a0e6c4d0317080a8b3d65dcb6cb071addd1348f2e5c923f050": {
    "block": 975101,
@@ -4926,18 +5220,25 @@
    "upgraded_at": "2026-11-08T23:06:25.144Z"
   },
   "5181669aabf3db6a3abab1fd4ba48dee06744264e9fac67fcf40c969ac4d486d": {
+   "block": 975116,
+   "block_time": 1794184947,
    "calendars": [
     "https://alice.btc.calendar.opentimestamps.org",
     "https://bob.btc.calendar.opentimestamps.org",
     "https://btc.calendar.catallaxy.com",
     "https://finney.calendar.eternitywall.com"
    ],
+   "explorers": [
+    "https://blockstream.info/api",
+    "https://mempool.space/api"
+   ],
    "line_timestamp": "2026-11-08T22:56:59Z",
    "proof": "proofs/5181669aabf3db6a3abab1fd4ba48dee06744264e9fac67fcf40c969ac4d486d.ots",
    "seen_at": "2026-11-08T23:38:22.034Z",
    "seq": 737,
    "stamped_at": "2026-11-08T23:38:23.569Z",
-   "status": "pending"
+   "status": "bitcoin",
+   "upgraded_at": "2026-11-09T05:30:04.702Z"
   },
   "51b7f6ca935559022f8a0df4cf96228f3be16bc7731256f39c92febcfe1b6d6a": {
    "block": 975101,
@@ -5276,18 +5577,25 @@
    "upgraded_at": "2026-11-08T23:06:25.144Z"
   },
   "5b2b6e1f5e7bec89db2d3036d8cd83090effafe6cf9480fc82be7d44ac428e73": {
+   "block": 975136,
+   "block_time": 1794201867,
    "calendars": [
     "https://alice.btc.calendar.opentimestamps.org",
     "https://bob.btc.calendar.opentimestamps.org",
     "https://btc.calendar.catallaxy.com",
     "https://finney.calendar.eternitywall.com"
    ],
+   "explorers": [
+    "https://blockstream.info/api",
+    "https://mempool.space/api"
+   ],
    "line_timestamp": "2026-11-09T00:36:13Z",
    "proof": "proofs/5b2b6e1f5e7bec89db2d3036d8cd83090effafe6cf9480fc82be7d44ac428e73.ots",
    "seen_at": "2026-11-09T05:00:09.543Z",
    "seq": 751,
    "stamped_at": "2026-11-09T05:00:11.207Z",
-   "status": "pending"
+   "status": "bitcoin",
+   "upgraded_at": "2026-11-09T06:50:04.445Z"
   },
   "5bc7708c90719e983e26758f65b235d5cbff2e797391421d0047b2f55f09018d": {
    "block": 975101,
@@ -5436,6 +5744,27 @@
    "status": "bitcoin",
    "upgraded_at": "2026-11-08T23:06:25.144Z"
   },
+  "5d24ef39be52c7bb6777c6806c866b35e31086c2a8cb36aaf4f7797233e8d4af": {
+   "block": 975147,
+   "block_time": 1794211488,
+   "calendars": [
+    "https://alice.btc.calendar.opentimestamps.org",
+    "https://bob.btc.calendar.opentimestamps.org",
+    "https://btc.calendar.catallaxy.com",
+    "https://finney.calendar.eternitywall.com"
+   ],
+   "explorers": [
+    "https://blockstream.info/api",
+    "https://mempool.space/api"
+   ],
+   "line_timestamp": "2026-11-09T07:51:13Z",
+   "proof": "proofs/5d24ef39be52c7bb6777c6806c866b35e31086c2a8cb36aaf4f7797233e8d4af.ots",
+   "seen_at": "2026-11-09T07:55:02.053Z",
+   "seq": 812,
+   "stamped_at": "2026-11-09T07:55:03.482Z",
+   "status": "bitcoin",
+   "upgraded_at": "2026-11-09T08:55:05.792Z"
+  },
   "5d3b6c5843299428cb2afae9cdd31550f70098897a4faff88a9850280cf9e5ae": {
    "block": 975101,
    "block_time": 1794174086,
@@ -5479,18 +5808,25 @@
    "upgraded_at": "2026-11-08T23:06:25.144Z"
   },
   "5e562e5954d5cbf2eda9a5614201b68f4a226ed4f3a56b838bcb7e29401044e6": {
+   "block": 975136,
+   "block_time": 1794201867,
    "calendars": [
     "https://alice.btc.calendar.opentimestamps.org",
     "https://bob.btc.calendar.opentimestamps.org",
     "https://btc.calendar.catallaxy.com",
     "https://finney.calendar.eternitywall.com"
    ],
+   "explorers": [
+    "https://blockstream.info/api",
+    "https://mempool.space/api"
+   ],
    "line_timestamp": "2026-11-09T01:06:11Z",
    "proof": "proofs/5e562e5954d5cbf2eda9a5614201b68f4a226ed4f3a56b838bcb7e29401044e6.ots",
    "seen_at": "2026-11-09T05:00:09.543Z",
    "seq": 754,
    "stamped_at": "2026-11-09T05:00:11.207Z",
-   "status": "pending"
+   "status": "bitcoin",
+   "upgraded_at": "2026-11-09T06:50:04.445Z"
   },
   "5e95527503e28dd10b72ed88e1a999ae6a238bd954cc3ab55c86e06b82a006b4": {
    "block": 975101,
@@ -5787,18 +6123,25 @@
    "upgraded_at": "2026-11-08T23:06:25.144Z"
   },
   "61c8b59c989278668c60cfacff2ad636a974840ded28d601143602adc0eaac1b": {
+   "block": 975136,
+   "block_time": 1794201867,
    "calendars": [
     "https://alice.btc.calendar.opentimestamps.org",
     "https://bob.btc.calendar.opentimestamps.org",
     "https://btc.calendar.catallaxy.com",
     "https://finney.calendar.eternitywall.com"
    ],
+   "explorers": [
+    "https://blockstream.info/api",
+    "https://mempool.space/api"
+   ],
    "line_timestamp": "2026-11-09T01:06:12Z",
    "proof": "proofs/61c8b59c989278668c60cfacff2ad636a974840ded28d601143602adc0eaac1b.ots",
    "seen_at": "2026-11-09T05:00:09.543Z",
    "seq": 755,
    "stamped_at": "2026-11-09T05:00:11.207Z",
-   "status": "pending"
+   "status": "bitcoin",
+   "upgraded_at": "2026-11-09T06:50:04.445Z"
   },
   "62146af21ea81189dfb19f74fa94b3144385d280d03d6e893b688ada43fd3347": {
    "block": 975101,
@@ -5927,18 +6270,25 @@
    "upgraded_at": "2026-11-08T23:06:25.144Z"
   },
   "639e3ac3985b34db6218c5ac28ac879b1f79fd275d0063a068f6243c44f73cb6": {
+   "block": 975136,
+   "block_time": 1794201867,
    "calendars": [
     "https://alice.btc.calendar.opentimestamps.org",
     "https://bob.btc.calendar.opentimestamps.org",
     "https://btc.calendar.catallaxy.com",
     "https://finney.calendar.eternitywall.com"
    ],
+   "explorers": [
+    "https://blockstream.info/api",
+    "https://mempool.space/api"
+   ],
    "line_timestamp": "2026-11-09T04:06:12Z",
    "proof": "proofs/639e3ac3985b34db6218c5ac28ac879b1f79fd275d0063a068f6243c44f73cb6.ots",
    "seen_at": "2026-11-09T05:00:09.543Z",
    "seq": 779,
    "stamped_at": "2026-11-09T05:00:11.207Z",
-   "status": "pending"
+   "status": "bitcoin",
+   "upgraded_at": "2026-11-09T06:50:04.445Z"
   },
   "645b571cff7a6a605ff6016e1d7ef32c532366fe1610d99f49d06781baf03f14": {
    "block": 975101,
@@ -6803,6 +7153,27 @@
    "status": "bitcoin",
    "upgraded_at": "2026-11-08T23:06:25.144Z"
   },
+  "6f2c1bad5b73b23a4e46475f5261d10ff4e7ce0aefc2232a15c893f4c921d481": {
+   "block": 975152,
+   "block_time": 1794214820,
+   "calendars": [
+    "https://alice.btc.calendar.opentimestamps.org",
+    "https://bob.btc.calendar.opentimestamps.org",
+    "https://btc.calendar.catallaxy.com",
+    "https://finney.calendar.eternitywall.com"
+   ],
+   "explorers": [
+    "https://blockstream.info/api",
+    "https://mempool.space/api"
+   ],
+   "line_timestamp": "2026-11-09T08:36:12Z",
+   "proof": "proofs/6f2c1bad5b73b23a4e46475f5261d10ff4e7ce0aefc2232a15c893f4c921d481.ots",
+   "seen_at": "2026-11-09T08:40:02.103Z",
+   "seq": 818,
+   "stamped_at": "2026-11-09T08:40:03.680Z",
+   "status": "bitcoin",
+   "upgraded_at": "2026-11-09T09:35:03.771Z"
+  },
   "6fab5f31d0d8067f1bbdbae47f53dfccd4afe29496fee59b5ae6b5f31458f0da": {
    "block": 975101,
    "block_time": 1794174086,
@@ -6928,6 +7299,27 @@
    "stamped_at": "2026-11-08T21:01:34.091Z",
    "status": "bitcoin",
    "upgraded_at": "2026-11-08T23:06:25.144Z"
+  },
+  "7217c2034a3d2f51db2a89843839777f165c974fb3aefeffcde55d503e46281b": {
+   "block": 975142,
+   "block_time": 1794207722,
+   "calendars": [
+    "https://alice.btc.calendar.opentimestamps.org",
+    "https://bob.btc.calendar.opentimestamps.org",
+    "https://btc.calendar.catallaxy.com",
+    "https://finney.calendar.eternitywall.com"
+   ],
+   "explorers": [
+    "https://blockstream.info/api",
+    "https://mempool.space/api"
+   ],
+   "line_timestamp": "2026-11-09T06:06:12Z",
+   "proof": "proofs/7217c2034a3d2f51db2a89843839777f165c974fb3aefeffcde55d503e46281b.ots",
+   "seen_at": "2026-11-09T06:10:02.272Z",
+   "seq": 797,
+   "stamped_at": "2026-11-09T06:10:03.674Z",
+   "status": "bitcoin",
+   "upgraded_at": "2026-11-09T08:05:04.177Z"
   },
   "72bcbcf4e701bdcc3cf062b56eef3f0c3e2602a9d10710177e2397f8cd01734a": {
    "block": 975101,
@@ -7119,18 +7511,25 @@
    "upgraded_at": "2026-11-08T23:06:25.144Z"
   },
   "74fefd91c5810ddc66b8994af45b5603def066520dee3370a9faede24a57abb6": {
+   "block": 975136,
+   "block_time": 1794201867,
    "calendars": [
     "https://alice.btc.calendar.opentimestamps.org",
     "https://bob.btc.calendar.opentimestamps.org",
     "https://btc.calendar.catallaxy.com",
     "https://finney.calendar.eternitywall.com"
    ],
+   "explorers": [
+    "https://blockstream.info/api",
+    "https://mempool.space/api"
+   ],
    "line_timestamp": "2026-11-09T01:51:11Z",
    "proof": "proofs/74fefd91c5810ddc66b8994af45b5603def066520dee3370a9faede24a57abb6.ots",
    "seen_at": "2026-11-09T05:00:09.543Z",
    "seq": 760,
    "stamped_at": "2026-11-09T05:00:11.207Z",
-   "status": "pending"
+   "status": "bitcoin",
+   "upgraded_at": "2026-11-09T06:50:04.445Z"
   },
   "7520b08de22fcda968d1ff08b721201f78eb029ada7a95822b18832ec01492cb": {
    "block": 975101,
@@ -7219,18 +7618,25 @@
    "upgraded_at": "2026-11-08T23:06:25.144Z"
   },
   "7593208e30ce69973b4443f83048d72f6434925f138460e086fbb5434a94e16d": {
+   "block": 975136,
+   "block_time": 1794201867,
    "calendars": [
     "https://alice.btc.calendar.opentimestamps.org",
     "https://bob.btc.calendar.opentimestamps.org",
     "https://btc.calendar.catallaxy.com",
     "https://finney.calendar.eternitywall.com"
    ],
+   "explorers": [
+    "https://blockstream.info/api",
+    "https://mempool.space/api"
+   ],
    "line_timestamp": "2026-11-09T04:21:12Z",
    "proof": "proofs/7593208e30ce69973b4443f83048d72f6434925f138460e086fbb5434a94e16d.ots",
    "seen_at": "2026-11-09T05:00:09.543Z",
    "seq": 781,
    "stamped_at": "2026-11-09T05:00:11.207Z",
-   "status": "pending"
+   "status": "bitcoin",
+   "upgraded_at": "2026-11-09T06:50:04.445Z"
   },
   "7610485e5efe95c864f726cd11e8d8123837e5e77f8b2048b779db3071ec140e": {
    "block": 975101,
@@ -7380,18 +7786,25 @@
    "upgraded_at": "2026-11-08T23:06:25.144Z"
   },
   "79367877d83fe39220f0d34904cf7732756fa15b089b8ab65ca8498ac4d34c9b": {
+   "block": 975136,
+   "block_time": 1794201867,
    "calendars": [
     "https://alice.btc.calendar.opentimestamps.org",
     "https://bob.btc.calendar.opentimestamps.org",
     "https://btc.calendar.catallaxy.com",
     "https://finney.calendar.eternitywall.com"
    ],
+   "explorers": [
+    "https://blockstream.info/api",
+    "https://mempool.space/api"
+   ],
    "line_timestamp": "2026-11-09T00:51:12Z",
    "proof": "proofs/79367877d83fe39220f0d34904cf7732756fa15b089b8ab65ca8498ac4d34c9b.ots",
    "seen_at": "2026-11-09T05:00:09.543Z",
    "seq": 753,
    "stamped_at": "2026-11-09T05:00:11.207Z",
-   "status": "pending"
+   "status": "bitcoin",
+   "upgraded_at": "2026-11-09T06:50:04.445Z"
   },
   "794ec17a092243a669ef5d173f038fea05cf93a149ae5a9c5f9de7bcf6382786": {
    "block": 975101,
@@ -7413,6 +7826,27 @@
    "stamped_at": "2026-11-08T21:01:34.091Z",
    "status": "bitcoin",
    "upgraded_at": "2026-11-08T23:06:25.144Z"
+  },
+  "797ae32badf034f1147b304c357a00a3eb70878a92b546ac176d8156540b949e": {
+   "block": 975142,
+   "block_time": 1794207722,
+   "calendars": [
+    "https://alice.btc.calendar.opentimestamps.org",
+    "https://bob.btc.calendar.opentimestamps.org",
+    "https://btc.calendar.catallaxy.com",
+    "https://finney.calendar.eternitywall.com"
+   ],
+   "explorers": [
+    "https://blockstream.info/api",
+    "https://mempool.space/api"
+   ],
+   "line_timestamp": "2026-11-09T06:21:13Z",
+   "proof": "proofs/797ae32badf034f1147b304c357a00a3eb70878a92b546ac176d8156540b949e.ots",
+   "seen_at": "2026-11-09T06:25:02.395Z",
+   "seq": 800,
+   "stamped_at": "2026-11-09T06:25:03.720Z",
+   "status": "bitcoin",
+   "upgraded_at": "2026-11-09T08:05:04.177Z"
   },
   "7997b9e2fe162b155f2c1557eb06738ab2c104bae6a1a30edc3dd5494a90c543": {
    "block": 975101,
@@ -7436,18 +7870,25 @@
    "upgraded_at": "2026-11-08T23:06:25.144Z"
   },
   "79a6a372a3e7fbc5d865ebc9ef58d6a073220b6819e7b82980cf05ac4ce5d5fa": {
+   "block": 975136,
+   "block_time": 1794201867,
    "calendars": [
     "https://alice.btc.calendar.opentimestamps.org",
     "https://bob.btc.calendar.opentimestamps.org",
     "https://btc.calendar.catallaxy.com",
     "https://finney.calendar.eternitywall.com"
    ],
+   "explorers": [
+    "https://blockstream.info/api",
+    "https://mempool.space/api"
+   ],
    "line_timestamp": "2026-11-09T03:36:11Z",
    "proof": "proofs/79a6a372a3e7fbc5d865ebc9ef58d6a073220b6819e7b82980cf05ac4ce5d5fa.ots",
    "seen_at": "2026-11-09T05:00:09.543Z",
    "seq": 774,
    "stamped_at": "2026-11-09T05:00:11.207Z",
-   "status": "pending"
+   "status": "bitcoin",
+   "upgraded_at": "2026-11-09T06:50:04.445Z"
   },
   "79a7d9a64f3c0cabe7549c4ef6f7c0725814e2593d5ee516edcebe73832f5c9a": {
    "block": 975101,
@@ -7575,6 +8016,27 @@
    "status": "bitcoin",
    "upgraded_at": "2026-11-08T23:06:25.144Z"
   },
+  "7b8f6caaf5f0121685225e0c9736f60789fcda915034900ae5fdb043670e74dd": {
+   "block": 975152,
+   "block_time": 1794214820,
+   "calendars": [
+    "https://alice.btc.calendar.opentimestamps.org",
+    "https://bob.btc.calendar.opentimestamps.org",
+    "https://btc.calendar.catallaxy.com",
+    "https://finney.calendar.eternitywall.com"
+   ],
+   "explorers": [
+    "https://blockstream.info/api",
+    "https://mempool.space/api"
+   ],
+   "line_timestamp": "2026-11-09T08:21:12Z",
+   "proof": "proofs/7b8f6caaf5f0121685225e0c9736f60789fcda915034900ae5fdb043670e74dd.ots",
+   "seen_at": "2026-11-09T08:25:02.069Z",
+   "seq": 816,
+   "stamped_at": "2026-11-09T08:25:03.748Z",
+   "status": "bitcoin",
+   "upgraded_at": "2026-11-09T09:35:03.771Z"
+  },
   "7bfbc98359cadf61de28213347dfe3364e0e4f7539ce18775fb78e85c5a5d558": {
    "block": 975101,
    "block_time": 1794174086,
@@ -7595,6 +8057,27 @@
    "stamped_at": "2026-11-08T21:01:34.091Z",
    "status": "bitcoin",
    "upgraded_at": "2026-11-08T23:06:25.144Z"
+  },
+  "7bffa1e840ea7c52513e58222d6925f4787ea9eb3f0613da67d88bb346e82552": {
+   "block": 975147,
+   "block_time": 1794211488,
+   "calendars": [
+    "https://alice.btc.calendar.opentimestamps.org",
+    "https://bob.btc.calendar.opentimestamps.org",
+    "https://btc.calendar.catallaxy.com",
+    "https://finney.calendar.eternitywall.com"
+   ],
+   "explorers": [
+    "https://blockstream.info/api",
+    "https://mempool.space/api"
+   ],
+   "line_timestamp": "2026-11-09T07:06:12Z",
+   "proof": "proofs/7bffa1e840ea7c52513e58222d6925f4787ea9eb3f0613da67d88bb346e82552.ots",
+   "seen_at": "2026-11-09T07:10:02.056Z",
+   "seq": 806,
+   "stamped_at": "2026-11-09T07:10:04.400Z",
+   "status": "bitcoin",
+   "upgraded_at": "2026-11-09T08:55:05.792Z"
   },
   "7c14e8ef3c092be3c9f2eee741cdc5e08c76aa07f06d613517ef6d495452b566": {
    "block": 975101,
@@ -7702,18 +8185,25 @@
    "upgraded_at": "2026-11-08T23:06:25.144Z"
   },
   "7f20e569ee82a66e7efd4a9fb1802ccf7b6edc79824075e50bc3dc8b1956e31d": {
+   "block": 975136,
+   "block_time": 1794201867,
    "calendars": [
     "https://alice.btc.calendar.opentimestamps.org",
     "https://bob.btc.calendar.opentimestamps.org",
     "https://btc.calendar.catallaxy.com",
     "https://finney.calendar.eternitywall.com"
    ],
+   "explorers": [
+    "https://blockstream.info/api",
+    "https://mempool.space/api"
+   ],
    "line_timestamp": "2026-11-09T03:51:15Z",
    "proof": "proofs/7f20e569ee82a66e7efd4a9fb1802ccf7b6edc79824075e50bc3dc8b1956e31d.ots",
    "seen_at": "2026-11-09T05:00:09.543Z",
    "seq": 776,
    "stamped_at": "2026-11-09T05:00:11.207Z",
-   "status": "pending"
+   "status": "bitcoin",
+   "upgraded_at": "2026-11-09T06:50:04.445Z"
   },
   "7f6e9712346e379ea9a972552c9abd8cd8c8ade5ad4b8cd16b646b7283657d7f": {
    "block": 975101,
@@ -7925,6 +8415,27 @@
    "status": "bitcoin",
    "upgraded_at": "2026-11-08T23:06:25.144Z"
   },
+  "833032f66a6fa2031ac574ac91285566f842c4c9664c29ab602d8c2537ca229f": {
+   "block": 975142,
+   "block_time": 1794207722,
+   "calendars": [
+    "https://alice.btc.calendar.opentimestamps.org",
+    "https://bob.btc.calendar.opentimestamps.org",
+    "https://btc.calendar.catallaxy.com",
+    "https://finney.calendar.eternitywall.com"
+   ],
+   "explorers": [
+    "https://blockstream.info/api",
+    "https://mempool.space/api"
+   ],
+   "line_timestamp": "2026-11-09T05:36:12Z",
+   "proof": "proofs/833032f66a6fa2031ac574ac91285566f842c4c9664c29ab602d8c2537ca229f.ots",
+   "seen_at": "2026-11-09T05:40:02.349Z",
+   "seq": 793,
+   "stamped_at": "2026-11-09T05:40:04.155Z",
+   "status": "bitcoin",
+   "upgraded_at": "2026-11-09T08:05:04.177Z"
+  },
   "83576e8f3c0b8d20cf5f8f7c985322895277e0dc1a5d7377be58d4b016894e5c": {
    "block": 975101,
    "block_time": 1794174086,
@@ -7968,18 +8479,25 @@
    "upgraded_at": "2026-11-08T23:06:25.144Z"
   },
   "8364850bd3025b4b98cb93dfcac69b49544a3a0007bcb66613196cd3b17a7623": {
+   "block": 975116,
+   "block_time": 1794184947,
    "calendars": [
     "https://alice.btc.calendar.opentimestamps.org",
     "https://bob.btc.calendar.opentimestamps.org",
     "https://btc.calendar.catallaxy.com",
     "https://finney.calendar.eternitywall.com"
    ],
+   "explorers": [
+    "https://blockstream.info/api",
+    "https://mempool.space/api"
+   ],
    "line_timestamp": "2026-11-08T22:51:06Z",
    "proof": "proofs/8364850bd3025b4b98cb93dfcac69b49544a3a0007bcb66613196cd3b17a7623.ots",
    "seen_at": "2026-11-08T23:38:22.034Z",
    "seq": 735,
    "stamped_at": "2026-11-08T23:38:23.569Z",
-   "status": "pending"
+   "status": "bitcoin",
+   "upgraded_at": "2026-11-09T05:30:04.702Z"
   },
   "838bf245273c1d670be10d1982cb9477b59636e21a2abff46009395f4b7c3c1d": {
    "block": 975101,
@@ -8045,18 +8563,25 @@
    "upgraded_at": "2026-11-08T23:06:25.144Z"
   },
   "85f4a10b23981618d8ad3d61bedf52480335c6eaf2737c2fa79db940b658c7b9": {
+   "block": 975136,
+   "block_time": 1794201867,
    "calendars": [
     "https://alice.btc.calendar.opentimestamps.org",
     "https://bob.btc.calendar.opentimestamps.org",
     "https://btc.calendar.catallaxy.com",
     "https://finney.calendar.eternitywall.com"
    ],
+   "explorers": [
+    "https://blockstream.info/api",
+    "https://mempool.space/api"
+   ],
    "line_timestamp": "2026-11-09T04:06:11Z",
    "proof": "proofs/85f4a10b23981618d8ad3d61bedf52480335c6eaf2737c2fa79db940b658c7b9.ots",
    "seen_at": "2026-11-09T05:00:09.543Z",
    "seq": 778,
    "stamped_at": "2026-11-09T05:00:11.207Z",
-   "status": "pending"
+   "status": "bitcoin",
+   "upgraded_at": "2026-11-09T06:50:04.445Z"
   },
   "862bd1f96e31569d1cb030daa5c796918c34065bb4120c1fada3e9aa1d0de197": {
    "block": 975101,
@@ -8226,6 +8751,27 @@
    "status": "bitcoin",
    "upgraded_at": "2026-11-08T23:06:25.144Z"
   },
+  "87086f1ec21087e379c131c700af08b87b92b15f05090f104d0e186b92be27db": {
+   "block": 975152,
+   "block_time": 1794214820,
+   "calendars": [
+    "https://alice.btc.calendar.opentimestamps.org",
+    "https://bob.btc.calendar.opentimestamps.org",
+    "https://btc.calendar.catallaxy.com",
+    "https://finney.calendar.eternitywall.com"
+   ],
+   "explorers": [
+    "https://blockstream.info/api",
+    "https://mempool.space/api"
+   ],
+   "line_timestamp": "2026-11-09T08:06:12Z",
+   "proof": "proofs/87086f1ec21087e379c131c700af08b87b92b15f05090f104d0e186b92be27db.ots",
+   "seen_at": "2026-11-09T08:10:02.081Z",
+   "seq": 813,
+   "stamped_at": "2026-11-09T08:10:03.161Z",
+   "status": "bitcoin",
+   "upgraded_at": "2026-11-09T09:35:03.771Z"
+  },
   "8737dc56a2d0ad2e45f30d9b0d88914f30e900d67d3efea218d491363cfdc645": {
    "block": 975101,
    "block_time": 1794174086,
@@ -8374,18 +8920,25 @@
    "upgraded_at": "2026-11-08T23:06:25.144Z"
   },
   "8999276654775f0546697a549bbb62c98ef06bbaac252df59dc6537f4532d490": {
+   "block": 975136,
+   "block_time": 1794201867,
    "calendars": [
     "https://alice.btc.calendar.opentimestamps.org",
     "https://bob.btc.calendar.opentimestamps.org",
     "https://btc.calendar.catallaxy.com",
     "https://finney.calendar.eternitywall.com"
    ],
+   "explorers": [
+    "https://blockstream.info/api",
+    "https://mempool.space/api"
+   ],
    "line_timestamp": "2026-11-09T05:00:02Z",
    "proof": "proofs/8999276654775f0546697a549bbb62c98ef06bbaac252df59dc6537f4532d490.ots",
    "seen_at": "2026-11-09T05:00:09.543Z",
    "seq": 787,
    "stamped_at": "2026-11-09T05:00:11.207Z",
-   "status": "pending"
+   "status": "bitcoin",
+   "upgraded_at": "2026-11-09T06:50:04.445Z"
   },
   "8a3de24033d0a6ac6e0fb3843ffae7a8cb41166b07973443659ff9ec6c457587": {
    "block": 975101,
@@ -8493,18 +9046,25 @@
    "upgraded_at": "2026-11-08T23:06:25.144Z"
   },
   "8afd642915b2a397764041a424619b03888dd1f94532c55cf6fc9782628e2409": {
+   "block": 975116,
+   "block_time": 1794184947,
    "calendars": [
     "https://alice.btc.calendar.opentimestamps.org",
     "https://bob.btc.calendar.opentimestamps.org",
     "https://btc.calendar.catallaxy.com",
     "https://finney.calendar.eternitywall.com"
    ],
+   "explorers": [
+    "https://blockstream.info/api",
+    "https://mempool.space/api"
+   ],
    "line_timestamp": "2026-11-08T23:36:13Z",
    "proof": "proofs/8afd642915b2a397764041a424619b03888dd1f94532c55cf6fc9782628e2409.ots",
    "seen_at": "2026-11-08T23:38:22.034Z",
    "seq": 743,
    "stamped_at": "2026-11-08T23:38:23.569Z",
-   "status": "pending"
+   "status": "bitcoin",
+   "upgraded_at": "2026-11-09T05:30:04.702Z"
   },
   "8b158f3ed747c8f2489866ff31d8aae852323bae918fafba2c8ecdd583d65bef": {
    "block": 975101,
@@ -8549,18 +9109,25 @@
    "upgraded_at": "2026-11-08T23:06:25.144Z"
   },
   "8b7fee3d0b2149031924461361fe5ba06f27b91f73696d49eab2da355da8466f": {
+   "block": 975116,
+   "block_time": 1794184947,
    "calendars": [
     "https://alice.btc.calendar.opentimestamps.org",
     "https://bob.btc.calendar.opentimestamps.org",
     "https://btc.calendar.catallaxy.com",
     "https://finney.calendar.eternitywall.com"
    ],
+   "explorers": [
+    "https://blockstream.info/api",
+    "https://mempool.space/api"
+   ],
    "line_timestamp": "2026-11-08T23:21:12Z",
    "proof": "proofs/8b7fee3d0b2149031924461361fe5ba06f27b91f73696d49eab2da355da8466f.ots",
    "seen_at": "2026-11-08T23:38:22.034Z",
    "seq": 738,
    "stamped_at": "2026-11-08T23:38:23.569Z",
-   "status": "pending"
+   "status": "bitcoin",
+   "upgraded_at": "2026-11-09T05:30:04.702Z"
   },
   "8ba32d6da292ee6160a49c6bfe60f394f755274f3f387d38b8afc906ade221c6": {
    "block": 975101,
@@ -8689,18 +9256,25 @@
    "upgraded_at": "2026-11-08T23:06:25.144Z"
   },
   "8d972ec29e8c729b514cd93d45a9b42dbc25025c560904419479024c46bf2419": {
+   "block": 975136,
+   "block_time": 1794201867,
    "calendars": [
     "https://alice.btc.calendar.opentimestamps.org",
     "https://bob.btc.calendar.opentimestamps.org",
     "https://btc.calendar.catallaxy.com",
     "https://finney.calendar.eternitywall.com"
    ],
+   "explorers": [
+    "https://blockstream.info/api",
+    "https://mempool.space/api"
+   ],
    "line_timestamp": "2026-11-09T01:51:12Z",
    "proof": "proofs/8d972ec29e8c729b514cd93d45a9b42dbc25025c560904419479024c46bf2419.ots",
    "seen_at": "2026-11-09T05:00:09.543Z",
    "seq": 761,
    "stamped_at": "2026-11-09T05:00:11.207Z",
-   "status": "pending"
+   "status": "bitcoin",
+   "upgraded_at": "2026-11-09T06:50:04.445Z"
   },
   "8de6482556b195c75807cf527d72b91608a9e23d8cd48863cc550d79aa3f015a": {
    "block": 975101,
@@ -8724,18 +9298,25 @@
    "upgraded_at": "2026-11-08T23:06:25.144Z"
   },
   "8e2faf2178260fa8dc684d5d3aff220f3024f39ef8aa9a8cde3a0b92c5eee419": {
+   "block": 975136,
+   "block_time": 1794201867,
    "calendars": [
     "https://alice.btc.calendar.opentimestamps.org",
     "https://bob.btc.calendar.opentimestamps.org",
     "https://btc.calendar.catallaxy.com",
     "https://finney.calendar.eternitywall.com"
    ],
+   "explorers": [
+    "https://blockstream.info/api",
+    "https://mempool.space/api"
+   ],
    "line_timestamp": "2026-11-09T04:21:11Z",
    "proof": "proofs/8e2faf2178260fa8dc684d5d3aff220f3024f39ef8aa9a8cde3a0b92c5eee419.ots",
    "seen_at": "2026-11-09T05:00:09.543Z",
    "seq": 780,
    "stamped_at": "2026-11-09T05:00:11.207Z",
-   "status": "pending"
+   "status": "bitcoin",
+   "upgraded_at": "2026-11-09T06:50:04.445Z"
   },
   "8ef15aad294250b67f06d1aced0138df1a9dec811e38a8738ee1238775bb7e7c": {
    "block": 975101,
@@ -8843,18 +9424,25 @@
    "upgraded_at": "2026-11-08T23:06:25.144Z"
   },
   "904635453d43543e9720f6e404dbdfc0d321a68b60fb681f82a4e0bcdb205ab4": {
+   "block": 975136,
+   "block_time": 1794201867,
    "calendars": [
     "https://alice.btc.calendar.opentimestamps.org",
     "https://bob.btc.calendar.opentimestamps.org",
     "https://btc.calendar.catallaxy.com",
     "https://finney.calendar.eternitywall.com"
    ],
+   "explorers": [
+    "https://blockstream.info/api",
+    "https://mempool.space/api"
+   ],
    "line_timestamp": "2026-11-09T05:00:00Z",
    "proof": "proofs/904635453d43543e9720f6e404dbdfc0d321a68b60fb681f82a4e0bcdb205ab4.ots",
    "seen_at": "2026-11-09T05:00:09.543Z",
    "seq": 786,
    "stamped_at": "2026-11-09T05:00:11.207Z",
-   "status": "pending"
+   "status": "bitcoin",
+   "upgraded_at": "2026-11-09T06:50:04.445Z"
   },
   "905f98dae47c24812d3e84c09dbe66673b2b69270b9756f7ac66e14283bd6fbe": {
    "block": 975101,
@@ -8920,18 +9508,25 @@
    "upgraded_at": "2026-11-08T23:06:25.144Z"
   },
   "90cbe0a3c59cbc578c6cd633e3bcce1ceae090384dba32f280cf4c079e60a3d2": {
+   "block": 975136,
+   "block_time": 1794201867,
    "calendars": [
     "https://alice.btc.calendar.opentimestamps.org",
     "https://bob.btc.calendar.opentimestamps.org",
     "https://btc.calendar.catallaxy.com",
     "https://finney.calendar.eternitywall.com"
    ],
+   "explorers": [
+    "https://blockstream.info/api",
+    "https://mempool.space/api"
+   ],
    "line_timestamp": "2026-11-09T02:06:12Z",
    "proof": "proofs/90cbe0a3c59cbc578c6cd633e3bcce1ceae090384dba32f280cf4c079e60a3d2.ots",
    "seen_at": "2026-11-09T05:00:09.543Z",
    "seq": 763,
    "stamped_at": "2026-11-09T05:00:11.207Z",
-   "status": "pending"
+   "status": "bitcoin",
+   "upgraded_at": "2026-11-09T06:50:04.445Z"
   },
   "90dc9e0f2f102d2222a6cd1061a1a9dbc1e6d0fd9049e9f79393097a4ab739da": {
    "block": 975101,
@@ -9039,18 +9634,25 @@
    "upgraded_at": "2026-11-08T23:06:25.144Z"
   },
   "91825a7d4539098e94d794c35a6116e1940f8ca8aec32bd0c7cd3e7db4cf8a31": {
+   "block": 975136,
+   "block_time": 1794201867,
    "calendars": [
     "https://alice.btc.calendar.opentimestamps.org",
     "https://bob.btc.calendar.opentimestamps.org",
     "https://btc.calendar.catallaxy.com",
     "https://finney.calendar.eternitywall.com"
    ],
+   "explorers": [
+    "https://blockstream.info/api",
+    "https://mempool.space/api"
+   ],
    "line_timestamp": "2026-11-09T01:36:13Z",
    "proof": "proofs/91825a7d4539098e94d794c35a6116e1940f8ca8aec32bd0c7cd3e7db4cf8a31.ots",
    "seen_at": "2026-11-09T05:00:09.543Z",
    "seq": 759,
    "stamped_at": "2026-11-09T05:00:11.207Z",
-   "status": "pending"
+   "status": "bitcoin",
+   "upgraded_at": "2026-11-09T06:50:04.445Z"
   },
   "92cbfda84e3624e9ba3de429a6136038447a13aa522b282d08dffd84929d1147": {
    "block": 975101,
@@ -9515,18 +10117,25 @@
    "upgraded_at": "2026-11-08T23:06:25.144Z"
   },
   "9a080f22717c5561a6b384eb3484f7951c5ae7cca660402dc56afb2686b4ab5c": {
+   "block": 975116,
+   "block_time": 1794184947,
    "calendars": [
     "https://alice.btc.calendar.opentimestamps.org",
     "https://bob.btc.calendar.opentimestamps.org",
     "https://btc.calendar.catallaxy.com",
     "https://finney.calendar.eternitywall.com"
    ],
+   "explorers": [
+    "https://blockstream.info/api",
+    "https://mempool.space/api"
+   ],
    "line_timestamp": "2026-11-08T23:35:30Z",
    "proof": "proofs/9a080f22717c5561a6b384eb3484f7951c5ae7cca660402dc56afb2686b4ab5c.ots",
    "seen_at": "2026-11-08T23:38:22.034Z",
    "seq": 740,
    "stamped_at": "2026-11-08T23:38:23.569Z",
-   "status": "pending"
+   "status": "bitcoin",
+   "upgraded_at": "2026-11-09T05:30:04.702Z"
   },
   "9a15cfad7ef512c14f39b59f2bd7d9c9cb96a0b3ef55932fb043d73a40a48770": {
    "block": 975101,
@@ -9569,6 +10178,27 @@
    "stamped_at": "2026-11-08T21:01:34.091Z",
    "status": "bitcoin",
    "upgraded_at": "2026-11-08T23:06:25.144Z"
+  },
+  "9a85f68dfaff6da77ce404b2885262d2d5bc7847b98ba8391398bb8799e0f943": {
+   "block": 975143,
+   "block_time": 1794208125,
+   "calendars": [
+    "https://alice.btc.calendar.opentimestamps.org",
+    "https://bob.btc.calendar.opentimestamps.org",
+    "https://btc.calendar.catallaxy.com",
+    "https://finney.calendar.eternitywall.com"
+   ],
+   "explorers": [
+    "https://blockstream.info/api",
+    "https://mempool.space/api"
+   ],
+   "line_timestamp": "2026-11-09T06:51:13Z",
+   "proof": "proofs/9a85f68dfaff6da77ce404b2885262d2d5bc7847b98ba8391398bb8799e0f943.ots",
+   "seen_at": "2026-11-09T06:55:02.054Z",
+   "seq": 803,
+   "stamped_at": "2026-11-09T06:55:03.634Z",
+   "status": "bitcoin",
+   "upgraded_at": "2026-11-09T08:20:03.953Z"
   },
   "9ace1c3b9f45d01813dca689cd8ab9d319b1aa624a31f93421710f1ea7933748": {
    "block": 975101,
@@ -9634,18 +10264,25 @@
    "upgraded_at": "2026-11-08T23:06:25.144Z"
   },
   "9b24342af9a6242865eec933567ecd309b5273d90aefd8d68200e94835c9c1b2": {
+   "block": 975116,
+   "block_time": 1794184947,
    "calendars": [
     "https://alice.btc.calendar.opentimestamps.org",
     "https://bob.btc.calendar.opentimestamps.org",
     "https://btc.calendar.catallaxy.com",
     "https://finney.calendar.eternitywall.com"
    ],
+   "explorers": [
+    "https://blockstream.info/api",
+    "https://mempool.space/api"
+   ],
    "line_timestamp": "2026-11-08T22:56:58Z",
    "proof": "proofs/9b24342af9a6242865eec933567ecd309b5273d90aefd8d68200e94835c9c1b2.ots",
    "seen_at": "2026-11-08T23:38:22.034Z",
    "seq": 736,
    "stamped_at": "2026-11-08T23:38:23.569Z",
-   "status": "pending"
+   "status": "bitcoin",
+   "upgraded_at": "2026-11-09T05:30:04.702Z"
   },
   "9b306d714762281c58ca20667aebfbe01430660c1b5dd0c05cd5b027b7a9a411": {
    "block": 975101,
@@ -9710,6 +10347,27 @@
    "status": "bitcoin",
    "upgraded_at": "2026-11-08T23:06:25.144Z"
   },
+  "9bd25fc2f64328483e8da8ace83dc56aebae8dd1b4538e6a4a6d5390b35d9340": {
+   "block": 975147,
+   "block_time": 1794211488,
+   "calendars": [
+    "https://alice.btc.calendar.opentimestamps.org",
+    "https://bob.btc.calendar.opentimestamps.org",
+    "https://btc.calendar.catallaxy.com",
+    "https://finney.calendar.eternitywall.com"
+   ],
+   "explorers": [
+    "https://blockstream.info/api",
+    "https://mempool.space/api"
+   ],
+   "line_timestamp": "2026-11-09T07:21:12Z",
+   "proof": "proofs/9bd25fc2f64328483e8da8ace83dc56aebae8dd1b4538e6a4a6d5390b35d9340.ots",
+   "seen_at": "2026-11-09T07:25:02.043Z",
+   "seq": 808,
+   "stamped_at": "2026-11-09T07:25:03.423Z",
+   "status": "bitcoin",
+   "upgraded_at": "2026-11-09T08:55:05.792Z"
+  },
   "9c2220581d430c75459b4b6fb46244f711e5af2cbc56d5dfbcb9ecdfdb333b9c": {
    "block": 975101,
    "block_time": 1794174086,
@@ -9753,18 +10411,25 @@
    "upgraded_at": "2026-11-08T23:06:25.144Z"
   },
   "9d2dbe6dd8bf80026431820a13568140c3fbf6e2f11ae0a40801654e3ce19a43": {
+   "block": 975136,
+   "block_time": 1794201867,
    "calendars": [
     "https://alice.btc.calendar.opentimestamps.org",
     "https://bob.btc.calendar.opentimestamps.org",
     "https://btc.calendar.catallaxy.com",
     "https://finney.calendar.eternitywall.com"
    ],
+   "explorers": [
+    "https://blockstream.info/api",
+    "https://mempool.space/api"
+   ],
    "line_timestamp": "2026-11-09T03:06:11Z",
    "proof": "proofs/9d2dbe6dd8bf80026431820a13568140c3fbf6e2f11ae0a40801654e3ce19a43.ots",
    "seen_at": "2026-11-09T05:00:09.543Z",
    "seq": 770,
    "stamped_at": "2026-11-09T05:00:11.207Z",
-   "status": "pending"
+   "status": "bitcoin",
+   "upgraded_at": "2026-11-09T06:50:04.445Z"
   },
   "9d314f8de926735909df4ed005418ab184bdab953f3425789daf6e4c90131672": {
    "block": 975101,
@@ -9916,18 +10581,25 @@
    "upgraded_at": "2026-11-08T23:06:25.144Z"
   },
   "9fdfeda17e741672c1e06d2d0b9ebe1ad53818d20b8e44a93c40c55207931a79": {
+   "block": 975116,
+   "block_time": 1794184947,
    "calendars": [
     "https://alice.btc.calendar.opentimestamps.org",
     "https://bob.btc.calendar.opentimestamps.org",
     "https://btc.calendar.catallaxy.com",
     "https://finney.calendar.eternitywall.com"
    ],
+   "explorers": [
+    "https://blockstream.info/api",
+    "https://mempool.space/api"
+   ],
    "line_timestamp": "2026-11-08T23:35:31Z",
    "proof": "proofs/9fdfeda17e741672c1e06d2d0b9ebe1ad53818d20b8e44a93c40c55207931a79.ots",
    "seen_at": "2026-11-08T23:38:22.034Z",
    "seq": 741,
    "stamped_at": "2026-11-08T23:38:23.569Z",
-   "status": "pending"
+   "status": "bitcoin",
+   "upgraded_at": "2026-11-09T05:30:04.702Z"
   },
   "9ff38a337cdcb2e9cec19d3c183bc42e86a0f8046e28e24da8f0ffa292a5a893": {
    "block": 975101,
@@ -10077,18 +10749,25 @@
    "upgraded_at": "2026-11-08T23:06:25.144Z"
   },
   "a3712cd63c989d1ddf1e07bbf2beffa9624eef010d35e06be918845706efa819": {
+   "block": 975136,
+   "block_time": 1794201867,
    "calendars": [
     "https://alice.btc.calendar.opentimestamps.org",
     "https://bob.btc.calendar.opentimestamps.org",
     "https://btc.calendar.catallaxy.com",
     "https://finney.calendar.eternitywall.com"
    ],
+   "explorers": [
+    "https://blockstream.info/api",
+    "https://mempool.space/api"
+   ],
    "line_timestamp": "2026-11-09T00:36:13Z",
    "proof": "proofs/a3712cd63c989d1ddf1e07bbf2beffa9624eef010d35e06be918845706efa819.ots",
    "seen_at": "2026-11-09T05:00:09.543Z",
    "seq": 750,
    "stamped_at": "2026-11-09T05:00:11.207Z",
-   "status": "pending"
+   "status": "bitcoin",
+   "upgraded_at": "2026-11-09T06:50:04.445Z"
   },
   "a3800ffe9615c816ce6a8d9f782d53d749c7a908ce8a2bdca42ffa6713a69a49": {
    "block": 975101,
@@ -10258,6 +10937,27 @@
    "status": "bitcoin",
    "upgraded_at": "2026-11-08T23:06:25.144Z"
   },
+  "a5adb9e0c1b8d87e1e4564281c677e3ccc616810d087529d786aabe5ad0b3aea": {
+   "block": 975142,
+   "block_time": 1794207722,
+   "calendars": [
+    "https://alice.btc.calendar.opentimestamps.org",
+    "https://bob.btc.calendar.opentimestamps.org",
+    "https://btc.calendar.catallaxy.com",
+    "https://finney.calendar.eternitywall.com"
+   ],
+   "explorers": [
+    "https://blockstream.info/api",
+    "https://mempool.space/api"
+   ],
+   "line_timestamp": "2026-11-09T06:06:13Z",
+   "proof": "proofs/a5adb9e0c1b8d87e1e4564281c677e3ccc616810d087529d786aabe5ad0b3aea.ots",
+   "seen_at": "2026-11-09T06:10:02.272Z",
+   "seq": 798,
+   "stamped_at": "2026-11-09T06:10:03.674Z",
+   "status": "bitcoin",
+   "upgraded_at": "2026-11-09T08:05:04.177Z"
+  },
   "a5ecec5d95b0268393b7807cc1029241b4d897d48a4af435e158754cf54d2972": {
    "block": 975101,
    "block_time": 1794174086,
@@ -10363,6 +11063,27 @@
    "status": "bitcoin",
    "upgraded_at": "2026-11-08T23:06:25.144Z"
   },
+  "a7ff2ac3cf9d58ec2d256e0bf8b2489414729ca066a39e8dfa66c3789abc34b5": {
+   "block": 975147,
+   "block_time": 1794211488,
+   "calendars": [
+    "https://alice.btc.calendar.opentimestamps.org",
+    "https://bob.btc.calendar.opentimestamps.org",
+    "https://btc.calendar.catallaxy.com",
+    "https://finney.calendar.eternitywall.com"
+   ],
+   "explorers": [
+    "https://blockstream.info/api",
+    "https://mempool.space/api"
+   ],
+   "line_timestamp": "2026-11-09T07:51:13Z",
+   "proof": "proofs/a7ff2ac3cf9d58ec2d256e0bf8b2489414729ca066a39e8dfa66c3789abc34b5.ots",
+   "seen_at": "2026-11-09T07:55:02.053Z",
+   "seq": 811,
+   "stamped_at": "2026-11-09T07:55:03.482Z",
+   "status": "bitcoin",
+   "upgraded_at": "2026-11-09T08:55:05.792Z"
+  },
   "a8308c811f69e5ae69774fd8fa605d9f3e7fec9aea9dcfb39f8257640616423d": {
    "block": 975101,
    "block_time": 1794174086,
@@ -10406,18 +11127,25 @@
    "upgraded_at": "2026-11-08T23:06:25.144Z"
   },
   "a8c9e9ce008a34c6b79bb84aa949b7fef9b985a49ce4883b70d5380d75c24ff5": {
+   "block": 975116,
+   "block_time": 1794184947,
    "calendars": [
     "https://alice.btc.calendar.opentimestamps.org",
     "https://bob.btc.calendar.opentimestamps.org",
     "https://btc.calendar.catallaxy.com",
     "https://finney.calendar.eternitywall.com"
    ],
+   "explorers": [
+    "https://blockstream.info/api",
+    "https://mempool.space/api"
+   ],
    "line_timestamp": "2026-11-08T23:36:13Z",
    "proof": "proofs/a8c9e9ce008a34c6b79bb84aa949b7fef9b985a49ce4883b70d5380d75c24ff5.ots",
    "seen_at": "2026-11-08T23:38:22.034Z",
    "seq": 742,
    "stamped_at": "2026-11-08T23:38:23.569Z",
-   "status": "pending"
+   "status": "bitcoin",
+   "upgraded_at": "2026-11-09T05:30:04.702Z"
   },
   "a96778aceeff55ad6872a5d69ec23107a44ccffc619b2b9114c4b8af9f3ce3a8": {
    "block": 975101,
@@ -10544,6 +11272,27 @@
    "stamped_at": "2026-11-08T21:01:34.091Z",
    "status": "bitcoin",
    "upgraded_at": "2026-11-08T23:06:25.144Z"
+  },
+  "ab91f537718d37696de01bc78d09fdbd27871d009d4bf36ca8c86a41344f3eb5": {
+   "block": 975152,
+   "block_time": 1794214820,
+   "calendars": [
+    "https://alice.btc.calendar.opentimestamps.org",
+    "https://bob.btc.calendar.opentimestamps.org",
+    "https://btc.calendar.catallaxy.com",
+    "https://finney.calendar.eternitywall.com"
+   ],
+   "explorers": [
+    "https://blockstream.info/api",
+    "https://mempool.space/api"
+   ],
+   "line_timestamp": "2026-11-09T08:36:12Z",
+   "proof": "proofs/ab91f537718d37696de01bc78d09fdbd27871d009d4bf36ca8c86a41344f3eb5.ots",
+   "seen_at": "2026-11-09T08:40:02.103Z",
+   "seq": 817,
+   "stamped_at": "2026-11-09T08:40:03.680Z",
+   "status": "bitcoin",
+   "upgraded_at": "2026-11-09T09:35:03.771Z"
   },
   "aba155185ad9bf9b0f3cadca98d60ee421f63d9f051c58bcb437a8decc7562d3": {
    "block": 975101,
@@ -11262,18 +12011,25 @@
    "upgraded_at": "2026-11-08T23:06:25.144Z"
   },
   "b2c70807c1e2055c553fc418cfb57f6a956fb0d8cc371b861f33ab9c70cb7ccc": {
+   "block": 975136,
+   "block_time": 1794201867,
    "calendars": [
     "https://alice.btc.calendar.opentimestamps.org",
     "https://bob.btc.calendar.opentimestamps.org",
     "https://btc.calendar.catallaxy.com",
     "https://finney.calendar.eternitywall.com"
    ],
+   "explorers": [
+    "https://blockstream.info/api",
+    "https://mempool.space/api"
+   ],
    "line_timestamp": "2026-11-09T03:06:12Z",
    "proof": "proofs/b2c70807c1e2055c553fc418cfb57f6a956fb0d8cc371b861f33ab9c70cb7ccc.ots",
    "seen_at": "2026-11-09T05:00:09.543Z",
    "seq": 771,
    "stamped_at": "2026-11-09T05:00:11.207Z",
-   "status": "pending"
+   "status": "bitcoin",
+   "upgraded_at": "2026-11-09T06:50:04.445Z"
   },
   "b2d27993ab87dc868b5decc2711c32e1feb51daa712c5b2566e9c095a838bcd1": {
    "block": 975101,
@@ -11295,6 +12051,27 @@
    "stamped_at": "2026-11-08T21:01:34.091Z",
    "status": "bitcoin",
    "upgraded_at": "2026-11-08T23:06:25.144Z"
+  },
+  "b2e75dbddbeefe78e555fba2a227eced3a85ad45650fbaf16ed5ac2ffeb22c18": {
+   "block": 975147,
+   "block_time": 1794211488,
+   "calendars": [
+    "https://alice.btc.calendar.opentimestamps.org",
+    "https://bob.btc.calendar.opentimestamps.org",
+    "https://btc.calendar.catallaxy.com",
+    "https://finney.calendar.eternitywall.com"
+   ],
+   "explorers": [
+    "https://blockstream.info/api",
+    "https://mempool.space/api"
+   ],
+   "line_timestamp": "2026-11-09T07:36:11Z",
+   "proof": "proofs/b2e75dbddbeefe78e555fba2a227eced3a85ad45650fbaf16ed5ac2ffeb22c18.ots",
+   "seen_at": "2026-11-09T07:40:02.043Z",
+   "seq": 809,
+   "stamped_at": "2026-11-09T07:40:03.524Z",
+   "status": "bitcoin",
+   "upgraded_at": "2026-11-09T08:55:05.792Z"
   },
   "b335f5397fb28de006ee51d4f60a8a037a8b937365a0d2492954336670812cc9": {
    "block": 975101,
@@ -11695,6 +12472,27 @@
    "status": "bitcoin",
    "upgraded_at": "2026-11-08T23:06:25.144Z"
   },
+  "bbf7e2a5cb1826bf980be7e0bf07fce21aad6d2bdf4dd4f1c41f10167bd35fd3": {
+   "block": 975147,
+   "block_time": 1794211488,
+   "calendars": [
+    "https://alice.btc.calendar.opentimestamps.org",
+    "https://bob.btc.calendar.opentimestamps.org",
+    "https://btc.calendar.catallaxy.com",
+    "https://finney.calendar.eternitywall.com"
+   ],
+   "explorers": [
+    "https://blockstream.info/api",
+    "https://mempool.space/api"
+   ],
+   "line_timestamp": "2026-11-09T07:36:12Z",
+   "proof": "proofs/bbf7e2a5cb1826bf980be7e0bf07fce21aad6d2bdf4dd4f1c41f10167bd35fd3.ots",
+   "seen_at": "2026-11-09T07:40:02.043Z",
+   "seq": 810,
+   "stamped_at": "2026-11-09T07:40:03.524Z",
+   "status": "bitcoin",
+   "upgraded_at": "2026-11-09T08:55:05.792Z"
+  },
   "bc17abcc358e444671aa793c8da92e1115f8e2ef68ac176f17a281b0425e786a": {
    "block": 975101,
    "block_time": 1794174086,
@@ -11759,18 +12557,25 @@
    "upgraded_at": "2026-11-08T23:06:25.144Z"
   },
   "bc58325ccd504a11b190c22a8af18b899745a095d561dbbb534785a257a7177b": {
+   "block": 975136,
+   "block_time": 1794201867,
    "calendars": [
     "https://alice.btc.calendar.opentimestamps.org",
     "https://bob.btc.calendar.opentimestamps.org",
     "https://btc.calendar.catallaxy.com",
     "https://finney.calendar.eternitywall.com"
    ],
+   "explorers": [
+    "https://blockstream.info/api",
+    "https://mempool.space/api"
+   ],
    "line_timestamp": "2026-11-09T02:36:11Z",
    "proof": "proofs/bc58325ccd504a11b190c22a8af18b899745a095d561dbbb534785a257a7177b.ots",
    "seen_at": "2026-11-09T05:00:09.543Z",
    "seq": 766,
    "stamped_at": "2026-11-09T05:00:11.207Z",
-   "status": "pending"
+   "status": "bitcoin",
+   "upgraded_at": "2026-11-09T06:50:04.445Z"
   },
   "bc7bf4fc450f919018463fd057970cb0a7fbb2a594997823f2d24a30485b71dc": {
    "block": 975101,
@@ -11962,18 +12767,25 @@
    "upgraded_at": "2026-11-08T23:06:25.144Z"
   },
   "beb00ff9fe9619986a55f2c914de5c4706aa6bdb4a2bb502e44bceef32e13daf": {
+   "block": 975136,
+   "block_time": 1794201867,
    "calendars": [
     "https://alice.btc.calendar.opentimestamps.org",
     "https://bob.btc.calendar.opentimestamps.org",
     "https://btc.calendar.catallaxy.com",
     "https://finney.calendar.eternitywall.com"
    ],
+   "explorers": [
+    "https://blockstream.info/api",
+    "https://mempool.space/api"
+   ],
    "line_timestamp": "2026-11-09T00:51:11Z",
    "proof": "proofs/beb00ff9fe9619986a55f2c914de5c4706aa6bdb4a2bb502e44bceef32e13daf.ots",
    "seen_at": "2026-11-09T05:00:09.543Z",
    "seq": 752,
    "stamped_at": "2026-11-09T05:00:11.207Z",
-   "status": "pending"
+   "status": "bitcoin",
+   "upgraded_at": "2026-11-09T06:50:04.445Z"
   },
   "bf047a2a9ea21dcdb67c2094648969b471d4640999ea43ecf23491136c3a35fa": {
    "block": 975101,
@@ -12354,18 +13166,25 @@
    "upgraded_at": "2026-11-08T23:06:25.144Z"
   },
   "c37649aba538441ec20803b2c57f94e242ed1a4ba402bf2f1e5191c31a43c353": {
+   "block": 975136,
+   "block_time": 1794201867,
    "calendars": [
     "https://alice.btc.calendar.opentimestamps.org",
     "https://bob.btc.calendar.opentimestamps.org",
     "https://btc.calendar.catallaxy.com",
     "https://finney.calendar.eternitywall.com"
    ],
+   "explorers": [
+    "https://blockstream.info/api",
+    "https://mempool.space/api"
+   ],
    "line_timestamp": "2026-11-08T23:51:14Z",
    "proof": "proofs/c37649aba538441ec20803b2c57f94e242ed1a4ba402bf2f1e5191c31a43c353.ots",
    "seen_at": "2026-11-09T05:00:09.543Z",
    "seq": 745,
    "stamped_at": "2026-11-09T05:00:11.207Z",
-   "status": "pending"
+   "status": "bitcoin",
+   "upgraded_at": "2026-11-09T06:50:04.445Z"
   },
   "c3dff4bcc087845100b9de4e50a4fae3165e83f1f9bbdf365ffc5c6409f666cc": {
    "block": 975101,
@@ -12389,18 +13208,25 @@
    "upgraded_at": "2026-11-08T23:06:25.144Z"
   },
   "c3e8071aea74901a9460280ac870978e7df642d6056ef48e4c56a9a0ebe07761": {
+   "block": 975116,
+   "block_time": 1794184947,
    "calendars": [
     "https://alice.btc.calendar.opentimestamps.org",
     "https://bob.btc.calendar.opentimestamps.org",
     "https://btc.calendar.catallaxy.com",
     "https://finney.calendar.eternitywall.com"
    ],
+   "explorers": [
+    "https://blockstream.info/api",
+    "https://mempool.space/api"
+   ],
    "line_timestamp": "2026-11-08T23:21:13Z",
    "proof": "proofs/c3e8071aea74901a9460280ac870978e7df642d6056ef48e4c56a9a0ebe07761.ots",
    "seen_at": "2026-11-08T23:38:22.034Z",
    "seq": 739,
    "stamped_at": "2026-11-08T23:38:23.569Z",
-   "status": "pending"
+   "status": "bitcoin",
+   "upgraded_at": "2026-11-09T05:30:04.702Z"
   },
   "c3ed8a5c47b97b4787785b761ba41e582dbb06d92338e53d69d18c90b84e461e": {
    "block": 975101,
@@ -12655,32 +13481,46 @@
    "upgraded_at": "2026-11-08T23:06:25.144Z"
   },
   "c7f99e1c40776d749c46e83fa4287e5ac1c2bfb3aa3f407d5627a4867583c5f9": {
+   "block": 975136,
+   "block_time": 1794201867,
    "calendars": [
     "https://alice.btc.calendar.opentimestamps.org",
     "https://bob.btc.calendar.opentimestamps.org",
     "https://btc.calendar.catallaxy.com",
     "https://finney.calendar.eternitywall.com"
+   ],
+   "explorers": [
+    "https://blockstream.info/api",
+    "https://mempool.space/api"
    ],
    "line_timestamp": "2026-11-09T02:36:12Z",
    "proof": "proofs/c7f99e1c40776d749c46e83fa4287e5ac1c2bfb3aa3f407d5627a4867583c5f9.ots",
    "seen_at": "2026-11-09T05:00:09.543Z",
    "seq": 767,
    "stamped_at": "2026-11-09T05:00:11.207Z",
-   "status": "pending"
+   "status": "bitcoin",
+   "upgraded_at": "2026-11-09T06:50:04.445Z"
   },
   "c82b77407334b36136c74f1889c1eeea4c646ee4146248bb75d565fbc51dd7b6": {
+   "block": 975136,
+   "block_time": 1794201867,
    "calendars": [
     "https://alice.btc.calendar.opentimestamps.org",
     "https://bob.btc.calendar.opentimestamps.org",
     "https://btc.calendar.catallaxy.com",
     "https://finney.calendar.eternitywall.com"
    ],
+   "explorers": [
+    "https://blockstream.info/api",
+    "https://mempool.space/api"
+   ],
    "line_timestamp": "2026-11-09T02:51:13Z",
    "proof": "proofs/c82b77407334b36136c74f1889c1eeea4c646ee4146248bb75d565fbc51dd7b6.ots",
    "seen_at": "2026-11-09T05:00:09.543Z",
    "seq": 768,
    "stamped_at": "2026-11-09T05:00:11.207Z",
-   "status": "pending"
+   "status": "bitcoin",
+   "upgraded_at": "2026-11-09T06:50:04.445Z"
   },
   "c82d4c41d47ace7e8703a4f8f0c90b299213fcb78c2c0a2883c1b30e29472904": {
    "block": 975101,
@@ -12767,18 +13607,25 @@
    "upgraded_at": "2026-11-08T23:06:25.144Z"
   },
   "c8e113d465499e1a249ef62f94e1d0064286475dde88a02ce6bcfd901c57709f": {
+   "block": 975136,
+   "block_time": 1794201867,
    "calendars": [
     "https://alice.btc.calendar.opentimestamps.org",
     "https://bob.btc.calendar.opentimestamps.org",
     "https://btc.calendar.catallaxy.com",
     "https://finney.calendar.eternitywall.com"
    ],
+   "explorers": [
+    "https://blockstream.info/api",
+    "https://mempool.space/api"
+   ],
    "line_timestamp": "2026-11-09T01:21:11Z",
    "proof": "proofs/c8e113d465499e1a249ef62f94e1d0064286475dde88a02ce6bcfd901c57709f.ots",
    "seen_at": "2026-11-09T05:00:09.543Z",
    "seq": 756,
    "stamped_at": "2026-11-09T05:00:11.207Z",
-   "status": "pending"
+   "status": "bitcoin",
+   "upgraded_at": "2026-11-09T06:50:04.445Z"
   },
   "c93b89e86a1555f4723ee957e1144f4d0b7588a2eaece4d8680724d95cfab461": {
    "block": 975101,
@@ -12907,18 +13754,25 @@
    "upgraded_at": "2026-11-08T23:06:25.144Z"
   },
   "cb0f7ce016bfac0bc42fb25c79da8e6d5f5578e0d0ca2b611447e68ad0fe888b": {
+   "block": 975136,
+   "block_time": 1794201867,
    "calendars": [
     "https://alice.btc.calendar.opentimestamps.org",
     "https://bob.btc.calendar.opentimestamps.org",
     "https://btc.calendar.catallaxy.com",
     "https://finney.calendar.eternitywall.com"
    ],
+   "explorers": [
+    "https://blockstream.info/api",
+    "https://mempool.space/api"
+   ],
    "line_timestamp": "2026-11-09T02:21:12Z",
    "proof": "proofs/cb0f7ce016bfac0bc42fb25c79da8e6d5f5578e0d0ca2b611447e68ad0fe888b.ots",
    "seen_at": "2026-11-09T05:00:09.543Z",
    "seq": 765,
    "stamped_at": "2026-11-09T05:00:11.207Z",
-   "status": "pending"
+   "status": "bitcoin",
+   "upgraded_at": "2026-11-09T06:50:04.445Z"
   },
   "cb565990be1c4db2199f2e142d1fb68eeb400dd6bbd2ebf2468df5f393667983": {
    "block": 975101,
@@ -13423,6 +14277,27 @@
    "stamped_at": "2026-11-08T21:01:34.091Z",
    "status": "bitcoin",
    "upgraded_at": "2026-11-08T23:06:25.144Z"
+  },
+  "d2e7de4d45dbe0be922d244e58d17ccc8a43c67c33ceaa92c059f5cb8dc7fe3d": {
+   "block": 975155,
+   "block_time": 1794216257,
+   "calendars": [
+    "https://alice.btc.calendar.opentimestamps.org",
+    "https://bob.btc.calendar.opentimestamps.org",
+    "https://btc.calendar.catallaxy.com",
+    "https://finney.calendar.eternitywall.com"
+   ],
+   "explorers": [
+    "https://blockstream.info/api",
+    "https://mempool.space/api"
+   ],
+   "line_timestamp": "2026-11-09T08:51:15Z",
+   "proof": "proofs/d2e7de4d45dbe0be922d244e58d17ccc8a43c67c33ceaa92c059f5cb8dc7fe3d.ots",
+   "seen_at": "2026-11-09T08:55:02.061Z",
+   "seq": 820,
+   "stamped_at": "2026-11-09T08:55:03.641Z",
+   "status": "bitcoin",
+   "upgraded_at": "2026-11-09T10:35:03.406Z"
   },
   "d362d1e8d00898c7294e1de37a68b225a0aab6e78973cc535410785194455037": {
    "block": 975101,
@@ -14139,18 +15014,25 @@
    "upgraded_at": "2026-11-08T23:06:25.144Z"
   },
   "de104867b4739d0f189d99bd032121ce25df8aea0a82cbf025314f0edea68d32": {
+   "block": 975136,
+   "block_time": 1794201867,
    "calendars": [
     "https://alice.btc.calendar.opentimestamps.org",
     "https://bob.btc.calendar.opentimestamps.org",
     "https://btc.calendar.catallaxy.com",
     "https://finney.calendar.eternitywall.com"
    ],
+   "explorers": [
+    "https://blockstream.info/api",
+    "https://mempool.space/api"
+   ],
    "line_timestamp": "2026-11-09T03:21:11Z",
    "proof": "proofs/de104867b4739d0f189d99bd032121ce25df8aea0a82cbf025314f0edea68d32.ots",
    "seen_at": "2026-11-09T05:00:09.543Z",
    "seq": 772,
    "stamped_at": "2026-11-09T05:00:11.207Z",
-   "status": "pending"
+   "status": "bitcoin",
+   "upgraded_at": "2026-11-09T06:50:04.445Z"
   },
   "deb19f7d55b4d9a8620dfa8d31991bf01bb1c0169d1a9c039ff0ef5b7be51580": {
    "block": 975101,
@@ -14447,18 +15329,25 @@
    "upgraded_at": "2026-11-08T23:06:25.144Z"
   },
   "e31615aa64e53d92d6408cce80c823db208dce9cbadb2ca8fe251319c4e304be": {
+   "block": 975136,
+   "block_time": 1794201867,
    "calendars": [
     "https://alice.btc.calendar.opentimestamps.org",
     "https://bob.btc.calendar.opentimestamps.org",
     "https://btc.calendar.catallaxy.com",
     "https://finney.calendar.eternitywall.com"
    ],
+   "explorers": [
+    "https://blockstream.info/api",
+    "https://mempool.space/api"
+   ],
    "line_timestamp": "2026-11-09T00:21:11Z",
    "proof": "proofs/e31615aa64e53d92d6408cce80c823db208dce9cbadb2ca8fe251319c4e304be.ots",
    "seen_at": "2026-11-09T05:00:09.543Z",
    "seq": 748,
    "stamped_at": "2026-11-09T05:00:11.207Z",
-   "status": "pending"
+   "status": "bitcoin",
+   "upgraded_at": "2026-11-09T06:50:04.445Z"
   },
   "e3e51158d82cff536893f37445ee8f29128d1fe7c9a59a5c8aba7e8b351ad192": {
    "block": 975101,
@@ -14587,18 +15476,25 @@
    "upgraded_at": "2026-11-08T23:06:25.144Z"
   },
   "e4bc34094e964264c9940395a6fb1680e0c85e5bdefc91ef8e8e663b56b002f1": {
+   "block": 975136,
+   "block_time": 1794201867,
    "calendars": [
     "https://alice.btc.calendar.opentimestamps.org",
     "https://bob.btc.calendar.opentimestamps.org",
     "https://btc.calendar.catallaxy.com",
     "https://finney.calendar.eternitywall.com"
    ],
+   "explorers": [
+    "https://blockstream.info/api",
+    "https://mempool.space/api"
+   ],
    "line_timestamp": "2026-11-09T00:06:11Z",
    "proof": "proofs/e4bc34094e964264c9940395a6fb1680e0c85e5bdefc91ef8e8e663b56b002f1.ots",
    "seen_at": "2026-11-09T05:00:09.543Z",
    "seq": 746,
    "stamped_at": "2026-11-09T05:00:11.207Z",
-   "status": "pending"
+   "status": "bitcoin",
+   "upgraded_at": "2026-11-09T06:50:04.445Z"
   },
   "e50e010965b9e99f28e6bfaa170ed7b216801c69a7bddebc43cd1a9748299796": {
    "block": 975101,
@@ -14622,18 +15518,25 @@
    "upgraded_at": "2026-11-08T23:06:25.144Z"
   },
   "e51f74cdc204839594ff598abd9c7859efb691de05a32ec071b6fa8e0708dcaa": {
+   "block": 975136,
+   "block_time": 1794201867,
    "calendars": [
     "https://alice.btc.calendar.opentimestamps.org",
     "https://bob.btc.calendar.opentimestamps.org",
     "https://btc.calendar.catallaxy.com",
     "https://finney.calendar.eternitywall.com"
    ],
+   "explorers": [
+    "https://blockstream.info/api",
+    "https://mempool.space/api"
+   ],
    "line_timestamp": "2026-11-09T03:36:12Z",
    "proof": "proofs/e51f74cdc204839594ff598abd9c7859efb691de05a32ec071b6fa8e0708dcaa.ots",
    "seen_at": "2026-11-09T05:00:09.543Z",
    "seq": 775,
    "stamped_at": "2026-11-09T05:00:11.207Z",
-   "status": "pending"
+   "status": "bitcoin",
+   "upgraded_at": "2026-11-09T06:50:04.445Z"
   },
   "e53e3ccd55f634ec4f576ab1cf5d60a0945e74f457eadc44c08ba39125fd52a8": {
    "block": 975101,
@@ -14993,6 +15896,27 @@
    "stamped_at": "2026-11-08T21:01:34.091Z",
    "status": "bitcoin",
    "upgraded_at": "2026-11-08T23:06:25.144Z"
+  },
+  "ea11aa40a9820c5e68f9769fd56e6156f14764685e1b8a5fde247f12863fbf52": {
+   "block": 975142,
+   "block_time": 1794207722,
+   "calendars": [
+    "https://alice.btc.calendar.opentimestamps.org",
+    "https://bob.btc.calendar.opentimestamps.org",
+    "https://btc.calendar.catallaxy.com",
+    "https://finney.calendar.eternitywall.com"
+   ],
+   "explorers": [
+    "https://blockstream.info/api",
+    "https://mempool.space/api"
+   ],
+   "line_timestamp": "2026-11-09T06:21:12Z",
+   "proof": "proofs/ea11aa40a9820c5e68f9769fd56e6156f14764685e1b8a5fde247f12863fbf52.ots",
+   "seen_at": "2026-11-09T06:25:02.395Z",
+   "seq": 799,
+   "stamped_at": "2026-11-09T06:25:03.720Z",
+   "status": "bitcoin",
+   "upgraded_at": "2026-11-09T08:05:04.177Z"
   },
   "ea3286f1a5552ac62689ed8002cedaa1a393620c89aea3d2fef853d9744bddf7": {
    "block": 975101,
@@ -15540,19 +16464,47 @@
    "status": "bitcoin",
    "upgraded_at": "2026-11-08T23:06:25.144Z"
   },
-  "f2deddbc3dd7284436828e24d1024c28198575287ff4f55be96b9a280e361a73": {
+  "f2882392be2bbb3f2b645fe04252d2913afc98a4c39ccad9941f54a37cb764bd": {
+   "block": 975143,
+   "block_time": 1794208125,
    "calendars": [
     "https://alice.btc.calendar.opentimestamps.org",
     "https://bob.btc.calendar.opentimestamps.org",
     "https://btc.calendar.catallaxy.com",
     "https://finney.calendar.eternitywall.com"
    ],
+   "explorers": [
+    "https://blockstream.info/api",
+    "https://mempool.space/api"
+   ],
+   "line_timestamp": "2026-11-09T06:51:13Z",
+   "proof": "proofs/f2882392be2bbb3f2b645fe04252d2913afc98a4c39ccad9941f54a37cb764bd.ots",
+   "seen_at": "2026-11-09T06:55:02.054Z",
+   "seq": 804,
+   "stamped_at": "2026-11-09T06:55:03.634Z",
+   "status": "bitcoin",
+   "upgraded_at": "2026-11-09T08:20:03.953Z"
+  },
+  "f2deddbc3dd7284436828e24d1024c28198575287ff4f55be96b9a280e361a73": {
+   "block": 975136,
+   "block_time": 1794201867,
+   "calendars": [
+    "https://alice.btc.calendar.opentimestamps.org",
+    "https://bob.btc.calendar.opentimestamps.org",
+    "https://btc.calendar.catallaxy.com",
+    "https://finney.calendar.eternitywall.com"
+   ],
+   "explorers": [
+    "https://blockstream.info/api",
+    "https://mempool.space/api"
+   ],
    "line_timestamp": "2026-11-09T04:51:16Z",
    "proof": "proofs/f2deddbc3dd7284436828e24d1024c28198575287ff4f55be96b9a280e361a73.ots",
    "seen_at": "2026-11-09T05:00:09.543Z",
    "seq": 785,
    "stamped_at": "2026-11-09T05:00:11.207Z",
-   "status": "pending"
+   "status": "bitcoin",
+   "upgraded_at": "2026-11-09T06:50:04.445Z"
   },
   "f3352bacf825a2f66c6e42d91141f4431dd69b01809268da504bbadad2c07fc8": {
    "block": 975101,
@@ -15700,6 +16652,27 @@
    "stamped_at": "2026-11-08T21:01:34.091Z",
    "status": "bitcoin",
    "upgraded_at": "2026-11-08T23:06:25.144Z"
+  },
+  "f536d60b9a3e5a2faa4ea6152193d62a2d7eb85fbeeb73dbd6b5f93ab24111ba": {
+   "block": 975142,
+   "block_time": 1794207722,
+   "calendars": [
+    "https://alice.btc.calendar.opentimestamps.org",
+    "https://bob.btc.calendar.opentimestamps.org",
+    "https://btc.calendar.catallaxy.com",
+    "https://finney.calendar.eternitywall.com"
+   ],
+   "explorers": [
+    "https://blockstream.info/api",
+    "https://mempool.space/api"
+   ],
+   "line_timestamp": "2026-11-09T06:36:12Z",
+   "proof": "proofs/f536d60b9a3e5a2faa4ea6152193d62a2d7eb85fbeeb73dbd6b5f93ab24111ba.ots",
+   "seen_at": "2026-11-09T06:40:02.071Z",
+   "seq": 801,
+   "stamped_at": "2026-11-09T06:40:03.463Z",
+   "status": "bitcoin",
+   "upgraded_at": "2026-11-09T08:05:04.177Z"
   },
   "f5c20b5497e2cec1d3dcab36728bf96b4a99426eb4bdbc7dd227277030677e4a": {
    "block": 975101,
@@ -16246,37 +17219,65 @@
    "stamped_at": "2026-11-08T21:01:34.091Z",
    "status": "bitcoin",
    "upgraded_at": "2026-11-08T23:06:25.144Z"
-  }
- },
- "ledger": {
-  "bridged_withheld": 0,
-  "head": "3f9fe35a1b276ed34933b75cc0cd075383b8bd5e89ea93aec603cc62f116cf3b",
-  "lines_in_chain": 792,
-  "partial_tail_bytes": 0,
-  "published": 792
- },
- "orphans": {
-  "against_head": "3f9fe35a1b276ed34933b75cc0cd075383b8bd5e89ea93aec603cc62f116cf3b",
-  "computed_at": "2026-11-09T05:25:08.120Z",
-  "count": 0,
-  "entries": [],
-  "of": 792
- },
- "prereg": {
-  "file": "WITNESS_PREREG.md",
-  "moved": false,
-  "proof": {
+  },
+  "ff9337f4fc50ea138cf0fa20046035e97478004d6accaaa2ae44314fd2bbd842": {
+   "block": 975147,
+   "block_time": 1794211488,
    "calendars": [
     "https://alice.btc.calendar.opentimestamps.org",
     "https://bob.btc.calendar.opentimestamps.org",
     "https://btc.calendar.catallaxy.com",
     "https://finney.calendar.eternitywall.com"
    ],
+   "explorers": [
+    "https://blockstream.info/api",
+    "https://mempool.space/api"
+   ],
+   "line_timestamp": "2026-11-09T07:21:11Z",
+   "proof": "proofs/ff9337f4fc50ea138cf0fa20046035e97478004d6accaaa2ae44314fd2bbd842.ots",
+   "seen_at": "2026-11-09T07:25:02.043Z",
+   "seq": 807,
+   "stamped_at": "2026-11-09T07:25:03.423Z",
+   "status": "bitcoin",
+   "upgraded_at": "2026-11-09T08:55:05.792Z"
+  }
+ },
+ "ledger": {
+  "bridged_withheld": 0,
+  "head": "d2e7de4d45dbe0be922d244e58d17ccc8a43c67c33ceaa92c059f5cb8dc7fe3d",
+  "lines_in_chain": 820,
+  "partial_tail_bytes": 0,
+  "published": 820
+ },
+ "orphans": {
+  "against_head": "d2e7de4d45dbe0be922d244e58d17ccc8a43c67c33ceaa92c059f5cb8dc7fe3d",
+  "computed_at": "2026-11-09T14:35:05.028Z",
+  "count": 0,
+  "entries": [],
+  "of": 820
+ },
+ "prereg": {
+  "file": "WITNESS_PREREG.md",
+  "moved": false,
+  "proof": {
+   "block": 975108,
+   "block_time": 1794179175,
+   "calendars": [
+    "https://alice.btc.calendar.opentimestamps.org",
+    "https://bob.btc.calendar.opentimestamps.org",
+    "https://btc.calendar.catallaxy.com",
+    "https://finney.calendar.eternitywall.com"
+   ],
+   "explorers": [
+    "https://blockstream.info/api",
+    "https://mempool.space/api"
+   ],
    "proof": "proofs/prereg_43f315594728a7f21f9685cf19810b5303628198d0507c6eece8da51e716503b.ots",
    "seen_at": "2026-11-08T22:46:21.720Z",
    "sha256": "43f315594728a7f21f9685cf19810b5303628198d0507c6eece8da51e716503b",
    "stamped_at": "2026-11-08T22:46:23.745Z",
-   "status": "pending"
+   "status": "bitcoin",
+   "upgraded_at": "2026-11-09T05:30:04.702Z"
   },
   "seal_record": "seal.jsonl line 1",
   "sealed_at": "2026-11-08T21:28:19.041Z",
@@ -16285,7 +17286,7 @@
  },
  "publisher": {
   "checked": "the witness states on the page (status, block, header time) are the tail's store as copied at build; the publisher checks each proof's opentimestamps magic and the digest it commits to, and parses nothing further; the page parses no proof and asks no explorer; the proof file is what a stranger checks",
-  "copied_at": "2026-11-09T05:30:03Z",
+  "copied_at": "2026-11-09T14:37:21Z",
   "from": "the live witness store's index.json",
   "proofs": "a published proof's bytes are replaced by their upgraded form on a later build: the commitment never changes, the bytes grow when a calendar's bitcoin attestation is added; nothing under proofs/ is deleted",
   "why": "for a withheld seq the published witness carries no clock finer than the utc day on that seq's record: line_timestamp is blanked and seen_at, stamped_at, upgraded_at are cut to the day, in index.json and in the page's embed; the published ledger shows a withheld line's digest and day only, and the publisher keeps that here. runs.jsonl is the tail's run log, copied whole: a run that stamped a single line names, by the tail's clock, a moment within the batch window of that line's write",
@@ -16310,5 +17311,5 @@
   "seen_at": "the tail's clock (the lab's word)",
   "stamped_at": "the tail's clock when the calendars answered (the lab's word)"
  },
- "written_at": "2026-11-09T05:25:08.120Z"
+ "written_at": "2026-11-09T14:35:05.028Z"
 }

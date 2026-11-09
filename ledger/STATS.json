@@ -1,9 +1,9 @@
 {
  "anchor_stamps": {
   "anchors": 15,
-  "bitcoin": 14,
+  "bitcoin": 15,
   "mismatch": 0,
-  "pending": 1,
+  "pending": 0,
   "unknown": 0,
   "unstamped": 0
  },
@@ -11,7 +11,7 @@
  "anchors_in_chain": 15,
  "anchors_late": 0,
  "brains": {
-  "built_at": "2026-11-09T05:30:03Z",
+  "built_at": "2026-11-09T14:37:21Z",
   "changes": [],
   "changes_count": 0,
   "declared_changes": 0,
@@ -22,17 +22,17 @@
     "digest": "d88caaaa9c8824d6e505d263773a529b78c7a26dbf07a71d929297cbd528e539",
     "earliest_seq": 736,
     "earliest_ts": "2026-11-08T22:56:58Z",
-    "latest_seq": 791,
-    "latest_ts": "2026-11-09T05:21:13Z",
-    "lines": 28,
+    "latest_seq": 819,
+    "latest_ts": "2026-11-09T08:51:15Z",
+    "lines": 42,
     "retroactive_rows": 0
    }
   ],
   "distinct_digests": 1,
   "earliest_seq": 736,
   "earliest_ts": "2026-11-08T22:56:58Z",
-  "latest_seq": 791,
-  "latest_ts": "2026-11-09T05:21:13Z",
+  "latest_seq": 819,
+  "latest_ts": "2026-11-09T08:51:15Z",
   "per_day": [
    {
     "day": "2026-11-08",
@@ -50,30 +50,30 @@
     "digests": [
      {
       "digest": "d88caaaa9c8824d6e505d263773a529b78c7a26dbf07a71d929297cbd528e539",
-      "lines": 3
+      "lines": 17
      }
     ],
-    "send_lines": 3,
-    "send_lines_with_digest": 3
+    "send_lines": 17,
+    "send_lines_with_digest": 17
    }
   ],
   "register_rewrite_reason": null,
   "register_rows": 1,
   "register_sha256": "3ee94b254026930cc817656471089092c1782b24efb782dcd0bc78b09bbcafbd",
   "retroactive_changes": 0,
-  "send_lines": 372,
-  "send_lines_since_earliest_digest": 28,
-  "send_lines_with_digest": 28,
+  "send_lines": 386,
+  "send_lines_since_earliest_digest": 42,
+  "send_lines_with_digest": 42,
   "send_lines_withheld": 5,
   "send_lines_without_digest_since_earliest": 0,
   "undeclared_changes": 0
  },
- "built_at": "2026-11-09T05:30:03Z",
+ "built_at": "2026-11-09T14:37:21Z",
  "checkout_artefacts_restored": [],
  "continuity": {
-  "added_bytes": 0,
+  "added_bytes": 52270,
   "extends": true,
-  "previous_commit": "195b90349575"
+  "previous_commit": "c466450b6c32"
  },
  "days": [
   {
@@ -256,7 +256,7 @@
    "allow": 1,
    "anchor_head_seq": null,
    "day": "2026-11-09",
-   "dm": 2,
+   "dm": 16,
    "marked": 0,
    "numerals_bound": 0,
    "numerals_total": 0,
@@ -265,7 +265,7 @@
   }
  ],
  "first_timestamp": "2026-10-24T15:09:56Z",
- "full_file_sha256": "908fc25148c749f39aab514b6575ba8b9526f7989b48715867efc4e04e312035",
+ "full_file_sha256": "3b699a0405093227cc614cfb9f4d7cc39be00685909a6bbd45e14daedd27f535",
  "gate_sha256_stretches": [
   {
    "first_seq": 1,
@@ -295,25 +295,25 @@
   {
    "first_seq": 735,
    "gate_sha256": "7249a8f86a586ae0e6ebb8b3d362f2cb1820c61e0c57f110c09b51e5ed149962",
-   "last_seq": 792
+   "last_seq": 820
   }
  ],
  "gate_unavailable": 0,
- "head": "3f9fe35a1b276ed34933b75cc0cd075383b8bd5e89ea93aec603cc62f116cf3b",
+ "head": "d2e7de4d45dbe0be922d244e58d17ccc8a43c67c33ceaa92c059f5cb8dc7fe3d",
  "kinds": {
   "anchor": 15,
-  "delivered": 377,
-  "send": 377,
+  "delivered": 391,
+  "send": 391,
   "started": 23
  },
  "last_anchor_date": "2026-11-08",
  "last_anchor_head_seq": 785,
- "last_timestamp": "2026-11-09T05:21:13Z",
- "lines": 792,
- "lines_after_last_anchor": 7,
+ "last_timestamp": "2026-11-09T08:51:15Z",
+ "lines": 820,
+ "lines_after_last_anchor": 35,
  "numerals_public_bound": 4,
  "numerals_public_total": 17,
- "operator_dm_lines": 323,
+ "operator_dm_lines": 337,
  "pin": "3437340b9e944644372e41d9fcab735d47e20fa0",
  "public_allow": 48,
  "public_marked": 5,
@@ -350,8 +350,8 @@
   ]
  },
  "public_would_refuse": 1,
- "published_file_sha256": "20f6d62058a3c1950052271f2b3dc24f3b59a49cbf85693810148225e3514b69",
- "published_lines": 787,
+ "published_file_sha256": "f5c2171cf64d20cc5e79f63debff163499c9ef0dfb40daed6bf155d3367873de",
+ "published_lines": 815,
  "required_present_true": 0,
  "withheld": {
   "count": 5,
@@ -368,12 +368,12 @@
  "withheld_lines": 5,
  "witness": {
   "bitcoin": {
-   "count": 734,
-   "of": 792
+   "count": 820,
+   "of": 820
   },
   "bitcoin_mismatch": {
    "count": 0,
-   "of": 792
+   "of": 820
   },
   "dup_seqs": {
    "count": 0,
@@ -381,85 +381,85 @@
   },
   "explorers_disagree": {
    "count": 0,
-   "of": 792
+   "of": 820
   },
-  "lines": 792,
+  "lines": 820,
   "no_record": {
    "count": 0,
-   "of": 792
+   "of": 820
   },
   "orphans": {
    "count": 0,
    "entries": [],
-   "of": 792
+   "of": 820
   },
   "outside_latency": {
-   "attested": 734,
+   "attested": 820,
    "buckets": "cumulative",
-   "median_s": 378839.5,
+   "median_s": 374277.0,
    "negative": 0,
-   "none_yet": 58,
-   "of": 792,
+   "none_yet": 0,
+   "of": 820,
    "over_24h": 728,
-   "within_1h": 0,
-   "within_24h": 6,
-   "within_6h": 2
+   "within_1h": 33,
+   "within_24h": 92,
+   "within_6h": 88
   },
   "pending": {
-   "count": 58,
-   "of": 792
+   "count": 0,
+   "of": 820
   },
   "prereg_sha256": "43f315594728a7f21f9685cf19810b5303628198d0507c6eece8da51e716503b",
   "proofs": {
-   "published": 793,
+   "published": 821,
    "published_not_in_store": 0,
-   "replaced": 10,
+   "replaced": 59,
    "shrunk": 0,
    "stray_in_store": 0,
-   "unchanged": 781,
-   "written": 2
+   "unchanged": 734,
+   "written": 28
   },
   "seal": {
    "file": "WITNESS_PREREG.md",
-   "proof_block": null,
-   "proof_block_time": null,
-   "proof_status": "pending",
+   "proof_block": 975108,
+   "proof_block_time": 1794179175,
+   "proof_status": "bitcoin",
    "sealed_at": "2026-11-08T21:28:19.041Z",
    "stamped_as": "proofs/prereg_43f315594728a7f21f9685cf19810b5303628198d0507c6eece8da51e716503b.ots"
   },
   "stamp_batches": {
-   "count": 5,
-   "of_lines": 792
+   "count": 19,
+   "of_lines": 820
   },
   "stamp_failed": {
    "count": 0,
-   "of": 792
+   "of": 820
   },
-  "store_entries": 792,
-  "store_lines_in_chain": 792,
-  "store_written_at": "2026-11-09T05:25:08.120Z",
+  "store_entries": 820,
+  "store_lines_in_chain": 820,
+  "store_written_at": "2026-11-09T14:35:05.028Z",
   "stray_proofs_in_store": 0,
   "tail_lag": {
    "buckets": "cumulative",
-   "median_s": 374887.0,
-   "of": 792,
+   "median_s": 371883.0,
+   "of": 820,
    "over_24h": 728,
    "retroactive": 768,
    "retroactive_stamp_days": [
     "2026-11-08",
     "2026-11-09"
    ],
-   "within_10min": 13,
-   "within_1h": 24,
-   "within_24h": 64
+   "within_10min": 41,
+   "within_1h": 52,
+   "within_24h": 92
   },
   "window": {
    "note": "window not open: the standing task is not registered",
    "open": false
   },
   "with_commitment": {
-   "count": 792,
-   "of": 792
+   "count": 820,
+   "of": 820
   },
   "withheld_seqs_clocks_cut_to_day": [
    129,
