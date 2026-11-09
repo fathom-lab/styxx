@@ -11,7 +11,7 @@
  "anchors_in_chain": 15,
  "anchors_late": 0,
  "brains": {
-  "built_at": "2026-11-09T05:24:33Z",
+  "built_at": "2026-11-09T05:30:03Z",
   "changes": [],
   "changes_count": 0,
   "declared_changes": 0,
@@ -68,12 +68,12 @@
   "send_lines_without_digest_since_earliest": 0,
   "undeclared_changes": 0
  },
- "built_at": "2026-11-09T05:24:33Z",
+ "built_at": "2026-11-09T05:30:03Z",
  "checkout_artefacts_restored": [],
  "continuity": {
-  "added_bytes": 90248,
+  "added_bytes": 0,
   "extends": true,
-  "previous_commit": "1cc557a584bd"
+  "previous_commit": "195b90349575"
  },
  "days": [
   {
@@ -385,13 +385,13 @@
   },
   "lines": 792,
   "no_record": {
-   "count": 2,
+   "count": 0,
    "of": 792
   },
   "orphans": {
    "count": 0,
    "entries": [],
-   "of": 790
+   "of": 792
   },
   "outside_latency": {
    "attested": 734,
@@ -406,18 +406,18 @@
    "within_6h": 2
   },
   "pending": {
-   "count": 56,
+   "count": 58,
    "of": 792
   },
   "prereg_sha256": "43f315594728a7f21f9685cf19810b5303628198d0507c6eece8da51e716503b",
   "proofs": {
-   "published": 791,
+   "published": 793,
    "published_not_in_store": 0,
-   "replaced": 0,
+   "replaced": 10,
    "shrunk": 0,
    "stray_in_store": 0,
-   "unchanged": 791,
-   "written": 0
+   "unchanged": 781,
+   "written": 2
   },
   "seal": {
    "file": "WITNESS_PREREG.md",
@@ -428,37 +428,37 @@
    "stamped_as": "proofs/prereg_43f315594728a7f21f9685cf19810b5303628198d0507c6eece8da51e716503b.ots"
   },
   "stamp_batches": {
-   "count": 4,
-   "of_lines": 790
+   "count": 5,
+   "of_lines": 792
   },
   "stamp_failed": {
    "count": 0,
    "of": 792
   },
-  "store_entries": 790,
-  "store_lines_in_chain": 790,
-  "store_written_at": "2026-11-09T05:20:07.652Z",
+  "store_entries": 792,
+  "store_lines_in_chain": 792,
+  "store_written_at": "2026-11-09T05:25:08.120Z",
   "stray_proofs_in_store": 0,
   "tail_lag": {
    "buckets": "cumulative",
-   "median_s": 375037.5,
-   "of": 790,
+   "median_s": 374887.0,
+   "of": 792,
    "over_24h": 728,
    "retroactive": 768,
    "retroactive_stamp_days": [
     "2026-11-08",
     "2026-11-09"
    ],
-   "within_10min": 11,
-   "within_1h": 22,
-   "within_24h": 62
+   "within_10min": 13,
+   "within_1h": 24,
+   "within_24h": 64
   },
   "window": {
    "note": "window not open: the standing task is not registered",
    "open": false
   },
   "with_commitment": {
-   "count": 790,
+   "count": 792,
    "of": 792
   },
   "withheld_seqs_clocks_cut_to_day": [

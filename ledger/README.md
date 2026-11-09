@@ -57,11 +57,11 @@ hash to the gate's bytes. the released texts are the agent's bytes as they left 
 lab; the publisher changes none of them, and a word in one of them is the agent's, not a claim of this page.
 
 per-line witness: 734 of 792 lines carry a bitcoin-attested proof (the block header's time minus the line's own
-timestamp, cumulative: within 1 h 0, within 6 h 2, within 24 h 6; over 24 h 728; none yet 58; of 792); 56 of 792
-are pending at the calendars (a receipt, no time a stranger can check); 0 of 790 store entries are orphans (a
+timestamp, cumulative: within 1 h 0, within 6 h 2, within 24 h 6; over 24 h 728; none yet 58; of 792); 58 of 792
+are pending at the calendars (a receipt, no time a stranger can check); 0 of 792 store entries are orphans (a
 digest no longer in the chain; a rewrite leaves these); 0 seqs carry more than one entry_id in the store; 768 of
-790 lines were stamped retroactively (seen more than 1 h after their own timestamp, on 2026-11-08, 2026-11-09):
-their proofs pin them to that stamping day's blocks, not to their own days; stamp batches 4 for 790 lines (the
+792 lines were stamped retroactively (seen more than 1 h after their own timestamp, on 2026-11-08, 2026-11-09):
+their proofs pin them to that stamping day's blocks, not to their own days; stamp batches 5 for 792 lines (the
 tail's own clock, the lab's word). the kill gate is `witness/WITNESS_PREREG.md`, sha256
 43f315594728a7f21f9685cf19810b5303628198d0507c6eece8da51e716503b, sealed 2026-11-08T21:28:19.041Z in
 `witness/seal.jsonl` line 1; window not open: the standing task is not registered. a proof attests that the
@@ -85,4 +85,4 @@ cannot show: that every send got a line (the census at the window's close reads 
 any message said. the gate runs in shadow: every line reads `required_present: false`; a would-refuse is what
 it would have blocked, and it blocked nothing. nothing here is signed and nothing here says a post is true.
 
-built 2026-11-09T05:24:33Z from head `3f9fe35a1b276ed3` (792 lines, 15 anchors through 2026-11-08); the gate's instrument pin `3437340b9e944644372e41d9fcab735d47e20fa0`.
+built 2026-11-09T05:30:03Z from head `3f9fe35a1b276ed3` (792 lines, 15 anchors through 2026-11-08); the gate's instrument pin `3437340b9e944644372e41d9fcab735d47e20fa0`.

@@ -3,11 +3,11 @@
   "bad_record_lines": 0,
   "bitcoin": 734,
   "bitcoin_mismatch": 0,
-  "entries_in_store": 790,
+  "entries_in_store": 792,
   "explorers_disagree": 0,
-  "pending": 56,
+  "pending": 58,
   "proof_found_without_record": 0,
-  "records": 1525,
+  "records": 1527,
   "stamp_failed": 0
  },
  "entries": {
@@ -906,6 +906,20 @@
    "stamped_at": "2026-11-08T21:01:34.091Z",
    "status": "bitcoin",
    "upgraded_at": "2026-11-08T23:06:25.144Z"
+  },
+  "0e946cc7508f96a2f937411f39237bb480a2668375df307e25c1777e657885ec": {
+   "calendars": [
+    "https://alice.btc.calendar.opentimestamps.org",
+    "https://bob.btc.calendar.opentimestamps.org",
+    "https://btc.calendar.catallaxy.com",
+    "https://finney.calendar.eternitywall.com"
+   ],
+   "line_timestamp": "2026-11-09T05:21:13Z",
+   "proof": "proofs/0e946cc7508f96a2f937411f39237bb480a2668375df307e25c1777e657885ec.ots",
+   "seen_at": "2026-11-09T05:25:02.521Z",
+   "seq": 791,
+   "stamped_at": "2026-11-09T05:25:04.054Z",
+   "status": "pending"
   },
   "0e9ee6c0bafb2d41249d9b36be2d6f154ce389a0f1f415bd662059426bc7665d": {
    "block": 975101,
@@ -4035,6 +4049,20 @@
    "stamped_at": "2026-11-08T21:01:34.091Z",
    "status": "bitcoin",
    "upgraded_at": "2026-11-08T23:06:25.144Z"
+  },
+  "3f9fe35a1b276ed34933b75cc0cd075383b8bd5e89ea93aec603cc62f116cf3b": {
+   "calendars": [
+    "https://alice.btc.calendar.opentimestamps.org",
+    "https://bob.btc.calendar.opentimestamps.org",
+    "https://btc.calendar.catallaxy.com",
+    "https://finney.calendar.eternitywall.com"
+   ],
+   "line_timestamp": "2026-11-09T05:21:13Z",
+   "proof": "proofs/3f9fe35a1b276ed34933b75cc0cd075383b8bd5e89ea93aec603cc62f116cf3b.ots",
+   "seen_at": "2026-11-09T05:25:02.521Z",
+   "seq": 792,
+   "stamped_at": "2026-11-09T05:25:04.054Z",
+   "status": "pending"
   },
   "4067cf4609a4269e78da47bd1c8345c0c67d6b345ff5e6bfc1877656337323f3": {
    "block": 975101,
@@ -16222,17 +16250,17 @@
  },
  "ledger": {
   "bridged_withheld": 0,
-  "head": "16f6fc19c41c9492728b0d4a9534a0181f15c750c8e64f2efe0daafd0cdee6e0",
-  "lines_in_chain": 790,
+  "head": "3f9fe35a1b276ed34933b75cc0cd075383b8bd5e89ea93aec603cc62f116cf3b",
+  "lines_in_chain": 792,
   "partial_tail_bytes": 0,
-  "published": 790
+  "published": 792
  },
  "orphans": {
-  "against_head": "16f6fc19c41c9492728b0d4a9534a0181f15c750c8e64f2efe0daafd0cdee6e0",
-  "computed_at": "2026-11-09T05:20:07.652Z",
+  "against_head": "3f9fe35a1b276ed34933b75cc0cd075383b8bd5e89ea93aec603cc62f116cf3b",
+  "computed_at": "2026-11-09T05:25:08.120Z",
   "count": 0,
   "entries": [],
-  "of": 790
+  "of": 792
  },
  "prereg": {
   "file": "WITNESS_PREREG.md",
@@ -16257,7 +16285,7 @@
  },
  "publisher": {
   "checked": "the witness states on the page (status, block, header time) are the tail's store as copied at build; the publisher checks each proof's opentimestamps magic and the digest it commits to, and parses nothing further; the page parses no proof and asks no explorer; the proof file is what a stranger checks",
-  "copied_at": "2026-11-09T05:24:33Z",
+  "copied_at": "2026-11-09T05:30:03Z",
   "from": "the live witness store's index.json",
   "proofs": "a published proof's bytes are replaced by their upgraded form on a later build: the commitment never changes, the bytes grow when a calendar's bitcoin attestation is added; nothing under proofs/ is deleted",
   "why": "for a withheld seq the published witness carries no clock finer than the utc day on that seq's record: line_timestamp is blanked and seen_at, stamped_at, upgraded_at are cut to the day, in index.json and in the page's embed; the published ledger shows a withheld line's digest and day only, and the publisher keeps that here. runs.jsonl is the tail's run log, copied whole: a run that stamped a single line names, by the tail's clock, a moment within the batch window of that line's write",
@@ -16282,5 +16310,5 @@
   "seen_at": "the tail's clock (the lab's word)",
   "stamped_at": "the tail's clock when the calendars answered (the lab's word)"
  },
- "written_at": "2026-11-09T05:20:07.652Z"
+ "written_at": "2026-11-09T05:25:08.120Z"
 }
