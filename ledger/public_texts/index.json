@@ -1,11 +1,11 @@
 {
  "allowed_by_operator": [],
- "built_at": "2026-11-08T23:50:36Z",
+ "built_at": "2026-11-09T05:24:33Z",
  "counts": {
-  "allow_listed_lines": 46,
-  "bytes": 14041,
-  "public_lines": 53,
-  "published": 45,
+  "allow_listed_lines": 47,
+  "bytes": 14141,
+  "public_lines": 54,
+  "published": 46,
   "unreconstructable": 0,
   "withheld": 1
  },
@@ -469,6 +469,16 @@
    "form": "checked",
    "sent_sha256": "b9032fc6152f042e4a67198d729fc9f5762ec3cbe53ac62c84484ee445a90dce",
    "seq": 731
+  },
+  {
+   "bytes": 100,
+   "checked_sha256": "37a20f2cc4106af649599123cd267d67ea7b61be20cb80e89dfeb20cd61c8735",
+   "day": "2026-11-09",
+   "decision": "allow",
+   "dest_role": "anchor_channel",
+   "form": "checked",
+   "sent_sha256": "37a20f2cc4106af649599123cd267d67ea7b61be20cb80e89dfeb20cd61c8735",
+   "seq": 787
   }
  ],
  "rewrite_reason": null,

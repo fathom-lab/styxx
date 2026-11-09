@@ -28,6 +28,9 @@ the gate's ledger (`darkflobi.gate/entry/v0`) as bytes, and a page that re-deriv
   `witness/index.json` — the tail's latest state per entry_id (no timestamp for a withheld line);
   `witness/REPORT.md` — its counts with denominators; `witness/seal.jsonl`, `witness/WITNESS_PREREG.md` — the
   preregistered kill gate and its seal; `witness/runs.jsonl` — every run of the tail.
+- `brains/index.html` — the gateway's `subject_digest` on the send lines: what it covers, the counts, the
+  digest changes and the register; `brains/brains.json` — the counts, digests, timestamps and seqs;
+  `brains/register.jsonl` — the lab's register of declared digests, append-only.
 
 check it without the page (node 20+, no packages):
 
@@ -35,31 +38,31 @@ check it without the page (node 20+, no packages):
 
 the anchor texts are the posts at https://t.me/DFledger, one per day at 00:00 new york time.
 
-withheld lines: 5 of 743 (seqs 129, 131, 136, 138, 351). each is an operator-dm line whose numeral-token field carried a
+withheld lines: 5 of 792 (seqs 129, 131, 136, 138, 351). each is an operator-dm line whose numeral-token field carried a
 ten-digit identifier typed in a message; the ledger's header promises never message text or chat ids, and
 the publisher keeps that promise where the gate's own field would not. a withheld line's digest is in
 `withheld.json` (re-derived by the lab over the full file, not by you); the chain is bridged through it,
 and the page prints exactly which published lines that leaves unpinned for a stranger.
 
-released texts: 45 of 46 allow-listed public lines have their released bytes published under `public_texts/` (46
-of 53 public send lines are allow-listed; off the list: 4 to the canary chat, 3 to a chat not in the gate's
-config, 0 without released bytes). 1 of 46 withheld by the text guard (seq 36: a drive or home path; listed in
-`public_texts/index.json`, published only after a person reads it; 0 so far). 0 of 46 not re-derivable. the
+released texts: 46 of 47 allow-listed public lines have their released bytes published under `public_texts/` (47
+of 54 public send lines are allow-listed; off the list: 4 to the canary chat, 3 to a chat not in the gate's
+config, 0 without released bytes). 1 of 47 withheld by the text guard (seq 36: a drive or home path; listed in
+`public_texts/index.json`, published only after a person reads it; 0 so far). 0 of 47 not re-derivable. the
 recipe: the bytes the gate kept as the checked text, or the draft, as written or with the gate's trailer
-appended, published only when their sha256 equals the line's `sent_sha256` (40 checked, 5 checked+trailer).
+appended, published only when their sha256 equals the line's `sent_sha256` (41 checked, 5 checked+trailer).
 texts are append-only: a text once published is not changed or removed by a later build unless the build records
 why. a match says these exact bytes left the gate at that second under that verdict; it does not say who typed
 them, that they are true, or that a text with no match was never sent; a copy re-rendered by telegram need not
 hash to the gate's bytes. the released texts are the agent's bytes as they left the gate, not statements of the
 lab; the publisher changes none of them, and a word in one of them is the agent's, not a claim of this page.
 
-per-line witness: 734 of 743 lines carry a bitcoin-attested proof (the block header's time minus the line's own
-timestamp, cumulative: within 1 h 0, within 6 h 2, within 24 h 6; over 24 h 728; none yet 9; of 743); 9 of 743
-are pending at the calendars (a receipt, no time a stranger can check); 0 of 743 store entries are orphans (a
-digest no longer in the chain; a rewrite leaves these); 0 seqs carry more than one entry_id in the store; 734 of
-743 lines were stamped retroactively (seen more than 1 h after their own timestamp, on 2026-11-08): their proofs
-pin them to that stamping day's blocks, not to their own days; stamp batches 2 for 743 lines (the tail's own
-clock, the lab's word). the kill gate is `witness/WITNESS_PREREG.md`, sha256
+per-line witness: 734 of 792 lines carry a bitcoin-attested proof (the block header's time minus the line's own
+timestamp, cumulative: within 1 h 0, within 6 h 2, within 24 h 6; over 24 h 728; none yet 58; of 792); 56 of 792
+are pending at the calendars (a receipt, no time a stranger can check); 0 of 790 store entries are orphans (a
+digest no longer in the chain; a rewrite leaves these); 0 seqs carry more than one entry_id in the store; 768 of
+790 lines were stamped retroactively (seen more than 1 h after their own timestamp, on 2026-11-08, 2026-11-09):
+their proofs pin them to that stamping day's blocks, not to their own days; stamp batches 4 for 790 lines (the
+tail's own clock, the lab's word). the kill gate is `witness/WITNESS_PREREG.md`, sha256
 43f315594728a7f21f9685cf19810b5303628198d0507c6eece8da51e716503b, sealed 2026-11-08T21:28:19.041Z in
 `witness/seal.jsonl` line 1; window not open: the standing task is not registered. a proof attests that the
 line's digest existed before its block; it does not show that every send got a line, nor the words, nor who
@@ -68,10 +71,18 @@ publisher checks each proof's opentimestamps magic and the digest it commits to 
 page parses no proof and asks no explorer. a published proof's bytes are replaced by their upgraded form on
 later builds; a proof's commitment never changes.
 
+brains: 28 of 372 published send lines carry the gateway's `subject_digest` (28 of 28 from the earliest one
+carrying it, seq 736), 1 distinct digest(s), 0 digest change(s), 0 of 0 undeclared against the register (1
+row(s), sha256 3ee94b254026930cc817656471089092c1782b24efb782dcd0bc78b09bbcafbd). the digest is computed by the
+gate when it writes the line, over a manifest of the workspace path, the bootstrap files, three config subtrees
+and the skills tree the substrate amendment names (provider definitions, base urls and agents.defaults.models
+are outside it); it cannot be recomputed off the box. declared_at is the lab's own date. undeclared means no
+register row declares the new digest at or before that line, not that anything was wrong.
+
 what the lines hold: one line per outbound attempt and per gate event; hashes, verdicts and counts; never
 message text or chat ids (the header's `certifies` sentence). destinations are salted hashes. what the page
 cannot show: that every send got a line (the census at the window's close reads the chats for that), or what
 any message said. the gate runs in shadow: every line reads `required_present: false`; a would-refuse is what
 it would have blocked, and it blocked nothing. nothing here is signed and nothing here says a post is true.
 
-built 2026-11-08T23:50:36Z from head `8afd642915b2a397` (743 lines, 14 anchors through 2026-11-07); the gate's instrument pin `3437340b9e944644372e41d9fcab735d47e20fa0`.
+built 2026-11-09T05:24:33Z from head `3f9fe35a1b276ed3` (792 lines, 15 anchors through 2026-11-08); the gate's instrument pin `3437340b9e944644372e41d9fcab735d47e20fa0`.

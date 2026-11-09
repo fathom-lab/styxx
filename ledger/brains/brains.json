@@ -1,0 +1,58 @@
+{
+ "built_at": "2026-11-09T05:24:33Z",
+ "changes": [],
+ "changes_count": 0,
+ "declared_changes": 0,
+ "digests": [
+  {
+   "declared_at": null,
+   "declared_later_at": "2026-11-08T23:10:46Z",
+   "digest": "d88caaaa9c8824d6e505d263773a529b78c7a26dbf07a71d929297cbd528e539",
+   "earliest_seq": 736,
+   "earliest_ts": "2026-11-08T22:56:58Z",
+   "latest_seq": 791,
+   "latest_ts": "2026-11-09T05:21:13Z",
+   "lines": 28,
+   "retroactive_rows": 0
+  }
+ ],
+ "distinct_digests": 1,
+ "earliest_seq": 736,
+ "earliest_ts": "2026-11-08T22:56:58Z",
+ "latest_seq": 791,
+ "latest_ts": "2026-11-09T05:21:13Z",
+ "per_day": [
+  {
+   "day": "2026-11-08",
+   "digests": [
+    {
+     "digest": "d88caaaa9c8824d6e505d263773a529b78c7a26dbf07a71d929297cbd528e539",
+     "lines": 25
+    }
+   ],
+   "send_lines": 26,
+   "send_lines_with_digest": 25
+  },
+  {
+   "day": "2026-11-09",
+   "digests": [
+    {
+     "digest": "d88caaaa9c8824d6e505d263773a529b78c7a26dbf07a71d929297cbd528e539",
+     "lines": 3
+    }
+   ],
+   "send_lines": 3,
+   "send_lines_with_digest": 3
+  }
+ ],
+ "register_rewrite_reason": null,
+ "register_rows": 1,
+ "register_sha256": "3ee94b254026930cc817656471089092c1782b24efb782dcd0bc78b09bbcafbd",
+ "retroactive_changes": 0,
+ "send_lines": 372,
+ "send_lines_since_earliest_digest": 28,
+ "send_lines_with_digest": 28,
+ "send_lines_withheld": 5,
+ "send_lines_without_digest_since_earliest": 0,
+ "undeclared_changes": 0
+}

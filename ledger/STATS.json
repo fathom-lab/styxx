@@ -1,21 +1,79 @@
 {
  "anchor_stamps": {
-  "anchors": 14,
+  "anchors": 15,
   "bitcoin": 14,
   "mismatch": 0,
-  "pending": 0,
+  "pending": 1,
   "unknown": 0,
   "unstamped": 0
  },
- "anchors": 14,
- "anchors_in_chain": 14,
+ "anchors": 15,
+ "anchors_in_chain": 15,
  "anchors_late": 0,
- "built_at": "2026-11-08T23:50:36Z",
+ "brains": {
+  "built_at": "2026-11-09T05:24:33Z",
+  "changes": [],
+  "changes_count": 0,
+  "declared_changes": 0,
+  "digests": [
+   {
+    "declared_at": null,
+    "declared_later_at": "2026-11-08T23:10:46Z",
+    "digest": "d88caaaa9c8824d6e505d263773a529b78c7a26dbf07a71d929297cbd528e539",
+    "earliest_seq": 736,
+    "earliest_ts": "2026-11-08T22:56:58Z",
+    "latest_seq": 791,
+    "latest_ts": "2026-11-09T05:21:13Z",
+    "lines": 28,
+    "retroactive_rows": 0
+   }
+  ],
+  "distinct_digests": 1,
+  "earliest_seq": 736,
+  "earliest_ts": "2026-11-08T22:56:58Z",
+  "latest_seq": 791,
+  "latest_ts": "2026-11-09T05:21:13Z",
+  "per_day": [
+   {
+    "day": "2026-11-08",
+    "digests": [
+     {
+      "digest": "d88caaaa9c8824d6e505d263773a529b78c7a26dbf07a71d929297cbd528e539",
+      "lines": 25
+     }
+    ],
+    "send_lines": 26,
+    "send_lines_with_digest": 25
+   },
+   {
+    "day": "2026-11-09",
+    "digests": [
+     {
+      "digest": "d88caaaa9c8824d6e505d263773a529b78c7a26dbf07a71d929297cbd528e539",
+      "lines": 3
+     }
+    ],
+    "send_lines": 3,
+    "send_lines_with_digest": 3
+   }
+  ],
+  "register_rewrite_reason": null,
+  "register_rows": 1,
+  "register_sha256": "3ee94b254026930cc817656471089092c1782b24efb782dcd0bc78b09bbcafbd",
+  "retroactive_changes": 0,
+  "send_lines": 372,
+  "send_lines_since_earliest_digest": 28,
+  "send_lines_with_digest": 28,
+  "send_lines_withheld": 5,
+  "send_lines_without_digest_since_earliest": 0,
+  "undeclared_changes": 0
+ },
+ "built_at": "2026-11-09T05:24:33Z",
  "checkout_artefacts_restored": [],
  "continuity": {
-  "added_bytes": 0,
+  "added_bytes": 90248,
   "extends": true,
-  "previous_commit": "7ab69a4bc8b3"
+  "previous_commit": "1cc557a584bd"
  },
  "days": [
   {
@@ -185,9 +243,20 @@
   },
   {
    "allow": 1,
-   "anchor_head_seq": null,
+   "anchor_head_seq": 785,
    "day": "2026-11-08",
-   "dm": 4,
+   "dm": 25,
+   "marked": 0,
+   "numerals_bound": 0,
+   "numerals_total": 0,
+   "public": 1,
+   "would_refuse": 0
+  },
+  {
+   "allow": 1,
+   "anchor_head_seq": null,
+   "day": "2026-11-09",
+   "dm": 2,
    "marked": 0,
    "numerals_bound": 0,
    "numerals_total": 0,
@@ -196,7 +265,7 @@
   }
  ],
  "first_timestamp": "2026-10-24T15:09:56Z",
- "full_file_sha256": "8b372dfc2ab26bb490ff9052684b429907007a29f2fe63caf78761ddba452f4c",
+ "full_file_sha256": "908fc25148c749f39aab514b6575ba8b9526f7989b48715867efc4e04e312035",
  "gate_sha256_stretches": [
   {
    "first_seq": 1,
@@ -226,36 +295,36 @@
   {
    "first_seq": 735,
    "gate_sha256": "7249a8f86a586ae0e6ebb8b3d362f2cb1820c61e0c57f110c09b51e5ed149962",
-   "last_seq": 743
+   "last_seq": 792
   }
  ],
  "gate_unavailable": 0,
- "head": "8afd642915b2a397764041a424619b03888dd1f94532c55cf6fc9782628e2409",
+ "head": "3f9fe35a1b276ed34933b75cc0cd075383b8bd5e89ea93aec603cc62f116cf3b",
  "kinds": {
-  "anchor": 14,
-  "delivered": 353,
-  "send": 353,
+  "anchor": 15,
+  "delivered": 377,
+  "send": 377,
   "started": 23
  },
- "last_anchor_date": "2026-11-07",
- "last_anchor_head_seq": 729,
- "last_timestamp": "2026-11-08T23:36:13Z",
- "lines": 743,
- "lines_after_last_anchor": 14,
+ "last_anchor_date": "2026-11-08",
+ "last_anchor_head_seq": 785,
+ "last_timestamp": "2026-11-09T05:21:13Z",
+ "lines": 792,
+ "lines_after_last_anchor": 7,
  "numerals_public_bound": 4,
  "numerals_public_total": 17,
- "operator_dm_lines": 300,
+ "operator_dm_lines": 323,
  "pin": "3437340b9e944644372e41d9fcab735d47e20fa0",
- "public_allow": 47,
+ "public_allow": 48,
  "public_marked": 5,
  "public_refused": 1,
- "public_sends": 53,
+ "public_sends": 54,
  "public_texts": {
-  "allow_listed_lines": 46,
+  "allow_listed_lines": 47,
   "allowed_by_operator": 0,
-  "bytes": 14041,
+  "bytes": 14141,
   "forms": {
-   "checked": 40,
+   "checked": 41,
    "checked+trailer": 5
   },
   "off_allow_list": {
@@ -263,8 +332,8 @@
    "no_sent_bytes": 0,
    "unlisted_dest": 3
   },
-  "public_lines": 53,
-  "published": 45,
+  "public_lines": 54,
+  "published": 46,
   "unreconstructable": 0,
   "unreconstructable_seqs": [],
   "withheld": 1,
@@ -281,8 +350,8 @@
   ]
  },
  "public_would_refuse": 1,
- "published_file_sha256": "b9cdb57dc29e7c0f8fe0c5bbf4dbaf58383d819a85f00e01c4e814502857f533",
- "published_lines": 738,
+ "published_file_sha256": "20f6d62058a3c1950052271f2b3dc24f3b59a49cbf85693810148225e3514b69",
+ "published_lines": 787,
  "required_present_true": 0,
  "withheld": {
   "count": 5,
@@ -300,11 +369,11 @@
  "witness": {
   "bitcoin": {
    "count": 734,
-   "of": 743
+   "of": 792
   },
   "bitcoin_mismatch": {
    "count": 0,
-   "of": 743
+   "of": 792
   },
   "dup_seqs": {
    "count": 0,
@@ -312,42 +381,42 @@
   },
   "explorers_disagree": {
    "count": 0,
-   "of": 743
+   "of": 792
   },
-  "lines": 743,
+  "lines": 792,
   "no_record": {
-   "count": 0,
-   "of": 743
+   "count": 2,
+   "of": 792
   },
   "orphans": {
    "count": 0,
    "entries": [],
-   "of": 743
+   "of": 790
   },
   "outside_latency": {
    "attested": 734,
    "buckets": "cumulative",
    "median_s": 378839.5,
    "negative": 0,
-   "none_yet": 9,
-   "of": 743,
+   "none_yet": 58,
+   "of": 792,
    "over_24h": 728,
    "within_1h": 0,
    "within_24h": 6,
    "within_6h": 2
   },
   "pending": {
-   "count": 9,
-   "of": 743
+   "count": 56,
+   "of": 792
   },
   "prereg_sha256": "43f315594728a7f21f9685cf19810b5303628198d0507c6eece8da51e716503b",
   "proofs": {
-   "published": 744,
+   "published": 791,
    "published_not_in_store": 0,
    "replaced": 0,
    "shrunk": 0,
    "stray_in_store": 0,
-   "unchanged": 744,
+   "unchanged": 791,
    "written": 0
   },
   "seal": {
@@ -359,37 +428,38 @@
    "stamped_as": "proofs/prereg_43f315594728a7f21f9685cf19810b5303628198d0507c6eece8da51e716503b.ots"
   },
   "stamp_batches": {
-   "count": 2,
-   "of_lines": 743
+   "count": 4,
+   "of_lines": 790
   },
   "stamp_failed": {
    "count": 0,
-   "of": 743
+   "of": 792
   },
-  "store_entries": 743,
-  "store_lines_in_chain": 743,
-  "store_written_at": "2026-11-08T23:38:26.100Z",
+  "store_entries": 790,
+  "store_lines_in_chain": 790,
+  "store_written_at": "2026-11-09T05:20:07.652Z",
   "stray_proofs_in_store": 0,
   "tail_lag": {
    "buckets": "cumulative",
-   "median_s": 376143.0,
-   "of": 743,
+   "median_s": 375037.5,
+   "of": 790,
    "over_24h": 728,
-   "retroactive": 734,
+   "retroactive": 768,
    "retroactive_stamp_days": [
-    "2026-11-08"
+    "2026-11-08",
+    "2026-11-09"
    ],
-   "within_10min": 4,
-   "within_1h": 9,
-   "within_24h": 15
+   "within_10min": 11,
+   "within_1h": 22,
+   "within_24h": 62
   },
   "window": {
    "note": "window not open: the standing task is not registered",
    "open": false
   },
   "with_commitment": {
-   "count": 743,
-   "of": 743
+   "count": 790,
+   "of": 792
   },
   "withheld_seqs_clocks_cut_to_day": [
    129,

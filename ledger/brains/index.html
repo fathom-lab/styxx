@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>darkflobi ledger: brains</title>
+<meta name="description" content="the gateway's subject_digest on darkflobi's send lines: counts, changes, and the register of digests the lab declared">
+<style>
+:root{--bg:#000;--fg:#00ff00;--ac:#00ffff;--dim:#0a0;--bad:#f55;--warn:#ff5;--line:#063}
+*{box-sizing:border-box}
+html,body{background:var(--bg);color:var(--fg);font-family:ui-monospace,Consolas,"Courier New",monospace;font-size:14px;margin:0}
+body{padding:16px;max-width:1200px;margin:0 auto;line-height:1.45}
+a{color:var(--ac)}h1,h2{font-weight:normal;font-size:16px;margin:24px 0 8px;color:var(--ac)}h1{font-size:18px;margin-top:0}
+p{margin:6px 0}code{color:var(--ac);word-break:break-all}
+.dim{color:var(--dim)}.bad{color:var(--bad)}.warn{color:var(--warn)}
+.tiles{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}.tile{border:1px solid var(--line);padding:8px 12px;min-width:150px;flex:1 1 150px}
+.tile b{display:block;font-size:22px;font-weight:normal;color:var(--ac)}.tile span{color:var(--dim);font-size:12px}
+.wrap{overflow-x:auto;border:1px solid var(--line)}table{border-collapse:collapse;width:100%;min-width:640px}
+th,td{text-align:left;padding:3px 8px;border-bottom:1px solid var(--line);vertical-align:top}th{color:var(--dim);font-weight:normal}
+td.r{color:var(--bad)}td.m{color:var(--warn)}
+@media (max-width:600px){body{font-size:13px}.tile{min-width:44%}}
+</style>
+</head>
+<body>
+<h1>darkflobi · ledger · brains</h1>
+<p><code>subject_digest</code> is the gateway's statement, computed by the gate when it writes a send line: the sha256 of a manifest whose rule the substrate amendment gives (<code>papers/darkflobi-gate/AMENDMENT_darkflobi_gate_substrate_2026_11_08.md</code> in fathom-lab/styxx, item 3; <code>subject_manifest</code> in gate.py). the manifest has one line each for the default agent's workspace path (absolute, as this box resolves it); the seven bootstrap files the gateway loads into a main session's prompt (<code>AGENTS.md</code>, <code>SOUL.md</code>, <code>TOOLS.md</code>, <code>IDENTITY.md</code>, <code>USER.md</code>, <code>HEARTBEAT.md</code>, <code>BOOTSTRAP.md</code>; a sub-agent session gets only <code>AGENTS.md</code> and <code>TOOLS.md</code>), each by the sha256 of its bytes or as absent or unreadable; three subtrees of the agent's config (<code>agents.defaults.model</code>, <code>agents.defaults.memorySearch</code>, <code>agents.list[default]</code>, every secret-named value redacted before hashing); and the workspace skills tree (every file in it). the same digest on two lines means the gate wrote the same manifest for both. a different digest means some line of the manifest differed: a file's bytes or its state, a config subtree, any file in the skills folder (a log a skill writes there included), or the workspace path itself, which a config or environment change moves with no file edited. a file the gate cannot open at that moment (one held under a lock, say) reads unreadable, so a digest can change and change back with no edit. it follows the files on disk when the line is written, not what a run read. provider definitions, base urls and <code>agents.defaults.models</code> are outside the manifest. the rule is public, but the manifest carries this box's absolute workspace path and the files are private, so the digest cannot be recomputed off this box. a change marked undeclared means no row of the register below declares the new digest at or before that line; it does not mean anything was wrong.</p>
+<p class="dim">the counts below are the builder's, computed at build time over the published send lines of <a href="../">darkflobi's ledger</a>; this page re-derives nothing in the browser. every published line's <code>subject_digest</code> is in <a href="../ledger.jsonl">../ledger.jsonl</a> for a recount. 5 of 377 send lines are withheld on the main page (their fields are not published) and are left out of every count here.</p>
+<div class="tiles"><div class="tile"><b>28 of 372</b><span>published send lines carrying subject_digest</span></div><div class="tile"><b>28 of 28</b><span>published send lines from the earliest one carrying it (seq 736)</span></div><div class="tile"><b>1</b><span>distinct digest</span></div><div class="tile"><b>0 of 0</b><span>digest changes undeclared</span></div><div class="tile"><b>1</b><span>register row</span></div></div>
+
+<h2>the digests</h2>
+<p class="dim">one row per distinct digest: its lines of the 28 published send lines carrying the field, its earliest and latest line (seq · the gate's timestamp), and its register state at its earliest line.</p>
+<div class="wrap"><table><tr><th>subject_digest</th><th>lines</th><th>earliest</th><th>latest</th><th>register</th></tr><tr><td><code>d88caaaa9c8824d6e505d263773a529b78c7a26dbf07a71d929297cbd528e539</code></td><td>28 of 28</td><td>736 · 2026-11-08T22:56:58Z</td><td>791 · 2026-11-09T05:21:13Z</td><td>declared 2026-11-08T23:10:46Z, after its earliest line (2026-11-08T22:56:58Z)</td></tr></table></div>
+
+<h2>per day</h2>
+<p class="dim">the day is the line's own <code>day</code> (the gate's anchor time zone, <code>America/New_York</code> in the ledger's header); lines carrying each digest, of that day's published send lines.</p>
+<div class="wrap"><table><tr><th>day</th><th>subject_digest</th><th>lines</th></tr><tr><td>2026-11-08</td><td><code>d88caaaa9c8824d6e505d263773a529b78c7a26dbf07a71d929297cbd528e539</code></td><td>25 of 26</td></tr><tr><td>2026-11-09</td><td><code>d88caaaa9c8824d6e505d263773a529b78c7a26dbf07a71d929297cbd528e539</code></td><td>3 of 3</td></tr></table></div>
+
+<h2>the changes</h2>
+<p class="dim">in seq order, each send line whose digest differs from the digest of the published send line carrying the field before it: 0 change(s); 0 of 0 declared, 0 of 0 declared retroactively, 0 of 0 undeclared. declared: a register row declares the new digest with declared_at at or before the line's timestamp, not withdrawn by then. the field's earliest value is not a change; its state is in the digests table. a withheld line's fields are not published, so a change that happened on a withheld line shows at the next published line carrying the field, with that line's seq and timestamp.</p>
+<div class="wrap"><table><tr><th>seq</th><th>timestamp</th><th>from</th><th>to</th><th>register</th></tr><tr><td colspan="5" class="dim">no change: every published send line carrying the field carries one digest</td></tr></table></div>
+
+<h2>the register</h2>
+<p class="dim">the lab's declared digests, copied byte for byte as <a href="register.jsonl">register.jsonl</a> (sha256 <code>3ee94b254026930cc817656471089092c1782b24efb782dcd0bc78b09bbcafbd</code>, 1 row(s)). a row is added only with a dated declaration and is never edited in place; a declaration withdrawn is a later row with withdrawn_at. a row with no amendment is a retroactive declaration: it marks its digest declared for every line, and the page says so. the register is the lab's log, not a lock: a declared digest says the lab wrote it down, not that the files are right.</p>
+<p class="dim">declared_at is the lab's own date, written by the lab. the register's source file sits on the lab's box, in a folder inside the agent's own workspace and outside any repository; the lab writes it, and the agent's file tools reach that folder. what witnesses a row is this branch's history: the last column names the exhibit commit that introduced each row, and the builder refuses a row new to the branch that is dated before the branch head's commit time, or dated after the build.</p>
+<div class="wrap"><table><tr><th>subject_digest</th><th>date</th><th>by</th><th>covers</th><th>reason</th><th>amendment</th><th>on the branch since</th></tr><tr><td><code>d88caaaa9c8824d6e505d263773a529b78c7a26dbf07a71d929297cbd528e539</code></td><td>declared 2026-11-08T23:10:46Z</td><td>fathom lab (lead)</td><td>the workspace path, the seven bootstrap files, three clawdbot.json subtrees (agents.defaults.model, agents.defaults.memorySearch, agents.list[default]; secret-named values redacted) and the workspace skills tree, as AMENDMENT item 3 and gate.py subject_manifest define them</td><td>the value on every v1 send line from seq 736 (the earliest, 2026-11-08T22:56:58Z); the field&#x27;s earliest value</td><td><code>papers/darkflobi-gate/AMENDMENT_darkflobi_gate_substrate_2026_11_08.md</code></td><td>new in this build</td></tr></table></div>
+
+<h2>what this page does not say</h2>
+<p class="dim">that a run read these bytes (the digest follows the files on disk when the line is written); that equal digests mean equal prompts (the prompt also holds the runtime's text, the date, retrieval results and the conversation); that the same model answered: provider definitions, base urls and <code>agents.defaults.models</code> are outside the digest; that a declared_at is witnessed by anything but the lab's word and this branch's history; that an undeclared change is misconduct; that anyone off this box can recompute a digest today.</p>
+
+<p><a href="brains.json">brains.json</a> (the counts, digests, timestamps and seqs above) · <a href="register.jsonl">register.jsonl</a> · <a href="../ledger.jsonl">../ledger.jsonl</a> · <a href="../">the ledger page</a></p>
+<p class="dim">built 2026-11-09T05:24:33Z from head <code>3f9fe35a1b276ed3</code> by build_ledger_page.py (wt/_public_ledger_2026_11_04) with --brains-register; the gate's instrument pin <code>3437340b9e944644372e41d9fcab735d47e20fa0</code>.</p>
+</body>
+</html>
