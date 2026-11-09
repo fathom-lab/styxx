@@ -243,7 +243,7 @@ def test_lock_table_names_the_pin_the_snapshot_the_block_and_the_plugins_subtree
 # lock-rows AMENDMENT prints the same table for the five before-D0 files it was written with, and a test below reads it
 # there too; an AMENDMENT after it states its own count in its own lock-rows section
 AMENDMENT_ROW_COUNTS = {"canary_replan": 2, "count_rule": 4, "lint_overclaims": 0, "lock_rows": 0, "posting_skill": 7,
-                        "anchor_native": 9, "token_shapes": 6, "substrate": 26}
+                        "anchor_native": 9, "token_shapes": 6, "substrate": 26, "window_scorer": 3}
 LOCK_ROWS_TABLE_TOPICS = {"canary_replan", "count_rule", "lint_overclaims", "lock_rows", "posting_skill"}
 # the paths the amendments lock, together: the before-D0 move's ten files under W:gate/, the posting skill, the
 # anchor's nine plugin files (F-1: index.js, native_import.cjs and README.md in both places, and three test files),
@@ -268,6 +268,10 @@ AMENDED_PATHS = {
     "W:gate/plugin/tests/stub_gate.py", "W:gate/substrate_split.py", "W:gate/tests/test_substrate.py",
     *[_FIX + g + "/" + f for g in ("gate_v0_25d53fd6", "gate_v0_4416692c", "gate_v0_c17e3d06")
       for f in ("gate.py", "gate_verify.py", "helpers/numerals.py", "ledger.py")],
+    # the window-scorer AMENDMENT (2026-11-09): three repository rows no earlier amendment names, the scorer, its tests
+    # and the PREREG's own blob (the row score.py refuses without)
+    "papers/darkflobi-gate/score.py", "tests/test_darkflobi_gate_score.py",
+    "papers/darkflobi-gate/PREREG_darkflobi_gate_2026_10_23.md",
 }
 AMENDMENT_NAME = re.compile(r"AMENDMENT_darkflobi_gate_([a-z0-9_]+?)_(\d{4}_\d{2}_\d{2})\.md")
 _COUNT_RULE = "AMENDMENT_darkflobi_gate_count_rule_2026_10_25.md"
@@ -275,6 +279,9 @@ _POSTING_SKILL = "AMENDMENT_darkflobi_gate_posting_skill_2026_10_25.md"
 _ANCHOR_NATIVE = "AMENDMENT_darkflobi_gate_anchor_native_2026_10_26.md"
 _TOKEN_SHAPES = "AMENDMENT_darkflobi_gate_token_shapes_2026_11_04.md"
 _SUBSTRATE = "AMENDMENT_darkflobi_gate_substrate_2026_11_08.md"
+_WINDOW_SCORER = "AMENDMENT_darkflobi_gate_window_scorer_2026_11_09.md"
+SCORE_PY = FOLDER / "score.py"
+SCORE_TEST = ROOT / "tests" / "test_darkflobi_gate_score.py"
 # D9: the earlier amendment rows each later file supersedes, each declared once, (path, earlier file). The token-shapes
 # file (2026-11-04) re-locks seven rows of the count-rule and posting-skill files; the substrate file (2026-11-08)
 # re-locks the rows in force when it is read: the token-shapes file's for gate.py and gate_verify.py (never the
@@ -346,9 +353,11 @@ def test_each_amendment_parses_to_the_lock_rows_its_table_states():
     assert without["W:gate/gate.py"] == _COUNT_RULE + " + " + _POSTING_SKILL
     assert via["W:gate/canary_plan.py"] == "AMENDMENT_darkflobi_gate_canary_replan_2026_10_25.md"
     prereg = lock.parse_lock_rows(PREREG.read_text(encoding="utf-8"))
-    # 84 for the before-D0 files, the anchor's four new paths (F-1: the helper in both places, two test files), and the
-    # substrate move's fourteen new paths (substrate_split.py, test_substrate.py, the twelve fixture files)
-    assert len(set(prereg) | set(rows)) == 102
+    # 84 for the before-D0 files, the anchor's four new paths (F-1: the helper in both places, two test files), the
+    # substrate move's fourteen new paths (substrate_split.py, test_substrate.py, the twelve fixture files), and the
+    # window-scorer file's three repository paths (score.py, its tests, the PREREG's blob)
+    assert len(set(prereg) | set(rows)) == 105
+    assert via["papers/darkflobi-gate/score.py"] == via["tests/test_darkflobi_gate_score.py"] == _WINDOW_SCORER
     # the lock-rows AMENDMENT states the same counts for the five files it was written with, one row of its table each
     stated = dict(re.findall(r"^[ ]*\| `(AMENDMENT_darkflobi_gate_[a-z0-9_]+\.md)` \| (\d+) \|",
                              topics["lock_rows"].read_text(encoding="utf-8"), flags=re.M))
@@ -1081,7 +1090,7 @@ def test_the_lab_never_prints_these_words():
     words = re.findall(r'"([^"]+)"', m.group(1))
     assert len(words) >= 8
     banned = re.compile(r"\b(" + "|".join(re.escape(w) + "s?" for w in words) + r")\b", re.I)
-    for p in (PREREG, RULES, README, LOCK_PY, SCAN_PY, TEST_FILE):
+    for p in (PREREG, RULES, README, LOCK_PY, SCAN_PY, TEST_FILE, SCORE_PY, SCORE_TEST, FOLDER / _WINDOW_SCORER):
         raw = p.read_bytes()
         assert not raw.startswith(b"\xef\xbb\xbf"), f"{p.name} has a BOM"
         hits = [m.group(0) for m in banned.finditer(raw.decode("utf-8"))]
@@ -1292,14 +1301,16 @@ def test_a_later_amendment_supersedes_an_earlier_row_only_when_it_declares_it(tm
 
 
 def test_the_folder_reads_in_date_order_and_each_supersession_is_declared(tmp_path):
-    """The folder's eight files, given in any order, read by date then name; the token-shapes file (2026-11-04) declares
+    """The folder's nine files, given in any order, read by date then name; the token-shapes file (2026-11-04) declares
     each of the seven earlier rows it supersedes and the substrate file (2026-11-08) each of the eight rows in force when
-    it is read (D9), each states its count, and without a file's declarations the folder clashes on each of its paths."""
+    it is read (D9), each states its count, and without a file's declarations the folder clashes on each of its paths;
+    the window-scorer file (2026-11-09) is read last and supersedes nothing."""
     lock = _load(LOCK_PY, "lock_hashes")
     files = _amendment_files()
+    assert len(files) == 9 and files[-1].name == _WINDOW_SCORER
     r = lock.read_amendments(list(reversed(files)))
     assert r["clashes"] == [], r["clashes"]
-    assert r["order"][-3:] == [_ANCHOR_NATIVE, _TOKEN_SHAPES, _SUBSTRATE], r["order"]
+    assert r["order"][-4:] == [_ANCHOR_NATIVE, _TOKEN_SHAPES, _SUBSTRATE, _WINDOW_SCORER], r["order"]
     assert r["order"] == sorted(r["order"], key=lambda n: (AMENDMENT_NAME.fullmatch(n).group(2), n))
     got = {(p, e, later) for p, e, _old, later, _new in r["supersessions"]}
     want = {(p, e, later) for later, sup in SUPERSESSIONS_BY_FILE.items() for p, e in sup}
