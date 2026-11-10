@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [Unreleased] — front door: links to two offline sites replaced, 2026-11-10
+
+- **`pyproject.toml`, `CITATION.cff`, `README.md`.** The project links `Homepage`, `Documentation` and `Fathom Lab`, the `url` of the citation file and the site row of the README pointed at `styxx-org.netlify.app` and `fathomlab-io.netlify.app`. Both answered 404 on 2026-11-10. They now point at this repository, its README, the organisation page and the public ledger page, each of which answered 200 on the same day. No line was added to or removed from the README, so its DOI rows keep their line numbers.
+- **Not changed.** The package page on PyPI keeps the old links until the next release. Dated records that name the old sites are not edited. If the sites come back, the old links can be restored.
+
 ## [Unreleased] — coin material removed from the repository, 2026-11-10
 
 - **What this is.** The repository carried material about a cryptocurrency coin tied to the project: a module in the package, a documents folder, holder tiers, payment terms for the bounty, launch copy and a community link. On 2026-11-10 that material is removed from the current-facing files named below. No feature of the library was gated on a user holding the coin. One module, `styxx.clock`, still requires a transfer of the coin for an anchor (see the last item). No verifier in the `styxx` package changed.
