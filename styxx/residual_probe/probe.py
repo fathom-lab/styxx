@@ -13,9 +13,11 @@ from __future__ import annotations
 
 import json
 import math
-from dataclasses import dataclass, asdict
+from dataclasses import dataclass, asdict, field
 from pathlib import Path
 from typing import Any, Dict, List, Optional
+
+from .._position0 import check_position0
 
 
 ATLAS_DIR = Path(__file__).resolve().parent / "atlas"
@@ -46,9 +48,16 @@ class ProbeVerdict:
     n_tokens_in_prefill: int
     probe_version: str
     atlas_version: str
+    # True only when the reading was taken at position 0 of a one-token
+    # input under allow_position0=True. Always left out of repr and
+    # equality; in as_dict() only when True.
+    position0: bool = field(default=False, repr=False, compare=False)
 
     def as_dict(self) -> Dict[str, Any]:
-        return asdict(self)
+        d = asdict(self)
+        if not self.position0:
+            d.pop("position0", None)
+        return d
 
     @property
     def alignment_depth(self) -> float:
@@ -195,6 +204,7 @@ class StyxxProbe:
         prompt: str,
         *,
         apply_chat_template: bool = True,
+        allow_position0: bool = False,
     ) -> ProbeVerdict:
         """Predict the pre-output commitment for `prompt` on `model`.
 
@@ -213,6 +223,19 @@ class StyxxProbe:
         apply_chat_template : bool
             If True, wrap prompt with the target model's instruct chat
             template. Default True.
+        allow_position0 : bool
+            Default False. If the prefill is one token long and that token
+            is not the tokenizer's start token, the final prefill token is
+            position 0 and the reading would be the large activation models
+            carry there, not a measurement of the prompt. By default that
+            case raises. If True, the reading is taken anyway, a
+            Position0Warning is emitted, and the verdict has
+            ``position0=True``.
+
+        Raises:
+            Position0Error: the prefill is one token long, that token is not
+                the start token, and allow_position0 is False. Raised before
+                the forward pass.
         """
         import torch
 
@@ -226,6 +249,11 @@ class StyxxProbe:
             ).to(device)
         else:
             inputs = tokenizer(prompt, return_tensors="pt").input_ids.to(device)
+
+        position0 = check_position0(
+            inputs, tokenizer, allow_position0=allow_position0,
+            where="StyxxProbe.predict_before_generation",
+        )
 
         with torch.no_grad():
             out = model(input_ids=inputs, output_hidden_states=True)
@@ -251,17 +279,27 @@ class StyxxProbe:
             n_tokens_in_prefill=int(inputs.shape[1]),
             probe_version=self.probe_version,
             atlas_version=self.atlas_version,
+            position0=position0,
         )
 
     def gate(self, model, tokenizer, prompt: str,
              *,
              positive_threshold: float = 0.5,
-             raise_on_exceed: bool = False) -> ProbeVerdict:
+             raise_on_exceed: bool = False,
+             allow_position0: bool = False) -> ProbeVerdict:
         """Convenience wrapper: predict, and optionally raise if the
         positive-class probability exceeds `positive_threshold`. Useful
         for pre-output safety gates where the positive class is
-        'comply' on unsafe prompts."""
-        verdict = self.predict_before_generation(model, tokenizer, prompt)
+        'comply' on unsafe prompts.
+
+        allow_position0 is passed to predict_before_generation (see there).
+
+        Raises:
+            Position0Error: as predict_before_generation, before the
+                forward pass.
+        """
+        verdict = self.predict_before_generation(
+            model, tokenizer, prompt, allow_position0=allow_position0)
         if raise_on_exceed and verdict.p_positive >= positive_threshold:
             raise SafetyGateError(
                 f"probe {self.task!r} on {self.model!r} predicts "

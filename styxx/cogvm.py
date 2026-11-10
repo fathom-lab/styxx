@@ -55,6 +55,7 @@ import re
 from dataclasses import dataclass, field
 from typing import Any, Callable, Dict, List, Optional, Tuple
 
+from ._position0 import check_position0
 from .residual_probe.intervene import InterveneProbe
 from .steer import _build_layer_plans, _get_layer_module
 
@@ -125,11 +126,28 @@ class Program:
 
     def run(self, *, model, tokenizer, prompt: str,
             model_name: Optional[str] = None,
-            apply_chat_template: bool = True) -> "ProgramResult":
+            apply_chat_template: bool = True,
+            allow_position0: bool = False) -> "ProgramResult":
+        """Run the program on ``prompt``.
+
+        allow_position0: default False. If the prefill is one token long
+        and that token is not the tokenizer's start token, the probe
+        readings at the prefill step would be the hidden state at position
+        0, which is dominated by the large activation models carry there
+        and is not a measurement of the prompt. By default that case
+        raises; if True, the program runs, a Position0Warning is emitted,
+        and the result has ``position0=True``.
+
+        Raises:
+            Position0Error: the prefill is one token long, that token is
+                not the start token, and allow_position0 is False. Raised
+                before any hook is installed or forward pass is run.
+        """
         return _run_program(
             self, model=model, tokenizer=tokenizer, prompt=prompt,
             model_name=model_name,
             apply_chat_template=apply_chat_template,
+            allow_position0=allow_position0,
         )
 
 
@@ -142,9 +160,13 @@ class ProgramResult:
     trace: List[str] = field(default_factory=list)
     final_profile: Dict[str, float] = field(default_factory=dict)
     probe_readings_last: Dict[str, float] = field(default_factory=dict)
+    # True only when the readings started at position 0 of a one-token
+    # input under allow_position0=True. Always left out of repr and
+    # equality; in as_dict() only when True.
+    position0: bool = field(default=False, repr=False, compare=False)
 
     def as_dict(self) -> Dict[str, Any]:
-        return {
+        d = {
             "output_text": self.output_text,
             "output_tokens": self.output_tokens,
             "halt_reason": self.halt_reason,
@@ -153,6 +175,9 @@ class ProgramResult:
             "final_profile": self.final_profile,
             "probe_readings_last": self.probe_readings_last,
         }
+        if self.position0:
+            d["position0"] = True
+        return d
 
 
 # ─────────────────────────────────────────────────────────────────────
@@ -295,6 +320,7 @@ def _run_program(
     prompt: str,
     model_name: Optional[str],
     apply_chat_template: bool,
+    allow_position0: bool = False,
 ) -> ProgramResult:
     import torch
 
@@ -353,6 +379,10 @@ def _run_program(
             prompt, return_tensors="pt"
         ).input_ids.to(device)
     input_ids.shape[1]
+    position0 = check_position0(
+        input_ids, tokenizer, allow_position0=allow_position0,
+        where="Program.run",
+    )
 
     retries_used = 0
     attempt_profile = dict(profile)
@@ -470,6 +500,7 @@ def _run_program(
             trace=trace,
             final_profile=attempt_profile,
             probe_readings_last=probe_readings_last,
+            position0=position0,
         )
 
 

@@ -64,9 +64,10 @@ Calibration & limitations
 """
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Any, Dict, Iterator, List, Optional
 
+from ._position0 import check_position0
 from .residual_probe.intervene import InterveneProbe
 from .residual_probe.probe import ProbeNotAvailable
 
@@ -82,6 +83,10 @@ class TokenReading:
     token_text: str
     risk: float
     will_flag: bool
+    # True only when the readings come from position 0 of a one-token
+    # input under allow_position0=True. Always left out of repr and
+    # equality; TokenReading has no as_dict().
+    position0: bool = field(default=False, repr=False, compare=False)
 
 
 @dataclass
@@ -100,9 +105,13 @@ class HallucinationVerdict:
     probe_layer: int
     probe_auc: Optional[float]
     threshold: float
+    # True only when a reading was taken at position 0 of a one-token
+    # input under allow_position0=True. Always left out of repr and
+    # equality; in as_dict() only when True.
+    position0: bool = field(default=False, repr=False, compare=False)
 
     def as_dict(self) -> Dict[str, Any]:
-        return {
+        d = {
             "prompt": self.prompt,
             "output_text": self.output_text,
             "output_tokens": self.output_tokens,
@@ -117,6 +126,9 @@ class HallucinationVerdict:
             "probe_auc": self.probe_auc,
             "threshold": self.threshold,
         }
+        if self.position0:
+            d["position0"] = True
+        return d
 
 
 def _resolve_probe(model, probe_task: str) -> InterveneProbe:
@@ -165,6 +177,7 @@ def hallucination_verdict(
     probe_task: str = DEFAULT_PROBE_TASK,
     threshold: float = DEFAULT_THRESHOLD,
     apply_chat_template: bool = True,
+    allow_position0: bool = False,
 ) -> HallucinationVerdict:
     """One-shot risk verdict on a prompt+response pair.
 
@@ -172,6 +185,19 @@ def hallucination_verdict(
     and reads the probe at the final token. Fast path for already-
     completed responses. For per-token streaming use
     `detect_hallucination`.
+
+    allow_position0: default False. If the final ids are one token long
+    and that token is not the tokenizer's start token, the final token is
+    position 0 and the reading would be the large activation models carry
+    there, not a measurement. The raw text is prompt, a blank line, then
+    the response, so this case needs that whole text to tokenize to one
+    token. By default it raises; if True, the reading is taken anyway, a
+    Position0Warning is emitted, and the verdict has ``position0=True``.
+
+    Raises:
+        Position0Error: the final ids are one token long, that token is not
+            the start token, and allow_position0 is False. Raised before the
+            forward pass.
     """
     import torch
 
@@ -199,6 +225,11 @@ def hallucination_verdict(
         text = f"{prompt}\n\n{response_text}"
         input_ids = tokenizer(text, return_tensors="pt").input_ids.to(device)
 
+    position0 = check_position0(
+        input_ids, tokenizer, allow_position0=allow_position0,
+        where="hallucination_verdict",
+    )
+
     with torch.no_grad():
         out = model(input_ids=input_ids, output_hidden_states=True)
         resid = out.hidden_states[probe.layer][0, -1, :]
@@ -218,6 +249,7 @@ def hallucination_verdict(
         probe_layer=probe.layer,
         probe_auc=probe.auc_validation,
         threshold=threshold,
+        position0=position0,
     )
 
 
@@ -236,10 +268,26 @@ def stream_with_risk(
     apply_chat_template: bool = True,
     do_sample: bool = False,
     temperature: float = 1.0,
+    allow_position0: bool = False,
 ) -> Iterator[TokenReading]:
     """Generator yielding (token, reading) tuples. Does NOT halt on
     threshold — caller decides what to do per token. Uses KV cache
-    and a capture-only hook at probe.layer (no steering)."""
+    and a capture-only hook at probe.layer (no steering).
+
+    allow_position0: default False. If the prefill is one token long and
+    that token is not the tokenizer's start token, the prefill reading would
+    be the hidden state at position 0, which is dominated by the large
+    activation models carry there and is not a measurement of the prompt.
+    By default that case raises; if True, generation goes on, a
+    Position0Warning is emitted, and every yielded TokenReading has
+    ``position0=True``.
+
+    Raises:
+        Position0Error: the prefill is one token long, that token is not the
+            start token, and allow_position0 is False. As this is a
+            generator, it is raised when iteration starts, before any forward
+            pass.
+    """
     import torch
 
     probe = _resolve_probe(model, probe_task)
@@ -265,6 +313,17 @@ def stream_with_risk(
     else:
         input_ids = tokenizer(prompt, return_tensors="pt").input_ids.to(device)
     input_ids.shape[1]
+
+    try:
+        position0 = check_position0(
+            input_ids, tokenizer, allow_position0=allow_position0,
+            where="stream_with_risk",
+        )
+    except BaseException:
+        # Position0Error, or a Position0Warning turned into an error by a
+        # warnings filter: either way, take the capture hook off the model.
+        handle.remove()
+        raise
 
     try:
         current = input_ids
@@ -301,6 +360,7 @@ def stream_with_risk(
                                                  skip_special_tokens=True),
                     risk=risk,
                     will_flag=risk > threshold,
+                    position0=position0,
                 )
 
                 if eos is not None and tok_id == eos:
@@ -330,6 +390,7 @@ def detect_hallucination(
     apply_chat_template: bool = True,
     do_sample: bool = False,
     temperature: float = 1.0,
+    allow_position0: bool = False,
 ) -> HallucinationVerdict:
     """Generate with runtime fabrication detection.
 
@@ -338,6 +399,20 @@ def detect_hallucination(
       - "halt_and_flag"         — stop at first flagged token, return
       - "retry_with_suppression"— restart generation with -alpha on the
                                   confab direction; up to max_retries
+
+    allow_position0: default False. If the prefill is one token long and
+    that token is not the tokenizer's start token, the prefill reading would
+    be the hidden state at position 0, which is dominated by the large
+    activation models carry there and is not a measurement of the prompt.
+    By default that case raises; if True, generation goes on, a
+    Position0Warning is emitted, and the verdict has ``position0=True``.
+    In retry_with_suppression mode each attempt reads the prefill again,
+    so each attempt emits its own Position0Warning.
+
+    Raises:
+        Position0Error: the prefill is one token long, that token is not the
+            start token, and allow_position0 is False. Raised before any
+            forward pass.
     """
     if on_detect not in ON_DETECT_CHOICES:
         raise ValueError(
@@ -352,6 +427,8 @@ def detect_hallucination(
     retries = 0
     # For retry mode we install a steering hook on retry attempts.
     active_profile: Optional[Dict[str, float]] = None
+    position0 = False
+    marks: Dict[str, bool] = {}
 
     while True:
         token_texts: List[str] = []
@@ -368,10 +445,13 @@ def detect_hallucination(
             do_sample=do_sample,
             temperature=temperature,
             active_profile=active_profile,
+            allow_position0=allow_position0,
+            _marks=marks,
         )
 
         fired = False
         for i, reading in enumerate(streamer):
+            position0 = position0 or reading.position0
             token_texts.append(reading.token_text)
             risks.append(reading.risk)
             if reading.risk > max_risk:
@@ -415,15 +495,20 @@ def detect_hallucination(
             probe_layer=probe_layer,
             probe_auc=probe.auc_validation,
             threshold=threshold,
+            position0=position0 or marks.get("position0", False),
         )
 
 
 def _streamed(model, tokenizer, prompt, *, probe: InterveneProbe,
                max_new_tokens: int, apply_chat_template: bool,
                do_sample: bool, temperature: float,
-               active_profile: Optional[Dict[str, float]]) -> Iterator[TokenReading]:
+               active_profile: Optional[Dict[str, float]],
+               allow_position0: bool = False,
+               _marks: Optional[Dict[str, bool]] = None) -> Iterator[TokenReading]:
     """Internal: one attempt of streaming with per-token risk +
-    optional active steering profile."""
+    optional active steering profile. allow_position0 and the
+    Position0Error it governs are as in detect_hallucination; the
+    error is raised when iteration starts, before any forward pass."""
     import torch
     from contextlib import nullcontext
     from .steer import steer
@@ -452,6 +537,19 @@ def _streamed(model, tokenizer, prompt, *, probe: InterveneProbe,
         ).to(device)
     else:
         input_ids = tokenizer(prompt, return_tensors="pt").input_ids.to(device)
+
+    try:
+        position0 = check_position0(
+            input_ids, tokenizer, allow_position0=allow_position0,
+            where="detect_hallucination",
+        )
+        if _marks is not None:
+            _marks["position0"] = position0
+    except BaseException:
+        # Position0Error, or a Position0Warning turned into an error by a
+        # warnings filter: either way, take the capture hook off the model.
+        handle.remove()
+        raise
 
     try:
         with steer_cm:
@@ -485,6 +583,7 @@ def _streamed(model, tokenizer, prompt, *, probe: InterveneProbe,
                             [tok_id], skip_special_tokens=True),
                         risk=risk,
                         will_flag=False,  # caller decides threshold
+                        position0=position0,
                     )
                     if eos is not None and tok_id == eos:
                         return
