@@ -36,8 +36,6 @@ These are trust infrastructure. They are open because their value depends on bei
 3. **Protected IP.** Patents (3 filed; grounded-honesty mechanism + certificate apparatus are
    continuation candidates) let us OWN the invention while OPEN-SOURCING the implementation — the
    best of both. Defensibility without closure.
-4. **Network value.** `$STYXX` + validator tiers coordinate the public verification network and
-   capture value while the library stays free — exactly as `styxx.token` already states.
 
 ## Publish-with-a-lag (the one concession to value capture)
 
@@ -48,7 +46,7 @@ always lands in the open.
 ## Anti-goals (binding; the loop must honor these)
 
 - Never close, paywall, or obfuscate the verifier or the measurement primitives.
-- Never gate the open-source library behind the token (the token coordinates the network only).
+- Never gate the open-source library behind an asset a user must hold (reworded 2026-11-10).
 - Never replace a re-runnable receipt with a "trust us" claim, in product or marketing.
 - Never ship a certificate the public cannot independently re-verify.
 

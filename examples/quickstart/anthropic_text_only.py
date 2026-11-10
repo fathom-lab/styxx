@@ -12,7 +12,6 @@ proxy-signal) per Spec v1.0 §5.1.2. This is documented in the
 adversarial robustness supplement (Fathom v22, doi:10.5281/zenodo.19761194).
 
 Trust scores from Tier-3 carry a documented confidence_penalty of 0.25.
-For production-grade Anthropic profiling, use the Atlas Pro pipeline.
 
 Spec: https://doi.org/10.5281/zenodo.19746215
 """

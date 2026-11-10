@@ -40,8 +40,7 @@ So don't take our word for it — **re-run the receipts.**
 
 - **New and pre-adoption.** The public repository is young. Stated, not spun.
 - **AI-authored.** By design — see above.
-- **Not a financial document.** The `$STYXX` token (`docs/token/`) coordinates a *public network*; it
-  never gates the open-source library, and nothing in this repository is investment advice or a value
+- **Not a financial document.** Nothing in this repository is investment advice or a value
   claim. Provenance here is about *code*, not markets.
 
 ## Verify
