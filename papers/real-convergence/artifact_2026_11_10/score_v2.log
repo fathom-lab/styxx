@@ -1,0 +1,95 @@
+PASS      C3   original Qwen2.5-1.5B                   1 OK log(s); pad check worst 4.89e-06 over 178 rows
+PASS      C3   original Qwen2.5-3B                     1 OK log(s); pad check worst 1.68e-06 over 178 rows
+PASS      C3   original Llama-3.2-1B                   1 OK log(s); pad check worst 8.88e-07 over 178 rows
+PASS      C3   original Llama-3.2-3B                   1 OK log(s); pad check worst 6.11e-07 over 178 rows
+PASS      C3   original Phi-3.5-mini                   1 OK log(s); pad check worst 6.72e-07 over 98 rows
+PASS      C3   original Qwen2.5-0.5B                   1 OK log(s); pad check worst 8.40e-06 over 178 rows
+PASS      C1   original Qwen2.5-0.5B                   768 of 768 states within (max relative error 8.25e-06), lengths equal True
+PASS      C1   fresh    Qwen2.5-0.5B                   768 of 768 states within (max relative error 2.04e-05), lengths equal True
+PASS      C1   original Llama-3.2-1B                   768 of 768 states within (max relative error 4.06e-06), lengths equal True
+PASS      C1   fresh    Llama-3.2-1B                   768 of 768 states within (max relative error 3.08e-06), lengths equal True
+PASS      C1   original Qwen2.5-1.5B                   768 of 768 states within (max relative error 5.81e-06), lengths equal True
+PASS      C1   fresh    Qwen2.5-1.5B                   768 of 768 states within (max relative error 9.79e-06), lengths equal True
+PASS      C2a  original Qwen2.5-3B                     46 of 46 rows within (median 0.00058, max 0.00110)
+PASS      C2b  original Qwen2.5-3B                     50 of 50 rows within (median 0.00518, max 0.00908)
+PASS      C2a  original Llama-3.2-3B                   96 of 96 rows within (median 0.00037, max 0.00055)
+PASS      C2a  original Phi-3.5-mini                   47 of 47 rows within (median 0.00035, max 0.00055)
+PASS      C2b  original Phi-3.5-mini                   49 of 49 rows within (median 0.00260, max 0.00629)
+PASS      A1   fresh    Phi-3.5-mini                   29.1x over 39 words
+PASS      A1   fresh    Qwen2.5-3B                     43.4x over 40 words
+PASS      A2   fresh    Phi-3.5-mini                   share 0.9554, AUC 1.0000, alone 39 of 96
+PASS      A2   fresh    Qwen2.5-3B                     share 0.9511, AUC 1.0000, alone 40 of 96
+PASS      A3   fresh    Phi-3.5-mini                   share 0.0802
+PASS      A3   fresh    Qwen2.5-3B                     share 0.0773
+PASS      A4   fresh    Llama-3.2-3B                   start token True, ratio 0.91x, self RSA 0.9992
+PASS      G1   fresh    Qwen2.5-1.5B x Llama-3.2-1B    0.9280 (8 templates 0.0794)
+PASS      G1   fresh    Qwen2.5-1.5B x Llama-3.2-3B    0.9117 (8 templates 0.1049)
+PASS      G1   fresh    Qwen2.5-3B x Llama-3.2-1B      0.9197 (8 templates 0.0924)
+PASS      G1   fresh    Qwen2.5-3B x Llama-3.2-3B      0.9139 (8 templates 0.1184)
+PASS      G2   fresh    Llama-3.2-1B x Phi-3.5-mini    0.9205 (8 templates 0.1665)
+PASS      G2   fresh    Llama-3.2-3B x Phi-3.5-mini    0.9228 (8 templates 0.1866)
+PASS      G2   fresh    Qwen2.5-1.5B x Phi-3.5-mini    0.8899 (8 templates 0.1817)
+PASS      G2   fresh    Qwen2.5-3B x Phi-3.5-mini      0.8762 (8 templates 0.1816)
+PASS      G3   fresh    8 cross-family pairs among five models mean 0.9103, median 0.9168, min 0.8762 (8 templates: mean 0.1389)
+PASS      G4   fresh    Llama-3.2-1B x Phi-3.5-mini    0.2312 over a null of 0.6893 (25 null sd); same-category pairs only: r 0.8524
+PASS      G4   fresh    Llama-3.2-3B x Phi-3.5-mini    0.2447 over a null of 0.6781 (25 null sd); same-category pairs only: r 0.8703
+PASS      G4   fresh    Qwen2.5-1.5B x Llama-3.2-1B    0.2626 over a null of 0.6654 (28 null sd); same-category pairs only: r 0.8971
+PASS      G4   fresh    Qwen2.5-1.5B x Llama-3.2-3B    0.2653 over a null of 0.6464 (28 null sd); same-category pairs only: r 0.8380
+PASS      G4   fresh    Qwen2.5-1.5B x Phi-3.5-mini    0.2249 over a null of 0.6650 (23 null sd); same-category pairs only: r 0.7929
+PASS      G4   fresh    Qwen2.5-3B x Llama-3.2-1B      0.2701 over a null of 0.6497 (29 null sd); same-category pairs only: r 0.9016
+PASS      G4   fresh    Qwen2.5-3B x Llama-3.2-3B      0.2798 over a null of 0.6341 (29 null sd); same-category pairs only: r 0.8735
+PASS      G4   fresh    Qwen2.5-3B x Phi-3.5-mini      0.2296 over a null of 0.6466 (24 null sd); same-category pairs only: r 0.8191
+PASS      G5   fresh    Llama-3.2-1B x Llama-3.2-3B    June 0.963, re-derived 0.9633
+PASS      G5   fresh    Llama-3.2-1B x Phi-3.5-mini    June 0.166, re-derived 0.1661
+PASS      G5   fresh    Llama-3.2-3B x Phi-3.5-mini    June 0.186, re-derived 0.1864
+PASS      G5   fresh    Qwen2.5-1.5B x Llama-3.2-1B    June 0.075, re-derived 0.0747
+PASS      G5   fresh    Qwen2.5-1.5B x Llama-3.2-3B    June 0.1, re-derived 0.0998
+PASS      G5   fresh    Qwen2.5-1.5B x Phi-3.5-mini    June 0.18, re-derived 0.1800
+PASS      G5   fresh    Qwen2.5-1.5B x Qwen2.5-3B      June 0.999, re-derived 0.9988
+PASS      G5   fresh    Qwen2.5-3B x Llama-3.2-1B      June 0.087, re-derived 0.0871
+PASS      G5   fresh    Qwen2.5-3B x Llama-3.2-3B      June 0.113, re-derived 0.1127
+PASS      G5   fresh    Qwen2.5-3B x Phi-3.5-mini      June 0.18, re-derived 0.1800
+PASS      G6   fresh    Llama-3.2-1B x Phi-3.5-mini    largest move 0.0022
+PASS      G6   fresh    Llama-3.2-3B x Phi-3.5-mini    largest move 0.0023
+PASS      G6   fresh    Qwen2.5-1.5B x Llama-3.2-1B    largest move 0.0047
+PASS      G6   fresh    Qwen2.5-1.5B x Llama-3.2-3B    largest move 0.0050
+PASS      G6   fresh    Qwen2.5-1.5B x Phi-3.5-mini    largest move 0.0051
+PASS      G6   fresh    Qwen2.5-3B x Llama-3.2-1B      largest move 0.0039
+PASS      G6   fresh    Qwen2.5-3B x Llama-3.2-3B      largest move 0.0035
+PASS      G6   fresh    Qwen2.5-3B x Phi-3.5-mini      largest move 0.0034
+PASS      A1   original Phi-3.5-mini                   29.2x over 49 words
+PASS      A1   original Qwen2.5-3B                     42.7x over 50 words
+PASS      A2   original Phi-3.5-mini                   share 0.9570, AUC 1.0000, alone 49 of 96
+PASS      A2   original Qwen2.5-3B                     share 0.9532, AUC 1.0000, alone 50 of 96
+PASS      A3   original Phi-3.5-mini                   share 0.0846
+PASS      A3   original Qwen2.5-3B                     share 0.0758
+PASS      A4   original Llama-3.2-3B                   start token True, ratio 0.93x, self RSA 0.9992
+PASS      G1   original Qwen2.5-1.5B x Llama-3.2-1B    0.9261 (8 templates 0.1427)
+PASS      G1   original Qwen2.5-1.5B x Llama-3.2-3B    0.9230 (8 templates 0.1551)
+PASS      G1   original Qwen2.5-3B x Llama-3.2-1B      0.9208 (8 templates 0.1636)
+PASS      G1   original Qwen2.5-3B x Llama-3.2-3B      0.9159 (8 templates 0.1785)
+PASS      G2   original Llama-3.2-1B x Phi-3.5-mini    0.9075 (8 templates 0.1760)
+PASS      G2   original Llama-3.2-3B x Phi-3.5-mini    0.9204 (8 templates 0.1878)
+PASS      G2   original Qwen2.5-1.5B x Phi-3.5-mini    0.8968 (8 templates 0.3087)
+PASS      G2   original Qwen2.5-3B x Phi-3.5-mini      0.8833 (8 templates 0.3117)
+PASS      G3   original 8 cross-family pairs among five models mean 0.9117, median 0.9182, min 0.8833 (8 templates: mean 0.2030)
+PASS      G4   original Llama-3.2-1B x Phi-3.5-mini    0.2216 over a null of 0.6859 (15 null sd); same-category pairs only: r 0.8164
+PASS      G4   original Llama-3.2-3B x Phi-3.5-mini    0.2267 over a null of 0.6937 (15 null sd); same-category pairs only: r 0.8220
+PASS      G4   original Qwen2.5-1.5B x Llama-3.2-1B    0.2546 over a null of 0.6715 (19 null sd); same-category pairs only: r 0.8865
+PASS      G4   original Qwen2.5-1.5B x Llama-3.2-3B    0.2447 over a null of 0.6783 (19 null sd); same-category pairs only: r 0.8904
+PASS      G4   original Qwen2.5-1.5B x Phi-3.5-mini    0.2240 over a null of 0.6729 (14 null sd); same-category pairs only: r 0.8152
+PASS      G4   original Qwen2.5-3B x Llama-3.2-1B      0.2635 over a null of 0.6573 (21 null sd); same-category pairs only: r 0.8828
+PASS      G4   original Qwen2.5-3B x Llama-3.2-3B      0.2540 over a null of 0.6619 (22 null sd); same-category pairs only: r 0.8758
+PASS      G4   original Qwen2.5-3B x Phi-3.5-mini      0.2251 over a null of 0.6581 (16 null sd); same-category pairs only: r 0.8079
+PASS      G6   original Llama-3.2-1B x Phi-3.5-mini    largest move 0.0020
+PASS      G6   original Llama-3.2-3B x Phi-3.5-mini    largest move 0.0017
+PASS      G6   original Qwen2.5-1.5B x Llama-3.2-1B    largest move 0.0022
+PASS      G6   original Qwen2.5-1.5B x Llama-3.2-3B    largest move 0.0025
+PASS      G6   original Qwen2.5-1.5B x Phi-3.5-mini    largest move 0.0029
+PASS      G6   original Qwen2.5-3B x Llama-3.2-1B      largest move 0.0024
+PASS      G6   original Qwen2.5-3B x Llama-3.2-3B      largest move 0.0024
+PASS      G6   original Qwen2.5-3B x Phi-3.5-mini      largest move 0.0046
+PHI GAP fresh    Qwen x Llama mean 0.9183, Phi pairs mean 0.9023, gap 0.0160 -> sentence required: False
+PHI GAP original Qwen x Llama mean 0.9215, Phi pairs mean 0.9020, gap 0.0195 -> sentence required: False
+lines: fresh PASS 42, original PASS 32
+wrote score_v2_out.json

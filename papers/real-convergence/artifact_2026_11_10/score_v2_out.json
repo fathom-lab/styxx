@@ -1,0 +1,1687 @@
+{
+ "prereg": "PREREG_corrected_geometry_five_models_2026_11_10.md",
+ "controls": [
+  {
+   "id": "C3",
+   "set": "original",
+   "model": "Qwen2.5-1.5B",
+   "claim": "exactly one OK run log, with the pad check at most 1e-04",
+   "got": "1 OK log(s); pad check worst 4.89e-06 over 178 rows",
+   "verdict": "PASS"
+  },
+  {
+   "id": "C3",
+   "set": "original",
+   "model": "Qwen2.5-3B",
+   "claim": "exactly one OK run log, with the pad check at most 1e-04",
+   "got": "1 OK log(s); pad check worst 1.68e-06 over 178 rows",
+   "verdict": "PASS"
+  },
+  {
+   "id": "C3",
+   "set": "original",
+   "model": "Llama-3.2-1B",
+   "claim": "exactly one OK run log, with the pad check at most 1e-04",
+   "got": "1 OK log(s); pad check worst 8.88e-07 over 178 rows",
+   "verdict": "PASS"
+  },
+  {
+   "id": "C3",
+   "set": "original",
+   "model": "Llama-3.2-3B",
+   "claim": "exactly one OK run log, with the pad check at most 1e-04",
+   "got": "1 OK log(s); pad check worst 6.11e-07 over 178 rows",
+   "verdict": "PASS"
+  },
+  {
+   "id": "C3",
+   "set": "original",
+   "model": "Phi-3.5-mini",
+   "claim": "exactly one OK run log, with the pad check at most 1e-04",
+   "got": "1 OK log(s); pad check worst 6.72e-07 over 98 rows",
+   "verdict": "PASS"
+  },
+  {
+   "id": "C3",
+   "set": "original",
+   "model": "Qwen2.5-0.5B",
+   "claim": "exactly one OK run log, with the pad check at most 1e-04",
+   "got": "1 OK log(s); pad check worst 8.40e-06 over 178 rows",
+   "verdict": "PASS"
+  },
+  {
+   "id": "C1",
+   "set": "original",
+   "model": "Qwen2.5-0.5B",
+   "claim": "all 768 states within 1e-04 of the first test, token lengths equal",
+   "got": "768 of 768 states within (max relative error 8.25e-06), lengths equal True",
+   "verdict": "PASS"
+  },
+  {
+   "id": "C1",
+   "set": "fresh",
+   "model": "Qwen2.5-0.5B",
+   "claim": "all 768 states within 1e-04 of the first test, token lengths equal",
+   "got": "768 of 768 states within (max relative error 2.04e-05), lengths equal True",
+   "verdict": "PASS"
+  },
+  {
+   "id": "C1",
+   "set": "original",
+   "model": "Llama-3.2-1B",
+   "claim": "all 768 states within 1e-04 of the first test, token lengths equal",
+   "got": "768 of 768 states within (max relative error 4.06e-06), lengths equal True",
+   "verdict": "PASS"
+  },
+  {
+   "id": "C1",
+   "set": "fresh",
+   "model": "Llama-3.2-1B",
+   "claim": "all 768 states within 1e-04 of the first test, token lengths equal",
+   "got": "768 of 768 states within (max relative error 3.08e-06), lengths equal True",
+   "verdict": "PASS"
+  },
+  {
+   "id": "C1",
+   "set": "original",
+   "model": "Qwen2.5-1.5B",
+   "claim": "all 768 states within 1e-04 of the first test, token lengths equal",
+   "got": "768 of 768 states within (max relative error 5.81e-06), lengths equal True",
+   "verdict": "PASS"
+  },
+  {
+   "id": "C1",
+   "set": "fresh",
+   "model": "Qwen2.5-1.5B",
+   "claim": "all 768 states within 1e-04 of the first test, token lengths equal",
+   "got": "768 of 768 states within (max relative error 9.79e-06), lengths equal True",
+   "verdict": "PASS"
+  },
+  {
+   "id": "C2a",
+   "set": "original",
+   "model": "Qwen2.5-3B",
+   "claim": "rows not alone at position 0: rep8 within 0.01 of the stored June row, at most 2 rows missing",
+   "got": "46 of 46 rows within (median 0.00058, max 0.00110)",
+   "verdict": "PASS"
+  },
+  {
+   "id": "C2b",
+   "set": "original",
+   "model": "Qwen2.5-3B",
+   "claim": "rows alone at position 0: the rep8 difference from June is at most 0.05 of that row's seven-template part, at most 2 rows missing",
+   "got": "50 of 50 rows within (median 0.00518, max 0.00908)",
+   "verdict": "PASS"
+  },
+  {
+   "id": "C2a",
+   "set": "original",
+   "model": "Llama-3.2-3B",
+   "claim": "rows not alone at position 0: rep8 within 0.01 of the stored June row, at most 2 rows missing",
+   "got": "96 of 96 rows within (median 0.00037, max 0.00055)",
+   "verdict": "PASS"
+  },
+  {
+   "id": "C2a",
+   "set": "original",
+   "model": "Phi-3.5-mini",
+   "claim": "rows not alone at position 0: rep8 within 0.01 of the stored June row, at most 2 rows missing",
+   "got": "47 of 47 rows within (median 0.00035, max 0.00055)",
+   "verdict": "PASS"
+  },
+  {
+   "id": "C2b",
+   "set": "original",
+   "model": "Phi-3.5-mini",
+   "claim": "rows alone at position 0: the rep8 difference from June is at most 0.05 of that row's seven-template part, at most 2 rows missing",
+   "got": "49 of 49 rows within (median 0.00260, max 0.00629)",
+   "verdict": "PASS"
+  }
+ ],
+ "lines": [
+  {
+   "id": "A1",
+   "set": "fresh",
+   "model": "Qwen2.5-3B",
+   "claim": "bare-template norm at least 10x the other templates, median over words alone at position 0",
+   "got": "43.4x over 40 words",
+   "verdict": "PASS"
+  },
+  {
+   "id": "A2",
+   "set": "fresh",
+   "model": "Qwen2.5-3B",
+   "claim": "8 templates: top direction share at least 0.85 and AUC against alone at least 0.99",
+   "got": "share 0.9511, AUC 1.0000, alone 40 of 96",
+   "verdict": "PASS"
+  },
+  {
+   "id": "A3",
+   "set": "fresh",
+   "model": "Qwen2.5-3B",
+   "claim": "bare template dropped: top direction share at most 0.30",
+   "got": "share 0.0773",
+   "verdict": "PASS"
+  },
+  {
+   "id": "A1",
+   "set": "fresh",
+   "model": "Phi-3.5-mini",
+   "claim": "bare-template norm at least 10x the other templates, median over words alone at position 0",
+   "got": "29.1x over 39 words",
+   "verdict": "PASS"
+  },
+  {
+   "id": "A2",
+   "set": "fresh",
+   "model": "Phi-3.5-mini",
+   "claim": "8 templates: top direction share at least 0.85 and AUC against alone at least 0.99",
+   "got": "share 0.9554, AUC 1.0000, alone 39 of 96",
+   "verdict": "PASS"
+  },
+  {
+   "id": "A3",
+   "set": "fresh",
+   "model": "Phi-3.5-mini",
+   "claim": "bare template dropped: top direction share at most 0.30",
+   "got": "share 0.0802",
+   "verdict": "PASS"
+  },
+  {
+   "id": "A4",
+   "set": "fresh",
+   "model": "Llama-3.2-3B",
+   "claim": "start token added, norm ratio at most 3x, own geometry 8 against 7 templates at least 0.95",
+   "got": "start token True, ratio 0.91x, self RSA 0.9992",
+   "verdict": "PASS"
+  },
+  {
+   "id": "G1",
+   "set": "fresh",
+   "model": "Qwen2.5-1.5B x Llama-3.2-1B",
+   "claim": "Qwen with Llama, bare template dropped: RSA at least 0.85",
+   "got": "0.9280 (8 templates 0.0794)",
+   "verdict": "PASS"
+  },
+  {
+   "id": "G4",
+   "set": "fresh",
+   "model": "Qwen2.5-1.5B x Llama-3.2-1B",
+   "claim": "RSA exceeds the within-category shuffle null by at least 0.15 on the r scale",
+   "got": "0.2626 over a null of 0.6654 (28 null sd); same-category pairs only: r 0.8971",
+   "verdict": "PASS"
+  },
+  {
+   "id": "G6",
+   "set": "fresh",
+   "model": "Qwen2.5-1.5B x Llama-3.2-1B",
+   "claim": "dropping any one of the seven kept templates moves the RSA by at most 0.05",
+   "got": "largest move 0.0047",
+   "verdict": "PASS"
+  },
+  {
+   "id": "G1",
+   "set": "fresh",
+   "model": "Qwen2.5-1.5B x Llama-3.2-3B",
+   "claim": "Qwen with Llama, bare template dropped: RSA at least 0.85",
+   "got": "0.9117 (8 templates 0.1049)",
+   "verdict": "PASS"
+  },
+  {
+   "id": "G4",
+   "set": "fresh",
+   "model": "Qwen2.5-1.5B x Llama-3.2-3B",
+   "claim": "RSA exceeds the within-category shuffle null by at least 0.15 on the r scale",
+   "got": "0.2653 over a null of 0.6464 (28 null sd); same-category pairs only: r 0.8380",
+   "verdict": "PASS"
+  },
+  {
+   "id": "G6",
+   "set": "fresh",
+   "model": "Qwen2.5-1.5B x Llama-3.2-3B",
+   "claim": "dropping any one of the seven kept templates moves the RSA by at most 0.05",
+   "got": "largest move 0.0050",
+   "verdict": "PASS"
+  },
+  {
+   "id": "G2",
+   "set": "fresh",
+   "model": "Qwen2.5-1.5B x Phi-3.5-mini",
+   "claim": "pair with Phi, bare template dropped: RSA at least 0.70",
+   "got": "0.8899 (8 templates 0.1817)",
+   "verdict": "PASS"
+  },
+  {
+   "id": "G4",
+   "set": "fresh",
+   "model": "Qwen2.5-1.5B x Phi-3.5-mini",
+   "claim": "RSA exceeds the within-category shuffle null by at least 0.15 on the r scale",
+   "got": "0.2249 over a null of 0.6650 (23 null sd); same-category pairs only: r 0.7929",
+   "verdict": "PASS"
+  },
+  {
+   "id": "G6",
+   "set": "fresh",
+   "model": "Qwen2.5-1.5B x Phi-3.5-mini",
+   "claim": "dropping any one of the seven kept templates moves the RSA by at most 0.05",
+   "got": "largest move 0.0051",
+   "verdict": "PASS"
+  },
+  {
+   "id": "G1",
+   "set": "fresh",
+   "model": "Qwen2.5-3B x Llama-3.2-1B",
+   "claim": "Qwen with Llama, bare template dropped: RSA at least 0.85",
+   "got": "0.9197 (8 templates 0.0924)",
+   "verdict": "PASS"
+  },
+  {
+   "id": "G4",
+   "set": "fresh",
+   "model": "Qwen2.5-3B x Llama-3.2-1B",
+   "claim": "RSA exceeds the within-category shuffle null by at least 0.15 on the r scale",
+   "got": "0.2701 over a null of 0.6497 (29 null sd); same-category pairs only: r 0.9016",
+   "verdict": "PASS"
+  },
+  {
+   "id": "G6",
+   "set": "fresh",
+   "model": "Qwen2.5-3B x Llama-3.2-1B",
+   "claim": "dropping any one of the seven kept templates moves the RSA by at most 0.05",
+   "got": "largest move 0.0039",
+   "verdict": "PASS"
+  },
+  {
+   "id": "G1",
+   "set": "fresh",
+   "model": "Qwen2.5-3B x Llama-3.2-3B",
+   "claim": "Qwen with Llama, bare template dropped: RSA at least 0.85",
+   "got": "0.9139 (8 templates 0.1184)",
+   "verdict": "PASS"
+  },
+  {
+   "id": "G4",
+   "set": "fresh",
+   "model": "Qwen2.5-3B x Llama-3.2-3B",
+   "claim": "RSA exceeds the within-category shuffle null by at least 0.15 on the r scale",
+   "got": "0.2798 over a null of 0.6341 (29 null sd); same-category pairs only: r 0.8735",
+   "verdict": "PASS"
+  },
+  {
+   "id": "G6",
+   "set": "fresh",
+   "model": "Qwen2.5-3B x Llama-3.2-3B",
+   "claim": "dropping any one of the seven kept templates moves the RSA by at most 0.05",
+   "got": "largest move 0.0035",
+   "verdict": "PASS"
+  },
+  {
+   "id": "G2",
+   "set": "fresh",
+   "model": "Qwen2.5-3B x Phi-3.5-mini",
+   "claim": "pair with Phi, bare template dropped: RSA at least 0.70",
+   "got": "0.8762 (8 templates 0.1816)",
+   "verdict": "PASS"
+  },
+  {
+   "id": "G4",
+   "set": "fresh",
+   "model": "Qwen2.5-3B x Phi-3.5-mini",
+   "claim": "RSA exceeds the within-category shuffle null by at least 0.15 on the r scale",
+   "got": "0.2296 over a null of 0.6466 (24 null sd); same-category pairs only: r 0.8191",
+   "verdict": "PASS"
+  },
+  {
+   "id": "G6",
+   "set": "fresh",
+   "model": "Qwen2.5-3B x Phi-3.5-mini",
+   "claim": "dropping any one of the seven kept templates moves the RSA by at most 0.05",
+   "got": "largest move 0.0034",
+   "verdict": "PASS"
+  },
+  {
+   "id": "G2",
+   "set": "fresh",
+   "model": "Llama-3.2-1B x Phi-3.5-mini",
+   "claim": "pair with Phi, bare template dropped: RSA at least 0.70",
+   "got": "0.9205 (8 templates 0.1665)",
+   "verdict": "PASS"
+  },
+  {
+   "id": "G4",
+   "set": "fresh",
+   "model": "Llama-3.2-1B x Phi-3.5-mini",
+   "claim": "RSA exceeds the within-category shuffle null by at least 0.15 on the r scale",
+   "got": "0.2312 over a null of 0.6893 (25 null sd); same-category pairs only: r 0.8524",
+   "verdict": "PASS"
+  },
+  {
+   "id": "G6",
+   "set": "fresh",
+   "model": "Llama-3.2-1B x Phi-3.5-mini",
+   "claim": "dropping any one of the seven kept templates moves the RSA by at most 0.05",
+   "got": "largest move 0.0022",
+   "verdict": "PASS"
+  },
+  {
+   "id": "G2",
+   "set": "fresh",
+   "model": "Llama-3.2-3B x Phi-3.5-mini",
+   "claim": "pair with Phi, bare template dropped: RSA at least 0.70",
+   "got": "0.9228 (8 templates 0.1866)",
+   "verdict": "PASS"
+  },
+  {
+   "id": "G4",
+   "set": "fresh",
+   "model": "Llama-3.2-3B x Phi-3.5-mini",
+   "claim": "RSA exceeds the within-category shuffle null by at least 0.15 on the r scale",
+   "got": "0.2447 over a null of 0.6781 (25 null sd); same-category pairs only: r 0.8703",
+   "verdict": "PASS"
+  },
+  {
+   "id": "G6",
+   "set": "fresh",
+   "model": "Llama-3.2-3B x Phi-3.5-mini",
+   "claim": "dropping any one of the seven kept templates moves the RSA by at most 0.05",
+   "got": "largest move 0.0023",
+   "verdict": "PASS"
+  },
+  {
+   "id": "G3",
+   "set": "fresh",
+   "model": "8 cross-family pairs among five models",
+   "claim": "mean RSA with the bare template dropped at least 0.80",
+   "got": "mean 0.9103, median 0.9168, min 0.8762 (8 templates: mean 0.1389)",
+   "verdict": "PASS"
+  },
+  {
+   "id": "G5",
+   "set": "fresh",
+   "model": "Qwen2.5-1.5B x Qwen2.5-3B",
+   "claim": "June partial-lexical value re-derived within 0.02 under the published 8-template pipeline",
+   "got": "June 0.999, re-derived 0.9988",
+   "verdict": "PASS"
+  },
+  {
+   "id": "G5",
+   "set": "fresh",
+   "model": "Qwen2.5-1.5B x Llama-3.2-1B",
+   "claim": "June partial-lexical value re-derived within 0.02 under the published 8-template pipeline",
+   "got": "June 0.075, re-derived 0.0747",
+   "verdict": "PASS"
+  },
+  {
+   "id": "G5",
+   "set": "fresh",
+   "model": "Qwen2.5-1.5B x Llama-3.2-3B",
+   "claim": "June partial-lexical value re-derived within 0.02 under the published 8-template pipeline",
+   "got": "June 0.1, re-derived 0.0998",
+   "verdict": "PASS"
+  },
+  {
+   "id": "G5",
+   "set": "fresh",
+   "model": "Qwen2.5-1.5B x Phi-3.5-mini",
+   "claim": "June partial-lexical value re-derived within 0.02 under the published 8-template pipeline",
+   "got": "June 0.18, re-derived 0.1800",
+   "verdict": "PASS"
+  },
+  {
+   "id": "G5",
+   "set": "fresh",
+   "model": "Qwen2.5-3B x Llama-3.2-1B",
+   "claim": "June partial-lexical value re-derived within 0.02 under the published 8-template pipeline",
+   "got": "June 0.087, re-derived 0.0871",
+   "verdict": "PASS"
+  },
+  {
+   "id": "G5",
+   "set": "fresh",
+   "model": "Qwen2.5-3B x Llama-3.2-3B",
+   "claim": "June partial-lexical value re-derived within 0.02 under the published 8-template pipeline",
+   "got": "June 0.113, re-derived 0.1127",
+   "verdict": "PASS"
+  },
+  {
+   "id": "G5",
+   "set": "fresh",
+   "model": "Qwen2.5-3B x Phi-3.5-mini",
+   "claim": "June partial-lexical value re-derived within 0.02 under the published 8-template pipeline",
+   "got": "June 0.18, re-derived 0.1800",
+   "verdict": "PASS"
+  },
+  {
+   "id": "G5",
+   "set": "fresh",
+   "model": "Llama-3.2-1B x Llama-3.2-3B",
+   "claim": "June partial-lexical value re-derived within 0.02 under the published 8-template pipeline",
+   "got": "June 0.963, re-derived 0.9633",
+   "verdict": "PASS"
+  },
+  {
+   "id": "G5",
+   "set": "fresh",
+   "model": "Llama-3.2-1B x Phi-3.5-mini",
+   "claim": "June partial-lexical value re-derived within 0.02 under the published 8-template pipeline",
+   "got": "June 0.166, re-derived 0.1661",
+   "verdict": "PASS"
+  },
+  {
+   "id": "G5",
+   "set": "fresh",
+   "model": "Llama-3.2-3B x Phi-3.5-mini",
+   "claim": "June partial-lexical value re-derived within 0.02 under the published 8-template pipeline",
+   "got": "June 0.186, re-derived 0.1864",
+   "verdict": "PASS"
+  },
+  {
+   "id": "A1",
+   "set": "original",
+   "model": "Qwen2.5-3B",
+   "claim": "bare-template norm at least 10x the other templates, median over words alone at position 0",
+   "got": "42.7x over 50 words",
+   "verdict": "PASS"
+  },
+  {
+   "id": "A2",
+   "set": "original",
+   "model": "Qwen2.5-3B",
+   "claim": "8 templates: top direction share at least 0.85 and AUC against alone at least 0.99",
+   "got": "share 0.9532, AUC 1.0000, alone 50 of 96",
+   "verdict": "PASS"
+  },
+  {
+   "id": "A3",
+   "set": "original",
+   "model": "Qwen2.5-3B",
+   "claim": "bare template dropped: top direction share at most 0.30",
+   "got": "share 0.0758",
+   "verdict": "PASS"
+  },
+  {
+   "id": "A1",
+   "set": "original",
+   "model": "Phi-3.5-mini",
+   "claim": "bare-template norm at least 10x the other templates, median over words alone at position 0",
+   "got": "29.2x over 49 words",
+   "verdict": "PASS"
+  },
+  {
+   "id": "A2",
+   "set": "original",
+   "model": "Phi-3.5-mini",
+   "claim": "8 templates: top direction share at least 0.85 and AUC against alone at least 0.99",
+   "got": "share 0.9570, AUC 1.0000, alone 49 of 96",
+   "verdict": "PASS"
+  },
+  {
+   "id": "A3",
+   "set": "original",
+   "model": "Phi-3.5-mini",
+   "claim": "bare template dropped: top direction share at most 0.30",
+   "got": "share 0.0846",
+   "verdict": "PASS"
+  },
+  {
+   "id": "A4",
+   "set": "original",
+   "model": "Llama-3.2-3B",
+   "claim": "start token added, norm ratio at most 3x, own geometry 8 against 7 templates at least 0.95",
+   "got": "start token True, ratio 0.93x, self RSA 0.9992",
+   "verdict": "PASS"
+  },
+  {
+   "id": "G1",
+   "set": "original",
+   "model": "Qwen2.5-1.5B x Llama-3.2-1B",
+   "claim": "Qwen with Llama, bare template dropped: RSA at least 0.85",
+   "got": "0.9261 (8 templates 0.1427)",
+   "verdict": "PASS"
+  },
+  {
+   "id": "G4",
+   "set": "original",
+   "model": "Qwen2.5-1.5B x Llama-3.2-1B",
+   "claim": "RSA exceeds the within-category shuffle null by at least 0.15 on the r scale",
+   "got": "0.2546 over a null of 0.6715 (19 null sd); same-category pairs only: r 0.8865",
+   "verdict": "PASS"
+  },
+  {
+   "id": "G6",
+   "set": "original",
+   "model": "Qwen2.5-1.5B x Llama-3.2-1B",
+   "claim": "dropping any one of the seven kept templates moves the RSA by at most 0.05",
+   "got": "largest move 0.0022",
+   "verdict": "PASS"
+  },
+  {
+   "id": "G1",
+   "set": "original",
+   "model": "Qwen2.5-1.5B x Llama-3.2-3B",
+   "claim": "Qwen with Llama, bare template dropped: RSA at least 0.85",
+   "got": "0.9230 (8 templates 0.1551)",
+   "verdict": "PASS"
+  },
+  {
+   "id": "G4",
+   "set": "original",
+   "model": "Qwen2.5-1.5B x Llama-3.2-3B",
+   "claim": "RSA exceeds the within-category shuffle null by at least 0.15 on the r scale",
+   "got": "0.2447 over a null of 0.6783 (19 null sd); same-category pairs only: r 0.8904",
+   "verdict": "PASS"
+  },
+  {
+   "id": "G6",
+   "set": "original",
+   "model": "Qwen2.5-1.5B x Llama-3.2-3B",
+   "claim": "dropping any one of the seven kept templates moves the RSA by at most 0.05",
+   "got": "largest move 0.0025",
+   "verdict": "PASS"
+  },
+  {
+   "id": "G2",
+   "set": "original",
+   "model": "Qwen2.5-1.5B x Phi-3.5-mini",
+   "claim": "pair with Phi, bare template dropped: RSA at least 0.70",
+   "got": "0.8968 (8 templates 0.3087)",
+   "verdict": "PASS"
+  },
+  {
+   "id": "G4",
+   "set": "original",
+   "model": "Qwen2.5-1.5B x Phi-3.5-mini",
+   "claim": "RSA exceeds the within-category shuffle null by at least 0.15 on the r scale",
+   "got": "0.2240 over a null of 0.6729 (14 null sd); same-category pairs only: r 0.8152",
+   "verdict": "PASS"
+  },
+  {
+   "id": "G6",
+   "set": "original",
+   "model": "Qwen2.5-1.5B x Phi-3.5-mini",
+   "claim": "dropping any one of the seven kept templates moves the RSA by at most 0.05",
+   "got": "largest move 0.0029",
+   "verdict": "PASS"
+  },
+  {
+   "id": "G1",
+   "set": "original",
+   "model": "Qwen2.5-3B x Llama-3.2-1B",
+   "claim": "Qwen with Llama, bare template dropped: RSA at least 0.85",
+   "got": "0.9208 (8 templates 0.1636)",
+   "verdict": "PASS"
+  },
+  {
+   "id": "G4",
+   "set": "original",
+   "model": "Qwen2.5-3B x Llama-3.2-1B",
+   "claim": "RSA exceeds the within-category shuffle null by at least 0.15 on the r scale",
+   "got": "0.2635 over a null of 0.6573 (21 null sd); same-category pairs only: r 0.8828",
+   "verdict": "PASS"
+  },
+  {
+   "id": "G6",
+   "set": "original",
+   "model": "Qwen2.5-3B x Llama-3.2-1B",
+   "claim": "dropping any one of the seven kept templates moves the RSA by at most 0.05",
+   "got": "largest move 0.0024",
+   "verdict": "PASS"
+  },
+  {
+   "id": "G1",
+   "set": "original",
+   "model": "Qwen2.5-3B x Llama-3.2-3B",
+   "claim": "Qwen with Llama, bare template dropped: RSA at least 0.85",
+   "got": "0.9159 (8 templates 0.1785)",
+   "verdict": "PASS"
+  },
+  {
+   "id": "G4",
+   "set": "original",
+   "model": "Qwen2.5-3B x Llama-3.2-3B",
+   "claim": "RSA exceeds the within-category shuffle null by at least 0.15 on the r scale",
+   "got": "0.2540 over a null of 0.6619 (22 null sd); same-category pairs only: r 0.8758",
+   "verdict": "PASS"
+  },
+  {
+   "id": "G6",
+   "set": "original",
+   "model": "Qwen2.5-3B x Llama-3.2-3B",
+   "claim": "dropping any one of the seven kept templates moves the RSA by at most 0.05",
+   "got": "largest move 0.0024",
+   "verdict": "PASS"
+  },
+  {
+   "id": "G2",
+   "set": "original",
+   "model": "Qwen2.5-3B x Phi-3.5-mini",
+   "claim": "pair with Phi, bare template dropped: RSA at least 0.70",
+   "got": "0.8833 (8 templates 0.3117)",
+   "verdict": "PASS"
+  },
+  {
+   "id": "G4",
+   "set": "original",
+   "model": "Qwen2.5-3B x Phi-3.5-mini",
+   "claim": "RSA exceeds the within-category shuffle null by at least 0.15 on the r scale",
+   "got": "0.2251 over a null of 0.6581 (16 null sd); same-category pairs only: r 0.8079",
+   "verdict": "PASS"
+  },
+  {
+   "id": "G6",
+   "set": "original",
+   "model": "Qwen2.5-3B x Phi-3.5-mini",
+   "claim": "dropping any one of the seven kept templates moves the RSA by at most 0.05",
+   "got": "largest move 0.0046",
+   "verdict": "PASS"
+  },
+  {
+   "id": "G2",
+   "set": "original",
+   "model": "Llama-3.2-1B x Phi-3.5-mini",
+   "claim": "pair with Phi, bare template dropped: RSA at least 0.70",
+   "got": "0.9075 (8 templates 0.1760)",
+   "verdict": "PASS"
+  },
+  {
+   "id": "G4",
+   "set": "original",
+   "model": "Llama-3.2-1B x Phi-3.5-mini",
+   "claim": "RSA exceeds the within-category shuffle null by at least 0.15 on the r scale",
+   "got": "0.2216 over a null of 0.6859 (15 null sd); same-category pairs only: r 0.8164",
+   "verdict": "PASS"
+  },
+  {
+   "id": "G6",
+   "set": "original",
+   "model": "Llama-3.2-1B x Phi-3.5-mini",
+   "claim": "dropping any one of the seven kept templates moves the RSA by at most 0.05",
+   "got": "largest move 0.0020",
+   "verdict": "PASS"
+  },
+  {
+   "id": "G2",
+   "set": "original",
+   "model": "Llama-3.2-3B x Phi-3.5-mini",
+   "claim": "pair with Phi, bare template dropped: RSA at least 0.70",
+   "got": "0.9204 (8 templates 0.1878)",
+   "verdict": "PASS"
+  },
+  {
+   "id": "G4",
+   "set": "original",
+   "model": "Llama-3.2-3B x Phi-3.5-mini",
+   "claim": "RSA exceeds the within-category shuffle null by at least 0.15 on the r scale",
+   "got": "0.2267 over a null of 0.6937 (15 null sd); same-category pairs only: r 0.8220",
+   "verdict": "PASS"
+  },
+  {
+   "id": "G6",
+   "set": "original",
+   "model": "Llama-3.2-3B x Phi-3.5-mini",
+   "claim": "dropping any one of the seven kept templates moves the RSA by at most 0.05",
+   "got": "largest move 0.0017",
+   "verdict": "PASS"
+  },
+  {
+   "id": "G3",
+   "set": "original",
+   "model": "8 cross-family pairs among five models",
+   "claim": "mean RSA with the bare template dropped at least 0.80",
+   "got": "mean 0.9117, median 0.9182, min 0.8833 (8 templates: mean 0.2030)",
+   "verdict": "PASS"
+  }
+ ],
+ "tables": {
+  "fresh": [
+   {
+    "a": "Qwen2.5-1.5B",
+    "b": "Qwen2.5-3B",
+    "cross_family": false,
+    "in_june_six": true,
+    "raw_8": 0.9987381174571693,
+    "raw_7": 0.9247630677116905,
+    "partial_lex_8": 0.998765576570317,
+    "partial_lex_7": 0.9238165601815801,
+    "spearman_7": 0.8439451624916932,
+    "n_words_single_token_in_both": 40,
+    "same_category_pairs_rsa_7": 0.9291073016138554,
+    "same_category_pairs_n": 528
+   },
+   {
+    "a": "Qwen2.5-1.5B",
+    "b": "Llama-3.2-1B",
+    "cross_family": true,
+    "in_june_six": true,
+    "raw_8": 0.07938835327588482,
+    "raw_7": 0.927971297793068,
+    "partial_lex_8": 0.07466432675675587,
+    "partial_lex_7": 0.9271725495007769,
+    "spearman_7": 0.8528249008391073,
+    "n_words_single_token_in_both": 40,
+    "same_category_pairs_rsa_7": 0.897149598044855,
+    "same_category_pairs_n": 528,
+    "within_category_null_7": 0.6653793691498718,
+    "within_category_null_7_sd": 0.009274426041026526,
+    "excess_7": 0.26259192864319614,
+    "excess_7_in_null_sd": 28.313550342983593,
+    "raw_7_single_token_words_only": 0.9180792786173985,
+    "excess_7_single_token_words_only": 0.2937746621859012,
+    "leave_one_template_out_7": [
+     0.9281488805166674,
+     0.929158325516449,
+     0.9280453089591513,
+     0.9275543617617765,
+     0.9292010636747996,
+     0.9232292435773455,
+     0.9257727193354143
+    ],
+    "leave_one_template_out_max_move": 0.004742054215722491
+   },
+   {
+    "a": "Qwen2.5-1.5B",
+    "b": "Llama-3.2-3B",
+    "cross_family": true,
+    "in_june_six": true,
+    "raw_8": 0.10490966402327186,
+    "raw_7": 0.9116919435128251,
+    "partial_lex_8": 0.09984175917644358,
+    "partial_lex_7": 0.9106695374177457,
+    "spearman_7": 0.8337425703129021,
+    "n_words_single_token_in_both": 40,
+    "same_category_pairs_rsa_7": 0.838035423379229,
+    "same_category_pairs_n": 528,
+    "within_category_null_7": 0.6464378205021251,
+    "within_category_null_7_sd": 0.009502978927566078,
+    "excess_7": 0.26525412301070006,
+    "excess_7_in_null_sd": 27.912733996846264,
+    "raw_7_single_token_words_only": 0.9031993792260008,
+    "excess_7_single_token_words_only": 0.29175025249138165,
+    "leave_one_template_out_7": [
+     0.9123043521152969,
+     0.9131931898694475,
+     0.9108615512789279,
+     0.9116611704080595,
+     0.91406385797057,
+     0.9066982953185863,
+     0.9087688243818582
+    ],
+    "leave_one_template_out_max_move": 0.004993648194238864
+   },
+   {
+    "a": "Qwen2.5-1.5B",
+    "b": "Phi-3.5-mini",
+    "cross_family": true,
+    "in_june_six": true,
+    "raw_8": 0.18172287491635608,
+    "raw_7": 0.8899106708835229,
+    "partial_lex_8": 0.1799928992393287,
+    "partial_lex_7": 0.8896570702323734,
+    "spearman_7": 0.7957631656640813,
+    "n_words_single_token_in_both": 26,
+    "same_category_pairs_rsa_7": 0.7928558262947732,
+    "same_category_pairs_n": 528,
+    "within_category_null_7": 0.6649655037375183,
+    "within_category_null_7_sd": 0.009647263854626987,
+    "excess_7": 0.22494516714600465,
+    "excess_7_in_null_sd": 23.31699127466077,
+    "raw_7_single_token_words_only": 0.9181006971668435,
+    "excess_7_single_token_words_only": 0.23236785342772148,
+    "leave_one_template_out_7": [
+     0.891994553655897,
+     0.8909168068369164,
+     0.8888158861025007,
+     0.8897716560487371,
+     0.8919929890089568,
+     0.8847624428963657,
+     0.8870752869358022
+    ],
+    "leave_one_template_out_max_move": 0.0051482279871571945
+   },
+   {
+    "a": "Qwen2.5-1.5B",
+    "b": "Qwen2.5-0.5B",
+    "cross_family": false,
+    "in_june_six": false,
+    "raw_8": 0.9998699386479446,
+    "raw_7": 0.9233758521918419,
+    "partial_lex_8": 0.9998723562745548,
+    "partial_lex_7": 0.9224409987268448,
+    "spearman_7": 0.8435441466234015,
+    "n_words_single_token_in_both": 40,
+    "same_category_pairs_rsa_7": 0.9168197691017073,
+    "same_category_pairs_n": 528
+   },
+   {
+    "a": "Qwen2.5-3B",
+    "b": "Llama-3.2-1B",
+    "cross_family": true,
+    "in_june_six": true,
+    "raw_8": 0.09242162369131858,
+    "raw_7": 0.9197371356012323,
+    "partial_lex_8": 0.08709276391204417,
+    "partial_lex_7": 0.9187630044399684,
+    "spearman_7": 0.8318830425955402,
+    "n_words_single_token_in_both": 40,
+    "same_category_pairs_rsa_7": 0.901627810839184,
+    "same_category_pairs_n": 528,
+    "within_category_null_7": 0.6496536529848078,
+    "within_category_null_7_sd": 0.00918907232361229,
+    "excess_7": 0.27008348261642445,
+    "excess_7_in_null_sd": 29.391811607905694,
+    "raw_7_single_token_words_only": 0.91495763615543,
+    "excess_7_single_token_words_only": 0.31655251381551963,
+    "leave_one_template_out_7": [
+     0.9193081702074143,
+     0.9207671635220916,
+     0.9176459028654264,
+     0.9191992531382085,
+     0.9221926351034252,
+     0.9158460477818663,
+     0.9183090909713626
+    ],
+    "leave_one_template_out_max_move": 0.0038910878193659793
+   },
+   {
+    "a": "Qwen2.5-3B",
+    "b": "Llama-3.2-3B",
+    "cross_family": true,
+    "in_june_six": true,
+    "raw_8": 0.11840884006450364,
+    "raw_7": 0.9139471252279229,
+    "partial_lex_8": 0.11268130410479515,
+    "partial_lex_7": 0.9127666391740072,
+    "spearman_7": 0.8278843075951555,
+    "n_words_single_token_in_both": 40,
+    "same_category_pairs_rsa_7": 0.8735317688398766,
+    "same_category_pairs_n": 528,
+    "within_category_null_7": 0.63413208590431,
+    "within_category_null_7_sd": 0.009620516159034927,
+    "excess_7": 0.27981503932361285,
+    "excess_7_in_null_sd": 29.085241859060186,
+    "raw_7_single_token_words_only": 0.9057187773802641,
+    "excess_7_single_token_words_only": 0.31753615246659284,
+    "leave_one_template_out_7": [
+     0.9132582052333902,
+     0.9148078350826568,
+     0.912179976451764,
+     0.9138791492637218,
+     0.9168453551686851,
+     0.9104500985542866,
+     0.9116910736229391
+    ],
+    "leave_one_template_out_max_move": 0.003497026673636272
+   },
+   {
+    "a": "Qwen2.5-3B",
+    "b": "Phi-3.5-mini",
+    "cross_family": true,
+    "in_june_six": true,
+    "raw_8": 0.1815980881368089,
+    "raw_7": 0.8762076021229366,
+    "partial_lex_8": 0.17995006204540223,
+    "partial_lex_7": 0.875842500968809,
+    "spearman_7": 0.7576832596922078,
+    "n_words_single_token_in_both": 26,
+    "same_category_pairs_rsa_7": 0.819131479440365,
+    "same_category_pairs_n": 528,
+    "within_category_null_7": 0.6466491447959999,
+    "within_category_null_7_sd": 0.009405972254303984,
+    "excess_7": 0.2295584573269367,
+    "excess_7_in_null_sd": 24.40560646960124,
+    "raw_7_single_token_words_only": 0.9167052292686904,
+    "excess_7_single_token_words_only": 0.24593450594489275,
+    "leave_one_template_out_7": [
+     0.8765530609866443,
+     0.8770765885736665,
+     0.8731928071138448,
+     0.8761232196181399,
+     0.8792074130692363,
+     0.8728003584194876,
+     0.87380773894209
+    ],
+    "leave_one_template_out_max_move": 0.0034072437034490255
+   },
+   {
+    "a": "Qwen2.5-3B",
+    "b": "Qwen2.5-0.5B",
+    "cross_family": false,
+    "in_june_six": false,
+    "raw_8": 0.9993311173466511,
+    "raw_7": 0.9051543614378499,
+    "partial_lex_8": 0.9993442823416139,
+    "partial_lex_7": 0.9039844205455142,
+    "spearman_7": 0.8051044452113416,
+    "n_words_single_token_in_both": 40,
+    "same_category_pairs_rsa_7": 0.9049990531352944,
+    "same_category_pairs_n": 528
+   },
+   {
+    "a": "Llama-3.2-1B",
+    "b": "Llama-3.2-3B",
+    "cross_family": false,
+    "in_june_six": true,
+    "raw_8": 0.9637534280736791,
+    "raw_7": 0.9628972256453764,
+    "partial_lex_8": 0.9633456608375612,
+    "partial_lex_7": 0.9624811359535028,
+    "spearman_7": 0.9173043823169866,
+    "n_words_single_token_in_both": 40,
+    "same_category_pairs_rsa_7": 0.928587863804309,
+    "same_category_pairs_n": 528
+   },
+   {
+    "a": "Llama-3.2-1B",
+    "b": "Phi-3.5-mini",
+    "cross_family": true,
+    "in_june_six": true,
+    "raw_8": 0.16646666786760472,
+    "raw_7": 0.920454903287183,
+    "partial_lex_8": 0.16605299457727576,
+    "partial_lex_7": 0.9202157790789744,
+    "spearman_7": 0.8120012227396469,
+    "n_words_single_token_in_both": 26,
+    "same_category_pairs_rsa_7": 0.8524255840434862,
+    "same_category_pairs_n": 528,
+    "within_category_null_7": 0.6892757462890431,
+    "within_category_null_7_sd": 0.009405824524208775,
+    "excess_7": 0.23117915699813996,
+    "excess_7_in_null_sd": 24.57829788112155,
+    "raw_7_single_token_words_only": 0.9298276341598378,
+    "excess_7_single_token_words_only": 0.2243080197423074,
+    "leave_one_template_out_7": [
+     0.921202769000254,
+     0.9206226276570727,
+     0.920434857647999,
+     0.9201140955126001,
+     0.9201860554252203,
+     0.9182864748612625,
+     0.9194057854300014
+    ],
+    "leave_one_template_out_max_move": 0.0021684284259205766
+   },
+   {
+    "a": "Llama-3.2-1B",
+    "b": "Qwen2.5-0.5B",
+    "cross_family": true,
+    "in_june_six": false,
+    "raw_8": 0.08408043459637432,
+    "raw_7": 0.9154567127687331,
+    "partial_lex_8": 0.07918870399530867,
+    "partial_lex_7": 0.9145494765504192,
+    "spearman_7": 0.8271459128511516,
+    "n_words_single_token_in_both": 40,
+    "same_category_pairs_rsa_7": 0.8758749006307769,
+    "same_category_pairs_n": 528,
+    "within_category_null_7": 0.6670102252978402,
+    "within_category_null_7_sd": 0.01000389628324358,
+    "excess_7": 0.24844648747089293,
+    "excess_7_in_null_sd": 24.83497233594906,
+    "raw_7_single_token_words_only": 0.9126792840806959,
+    "excess_7_single_token_words_only": 0.28177845012726355,
+    "leave_one_template_out_7": [
+     0.9163340895360639,
+     0.9149171629003646,
+     0.9162433198495802,
+     0.9160124190266241,
+     0.9167342722559672,
+     0.909716940735865,
+     0.9136057050201513
+    ],
+    "leave_one_template_out_max_move": 0.005739772032868129
+   },
+   {
+    "a": "Llama-3.2-3B",
+    "b": "Phi-3.5-mini",
+    "cross_family": true,
+    "in_june_six": true,
+    "raw_8": 0.18656929853436793,
+    "raw_7": 0.9227876956081879,
+    "partial_lex_8": 0.18635687606051343,
+    "partial_lex_7": 0.9228205115936948,
+    "spearman_7": 0.8138981837884975,
+    "n_words_single_token_in_both": 26,
+    "same_category_pairs_rsa_7": 0.8703168137097184,
+    "same_category_pairs_n": 528,
+    "within_category_null_7": 0.6780735900729944,
+    "within_category_null_7_sd": 0.00976124772673658,
+    "excess_7": 0.24471410553519346,
+    "excess_7_in_null_sd": 25.069961582865936,
+    "raw_7_single_token_words_only": 0.9377556210805057,
+    "excess_7_single_token_words_only": 0.23902357030283727,
+    "leave_one_template_out_7": [
+     0.9226925716702631,
+     0.9242357983901632,
+     0.920956258423122,
+     0.9225229307986098,
+     0.9236483763588131,
+     0.9204797115090392,
+     0.9219548696136223
+    ],
+    "leave_one_template_out_max_move": 0.0023079840991486744
+   },
+   {
+    "a": "Llama-3.2-3B",
+    "b": "Qwen2.5-0.5B",
+    "cross_family": true,
+    "in_june_six": false,
+    "raw_8": 0.10961237081954404,
+    "raw_7": 0.895348534416649,
+    "partial_lex_8": 0.10436099615419085,
+    "partial_lex_7": 0.8941713936216537,
+    "spearman_7": 0.800547357715329,
+    "n_words_single_token_in_both": 40,
+    "same_category_pairs_rsa_7": 0.8060378799808583,
+    "same_category_pairs_n": 528,
+    "within_category_null_7": 0.6474645892147121,
+    "within_category_null_7_sd": 0.009548718418951798,
+    "excess_7": 0.2478839452019369,
+    "excess_7_in_null_sd": 25.959917792108087,
+    "raw_7_single_token_words_only": 0.892739524992802,
+    "excess_7_single_token_words_only": 0.2733449364956434,
+    "leave_one_template_out_7": [
+     0.8960502321845057,
+     0.8948709104634618,
+     0.8951312714932557,
+     0.8979179985285313,
+     0.8971918750151723,
+     0.8896894239748101,
+     0.8920983369833574
+    ],
+    "leave_one_template_out_max_move": 0.005659110441838866
+   },
+   {
+    "a": "Phi-3.5-mini",
+    "b": "Qwen2.5-0.5B",
+    "cross_family": true,
+    "in_june_six": false,
+    "raw_8": 0.18213316785792588,
+    "raw_7": 0.8786407808375561,
+    "partial_lex_8": 0.1804307102875827,
+    "partial_lex_7": 0.8783393239800805,
+    "spearman_7": 0.7683083592974429,
+    "n_words_single_token_in_both": 26,
+    "same_category_pairs_rsa_7": 0.772558110993218,
+    "same_category_pairs_n": 528,
+    "within_category_null_7": 0.660439739739777,
+    "within_category_null_7_sd": 0.009566318922220221,
+    "excess_7": 0.21820104109777916,
+    "excess_7_in_null_sd": 22.80930030130421,
+    "raw_7_single_token_words_only": 0.8930704332242773,
+    "excess_7_single_token_words_only": 0.2035890748578999,
+    "leave_one_template_out_7": [
+     0.8806019022319345,
+     0.8774411609228017,
+     0.8786519442602893,
+     0.880482275019172,
+     0.879348036166364,
+     0.8729503508590536,
+     0.8767538167810751
+    ],
+    "leave_one_template_out_max_move": 0.005690429978502554
+   }
+  ],
+  "original": [
+   {
+    "a": "Qwen2.5-1.5B",
+    "b": "Qwen2.5-3B",
+    "cross_family": false,
+    "in_june_six": true,
+    "raw_8": 0.9198701598968109,
+    "raw_7": 0.9299417814296036,
+    "partial_lex_8": 0.9178472622154941,
+    "partial_lex_7": 0.9292355759827455,
+    "spearman_7": 0.8533908196814243,
+    "n_words_single_token_in_both": 50,
+    "same_category_pairs_rsa_7": 0.9289978356766622,
+    "same_category_pairs_n": 528
+   },
+   {
+    "a": "Qwen2.5-1.5B",
+    "b": "Llama-3.2-1B",
+    "cross_family": true,
+    "in_june_six": true,
+    "raw_8": 0.14274850684260695,
+    "raw_7": 0.9261301851234143,
+    "partial_lex_8": 0.1325872504695099,
+    "partial_lex_7": 0.9256454441211083,
+    "spearman_7": 0.8526976254618196,
+    "n_words_single_token_in_both": 50,
+    "same_category_pairs_rsa_7": 0.8865220660364302,
+    "same_category_pairs_n": 528,
+    "within_category_null_7": 0.671507374754303,
+    "within_category_null_7_sd": 0.013540801586012088,
+    "excess_7": 0.2546228103691113,
+    "excess_7_in_null_sd": 18.804116486969093,
+    "raw_7_single_token_words_only": 0.9180978665374369,
+    "excess_7_single_token_words_only": 0.21288185784464564,
+    "leave_one_template_out_7": [
+     0.9251022312162959,
+     0.9270122899168645,
+     0.9247841108128579,
+     0.9252792368332263,
+     0.9275992632521337,
+     0.9239445009159607,
+     0.9258532572618431
+    ],
+    "leave_one_template_out_max_move": 0.0021856842074535754
+   },
+   {
+    "a": "Qwen2.5-1.5B",
+    "b": "Llama-3.2-3B",
+    "cross_family": true,
+    "in_june_six": true,
+    "raw_8": 0.15506374179873678,
+    "raw_7": 0.9229987344343666,
+    "partial_lex_8": 0.14288723842110188,
+    "partial_lex_7": 0.9222937849182732,
+    "spearman_7": 0.8421718003344761,
+    "n_words_single_token_in_both": 50,
+    "same_category_pairs_rsa_7": 0.8904429141684966,
+    "same_category_pairs_n": 528,
+    "within_category_null_7": 0.6782821562120219,
+    "within_category_null_7_sd": 0.01299962970157284,
+    "excess_7": 0.24471657822234472,
+    "excess_7_in_null_sd": 18.824888386929306,
+    "raw_7_single_token_words_only": 0.9177524597306245,
+    "excess_7_single_token_words_only": 0.1987033690575145,
+    "leave_one_template_out_7": [
+     0.9224464544177208,
+     0.9231867986513782,
+     0.9216060639335705,
+     0.9225440994061495,
+     0.9250266703611159,
+     0.920494525566009,
+     0.9228271748209729
+    ],
+    "leave_one_template_out_max_move": 0.0025042088683576713
+   },
+   {
+    "a": "Qwen2.5-1.5B",
+    "b": "Phi-3.5-mini",
+    "cross_family": true,
+    "in_june_six": true,
+    "raw_8": 0.3087159986954724,
+    "raw_7": 0.8968387780501643,
+    "partial_lex_8": 0.2980705009714841,
+    "partial_lex_7": 0.8967983771148152,
+    "spearman_7": 0.8098333115321742,
+    "n_words_single_token_in_both": 39,
+    "same_category_pairs_rsa_7": 0.8152321384549455,
+    "same_category_pairs_n": 528,
+    "within_category_null_7": 0.6728804067331637,
+    "within_category_null_7_sd": 0.01552730128100961,
+    "excess_7": 0.22395837131700058,
+    "excess_7_in_null_sd": 14.423521979088882,
+    "raw_7_single_token_words_only": 0.9016711028505123,
+    "excess_7_single_token_words_only": 0.1852861049882878,
+    "leave_one_template_out_7": [
+     0.8962946202269417,
+     0.8973614275264532,
+     0.89392765113313,
+     0.8978227802795028,
+     0.8969757353336774,
+     0.8954345046447105,
+     0.897098961931274
+    ],
+    "leave_one_template_out_max_move": 0.0029111269170343235
+   },
+   {
+    "a": "Qwen2.5-1.5B",
+    "b": "Qwen2.5-0.5B",
+    "cross_family": false,
+    "in_june_six": false,
+    "raw_8": 0.9999624323890023,
+    "raw_7": 0.9273848387419112,
+    "partial_lex_8": 0.9999618001058588,
+    "partial_lex_7": 0.9267227997056102,
+    "spearman_7": 0.8535611458831003,
+    "n_words_single_token_in_both": 50,
+    "same_category_pairs_rsa_7": 0.9188172974680101,
+    "same_category_pairs_n": 528
+   },
+   {
+    "a": "Qwen2.5-3B",
+    "b": "Llama-3.2-1B",
+    "cross_family": true,
+    "in_june_six": true,
+    "raw_8": 0.16358798688403445,
+    "raw_7": 0.920773253470197,
+    "partial_lex_8": 0.15181858653818864,
+    "partial_lex_7": 0.9203292514810416,
+    "spearman_7": 0.8360401712287063,
+    "n_words_single_token_in_both": 50,
+    "same_category_pairs_rsa_7": 0.8828049232246116,
+    "same_category_pairs_n": 528,
+    "within_category_null_7": 0.6572707894812078,
+    "within_category_null_7_sd": 0.012361652870320558,
+    "excess_7": 0.26350246398898924,
+    "excess_7_in_null_sd": 21.31611902808917,
+    "raw_7_single_token_words_only": 0.9130007573033103,
+    "excess_7_single_token_words_only": 0.2064203895085609,
+    "leave_one_template_out_7": [
+     0.9197957337032845,
+     0.9218915195412335,
+     0.9184152363201458,
+     0.9190901700435902,
+     0.9219251043699453,
+     0.9207411897195185,
+     0.9196199755966405
+    ],
+    "leave_one_template_out_max_move": 0.0023580171500512392
+   },
+   {
+    "a": "Qwen2.5-3B",
+    "b": "Llama-3.2-3B",
+    "cross_family": true,
+    "in_june_six": true,
+    "raw_8": 0.17846632944047638,
+    "raw_7": 0.9159114104115376,
+    "partial_lex_8": 0.16435562043759416,
+    "partial_lex_7": 0.9151345119524632,
+    "spearman_7": 0.8256870447436607,
+    "n_words_single_token_in_both": 50,
+    "same_category_pairs_rsa_7": 0.8757640759898497,
+    "same_category_pairs_n": 528,
+    "within_category_null_7": 0.6619424629616936,
+    "within_category_null_7_sd": 0.011764192918124328,
+    "excess_7": 0.253968947449844,
+    "excess_7_in_null_sd": 21.588301823662057,
+    "raw_7_single_token_words_only": 0.9042213395139783,
+    "excess_7_single_token_words_only": 0.1904583805222314,
+    "leave_one_template_out_7": [
+     0.9148378115191629,
+     0.9169469585646464,
+     0.9135426911126961,
+     0.9144222868933662,
+     0.918135003871876,
+     0.9154589923111168,
+     0.9149250895700974
+    ],
+    "leave_one_template_out_max_move": 0.002368719298841415
+   },
+   {
+    "a": "Qwen2.5-3B",
+    "b": "Phi-3.5-mini",
+    "cross_family": true,
+    "in_june_six": true,
+    "raw_8": 0.3116928058194753,
+    "raw_7": 0.8832791534843071,
+    "partial_lex_8": 0.2994232351549891,
+    "partial_lex_7": 0.8832745056636561,
+    "spearman_7": 0.7769148814801893,
+    "n_words_single_token_in_both": 39,
+    "same_category_pairs_rsa_7": 0.8078788076544076,
+    "same_category_pairs_n": 528,
+    "within_category_null_7": 0.6581347388308777,
+    "within_category_null_7_sd": 0.013941703113585032,
+    "excess_7": 0.22514441465342938,
+    "excess_7_in_null_sd": 16.148989316656433,
+    "raw_7_single_token_words_only": 0.8923061495085731,
+    "excess_7_single_token_words_only": 0.1696088467320005,
+    "leave_one_template_out_7": [
+     0.8821526403024297,
+     0.8850248371939111,
+     0.8786877188769492,
+     0.8823590351459382,
+     0.8841175865698573,
+     0.884219322945202,
+     0.8831042964172968
+    ],
+    "leave_one_template_out_max_move": 0.0045914346073578916
+   },
+   {
+    "a": "Qwen2.5-3B",
+    "b": "Qwen2.5-0.5B",
+    "cross_family": false,
+    "in_june_six": false,
+    "raw_8": 0.9200470505598151,
+    "raw_7": 0.9092704896989274,
+    "partial_lex_8": 0.9179993566594425,
+    "partial_lex_7": 0.9084137974832057,
+    "spearman_7": 0.8168437528349597,
+    "n_words_single_token_in_both": 50,
+    "same_category_pairs_rsa_7": 0.8882334678843271,
+    "same_category_pairs_n": 528
+   },
+   {
+    "a": "Llama-3.2-1B",
+    "b": "Llama-3.2-3B",
+    "cross_family": false,
+    "in_june_six": true,
+    "raw_8": 0.9657383565849489,
+    "raw_7": 0.9652832531585868,
+    "partial_lex_8": 0.9655562308537983,
+    "partial_lex_7": 0.9650920032272994,
+    "spearman_7": 0.9355247066783947,
+    "n_words_single_token_in_both": 50,
+    "same_category_pairs_rsa_7": 0.9193115639196731,
+    "same_category_pairs_n": 528
+   },
+   {
+    "a": "Llama-3.2-1B",
+    "b": "Phi-3.5-mini",
+    "cross_family": true,
+    "in_june_six": true,
+    "raw_8": 0.17603657825161192,
+    "raw_7": 0.9074987095940863,
+    "partial_lex_8": 0.1691225722037543,
+    "partial_lex_7": 0.907453488218693,
+    "spearman_7": 0.822633470799811,
+    "n_words_single_token_in_both": 39,
+    "same_category_pairs_rsa_7": 0.8163595788673756,
+    "same_category_pairs_n": 528,
+    "within_category_null_7": 0.6858560693681351,
+    "within_category_null_7_sd": 0.015186303886612715,
+    "excess_7": 0.22164264022595115,
+    "excess_7_in_null_sd": 14.594903530591296,
+    "raw_7_single_token_words_only": 0.9196161116234917,
+    "excess_7_single_token_words_only": 0.17061582229047,
+    "leave_one_template_out_7": [
+     0.9078203573234661,
+     0.9078435118260921,
+     0.9057059869175328,
+     0.9077172852370076,
+     0.907795803415599,
+     0.9054932483481221,
+     0.9076963936964876
+    ],
+    "leave_one_template_out_max_move": 0.002005461245964235
+   },
+   {
+    "a": "Llama-3.2-1B",
+    "b": "Qwen2.5-0.5B",
+    "cross_family": true,
+    "in_june_six": false,
+    "raw_8": 0.146575362918877,
+    "raw_7": 0.9182963900469353,
+    "partial_lex_8": 0.13642593960222943,
+    "partial_lex_7": 0.9177316452821085,
+    "spearman_7": 0.8432879268329291,
+    "n_words_single_token_in_both": 50,
+    "same_category_pairs_rsa_7": 0.857224288858283,
+    "same_category_pairs_n": 528,
+    "within_category_null_7": 0.6668696210169844,
+    "within_category_null_7_sd": 0.014046053365940423,
+    "excess_7": 0.25142676902995087,
+    "excess_7_in_null_sd": 17.900171846258463,
+    "raw_7_single_token_words_only": 0.9205493966040565,
+    "excess_7_single_token_words_only": 0.21304177375947786,
+    "leave_one_template_out_7": [
+     0.9184249275586721,
+     0.9198489714314935,
+     0.9157786516505402,
+     0.9180068430751371,
+     0.9186639719126722,
+     0.9168735257504828,
+     0.916328536883826
+    ],
+    "leave_one_template_out_max_move": 0.0025177383963951305
+   },
+   {
+    "a": "Llama-3.2-3B",
+    "b": "Phi-3.5-mini",
+    "cross_family": true,
+    "in_june_six": true,
+    "raw_8": 0.18779725280813117,
+    "raw_7": 0.9203937162500272,
+    "partial_lex_8": 0.17973263887578134,
+    "partial_lex_7": 0.9203935278908607,
+    "spearman_7": 0.8409109863442515,
+    "n_words_single_token_in_both": 39,
+    "same_category_pairs_rsa_7": 0.8219930025706009,
+    "same_category_pairs_n": 528,
+    "within_category_null_7": 0.6936782199337537,
+    "within_category_null_7_sd": 0.01474365177185882,
+    "excess_7": 0.22671549631627352,
+    "excess_7_in_null_sd": 15.377160272709899,
+    "raw_7_single_token_words_only": 0.9431673918741372,
+    "excess_7_single_token_words_only": 0.17079091385604417,
+    "leave_one_template_out_7": [
+     0.9203128880362664,
+     0.9202389709956094,
+     0.9186891985181278,
+     0.9201531365084313,
+     0.921652007041406,
+     0.9188062038008817,
+     0.9208323445898953
+    ],
+    "leave_one_template_out_max_move": 0.001704517731899391
+   },
+   {
+    "a": "Llama-3.2-3B",
+    "b": "Qwen2.5-0.5B",
+    "cross_family": true,
+    "in_june_six": false,
+    "raw_8": 0.15888679969721717,
+    "raw_7": 0.9074258434780549,
+    "partial_lex_8": 0.1467201857481741,
+    "partial_lex_7": 0.9066315032363071,
+    "spearman_7": 0.8224147252187917,
+    "n_words_single_token_in_both": 50,
+    "same_category_pairs_rsa_7": 0.8437260776728325,
+    "same_category_pairs_n": 528,
+    "within_category_null_7": 0.6722932235867632,
+    "within_category_null_7_sd": 0.013850177731379486,
+    "excess_7": 0.23513261989129164,
+    "excess_7_in_null_sd": 16.976866610281064,
+    "raw_7_single_token_words_only": 0.908227596644746,
+    "excess_7_single_token_words_only": 0.18725859713187543,
+    "leave_one_template_out_7": [
+     0.9071460409482046,
+     0.9085451543580956,
+     0.9048391475056005,
+     0.9076478014152973,
+     0.908369181563943,
+     0.9061856065678947,
+     0.9062152084477745
+    ],
+    "leave_one_template_out_max_move": 0.0025866959724544225
+   },
+   {
+    "a": "Phi-3.5-mini",
+    "b": "Qwen2.5-0.5B",
+    "cross_family": true,
+    "in_june_six": false,
+    "raw_8": 0.309833564087227,
+    "raw_7": 0.8876552216598284,
+    "partial_lex_8": 0.29916863114972253,
+    "partial_lex_7": 0.8877233139798795,
+    "spearman_7": 0.8000648608003688,
+    "n_words_single_token_in_both": 39,
+    "same_category_pairs_rsa_7": 0.7966415375874586,
+    "same_category_pairs_n": 528,
+    "within_category_null_7": 0.6663990686383637,
+    "within_category_null_7_sd": 0.016835097642520253,
+    "excess_7": 0.22125615302146462,
+    "excess_7_in_null_sd": 13.142552404893538,
+    "raw_7_single_token_words_only": 0.8952687176968553,
+    "excess_7_single_token_words_only": 0.16873301972351273,
+    "leave_one_template_out_7": [
+     0.8873716968262377,
+     0.888919607807025,
+     0.8844175902284226,
+     0.8881634452197261,
+     0.8874443124150234,
+     0.886642928187077,
+     0.8873683751032465
+    ],
+    "leave_one_template_out_max_move": 0.003237631431405763
+   }
+  ]
+ },
+ "presence": {
+  "Qwen2.5-1.5B": "OK",
+  "Qwen2.5-3B": "OK",
+  "Llama-3.2-1B": "OK",
+  "Llama-3.2-3B": "OK",
+  "Phi-3.5-mini": "OK",
+  "Qwen2.5-0.5B": "OK"
+ },
+ "phi_gap": {
+  "fresh": {
+   "qwen_llama_mean": 0.9183368755337621,
+   "phi_pairs_mean": 0.9023402179754576,
+   "gap": 0.015996657558304483,
+   "sentence_required": false,
+   "sentence": "Phi remains lower with the bare template dropped; cause not established."
+  },
+  "original": {
+   "qwen_llama_mean": 0.9214533958598788,
+   "phi_pairs_mean": 0.9020025893446462,
+   "gap": 0.019450806515232677,
+   "sentence_required": false,
+   "sentence": "Phi remains lower with the bare template dropped; cause not established."
+  }
+ },
+ "per_model": {
+  "original": {
+   "Qwen2.5-1.5B": {
+    "n_words": 96,
+    "n_alone": 50,
+    "n_single": 50,
+    "adds_start_token": false,
+    "ratio_alone": 160.49269337151603,
+    "ratio_single": 160.49269337151603,
+    "share8": 0.9971246261696906,
+    "auc8": 1.0,
+    "share7": 0.08909610486966457,
+    "self_rsa_8_vs_7": 0.16195334778783912
+   },
+   "Qwen2.5-3B": {
+    "n_words": 96,
+    "n_alone": 50,
+    "n_single": 50,
+    "adds_start_token": false,
+    "ratio_alone": 42.679594144641484,
+    "ratio_single": 42.679594144641484,
+    "share8": 0.9531916111139832,
+    "auc8": 1.0,
+    "share7": 0.07575857227987452,
+    "self_rsa_8_vs_7": 0.1945689932772987
+   },
+   "Llama-3.2-1B": {
+    "n_words": 96,
+    "n_alone": 0,
+    "n_single": 50,
+    "adds_start_token": true,
+    "ratio_alone": null,
+    "ratio_single": 0.9388430586941219,
+    "share8": 0.09663408701883484,
+    "auc8": null,
+    "share7": 0.0977058227028791,
+    "self_rsa_8_vs_7": 0.9990280046783836
+   },
+   "Llama-3.2-3B": {
+    "n_words": 96,
+    "n_alone": 0,
+    "n_single": 50,
+    "adds_start_token": true,
+    "ratio_alone": null,
+    "ratio_single": 0.9306762347189064,
+    "share8": 0.0820917255921765,
+    "auc8": null,
+    "share7": 0.08281341019803716,
+    "self_rsa_8_vs_7": 0.9992267658409109
+   },
+   "Phi-3.5-mini": {
+    "n_words": 96,
+    "n_alone": 49,
+    "n_single": 49,
+    "adds_start_token": false,
+    "ratio_alone": 29.201605295520956,
+    "ratio_single": 29.201605295520956,
+    "share8": 0.956990210627956,
+    "auc8": 1.0,
+    "share7": 0.084623180101487,
+    "self_rsa_8_vs_7": 0.27101839576768755
+   },
+   "Qwen2.5-0.5B": {
+    "n_words": 96,
+    "n_alone": 50,
+    "n_single": 50,
+    "adds_start_token": false,
+    "ratio_alone": 80.85856403718427,
+    "ratio_single": 80.85856403718427,
+    "share8": 0.9895789585846652,
+    "auc8": 1.0,
+    "share7": 0.09475619451652394,
+    "self_rsa_8_vs_7": 0.16868927926298619
+   }
+  },
+  "fresh": {
+   "Qwen2.5-1.5B": {
+    "n_words": 96,
+    "n_alone": 40,
+    "n_single": 40,
+    "adds_start_token": false,
+    "ratio_alone": 159.6633007735491,
+    "ratio_single": 159.6633007735491,
+    "share8": 0.9969312785569819,
+    "auc8": 1.0,
+    "share7": 0.0893601908899839,
+    "self_rsa_8_vs_7": 0.08840827358566034
+   },
+   "Qwen2.5-3B": {
+    "n_words": 96,
+    "n_alone": 40,
+    "n_single": 40,
+    "adds_start_token": false,
+    "ratio_alone": 43.354200256658906,
+    "ratio_single": 43.354200256658906,
+    "share8": 0.9510559614045057,
+    "auc8": 1.0,
+    "share7": 0.07729076375113594,
+    "self_rsa_8_vs_7": 0.1100916284071704
+   },
+   "Llama-3.2-1B": {
+    "n_words": 96,
+    "n_alone": 0,
+    "n_single": 40,
+    "adds_start_token": true,
+    "ratio_alone": null,
+    "ratio_single": 0.933116033155037,
+    "share8": 0.08881793078627197,
+    "auc8": null,
+    "share7": 0.08969218680049733,
+    "self_rsa_8_vs_7": 0.9988622964632131
+   },
+   "Llama-3.2-3B": {
+    "n_words": 96,
+    "n_alone": 0,
+    "n_single": 40,
+    "adds_start_token": true,
+    "ratio_alone": null,
+    "ratio_single": 0.9147270059840099,
+    "share8": 0.06844961900344475,
+    "auc8": null,
+    "share7": 0.068323823782564,
+    "self_rsa_8_vs_7": 0.9992335135420258
+   },
+   "Phi-3.5-mini": {
+    "n_words": 96,
+    "n_alone": 39,
+    "n_single": 39,
+    "adds_start_token": false,
+    "ratio_alone": 29.110559888875986,
+    "ratio_single": 29.110559888875986,
+    "share8": 0.9554495140345,
+    "auc8": 1.0,
+    "share7": 0.08019816198262997,
+    "self_rsa_8_vs_7": 0.2461469579099197
+   },
+   "Qwen2.5-0.5B": {
+    "n_words": 96,
+    "n_alone": 40,
+    "n_single": 40,
+    "adds_start_token": false,
+    "ratio_alone": 79.87920654178068,
+    "ratio_single": 79.87920654178068,
+    "share8": 0.9884606459220738,
+    "auc8": 1.0,
+    "share7": 0.10384046977163633,
+    "self_rsa_8_vs_7": 0.08864557382215386
+   }
+  }
+ }
+}

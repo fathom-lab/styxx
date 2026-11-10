@@ -1,0 +1,19 @@
+{
+ "script": "extract_v2.py",
+ "script_sha256": "fa7c33adbf8a721261d461bf1183c1cf4427f6233a2fcd0c6d10983f2495948d",
+ "kit_reproduce_sha256": "37f5ab6d97b6da7f61a54fc37896e4db7280e8e8af77c28cc893b57ae5273451",
+ "only": "Qwen2.5-3B",
+ "name": "Qwen2.5-3B",
+ "repo": "Qwen/Qwen2.5-3B-Instruct",
+ "mode": "run",
+ "attempt": 1,
+ "torch": "2.5.1+cu121",
+ "transformers": "4.57.3",
+ "threads": 6,
+ "device": "cpu",
+ "avail_gb_before": 13.41,
+ "need_gb": 4.0,
+ "status": "CRASHED: RuntimeError",
+ "seconds": 30.6,
+ "avail_gb_after": 11.6
+}

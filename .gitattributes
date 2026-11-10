@@ -201,3 +201,10 @@ papers/closed-model-frontier/ERRATUM_numeral_reader_v2_2026_10_25.sworn-receipt.
 # tests-pass-ci (2026-11-02): the PREREG, its forecast and the collector are named by sha256 in the lock table and
 # read by the collector's seal guard; this box has core.autocrlf=true, and a CRLF checkout would change those bytes
 papers/tests-pass-ci/** -text
+
+# real-convergence correction (2026-11-10): the sealed documents name these files by the sha256 of their bytes as
+# written (the JSON files and logs are CRLF, the documents and scripts LF), and every extract2 log names reproduce.py
+# by its sha256. A line-ending conversion would change those bytes, so git must store and check them out unchanged.
+papers/real-convergence/artifact_2026_11_10/** -text
+papers/real-convergence/lex_tokens.json -text
+papers/real-convergence/reproduce.py -text

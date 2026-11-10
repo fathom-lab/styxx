@@ -1,5 +1,5 @@
 # RESULT — Does convergence rise with scale? NOT robustly (14M–3B). It's data-driven, not scale-driven.
-
+**Caution added 2026-11-10: the numbers in this file were measured through the pipeline that [ERRATUM_real_convergence_2026_11_10.md](ERRATUM_real_convergence_2026_11_10.md) corrects, and have not been re-tested.**<br>
 **Date:** 2026-06-03 · Tests the falsifiable prediction the real-convergence result made as a
 HYPOTHESIS ("PRH caught mid-climb — *scale-driven*"). Three controlled scale ladders, an
 independent semantic reference, lexical control. **The hypothesis is not supported — and this

@@ -1,5 +1,5 @@
 # RESULT — Do REAL LLMs converge to the same concept geometry? Above-chance YES, uniformly NO.
-
+**Corrected 2026-11-10: the headline number of this file is withdrawn. See [ERRATUM_real_convergence_2026_11_10.md](ERRATUM_real_convergence_2026_11_10.md).**<br>
 **Date:** 2026-06-03 · The **non-circular, real-model** replacement for the synthetic Disjoint-
 Worlds toy the audit flagged (which passed the same latent `z` to both worlds). Here nothing is
 built in: 6 independently-trained LLMs (different orgs, architectures, data) are asked whether they
