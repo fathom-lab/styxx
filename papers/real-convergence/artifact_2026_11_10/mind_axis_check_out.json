@@ -1,0 +1,196 @@
+{
+ "mind_file_sha256": "59da4e4ec96a4f488951423da78be4a3f0c116b412b7d8378594411b83d8d4d7",
+ "june_anchors_sha256": "88b73512671a592240a7da8db789455de5f34091bbe5e379550c1ca18d1ffc4d",
+ "templates": [
+  "{w}",
+  "a {w}",
+  "the {w}",
+  "I saw a {w}",
+  "there is a {w}",
+  "this is a {w}",
+  "they showed me the {w}",
+  "look at that {w}"
+ ],
+ "shares": [
+  {
+   "array": "June anchor fixed__Qwen2.5-1.5B",
+   "templates": 8,
+   "share": 0.9971242523178472
+  },
+  {
+   "array": "June anchor fixed__Qwen2.5-3B",
+   "templates": 8,
+   "share": 0.9532094805018786
+  },
+  {
+   "array": "June anchor fixed__Llama-3.2-1B",
+   "templates": 8,
+   "share": 0.09664135877465353
+  },
+  {
+   "array": "June anchor fixed__Llama-3.2-3B",
+   "templates": 8,
+   "share": 0.08209305069473921
+  },
+  {
+   "array": "June anchor fixed__Phi-3.5-mini",
+   "templates": 8,
+   "share": 0.9570324357226799
+  },
+  {
+   "array": "June anchor fixed__gemma-2-2b",
+   "templates": 8,
+   "share": 0.0946056438148787
+  },
+  {
+   "array": "re-extracted Qwen2.5-0.5B",
+   "templates": 8,
+   "share": 0.9895789585846652,
+   "alone_at_position_0": 50
+  },
+  {
+   "array": "re-extracted Qwen2.5-0.5B",
+   "templates": 7,
+   "share": 0.09475619451652406
+  },
+  {
+   "array": "re-extracted Qwen2.5-1.5B",
+   "templates": 8,
+   "share": 0.9971246261696906,
+   "alone_at_position_0": 50
+  },
+  {
+   "array": "re-extracted Qwen2.5-1.5B",
+   "templates": 7,
+   "share": 0.08909610486966435
+  },
+  {
+   "array": "re-extracted Qwen2.5-3B",
+   "templates": 8,
+   "share": 0.9531916111139832,
+   "alone_at_position_0": 50
+  },
+  {
+   "array": "re-extracted Qwen2.5-3B",
+   "templates": 7,
+   "share": 0.07575857227987437
+  },
+  {
+   "array": "re-extracted Llama-3.2-1B",
+   "templates": 8,
+   "share": 0.09663408701883484,
+   "alone_at_position_0": 0
+  },
+  {
+   "array": "re-extracted Llama-3.2-1B",
+   "templates": 7,
+   "share": 0.09770582270287936
+  },
+  {
+   "array": "re-extracted Llama-3.2-3B",
+   "templates": 8,
+   "share": 0.08209172559217653,
+   "alone_at_position_0": 0
+  },
+  {
+   "array": "re-extracted Llama-3.2-3B",
+   "templates": 7,
+   "share": 0.0828134101980371
+  },
+  {
+   "array": "re-extracted Phi-3.5-mini",
+   "templates": 8,
+   "share": 0.956990210627956,
+   "alone_at_position_0": 49
+  },
+  {
+   "array": "re-extracted Phi-3.5-mini",
+   "templates": 7,
+   "share": 0.08462318010148702
+  }
+ ],
+ "citizenship": [
+  {
+   "candidate": "Qwen2.5-0.5B",
+   "family": "qwen",
+   "setting": "as documented: 8 templates, shipped anchors",
+   "citizenship": 0.1833,
+   "per_anchor": {
+    "Qwen2.5-1.5B": 1.0,
+    "Qwen2.5-3B": 0.918,
+    "Llama-3.2-1B": 0.136,
+    "Llama-3.2-3B": 0.147,
+    "Phi-3.5-mini": 0.299,
+    "gemma-2-2b": 0.151
+   }
+  },
+  {
+   "candidate": "Qwen2.5-0.5B",
+   "family": "qwen",
+   "setting": "candidate with the bare template dropped, shipped anchors",
+   "citizenship": 0.7321,
+   "per_anchor": {
+    "Qwen2.5-1.5B": 0.153,
+    "Qwen2.5-3B": 0.174,
+    "Llama-3.2-1B": 0.92,
+    "Llama-3.2-3B": 0.907,
+    "Phi-3.5-mini": 0.192,
+    "gemma-2-2b": 0.91
+   }
+  },
+  {
+   "candidate": "Qwen2.5-0.5B",
+   "family": "qwen",
+   "setting": "bare template dropped in candidate AND anchors (five anchors)",
+   "citizenship": 0.904,
+   "per_anchor": {
+    "Qwen2.5-1.5B": 0.927,
+    "Qwen2.5-3B": 0.908,
+    "Llama-3.2-1B": 0.918,
+    "Llama-3.2-3B": 0.907,
+    "Phi-3.5-mini": 0.888
+   }
+  },
+  {
+   "candidate": "Llama-3.2-1B",
+   "family": "llama",
+   "setting": "as documented: 8 templates, shipped anchors",
+   "citizenship": 0.3477,
+   "per_anchor": {
+    "Qwen2.5-1.5B": 0.133,
+    "Qwen2.5-3B": 0.152,
+    "Llama-3.2-1B": 1.0,
+    "Llama-3.2-3B": 0.966,
+    "Phi-3.5-mini": 0.169,
+    "gemma-2-2b": 0.937
+   }
+  },
+  {
+   "candidate": "Llama-3.2-1B",
+   "family": "llama",
+   "setting": "candidate with the bare template dropped, shipped anchors",
+   "citizenship": 0.3446,
+   "per_anchor": {
+    "Qwen2.5-1.5B": 0.128,
+    "Qwen2.5-3B": 0.148,
+    "Llama-3.2-1B": 0.999,
+    "Llama-3.2-3B": 0.964,
+    "Phi-3.5-mini": 0.165,
+    "gemma-2-2b": 0.937
+   }
+  },
+  {
+   "candidate": "Llama-3.2-1B",
+   "family": "llama",
+   "setting": "bare template dropped in candidate AND anchors (five anchors)",
+   "citizenship": 0.9178,
+   "per_anchor": {
+    "Qwen2.5-1.5B": 0.926,
+    "Qwen2.5-3B": 0.92,
+    "Llama-3.2-1B": 1.0,
+    "Llama-3.2-3B": 0.965,
+    "Phi-3.5-mini": 0.907
+   }
+  }
+ ]
+}

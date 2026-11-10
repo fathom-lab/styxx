@@ -1,0 +1,132 @@
+{
+ "prereg": "PREREG_corrected_geometry_five_models_2026_11_10.md",
+ "controls": [
+  {
+   "id": "C3",
+   "set": "original",
+   "model": "Qwen2.5-1.5B",
+   "claim": "exactly one OK run log, with the pad check at most 1e-04",
+   "got": "1 OK log(s); pad check worst 4.89e-06 over 178 rows",
+   "verdict": "PASS"
+  },
+  {
+   "id": "C3",
+   "set": "original",
+   "model": "Llama-3.2-1B",
+   "claim": "exactly one OK run log, with the pad check at most 1e-04",
+   "got": "1 OK log(s); pad check worst 8.88e-07 over 178 rows",
+   "verdict": "PASS"
+  },
+  {
+   "id": "C3",
+   "set": "original",
+   "model": "Phi-3.5-mini",
+   "claim": "exactly one OK run log, with the pad check at most 1e-04",
+   "got": "1 OK log(s); pad check worst 6.72e-07 over 98 rows",
+   "verdict": "PASS"
+  },
+  {
+   "id": "C3",
+   "set": "original",
+   "model": "Qwen2.5-0.5B",
+   "claim": "exactly one OK run log, with the pad check at most 1e-04",
+   "got": "1 OK log(s); pad check worst 8.40e-06 over 178 rows",
+   "verdict": "PASS"
+  },
+  {
+   "id": "C1",
+   "set": "original",
+   "model": "Qwen2.5-0.5B",
+   "claim": "all 768 states within 1e-04 of the first test, token lengths equal",
+   "got": "768 of 768 states within (max relative error 8.25e-06), lengths equal True",
+   "verdict": "PASS"
+  },
+  {
+   "id": "C1",
+   "set": "fresh",
+   "model": "Qwen2.5-0.5B",
+   "claim": "all 768 states within 1e-04 of the first test, token lengths equal",
+   "got": "768 of 768 states within (max relative error 2.04e-05), lengths equal True",
+   "verdict": "PASS"
+  },
+  {
+   "id": "C1",
+   "set": "original",
+   "model": "Llama-3.2-1B",
+   "claim": "all 768 states within 1e-04 of the first test, token lengths equal",
+   "got": "768 of 768 states within (max relative error 4.06e-06), lengths equal True",
+   "verdict": "PASS"
+  },
+  {
+   "id": "C1",
+   "set": "fresh",
+   "model": "Llama-3.2-1B",
+   "claim": "all 768 states within 1e-04 of the first test, token lengths equal",
+   "got": "768 of 768 states within (max relative error 3.08e-06), lengths equal True",
+   "verdict": "PASS"
+  },
+  {
+   "id": "C1",
+   "set": "original",
+   "model": "Qwen2.5-1.5B",
+   "claim": "all 768 states within 1e-04 of the first test, token lengths equal",
+   "got": "768 of 768 states within (max relative error 5.81e-06), lengths equal True",
+   "verdict": "PASS"
+  },
+  {
+   "id": "C1",
+   "set": "fresh",
+   "model": "Qwen2.5-1.5B",
+   "claim": "all 768 states within 1e-04 of the first test, token lengths equal",
+   "got": "768 of 768 states within (max relative error 9.79e-06), lengths equal True",
+   "verdict": "PASS"
+  },
+  {
+   "id": "C2",
+   "set": "original",
+   "model": "Qwen2.5-3B",
+   "claim": "re-extraction reproduces the stored June array",
+   "got": "states missing without a memory refusal",
+   "verdict": "FAIL"
+  },
+  {
+   "id": "C2",
+   "set": "original",
+   "model": "Llama-3.2-3B",
+   "claim": "re-extraction reproduces the stored June array",
+   "got": "states missing without a memory refusal",
+   "verdict": "FAIL"
+  },
+  {
+   "id": "C2a",
+   "set": "original",
+   "model": "Phi-3.5-mini",
+   "claim": "rows not alone at position 0: rep8 within 0.01 of the stored June row, at most 2 rows missing",
+   "got": "47 of 47 rows within (median 0.00035, max 0.00055)",
+   "verdict": "PASS"
+  },
+  {
+   "id": "C2b",
+   "set": "original",
+   "model": "Phi-3.5-mini",
+   "claim": "rows alone at position 0: the rep8 difference from June is at most 0.05 of that row's seven-template part, at most 2 rows missing",
+   "got": "49 of 49 rows within (median 0.00260, max 0.00629)",
+   "verdict": "PASS"
+  }
+ ],
+ "lines": [],
+ "tables": {},
+ "presence": {
+  "Qwen2.5-1.5B": "OK",
+  "Qwen2.5-3B": "MISSING",
+  "Llama-3.2-1B": "OK",
+  "Llama-3.2-3B": "MISSING",
+  "Phi-3.5-mini": "OK",
+  "Qwen2.5-0.5B": "OK"
+ },
+ "stopped": "a control failed; nothing else was computed. a rerun needs an amendment sealed first, naming the change and justified by control values only.",
+ "failed_controls": [
+  "C2 Qwen2.5-3B",
+  "C2 Llama-3.2-3B"
+ ]
+}

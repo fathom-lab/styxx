@@ -180,8 +180,8 @@ cohort of 8 minds over 120 shared items — nothing labelled
 
 Abridged from `--demo` on one machine (Python 3.12, numpy 2.4, Windows). The same seeded cohort's affinities have differed by up to about 0.005 between machines, cause not established; `--demo` lists islands at `island_z=3` and prints the rule it used ([#93](https://github.com/fathom-lab/styxx/issues/93)).
 
-Independently trained models converge on a shared concept geometry — and a model can sit
-*mostly inside* it and still be unreadable. We took the barrier apart under preregistered
+With the bare-word template dropped, the 8 cross-family pairs among five small models agree at a mean raw RSA of 0.9103 on 96 fresh words, against within-category nulls of 0.63 to 0.69, so most of that agreement is category structure (one lab, one machine; outside reruns: 0). The lab's June 2026 figure for six models, 0.258, is withdrawn ([erratum](https://github.com/fathom-lab/styxx/blob/main/papers/real-convergence/ERRATUM_real_convergence_2026_11_10.md)).
+A model can also sit *mostly inside* a shared geometry and still be unreadable. We took the barrier apart under preregistered
 gates: it is **causal** (correcting the frame takes cross-model reading 0.0612 -> 0.9745 while
 matched random frames do 0.0), **two directions wide at its core**, **nameless** (its
 directions match no human concept category, permutation p 0.8031), and **switch-like** —

@@ -1,0 +1,307 @@
+{
+ "prereg": "PREREG_start_token_artifact_2026_11_10.md",
+ "sets": {
+  "fresh": {
+   "Qwen2.5-1.5B": {
+    "n_words": 96,
+    "n_alone_at_position_0": 40,
+    "n_single_token_words": 40,
+    "bare_len_min": 1,
+    "adds_start_token": false,
+    "norm_ratio_median_alone": 159.6632918890544,
+    "norm_ratio_median_single": 159.6632918890544,
+    "norm_ratio_median_not_single": 1.0278745885559797,
+    "pc1_share_8_templates": 0.9969312785195003,
+    "auc_pc1_vs_alone_8": 1.0,
+    "pc1_share_7_templates": 0.08936018099888743,
+    "auc_pc1_vs_alone_7": 0.5879464285714285,
+    "self_rsa_8_vs_7": 0.08840828581776121
+   },
+   "Llama-3.2-1B": {
+    "n_words": 96,
+    "n_alone_at_position_0": 0,
+    "n_single_token_words": 40,
+    "bare_len_min": 2,
+    "adds_start_token": true,
+    "norm_ratio_median_alone": null,
+    "norm_ratio_median_single": 0.9331160391011972,
+    "norm_ratio_median_not_single": 0.9500503563124421,
+    "pc1_share_8_templates": 0.08881792583972764,
+    "auc_pc1_vs_alone_8": null,
+    "pc1_share_7_templates": 0.08969218037112572,
+    "auc_pc1_vs_alone_7": null,
+    "self_rsa_8_vs_7": 0.9988622960903617
+   },
+   "Qwen2.5-0.5B": {
+    "n_words": 96,
+    "n_alone_at_position_0": 40,
+    "n_single_token_words": 40,
+    "bare_len_min": 1,
+    "adds_start_token": false,
+    "norm_ratio_median_alone": 79.87919218825749,
+    "norm_ratio_median_single": 79.87919218825749,
+    "norm_ratio_median_not_single": 1.0209372786259938,
+    "pc1_share_8_templates": 0.9884606422409563,
+    "auc_pc1_vs_alone_8": 1.0,
+    "pc1_share_7_templates": 0.10384048468489879,
+    "auc_pc1_vs_alone_7": 0.5897321428571428,
+    "self_rsa_8_vs_7": 0.08864558023408203
+   },
+   "pair_A_x_B": {
+    "raw_8": 0.07938835398558483,
+    "raw_7": 0.9279712879093343,
+    "partial_lex_8": 0.07466432788344353,
+    "partial_lex_7": 0.927172539330264,
+    "spearman_8": 0.31780967698660284,
+    "spearman_7": 0.8528247117627022,
+    "within_category_null_8": [
+     0.028852864528833864,
+     0.009185688598075833
+    ],
+    "within_category_null_7": [
+     0.6653793545311635,
+     0.009274427954826454
+    ],
+    "excess_over_within_category_null_8": 0.050535489456750966,
+    "excess_over_within_category_null_7": 0.26259193337817077
+   },
+   "pair_C_x_B": {
+    "raw_8": 0.08408043634946326,
+    "raw_7": 0.9154567243692919
+   },
+   "pair_A_x_C_same_family": {
+    "raw_8": 0.9998699386276756,
+    "raw_7": 0.9233758745988693
+   }
+  },
+  "original": {
+   "Qwen2.5-1.5B": {
+    "n_words": 96,
+    "n_alone_at_position_0": 50,
+    "n_single_token_words": 50,
+    "bare_len_min": 1,
+    "adds_start_token": false,
+    "norm_ratio_median_alone": 160.49270166011712,
+    "norm_ratio_median_single": 160.49270166011712,
+    "norm_ratio_median_not_single": 1.0103503104423122,
+    "pc1_share_8_templates": 0.9971246258391951,
+    "auc_pc1_vs_alone_8": 1.0,
+    "pc1_share_7_templates": 0.08909610106073504,
+    "auc_pc1_vs_alone_7": 0.5860869565217391,
+    "self_rsa_8_vs_7": 0.16195332464747939
+   },
+   "Llama-3.2-1B": {
+    "n_words": 96,
+    "n_alone_at_position_0": 0,
+    "n_single_token_words": 50,
+    "bare_len_min": 2,
+    "adds_start_token": true,
+    "norm_ratio_median_alone": null,
+    "norm_ratio_median_single": 0.9388430435100831,
+    "norm_ratio_median_not_single": 0.949319525925391,
+    "pc1_share_8_templates": 0.09663408228037211,
+    "auc_pc1_vs_alone_8": null,
+    "pc1_share_7_templates": 0.09770581820541645,
+    "auc_pc1_vs_alone_7": null,
+    "self_rsa_8_vs_7": 0.9990280044197294
+   },
+   "Qwen2.5-0.5B": {
+    "n_words": 96,
+    "n_alone_at_position_0": 50,
+    "n_single_token_words": 50,
+    "bare_len_min": 1,
+    "adds_start_token": false,
+    "norm_ratio_median_alone": 80.85854351422151,
+    "norm_ratio_median_single": 80.85854351422151,
+    "norm_ratio_median_not_single": 1.0020641565001995,
+    "pc1_share_8_templates": 0.9895789555692922,
+    "auc_pc1_vs_alone_8": 1.0,
+    "pc1_share_7_templates": 0.09475619256159493,
+    "auc_pc1_vs_alone_7": 0.6360869565217391,
+    "self_rsa_8_vs_7": 0.16868926990882405
+   },
+   "pair_A_x_B": {
+    "raw_8": 0.14274848839041182,
+    "raw_7": 0.9261301869962033,
+    "partial_lex_8": 0.13258723317072954,
+    "partial_lex_7": 0.92564544632826,
+    "spearman_8": 0.3715023576549485,
+    "spearman_7": 0.8526973791815757,
+    "within_category_null_8": [
+     0.04388960581304621,
+     0.010899139156653291
+    ],
+    "within_category_null_7": [
+     0.6715073622098728,
+     0.01354080314681603
+    ],
+    "excess_over_within_category_null_8": 0.09885888257736561,
+    "excess_over_within_category_null_7": 0.25462282478633047
+   },
+   "pair_C_x_B": {
+    "raw_8": 0.1465753463799541,
+    "raw_7": 0.9182963710506644
+   },
+   "pair_A_x_C_same_family": {
+    "raw_8": 0.9999624323161233,
+    "raw_7": 0.9273848182884389
+   }
+  }
+ },
+ "predictions": [
+  {
+   "id": "P7",
+   "model": "Qwen2.5-1.5B",
+   "set": "original",
+   "claim": "at least 90 of 96 re-extracted rows within 0.05 relative error of the stored array",
+   "got": "96 of 96 (median 0.0010, max 0.0016)",
+   "verdict": "PASS"
+  },
+  {
+   "id": "P7",
+   "model": "Llama-3.2-1B",
+   "set": "original",
+   "claim": "at least 90 of 96 re-extracted rows within 0.05 relative error of the stored array",
+   "got": "96 of 96 (median 0.0005, max 0.0007)",
+   "verdict": "PASS"
+  },
+  {
+   "id": "P1a",
+   "set": "fresh",
+   "model": "Qwen2.5-1.5B",
+   "claim": "bare-template norm at least 20x the other templates, median over words alone at position 0",
+   "got": "159.7x over 40 words",
+   "verdict": "PASS"
+  },
+  {
+   "id": "P1b",
+   "set": "fresh",
+   "model": "Llama-3.2-1B",
+   "claim": "control with a start token: the same ratio at most 3x for single-token words",
+   "got": "0.93x over 40 words; start token added: True",
+   "verdict": "PASS"
+  },
+  {
+   "id": "P2",
+   "set": "fresh",
+   "model": "Qwen2.5-1.5B",
+   "claim": "8 templates: top direction holds at least 0.90 of variance and separates alone words at AUC 0.99 or more",
+   "got": "share 0.9969, AUC 1.0000, alone 40 of 96",
+   "verdict": "PASS"
+  },
+  {
+   "id": "P3",
+   "set": "fresh",
+   "model": "Qwen2.5-1.5B",
+   "claim": "bare template dropped (7 templates): top direction holds at most 0.30",
+   "got": "share 0.0894",
+   "verdict": "PASS"
+  },
+  {
+   "id": "P4",
+   "set": "fresh",
+   "model": "Qwen2.5-1.5B x Llama-3.2-1B",
+   "claim": "cross-family RSA rises by at least 0.30 when the bare template is dropped, and reaches 0.50",
+   "got": "8 templates 0.0794, 7 templates 0.9280, gain +0.8486",
+   "verdict": "PASS"
+  },
+  {
+   "id": "P8",
+   "set": "fresh",
+   "model": "Qwen2.5-1.5B x Llama-3.2-1B",
+   "claim": "re-derived partial-lexical value within 0.02 of the June result file for this pair",
+   "got": "June 0.075, re-derived 0.0747",
+   "verdict": "PASS"
+  },
+  {
+   "id": "P5",
+   "set": "fresh",
+   "model": "Llama-3.2-1B",
+   "claim": "control: dropping the bare template leaves this model's own geometry at RSA 0.95 or more",
+   "got": "0.9989",
+   "verdict": "PASS"
+  },
+  {
+   "id": "P6",
+   "set": "fresh",
+   "model": "Qwen2.5-0.5B",
+   "claim": "secondary, a model with no stored arrays: ratio, share and AUC as P1a and P2, and P3 after the drop",
+   "got": "ratio 79.9x, share8 0.9885, AUC 1.0000, share7 0.1038, alone 40 of 96",
+   "verdict": "PASS"
+  },
+  {
+   "id": "P1a",
+   "set": "original",
+   "model": "Qwen2.5-1.5B",
+   "claim": "bare-template norm at least 20x the other templates, median over words alone at position 0",
+   "got": "160.5x over 50 words",
+   "verdict": "PASS"
+  },
+  {
+   "id": "P1b",
+   "set": "original",
+   "model": "Llama-3.2-1B",
+   "claim": "control with a start token: the same ratio at most 3x for single-token words",
+   "got": "0.94x over 50 words; start token added: True",
+   "verdict": "PASS"
+  },
+  {
+   "id": "P2",
+   "set": "original",
+   "model": "Qwen2.5-1.5B",
+   "claim": "8 templates: top direction holds at least 0.90 of variance and separates alone words at AUC 0.99 or more",
+   "got": "share 0.9971, AUC 1.0000, alone 50 of 96",
+   "verdict": "PASS"
+  },
+  {
+   "id": "P3",
+   "set": "original",
+   "model": "Qwen2.5-1.5B",
+   "claim": "bare template dropped (7 templates): top direction holds at most 0.30",
+   "got": "share 0.0891",
+   "verdict": "PASS"
+  },
+  {
+   "id": "P4",
+   "set": "original",
+   "model": "Qwen2.5-1.5B x Llama-3.2-1B",
+   "claim": "cross-family RSA rises by at least 0.30 when the bare template is dropped, and reaches 0.50",
+   "got": "8 templates 0.1427, 7 templates 0.9261, gain +0.7834",
+   "verdict": "PASS"
+  },
+  {
+   "id": "P5",
+   "set": "original",
+   "model": "Llama-3.2-1B",
+   "claim": "control: dropping the bare template leaves this model's own geometry at RSA 0.95 or more",
+   "got": "0.9990",
+   "verdict": "PASS"
+  },
+  {
+   "id": "P6",
+   "set": "original",
+   "model": "Qwen2.5-0.5B",
+   "claim": "secondary, a model with no stored arrays: ratio, share and AUC as P1a and P2, and P3 after the drop",
+   "got": "ratio 80.9x, share8 0.9896, AUC 1.0000, share7 0.0948, alone 50 of 96",
+   "verdict": "PASS"
+  }
+ ],
+ "provenance": {
+  "Qwen2.5-1.5B": {
+   "rows_within_tolerance": 96,
+   "of": 96,
+   "median_relative_error": 0.000984192409471302,
+   "max_relative_error": 0.0015643391907339754,
+   "rsa_new_vs_stored": 0.9999999992152234,
+   "ok": true
+  },
+  "Llama-3.2-1B": {
+   "rows_within_tolerance": 96,
+   "of": 96,
+   "median_relative_error": 0.00045289965018905097,
+   "max_relative_error": 0.000669205245006267,
+   "rsa_new_vs_stored": 0.9999999509760299,
+   "ok": true
+  }
+ }
+}
