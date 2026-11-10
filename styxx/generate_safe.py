@@ -50,8 +50,11 @@ directly — this module wraps that for the simple case.
 """
 from __future__ import annotations
 
+import warnings
 from dataclasses import dataclass, field
 from typing import Any, List, Union
+
+from ._position0 import ChatTemplateFallbackWarning, check_position0
 
 DEFAULT_SAFE_RESPONSE = (
     "I don't have reliable information to answer that. I would need to "
@@ -66,15 +69,22 @@ class SafeResponse:
     halt_reason: str
     tokens_generated: int
     probe_trajectory: List[float] = field(default_factory=list)
+    # True only when the readings started at position 0 of a one-token
+    # input under allow_position0=True. Always left out of repr and
+    # equality; in as_dict() only when True.
+    position0: bool = field(default=False, repr=False, compare=False)
 
     def as_dict(self) -> dict:
-        return {
+        d = {
             "text": self.text,
             "halted": self.halted,
             "halt_reason": self.halt_reason,
             "tokens_generated": self.tokens_generated,
             "probe_trajectory": self.probe_trajectory,
         }
+        if self.position0:
+            d["position0"] = True
+        return d
 
 
 def _resolve_model_name(model) -> str:
@@ -115,6 +125,7 @@ def generate_safe(
     do_sample: bool = False,
     temperature: float = 1.0,
     return_partial_on_halt: bool = False,
+    allow_position0: bool = False,
 ) -> SafeResponse:
     """Generate with a residual-level probe gating each token.
 
@@ -144,6 +155,23 @@ def generate_safe(
     return_partial_on_halt : bool
         If True, return the partial generation up to the halt point.
         If False (default), replace with `safe_response`.
+    allow_position0 : bool
+        Default False. If the prefill is one token long and that token
+        is not the tokenizer's start token, the prefill probe reading would
+        be the hidden state at position 0, which is dominated by the large
+        activation models carry there and is not a measurement of the
+        prompt. By default that case raises; if True, generation goes on,
+        a Position0Warning is emitted, and the result has
+        ``position0=True``.
+
+    If ``apply_chat_template`` is True and the chat template raises, a
+    ChatTemplateFallbackWarning is emitted and the raw tokenization is
+    used instead; the position-0 check then applies to the raw ids.
+
+    Raises:
+        Position0Error: the prefill is one token long, that token is not
+            the start token, and allow_position0 is False. Raised before
+            the hook is installed or any forward pass is run.
     """
     import torch
     from transformers import AutoModelForCausalLM, AutoTokenizer
@@ -175,13 +203,24 @@ def generate_safe(
                 add_generation_prompt=True,
                 return_tensors="pt",
             ).to(device)
-        except Exception:
+        except Exception as e:
+            warnings.warn(
+                f"generate_safe: the chat template raised "
+                f"{type(e).__name__}; raw tokenization of the prompt was "
+                f"used instead, without the chat template.",
+                ChatTemplateFallbackWarning,
+                stacklevel=2,
+            )
             input_ids = tokenizer(prompt, return_tensors="pt"
                                    ).input_ids.to(device)
     else:
         input_ids = tokenizer(prompt, return_tensors="pt"
                                ).input_ids.to(device)
     input_ids.shape[1]
+    position0 = check_position0(
+        input_ids, tokenizer, allow_position0=allow_position0,
+        where="generate_safe",
+    )
 
     # Capture the last-token residual at probe layer on every forward pass
     captured = {"h": None}
@@ -252,6 +291,7 @@ def generate_safe(
         halt_reason=halt_reason,
         tokens_generated=len(generated_ids),
         probe_trajectory=trajectory,
+        position0=position0,
     )
 
 

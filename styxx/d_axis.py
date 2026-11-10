@@ -70,6 +70,7 @@ from dataclasses import dataclass
 from typing import Any, List, Optional
 
 from . import config
+from ._position0 import check_position0
 
 
 # ══════════════════════════════════════════════════════════════════
@@ -281,23 +282,47 @@ class DAxisScorer:
         self,
         input_ids: Any,
         token_id: int,
+        allow_position0: bool = False,
     ) -> float:
         """Compute D for a single token given existing input_ids.
 
         Lower-level than score_trajectory — for callers who manage
         their own generation loop (e.g. styxx.reflex tier 1 mode).
 
+        A one-element input_ids whose token is not the loaded tokenizer's
+        start token is refused: the last position is then position 0, and
+        the state there is dominated by the large activation models carry
+        at position 0, not a measurement of the context. The start-token id
+        is the loaded tokenizer's bos_token_id (TransformerLens may set it
+        to the end-of-sequence id when a tokenizer has none); a tokenizer
+        with no start-token id counts as adding none. The check runs after
+        the model is loaded, because the start-token id comes from the
+        loaded tokenizer, and before the forward pass.
+
         Args:
             input_ids: tensor of shape (1, seq_len) — the full
                        context including the token to score
             token_id:  the token ID at the last position
+            allow_position0: default False. If True, the one-element case
+                       is scored anyway and a Position0Warning is emitted;
+                       the return is a float with no room for a mark, so
+                       the warning alone marks it.
 
         Returns:
             D value (float in [-1, 1])
+
+        Raises:
+            Position0Error: input_ids is one token long, that token is not
+                the start token, and allow_position0 is False.
         """
         import torch
 
         self._ensure_loaded()
+        check_position0(
+            input_ids, getattr(self._model, "tokenizer", None),
+            allow_position0=allow_position0,
+            where="DAxisScorer.score_single",
+        )
         captured = {"h": None}
 
         def hook_fn(tensor, hook):
