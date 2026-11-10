@@ -1,0 +1,18 @@
+PASS         P1a  fresh    Qwen2.5-1.5B                159.7x over 40 words
+PASS         P1b  fresh    Llama-3.2-1B                0.93x over 40 words; start token added: True
+PASS         P2   fresh    Qwen2.5-1.5B                share 0.9969, AUC 1.0000, alone 40 of 96
+PASS         P3   fresh    Qwen2.5-1.5B                share 0.0894
+PASS         P4   fresh    Qwen2.5-1.5B x Llama-3.2-1B 8 templates 0.0794, 7 templates 0.9280, gain +0.8486
+PASS         P5   fresh    Llama-3.2-1B                0.9989
+PASS         P6   fresh    Qwen2.5-0.5B                ratio 79.9x, share8 0.9885, AUC 1.0000, share7 0.1038, alone 40 of 96
+PASS         P8   fresh    Qwen2.5-1.5B x Llama-3.2-1B June 0.075, re-derived 0.0747
+PASS         P1a  original Qwen2.5-1.5B                160.5x over 50 words
+PASS         P1b  original Llama-3.2-1B                0.94x over 50 words; start token added: True
+PASS         P2   original Qwen2.5-1.5B                share 0.9971, AUC 1.0000, alone 50 of 96
+PASS         P3   original Qwen2.5-1.5B                share 0.0891
+PASS         P4   original Qwen2.5-1.5B x Llama-3.2-1B 8 templates 0.1427, 7 templates 0.9261, gain +0.7834
+PASS         P5   original Llama-3.2-1B                0.9990
+PASS         P6   original Qwen2.5-0.5B                ratio 80.9x, share8 0.9896, AUC 1.0000, share7 0.0948, alone 50 of 96
+PASS         P7   original Llama-3.2-1B                96 of 96 (median 0.0005, max 0.0007)
+PASS         P7   original Qwen2.5-1.5B                96 of 96 (median 0.0010, max 0.0016)
+wrote score_out.json
