@@ -160,10 +160,9 @@ test = [
 ]
 
 [project.urls]
-Homepage       = "https://styxx-org.netlify.app"
-Documentation  = "https://styxx-org.netlify.app"
-"Fathom Lab"   = "https://fathomlab-io.netlify.app"
-"Telegram"     = "https://t.me/STYXX_COMM"
+Homepage       = "https://github.com/fathom-lab/styxx"
+Documentation  = "https://github.com/fathom-lab/styxx#readme"
+"Fathom Lab"   = "https://github.com/fathom-lab"
 "Research Paper" = "https://doi.org/10.5281/zenodo.19326174"
 "@fathom_lab"  = "https://x.com/fathom_lab"
 "Source"       = "https://github.com/fathom-lab/styxx"

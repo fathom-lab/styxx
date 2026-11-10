@@ -21,6 +21,8 @@ lanes (B7 3B run, B2-coupling chain, G5 scorecard) run without you today.**
 Review `docs/governance/PROPOSED_open_core_s4_excision_2026_07_14.md`. Say "apply the excision"
 and the agent commits the three edits (remove token passage, neutralize one anti-goal line,
 quarantine the idea to docs/token/NETWORK_NOTES.md). Nothing about the open-core rails changes.
+2026-11-10: the removal is applied and the proposal file is deleted. The quarantine file was never
+created. See the 2026-11-10 entry in `CHANGELOG.md`.
 
 ## 3. main fast-forward (~1 min) — publish the receipts
 

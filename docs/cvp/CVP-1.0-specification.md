@@ -721,11 +721,10 @@ This appendix is **non-normative** and **OPTIONAL**. Nothing in the
 core CVP/1.0 specification depends on it. Conformant implementations
 MAY ignore this appendix entirely.
 
-Some deployments of CVP choose to layer an economic mechanism on top
+A deployment of CVP can layer an economic mechanism on top
 of the protocol — for example, staking or reputation tokens that
 penalize senders whose signed vitals are later disproved by
-downstream verification. The reference implementation `styxx` is
-associated with one such experiment (`$STYXX`). This is a deployment
+downstream verification. This is a deployment
 concern, not a protocol concern. CVP itself does not require,
 endorse, or assume the existence of any token.
 
