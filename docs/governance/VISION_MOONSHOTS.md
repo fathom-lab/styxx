@@ -26,8 +26,8 @@ cached reps where available, conduct axis on the frozen B-series battery), one p
 
 ## M3 — The Court of Minds: re-execution markets
 
-Certificates invite challenge. Validator-tier $STYXX holders (styxx.token Tier 2 already names
-cert co-signing) re-run challenged certificates; failures are publicly revoked, challengers made
+Certificates invite challenge. Independent re-runners re-run challenged certificates; failures are
+publicly revoked, challengers made
 whole. Not a prediction market — a deterministic re-execution market. Resolution = re-run.
 **RUNG:** `styxx.challenge` — given any certificate JSON, re-execute it cold (doc + receipts +
 verifier SHA) and emit CONFIRMED / REVOKED / IRREPRODUCIBLE, with the diff. Protocol before market.
@@ -55,5 +55,5 @@ disjoint question (e.g. the UNBOUND-docs repayment queue), with a no-contention 
 - No consciousness claims, ever — the axis is REFUSED by construction.
 - No certificate without a validated instrument behind it; no instrument without its burial
   receipts attached.
-- No token mechanics that gate the OSS library; $STYXX coordinates the public network only.
+- No mechanism that gates the OSS library behind an asset a user must hold.
 - The moonshots are directions, not deadlines; the bar structure outranks the dream.
