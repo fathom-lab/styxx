@@ -15,6 +15,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 - The new top is 54 lines, as the old one was, so `### VERIFY` stays on line 55 and nothing from line 55 down changed, byte for byte. Every number on the new screen links to the committed file it comes from.
 - `zenodo/MANIFEST.json`: the `cited_in` entries `README.md:20` and `README.md:21` (the two dropped badges) are removed. The links-table rows did not move, so `README.md:504` to `README.md:507` stand.
 
+## [Unreleased] — a browser notebook to rerun the start-of-input correction (2026-11-11)
+
+- **New `papers/real-convergence/artifact_2026_11_10/rerun_ungated.ipynb`, and one row for it in that folder's `README.md`.** No package code changes.
+- **What it does.** It makes sure `transformers` is installed, downloads `rerun_ungated.py` from commit `4bbe4b3e27aaa5bc429a058ca7b788ef5b8e9b4f` of main (the commit that holds the published file), prints its sha256 and whether it matches `39cabff71dc98c511c8653ab797be8a4634458b4b6c2dbb22f8696e03853d92c`, prints the machine and the torch and transformers versions, and runs the script with `--cpu` on Qwen2.5-0.5B-Instruct. Its last cell asks for the whole output on issue 254, a NO as much as a YES. The notebook has no outputs saved in it.
+- **Why.** Outside reruns of the lab's correction stand at 0 (`ERRATUM_real_convergence_2026_11_10.md`), and until now a rerun needed a local Python install. The notebook opens in Google Colab from `https://colab.research.google.com/github/fathom-lab/styxx/blob/main/papers/real-convergence/artifact_2026_11_10/rerun_ungated.ipynb`.
+- **Not shown.** The lab has not run this notebook on Colab, so whether it runs there unchanged, and how long it takes, is not known. It was written after the two sealed tests and is not part of them. The script it runs is unchanged.
+
 ## [Unreleased] — styxx.mind_geometry: version 2 of the geometry axis refuses arrays dominated by one direction (2026-11-10)
 
 - **New `styxx/mind_geometry.py` (with its own `__all__` and command line); new `papers/mind-instrument/anchors_v2_2026_11_10.npz`, `build_anchors_v2.py`, `ANCHORS_V2_SHA256SUMS.txt`, `NOTE_geometry_axis_v2_2026_11_10.md` and `CENSUS_start_token_exposure_2026_11_10.md` in the same folder; new `tests/test_mind_geometry_v2.py`. `styxx/mind.py` is not changed.** Dated 2026-11-10.
