@@ -54,10 +54,18 @@ Usage
 from __future__ import annotations
 
 import math
-from dataclasses import dataclass
+import warnings
+from dataclasses import dataclass, field
 from typing import Any, Dict, Optional
 
+from .._position0 import Position0Warning
 from .probe import StyxxProbe, ProbeNotAvailable
+
+UNMEASURED_SCORES_NOTE = (
+    "The probe scores were not measured: the prefill hook never captured "
+    "a state, so original_score and patched_score are a default of 0.5 "
+    "and flipped is False by default; none of the three is a measurement."
+)
 
 
 @dataclass
@@ -74,9 +82,13 @@ class InterventionResult:
     flipped: bool                      # did the class prediction flip?
     generation_completed: bool         # did generation finish (vs error)?
     note: str = ""
+    # False when the prefill hook never captured a state, so the scores
+    # are the 0.5 default and not a measurement. Always left out of repr
+    # and equality; in as_dict() only when False.
+    scores_measured: bool = field(default=True, repr=False, compare=False)
 
     def as_dict(self) -> Dict[str, Any]:
-        return {
+        d = {
             "prompt": self.prompt,
             "target_class": self.target_class,
             "alpha_used": self.alpha_used,
@@ -89,6 +101,9 @@ class InterventionResult:
             "generation_completed": self.generation_completed,
             "note": self.note,
         }
+        if not self.scores_measured:
+            d["scores_measured"] = False
+        return d
 
 
 class InterveneProbe(StyxxProbe):
@@ -165,6 +180,16 @@ class InterveneProbe(StyxxProbe):
         return_baseline : bool
             If True, also runs an un-patched baseline generation for
             direct comparison.
+
+        Unmeasured scores: the probe scores are read only on a prefill
+        pass of two or more tokens. When the prefill hook never captured a
+        state (for example a raw prompt of one token, which sits alone at
+        position 0, or a generation that raised before its prefill),
+        original_score is a default of 0.5, patched_score equals it and
+        flipped is False by default. That result has ``scores_measured=False``, a sentence
+        saying so is added to ``note``, and a Position0Warning is emitted.
+        This function does not refuse that case: it reads nothing at
+        position 0, though the steering write lands there.
         """
         import torch
 
@@ -275,6 +300,18 @@ class InterveneProbe(StyxxProbe):
         post_pred_is_pos = post >= 0.5
         flipped = pre_pred_is_pos != post_pred_is_pos
 
+        scores_measured = captured["pre_patch"] is not None
+        if not scores_measured:
+            note = (f"{note.rstrip('.')}. {UNMEASURED_SCORES_NOTE}"
+                    if note else UNMEASURED_SCORES_NOTE)
+            warnings.warn(
+                "InterveneProbe.intervene_and_generate: "
+                + UNMEASURED_SCORES_NOTE
+                + f" Prefill length was {prefill_len} token(s).",
+                Position0Warning,
+                stacklevel=2,
+            )
+
         return InterventionResult(
             prompt=prompt,
             target_class=target_class,
@@ -287,6 +324,7 @@ class InterveneProbe(StyxxProbe):
             flipped=flipped,
             generation_completed=completed,
             note=note,
+            scores_measured=scores_measured,
         )
 
     # ---------- helpers ----------
