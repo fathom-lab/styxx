@@ -44,11 +44,11 @@ Numbers and detail for the EXTERNAL-1, V14 and `only_touches` items are in the V
 ### install, status on 2026-11-11
 
 ```bash
-pip install styxx                                      # 7.50.0 from PyPI
+pip install styxx                                      # 8.0.0 from PyPI
 pip install git+https://github.com/fathom-lab/styxx    # the main branch
 ```
 
-`pip install styxx` gives 7.50.0, which predates the changes of 2026-11-10 named on this screen: the geometry correction, the position-0 guard and `styxx.mind_geometry`. Main is ahead of it but still reports 7.50.0 ([styxx/_version.py](https://github.com/fathom-lab/styxx/blob/main/styxx/_version.py)); the changes since are under "Unreleased" in [CHANGELOG.md](https://github.com/fathom-lab/styxx/blob/main/CHANGELOG.md).
+`pip install styxx` gives 8.0.0, which carries the changes of 2026-11-10 named on this screen: the geometry correction, the position-0 guard and `styxx.mind_geometry`. 8.0.0 breaks two things that worked in 7.50.0: its `token` submodule is gone, and the guarded functions raise `Position0Error` on a one-token input with no start token unless called with `allow_position0=True`. `styxx.mind.geometry_citizenship` is unchanged and still gives the faulty number; version 2 is `styxx.mind_geometry`. Main can be ahead of the latest release; what changed since is under "Unreleased" in [CHANGELOG.md](https://github.com/fathom-lab/styxx/blob/main/CHANGELOG.md).
 
 ---
 
