@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [Unreleased] — README: a new first screen, written for a stranger arriving after the correction of 2026-11-10 (2026-11-11)
+
+### Changed
+
+- `README.md` lines 1 to 54, everything above the `### VERIFY` heading, are replaced. Gone: the ASCII banner and its motto, the "one idea, three layers" table, the paragraph "What the refusals cost us, in one day (2026-08-06)", and the two Zenodo DOI badges (both DOIs stay in the links table at the foot of the README, with their labels). In their place, in this order: one sentence on what styxx is; four commands that run offline from a clone of main (the diffgate demo, `papers/real-convergence/reproduce.py`, `python -m styxx.mind_geometry geometry`, `python -m styxx.sworn check` on the tranche A receipt), each with what it does and does not show; what failed (EXTERNAL-1 with the sentence its preregistration binds the lab to print, the panel's weaker blinding and the lab's own harness fault, V14, `only_touches`, the June geometry headline 0.258 withdrawn on 2026-11-10 with its erratum, and `styxx/mind.py` still carrying the June function under its lock tables); how to check the lab (outside reruns: 0, issue 254, `REPLICATIONS.md`, `rerun_ungated.py`); and install and status (PyPI's 7.50.0 predates the changes of 2026-11-10; main is ahead and still reports 7.50.0).
+- The new top is 54 lines, as the old one was, so `### VERIFY` stays on line 55 and nothing from line 55 down changed, byte for byte. Every number on the new screen links to the committed file it comes from.
+- `zenodo/MANIFEST.json`: the `cited_in` entries `README.md:20` and `README.md:21` (the two dropped badges) are removed. The links-table rows did not move, so `README.md:504` to `README.md:507` stand.
+
 ## [Unreleased] — styxx.mind_geometry: version 2 of the geometry axis refuses arrays dominated by one direction (2026-11-10)
 
 - **New `styxx/mind_geometry.py` (with its own `__all__` and command line); new `papers/mind-instrument/anchors_v2_2026_11_10.npz`, `build_anchors_v2.py`, `ANCHORS_V2_SHA256SUMS.txt`, `NOTE_geometry_axis_v2_2026_11_10.md` and `CENSUS_start_token_exposure_2026_11_10.md` in the same folder; new `tests/test_mind_geometry_v2.py`. `styxx/mind.py` is not changed.** Dated 2026-11-10.

@@ -1,54 +1,54 @@
-<div align="center">
+# styxx
 
-```
-   ███████╗████████╗██╗   ██╗██╗  ██╗██╗  ██╗
-   ██╔════╝╚══██╔══╝╚██╗ ██╔╝╚██╗██╔╝╚██╗██╔╝
-   ███████╗   ██║    ╚████╔╝  ╚███╔╝  ╚███╔╝
-   ╚════██║   ██║     ╚██╔╝   ██╔██╗  ██╔██╗
-   ███████║   ██║      ██║   ██╔╝ ██╗██╔╝ ██╗
-   ╚══════╝   ╚═╝      ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═╝
-
-           · · · nothing crosses unseen · · ·
-```
-
-### verification for the agent era
+styxx is a set of tools that check what an AI agent claims against the evidence the agent hands over, such as a pull request summary against its diff, plus instruments that read model hidden states.
 
 [![PyPI](https://img.shields.io/pypi/v/styxx.svg?color=ff2330&label=pypi&style=flat-square)](https://pypi.org/project/styxx/)
 [![Python](https://img.shields.io/pypi/pyversions/styxx.svg?color=ff2330&label=python&style=flat-square)](https://pypi.org/project/styxx/)
 [![License](https://img.shields.io/pypi/l/styxx.svg?color=ff2330&label=license&style=flat-square)](https://github.com/fathom-lab/styxx/blob/v7.50.0/LICENSE)
 [![tests](https://github.com/fathom-lab/styxx/actions/workflows/test.yml/badge.svg)](https://github.com/fathom-lab/styxx/actions/workflows/test.yml)
-[![Spec](https://img.shields.io/badge/spec_v1.0-10.5281%2Fzenodo.19746215-ff2330.svg?style=flat-square)](https://doi.org/10.5281/zenodo.19746215)
-[![Concept](https://img.shields.io/badge/concept_DOI-always--latest-ff2330.svg?style=flat-square)](https://doi.org/10.5281/zenodo.19326174)
 
-</div>
+### what runs today
 
-### one idea, three layers
+"Runs" means the command runs and does what it says. It does not mean the result is accurate: each item says whether accuracy was measured, and the next section lists what failed. From the root of a clone of the main branch:
 
-styxx is a verification layer for the agent era. Every instrument in it is built on a single
-principle, and the principle is the product:
+```bash
+python -m styxx.diffgate --demo                 # a built example, offline
+python papers/real-convergence/reproduce.py     # needs numpy; writes reproduce_result.json here
+python -m styxx.mind_geometry geometry --anchors papers/real-convergence/contextual_reps.npz
+python -m styxx.sworn check papers/sworn/RESULT_sworn_measurement_tranche_A_2026_10_25.sworn-receipt.json papers/sworn/RESULT_sworn_measurement_tranche_A_2026_10_25.sworn.json --repo .
+```
 
-> **An instrument that cannot refuse cannot be trusted.**
-> Each one names what stopped it, and none of them will tell you more than the evidence carries.
+- **diffgate demo.** It reads an example summary against an example diff and marks each claim it parsed `ok`, `CONTRADICTED`, or `?` when it was handed nothing to read. The demo shows the output format, not accuracy ([styxx/diffgate.py](https://github.com/fathom-lab/styxx/blob/main/styxx/diffgate.py)).
+- **Arithmetic re-check.** `reproduce.py` re-derives the June v2 and v3 numbers from the stored arrays in `contextual_reps.npz` and prints `RESULT: 12/12 checks match at 3 decimals` ([REPLICATIONS.md](https://github.com/fathom-lab/styxx/blob/main/REPLICATIONS.md)). It does not re-derive the withdrawn 0.258, whose representations were never saved ([reproduce.py](https://github.com/fathom-lab/styxx/blob/main/papers/real-convergence/reproduce.py)). In 3 of the 6 stored arrays (Qwen2.5-1.5B, Qwen2.5-3B, Phi-3.5-mini) one direction holds 0.9532 to 0.9971 of the variance across the 96 concepts ([CHANGELOG.md](https://github.com/fathom-lab/styxx/blob/main/CHANGELOG.md)), so a match shows the June arithmetic was faithful, not that the June reading was right.
+- **Geometry axis, version 2.** `styxx.mind_geometry` refuses a candidate array when one direction holds 0.5 or more of its variance across concepts, and leaves out anchors that do. The 0.5 cut was chosen after the shares were seen, and it is not shown to suit other model families ([CHANGELOG.md](https://github.com/fathom-lab/styxx/blob/main/CHANGELOG.md), [styxx/mind_geometry.py](https://github.com/fathom-lab/styxx/blob/main/styxx/mind_geometry.py)). On `contextual_reps.npz` the command above scores the file's Qwen2.5-1.5B anchor as the candidate, refuses it, and leaves out 3 of the 6 anchors.
+- **Position-0 guard.** [styxx/_position0.py](https://github.com/fathom-lab/styxx/blob/main/styxx/_position0.py) makes the guarded functions listed in CHANGELOG.md raise `Position0Error` rather than read position 0 of a one-token input that is not a start-of-input marker; `allow_position0=True` reads it with a warning. Paths built on TransformerLens or circuit-tracer are not guarded. Its tests use stand-in models; no real model was run ([CHANGELOG.md](https://github.com/fathom-lab/styxx/blob/main/CHANGELOG.md)).
+- **Sworn verifier.** `styxx.sworn check` re-derives a committed verdict receipt from the document's sidecar and the git history, so it needs a full clone. In the lab's measurement (tranche A, 9 documents the lab wrote) the verifier marked 182 of 182 planted known-false spans FAILED. The verifier's builder planted those spans, so this is not its miss rate on real errors. Both judging panels were void, and the gaming test formed 0 pairs, so that bar was not tested ([RESULT](https://github.com/fathom-lab/styxx/blob/main/papers/sworn/RESULT_sworn_measurement_tranche_A_2026_10_25.md)).
 
-Everything here is one of three things.
+### what failed
 
-| layer | the question | instruments |
-|---|---|---|
-| **VERIFY** | does this claim match its evidence? | `certify` (OATH) · `protocol` · `seal` · `diffgate` + the GitHub Action · `corpus_audit` |
-| **MEASURE** | what is actually true about these minds? | `islands` · `coupling` · `mind` · `meaning_diff` · `crossmind` · the register instruments |
-| **SENSE** | can an agent be connected to the world without lying about what it feels? | `sense` |
+Numbers and detail for the EXTERNAL-1, V14 and `only_touches` items are in the VERIFY section below; for the geometry item, in the MEASURE section and the erratum.
 
-They compose. A `sense` channel is scored by `coupling`, whose verdict is written into a finding,
-whose every number is checked by `certify`, whose preregistration is enforced by `protocol`, and
-the whole thing is `seal`ed or refused. That chain is why a claim from this repo can be checked
-by a stranger from committed bytes, within the verifier's measured limits (the OATH row below states them).
+- **The claim "an agent's PR summary cannot lie about its diff" is not yet true of this instrument on real-world data.** On agent-written pull requests from a dataset the lab did not collect, a three-seat panel upheld 23 of 100 sampled accusations against a preregistered floor of 0.95 ([PREREG](https://github.com/fathom-lab/styxx/blob/main/papers/closed-model-frontier/PREREG_external1_aidev_2026_08_31.md), [RESULT](https://github.com/fathom-lab/styxx/blob/main/papers/closed-model-frontier/RESULT_external1_the_gate_fails_in_the_wild_2026_08_31.md), [external1_adjudication.json](https://github.com/fathom-lab/styxx/blob/main/papers/closed-model-frontier/external1_adjudication.json)). The panel's blinding was weaker than stated: item ids carried the arm ([RESULT_compat2](https://github.com/fathom-lab/styxx/blob/main/papers/closed-model-frontier/RESULT_compat2_surface_and_panel_2026_09_16.md)). Part of the fault was the lab's own harness ([CORRECTION](https://github.com/fathom-lab/styxx/blob/main/papers/closed-model-frontier/CORRECTION_external1_cause_2026_08_31.md)). The path accusation is withheld in shipped code.
+- A repaired path accuser had 16 of 100 held-out accusations upheld, and the lab stopped repairing that class ([V14](https://github.com/fathom-lab/styxx/blob/main/papers/closed-model-frontier/RESULT_v14_naming_the_defects_did_not_save_it_2026_09_01.md)).
+- On `only_touches` claims, all 11 accusations the instrument made on a benchmark of AIDev pull requests were checked by hand: 9 of 11 are false ([RESULT_bench2_INVALID](https://github.com/fathom-lab/styxx/blob/main/papers/closed-model-frontier/RESULT_bench2_INVALID_2026_09_17.md)).
+- **The June 2026 geometry headline is withdrawn (2026-11-10).** The number 0.258, cross-family RSA after a lexical partial among six small models, is withdrawn as a statement about concept geometry ([erratum](https://github.com/fathom-lab/styxx/blob/main/papers/real-convergence/ERRATUM_real_convergence_2026_11_10.md)). One of the 8 prompt templates was the bare word; Qwen and Phi tokenizers add no start token, so a single-token word sat alone at position 0, where those models carry a very large activation. The corrected numbers rest on per-template state arrays that are not in the repository, and gemma-2-2b-it was not re-run.
+- `styxx/mind.py` still carries the June function: two lock tables pin that file's sha256, so `styxx.mind.geometry_citizenship` is unchanged and, scored as documented, still gives Qwen2.5-0.5B 0.1833. Version 2 is `styxx.mind_geometry.geometry_citizenship` ([CHANGELOG.md](https://github.com/fathom-lab/styxx/blob/main/CHANGELOG.md)).
 
-**What the refusals cost us, in one day (2026-08-06):** an instrument deleted for failing its own
-exam, a released module recalled after an internal red team broke it six ways, a priority claim
-retracted after an external methods audit, and four independent negatives against our own published prediction —
-twice on real human brain data we downloaded to test it. Every one of those is in
-[CHANGELOG.md](https://github.com/fathom-lab/styxx/blob/v7.50.0/CHANGELOG.md) and [papers/](https://github.com/fathom-lab/styxx/tree/v7.50.0/papers) with the receipt attached. That is not
-humility as branding; it is the only reason the passes mean anything.
+### how to check the lab
+
+- Outside reruns: 0. One lab, one machine wrote and scored the geometry correction ([erratum](https://github.com/fathom-lab/styxx/blob/main/papers/real-convergence/ERRATUM_real_convergence_2026_11_10.md)).
+- [Issue 254](https://github.com/fathom-lab/styxx/issues/254) is the open request for outside reruns.
+- [REPLICATIONS.md](https://github.com/fathom-lab/styxx/blob/main/REPLICATIONS.md) lists each target with its command and its bar. Its ledger has no entry from outside the lab. A rerun that does not match is recorded too.
+- With no lab code imported: [rerun_ungated.py](https://github.com/fathom-lab/styxx/blob/main/papers/real-convergence/artifact_2026_11_10/rerun_ungated.py) needs torch, transformers and numpy, downloads Qwen2.5-0.5B (about 1 GB), and prints your numbers beside the lab's. It checks the start-of-input finding on ungated models; it was written after the two sealed tests and is not part of them. The lab has run it on Windows alone.
+
+### install, status on 2026-11-11
+
+```bash
+pip install styxx                                      # 7.50.0 from PyPI
+pip install git+https://github.com/fathom-lab/styxx    # the main branch
+```
+
+`pip install styxx` gives 7.50.0, which predates the changes of 2026-11-10 named on this screen: the geometry correction, the position-0 guard and `styxx.mind_geometry`. Main is ahead of it but still reports 7.50.0 ([styxx/_version.py](https://github.com/fathom-lab/styxx/blob/main/styxx/_version.py)); the changes since are under "Unreleased" in [CHANGELOG.md](https://github.com/fathom-lab/styxx/blob/main/CHANGELOG.md).
 
 ---
 
