@@ -89,7 +89,6 @@
       "chain": null,
       "status": "NO_LOCAL_COUNTERPART",
       "cited_in": [
-        "README.md:21",
         "README.md:504",
         "many papers"
       ],
@@ -176,7 +175,6 @@
       "chain": "concept 10.5281/zenodo.19326174",
       "status": "DIVERGED",
       "cited_in": [
-        "README.md:20",
         "README.md:505",
         "CITATION.cff:57"
       ],
