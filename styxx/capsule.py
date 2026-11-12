@@ -40,6 +40,7 @@ import platform
 import re
 import sys
 import tempfile
+import threading
 import unicodedata
 from collections import Counter
 from pathlib import Path, PurePosixPath, PureWindowsPath
@@ -476,6 +477,7 @@ def _verify_capsule_v01(html: str, payload: dict) -> dict:
     advisory: List[str] = []
     cmp: dict = {"not_checked": [], "stated": [], "compared": [], "mint_refusals": []}
     live = None
+    earlier = None
     doc = payload.get("document") if isinstance(payload.get("document"), dict) else {}
     cert = payload.get("certificate") if isinstance(payload.get("certificate"), dict) else {}
 
@@ -541,11 +543,13 @@ def _verify_capsule_v01(html: str, payload: dict) -> dict:
                 except Exception as e:  # noqa: BLE001 - bytes the certifier cannot read fail
                     problems.append(f"the installed verifier could not re-run on the embedded "
                                     f"bytes ({type(e).__name__}: {str(e)[:160]})")
+                else:
+                    earlier = _earlier_reader_certificate(cert, live, d, rps)
     if live is not None:
         # the certificate as certify's own command writes it: through JSON, so a tuple is a list
         # and every number has the type a reader of the file sees
         live = json.loads(json.dumps(live, ensure_ascii=False))
-        cmp = _compare_certificate_v01(cert, live, payload, recs)
+        cmp = _compare_certificate_v01(cert, live, payload, recs, earlier)
         problems.extend(cmp["problems"])
         advisory.extend(cmp["advisory"])
         if cmp["problems"]:
@@ -556,6 +560,102 @@ def _verify_capsule_v01(html: str, payload: dict) -> dict:
     _check_page_v01(html, payload, cert, live if not problems else None, doc_bytes, problems,
                     advisory, cmp["compared"], cmp["mint_refusals"])
     return report()
+
+
+# The certify of the reader before the numeral reader v2: a second, private copy of the installed
+# styxx/certify.py with the master flag off, loaded once. See _earlier_reader_certificate.
+_EARLIER_CERTIFY: dict = {}
+_EARLIER_CERTIFY_LOCK = threading.Lock()
+
+
+def _certify_before_reader_v2():
+    """A private copy of the installed `styxx.certify`, executed a second time from the same file
+    under another name, with `V15_READER_V2` off on the copy only.
+
+    The copy exists so that nothing shared is written. The installed module's flag is never
+    touched, so a verify running in another thread, or a certify, reads the reader it always
+    read. (The draft of this repair set the installed module's flag to False around one call and
+    restored it. A review ran that draft in threads: intact capsules failed, a capsule with a
+    made-up `$99.9k` verified in most of 48 runs on four threads where one thread fails it every time, and in one
+    ordering the flag stayed off for the rest of the process. That draft was not merged.)
+
+    `__file__` of the copy is the installed file, so the `verifier_sha256` it writes is the
+    installed certify's. certify reads the flag inside functions, at call time, at every place it
+    reads it, so setting it on the copy after the copy is executed is enough. The copy is not
+    entered in sys.modules."""
+    with _EARLIER_CERTIFY_LOCK:
+        mod = _EARLIER_CERTIFY.get("module")
+        if mod is None:
+            import importlib
+            import importlib.util
+            # The module by its name in sys.modules. The package also exports a function named
+            # `certify` (from styxx.provenance), and which of the two the attribute
+            # `styxx.certify` holds depends on what was imported last.
+            installed = importlib.import_module("styxx.certify")
+            spec = importlib.util.spec_from_file_location("styxx._certify_before_reader_v2",
+                                                          installed.__file__)
+            mod = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(mod)
+            mod.V15_READER_V2 = False
+            _EARLIER_CERTIFY["module"] = mod
+        return mod
+
+
+def _earlier_reader_certificate(cert: dict, live: dict, doc: Path,
+                                receipts: List[Path]) -> Optional[dict]:
+    """The certificate the installed certify issues for the embedded bytes with the numeral reader
+    v2 off, for a certificate that names no reader. None when the question does not arise (the
+    certificate names a reader, it carries no policy block, or the installed certify is itself
+    running with the reader off) or when that certificate cannot be derived.
+
+    The numeral reader v2 (2026-10-25) rewrote the certificate's `uncovered_policy` block: its
+    schema string, its note, the reasons it counts. A certificate issued before it carries the
+    earlier block and no `numeral_reader`, so comparing its block with the installed reader's
+    failed it on a field that describes the reader and not the document. styxx 8.0.0 failed an
+    intact capsule minted by 7.50.0 that way, with no row moved (found on 2026-11-12, after
+    release). The census that cleared the reader compared nine certificate fields and not this one
+    (papers/closed-model-frontier/oath_v15_numeral_reader_census.py, COMPARED), and no capsule
+    committed here before this repair carried the field, so nothing committed could show it.
+
+    Nothing is taken on the certificate's word. The earlier certificate is re-derived from the
+    same embedded bytes by the installed certify.py, under the reader that issued it
+    (_certify_before_reader_v2). The comparison then asks two things of a certificate that names
+    no reader: is it, field for field, what that earlier reader issues
+    (_issued_by_the_earlier_reader), and does every field but the policy block equal what the
+    installed reader issues. The one shows which reader issued it. The other is the check
+    layer 2 always made, so a row the two readers disagree on still fails."""
+    if not isinstance(cert, dict) or "numeral_reader" in cert or "uncovered_policy" not in cert:
+        return None
+    if not isinstance(live, dict) or "numeral_reader" not in live:
+        return None
+    try:
+        earlier = _certify_before_reader_v2().certify_doc(doc, receipts)
+        return json.loads(json.dumps(earlier, ensure_ascii=False))
+    except Exception:  # noqa: BLE001 - no earlier certificate to compare with: the field fails as before
+        return None
+
+
+def _issued_by_the_earlier_reader(cert: dict, earlier: dict) -> bool:
+    """True when the embedded certificate is, field for field and type for type, the certificate
+    the installed certify issues for the embedded bytes with the numeral reader v2 off. The
+    mint-environment fields are left out, as everywhere in layer 2: no re-run reproduces them.
+
+    This is what keeps the policy exception to certificates equal to what the earlier reader
+    issues. A certificate of the reader v2 with its reader block deleted and the earlier policy
+    block put in its place fails when a row or a band item of it is the reader v2's (a
+    `magnitude`, a band reason the earlier reader has no name for): it differs from the earlier
+    certificate, so its policy block is not reproduced, as under 8.0.0. For a document the two
+    readers read alike, such a certificate is byte for byte what the earlier reader issues, and
+    it passes: nothing in the bytes tells it from one issued then (said in the CHANGELOG entry
+    of this repair, and pinned by a test so that it is seen)."""
+    if not isinstance(cert, dict) or not isinstance(earlier, dict):
+        return False
+    fields = [k for k in earlier if k not in _CERT_MINT_FIELDS]
+    if any(k not in cert for k in fields):
+        return False
+    if any(k not in earlier for k in cert if k not in _CERT_MINT_FIELDS):
+        return False
+    return all(_same(cert[k], earlier[k]) for k in fields)
 
 
 def _unicode_note(doc_bytes: bytes) -> List[str]:
@@ -899,9 +999,12 @@ def _generation_problems(cert: dict) -> dict:
     return out
 
 
-def _compare_certificate_v01(cert: dict, live: dict, payload: dict, recs: dict) -> dict:
+def _compare_certificate_v01(cert: dict, live: dict, payload: dict, recs: dict,
+                             earlier: Optional[dict] = None) -> dict:
     """Compare an embedded certificate with the one certify_doc re-derives from the embedded
-    bytes. A field both carry must be equal, type for type. A field the installed certify writes
+    bytes. A field both carry must be equal, type for type. One exception: the policy block of a
+    certificate that names no numeral reader and is, whole, the certificate `earlier` that the
+    installed certify issues with the reader v2 off (see _earlier_reader_certificate). A field the installed certify writes
     and the certificate lacks is NOT CHECKED, by name, with the value the installed verifier finds
     and the day certify began writing it, unless the certificate shows it is not that old: it
     carries a field certify began writing later, or names the installed certify.py as its issuer.
@@ -1011,7 +1114,15 @@ def _compare_certificate_v01(cert: dict, live: dict, payload: dict, recs: dict) 
             if k not in _CERT_REQUIRED:
                 absent_field(k, f"not carried (installed verifier: {_short(lval, 160)})")
         elif not _same(cert[k], lval):
-            if k == "document" and isinstance(cert[k], str) and isinstance(lval, str):
+            if (k == "uncovered_policy" and earlier is not None
+                    and _issued_by_the_earlier_reader(cert, earlier)):
+                # The certificate names no reader and is, whole, what the installed certify issues
+                # with the reader v2 off, so its policy block is that reader's own. The advisory
+                # below names the two readers.
+                compared.append("uncovered_policy (the block the installed certify writes with the "
+                                "numeral reader v2 off; the whole certificate is what that reader "
+                                "issues for these bytes, and it names no reader)")
+            elif k == "document" and isinstance(cert[k], str) and isinstance(lval, str):
                 # certify writes the document's file name; the re-run's file has the capsule's
                 problems.append(f"certificate.document {cert[k]!r} is not the name this capsule "
                                 f"gives its document ({lval!r}): the certificate was issued for a "
