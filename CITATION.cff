@@ -9,8 +9,8 @@ authors:
     affiliation: Fathom Intelligence
 type: software
 license: MIT
-version: "7.50.0"
-date-released: "2026-10-23"
+version: "8.0.0"
+date-released: "2026-11-11"
 repository-code: "https://github.com/fathom-lab/styxx"
 url: "https://github.com/fathom-lab/styxx"
 keywords:
