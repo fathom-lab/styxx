@@ -48,7 +48,7 @@ pip install styxx                                      # 8.0.0 from PyPI
 pip install git+https://github.com/fathom-lab/styxx    # the main branch
 ```
 
-`pip install styxx` gives 8.0.0, which carries the changes of 2026-11-10 named on this screen: the geometry correction, the position-0 guard and `styxx.mind_geometry`. 8.0.0 breaks two things that worked in 7.50.0: its `token` submodule is gone, and the guarded functions raise `Position0Error` on a one-token input with no start token unless called with `allow_position0=True`. `styxx.mind.geometry_citizenship` is unchanged and still gives the faulty number; version 2 is `styxx.mind_geometry`. Main can be ahead of the latest release; what changed since is under "Unreleased" in [CHANGELOG.md](https://github.com/fathom-lab/styxx/blob/main/CHANGELOG.md).
+`pip install styxx` gives 8.0.0, which carries the changes of 2026-11-10 named on this screen: the geometry correction, the position-0 guard and `styxx.mind_geometry`. 8.0.0 breaks three things that worked in 7.50.0: its `token` submodule is gone; the guarded functions raise `Position0Error` on a one-token input with no start token unless called with `allow_position0=True`; and, by an error found after release, `python -m styxx.capsule verify` fails intact OATH capsules minted by 7.50.0 (repaired on main, not released). On 8.0.0 and earlier, do not run `styxx publish` without `--endpoint`: its default host is not a lab server today. `styxx.mind.geometry_citizenship` is unchanged and still gives the faulty number; version 2 is `styxx.mind_geometry`. Main can be ahead of the latest release; what changed since is under "Unreleased" in [CHANGELOG.md](https://github.com/fathom-lab/styxx/blob/main/CHANGELOG.md).
 
 ---
 
@@ -225,7 +225,7 @@ hardware sits inside whatever it measures.
 
 ---
 
-Those are three instruments, one from each layer. The rest of this README is the lab behind them.
+Those are three instruments. The rest of this README is the lab behind them.
 
 ---
 
@@ -500,7 +500,7 @@ knitr and Sweave, and showyourwork! (2021) did it for filings and papers, and
 | research | [papers/](https://github.com/fathom-lab/styxx/tree/v8.0.0/papers) — pre-registrations, findings, and the negatives · headline arc: [the island, bridged and dissected](https://github.com/fathom-lab/styxx/blob/v8.0.0/papers/disjoint-worlds/REPLICATE_legibility.md) (nine sealed acts, replicates on a laptop) |
 | arXiv (staged) | three submissions prepared, each carrying its OATH certificate and receipts as ancillary files — frame-locality, the know-say gap, the connection of minds ([papers/arxiv/SUBMIT.md](https://github.com/fathom-lab/styxx/blob/v8.0.0/papers/arxiv/SUBMIT.md)) |
 | site | the project site (styxx-org.netlify.app) is offline (it answered 404 on 2026-11-10), so this repository is the front door · the public ledger page: [fathom-lab.github.io/styxx/ledger](https://fathom-lab.github.io/styxx/ledger/) |
-| playground | [fathom.darkflobi.com/cognometry/try](https://fathom.darkflobi.com/cognometry/try) — the real detector, in-browser via Pyodide, no install |
+| playground | offline (seen 2026-11-12): the in-browser playground was served from a domain that is parked today, so no link is given here |
 | DOI (concept, always-latest) | [10.5281/zenodo.19326174](https://doi.org/10.5281/zenodo.19326174) |
 | DOI (spec v1.0) | [10.5281/zenodo.19746215](https://doi.org/10.5281/zenodo.19746215) |
 | DOI (*Every Mind Leaves Vitals*) | [10.5281/zenodo.19777921](https://doi.org/10.5281/zenodo.19777921) — central claims bounded or falsified by a scope erratum (2026-06-21) in the [repo copy](https://github.com/fathom-lab/styxx/blob/v8.0.0/papers/every-mind-leaves-vitals.md) |
@@ -515,6 +515,6 @@ MIT on code. CC-BY-4.0 on calibrated atlas centroid data.
 ```
   drop-in     · one import change. zero config.
   fail-open   · if styxx can't read vitals, your agent runs.
-  local-first · no telemetry unless you opt in (STYXX_STREAM). all on your machine by default.
+  local-first · no telemetry unless you opt in (STYXX_STREAM plus a relay you name). by default styxx.trust and guardrail.check look names up on Wikipedia, and model commands fetch their model.
   honest      · every number from a committed, reproducible run.
 ```

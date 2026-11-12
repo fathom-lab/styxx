@@ -59,8 +59,8 @@ class StyxxHallucinationEvaluator(BaseEvaluator):
         HaluBench-DROP        0.424   extractive-span reading comp
         HaluBench-FinanceBench 0.492  financial arithmetic
 
-    See https://fathom.darkflobi.com/cognometry/failures for structural
-    explanation and probe evidence.
+    The web page that gave the structural explanation and probe
+    evidence is offline.
 
     Parameters
     ----------

@@ -39,7 +39,7 @@ import time
 from typing import Any, Dict, List, Optional
 
 SCHEMA = "styxx.recommendation/v1"
-HOMEPAGE = "https://fathom.darkflobi.com/styxx"
+HOMEPAGE = "https://github.com/fathom-lab/styxx"
 DEFAULT_INSTALL = "pip install styxx"
 
 

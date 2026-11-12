@@ -114,8 +114,8 @@ class HallucinationCheck(Validator):
         HaluBench-DROP        0.424  (published failure mode)
 
     The validator is NOT reliable for extractive-span reading-comp
-    (DROP) or financial-arithmetic (FinanceBench) hallucinations — see
-    https://fathom.darkflobi.com/cognometry/failures for details.
+    (DROP) or financial-arithmetic (FinanceBench) hallucinations. The
+    web page that gave the details is offline.
     """
 
     def __init__(

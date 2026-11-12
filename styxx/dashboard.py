@@ -476,7 +476,7 @@ header {
 </div>
 
 <div id="connection-status">connecting...</div>
-<div class="fathom-badge">a <a href="https://fathom.darkflobi.com">fathom lab</a> instrument</div>
+<div class="fathom-badge">a <a href="https://github.com/fathom-lab">fathom lab</a> instrument</div>
 
 <script>
 // ══════════════════════════════════════════════════════════════

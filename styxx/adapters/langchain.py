@@ -515,9 +515,9 @@ class StyxxHallucinationGuard:
         HaluBench-FinanceBench AUC 0.492  (published failure)
         HaluBench-DROP        AUC 0.424  (published failure)
 
-    https://fathom.darkflobi.com/cognometry/failures documents the two
-    failure modes — avoid this guard for extractive-span reading-comp
-    or financial arithmetic.
+    The last two rows are the two failure modes. Avoid this guard for
+    extractive-span reading-comp or financial arithmetic. The web page
+    that documented them is offline.
     """
 
     def __init__(

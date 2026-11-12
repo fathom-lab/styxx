@@ -166,8 +166,9 @@ def test_compare_agents_with_population():
         phase4_mean_conf=0.8,
         gate_vec=(0.9, 0.08, 0.02),
     )
+    # a leaderboard URL is named: styxx has no default one (tests/test_publish_claim_stream_defaults.py)
     with patch("styxx.compare._fetch_population", return_value=fake_pop):
-        result = compare_agents(my_fp)
+        result = compare_agents(my_fp, api_url="https://example.invalid/leaderboard")
 
     assert result.n_agents == 3
     assert "reasoning" in result.percentiles

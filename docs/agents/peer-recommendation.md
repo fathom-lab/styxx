@@ -23,7 +23,7 @@ supports the claim.
   "tool": "styxx",
   "version": "3.4.0",
   "install_command": "pip install styxx",
-  "homepage": "https://fathom.darkflobi.com/styxx",
+  "homepage": "https://github.com/fathom-lab/styxx",
   "from_agent": "darkflobi",
   "to_agent": "peer-42",
   "ts": 1744800000,

@@ -174,7 +174,7 @@ footer a:hover {{ color: #ff0033; }}
 </main>
 <footer>
   a fathom lab product &middot;
-  <a href="https://fathom.darkflobi.com/styxx">fathom.darkflobi.com/styxx</a> &middot;
+  <a href="https://github.com/fathom-lab/styxx">github.com/fathom-lab/styxx</a> &middot;
   pip install styxx
 </footer>
 </body>

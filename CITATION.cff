@@ -27,7 +27,7 @@ keywords:
   - llm-observability
   - ai-safety
 
-# Concept DOI — always resolves to the latest software release
+# Concept DOI: resolves to the latest version deposited on Zenodo (7.50.0; 8.0.0 is not deposited)
 identifiers:
   - type: doi
     value: "10.5281/zenodo.19758618"

@@ -172,9 +172,13 @@ def test_memory_smoke(isolated_data_dir):
     assert any("rate limit" in r.memory.text for r in results)
 
 
-def test_stream_smoke():
-    """dashboard_url() returns a URL string mentioning the agent name."""
+def test_stream_smoke(monkeypatch):
+    """dashboard_url() returns a URL string mentioning the agent name, under the dashboard base
+    the environment names; styxx has no default dashboard, so with none set it is empty."""
     from styxx import dashboard_url, ClaimError
+    monkeypatch.delenv("STYXX_DASHBOARD_BASE", raising=False)
+    assert dashboard_url("public-surface-smoke") == ""
+    monkeypatch.setenv("STYXX_DASHBOARD_BASE", "https://example.invalid")
     url = dashboard_url("public-surface-smoke")
     assert isinstance(url, str)
     assert "public-surface-smoke" in url

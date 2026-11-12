@@ -81,7 +81,7 @@ def build_agent_card() -> Dict[str, Any]:
         "provider": {
             "id": "fathom-lab",
             "name": "Fathom Lab",
-            "url": "https://fathom.darkflobi.com",
+            "url": "https://github.com/fathom-lab",
         },
         "defaultInputModes": ["application/json"],
         "defaultOutputModes": ["application/json"],

@@ -13,10 +13,8 @@ info:
     identifier: MIT
   contact:
     name: Fathom Lab
-    url: https://fathom.darkflobi.com/styxx
+    url: https://github.com/fathom-lab/styxx
 servers:
-  - url: https://fathom.darkflobi.com/styxx/api
-    description: Public endpoint (future)
   - url: http://localhost:8500
     description: Local dev
 
