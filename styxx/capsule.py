@@ -136,7 +136,32 @@ def _portable_name_problem(name: str) -> Optional[str]:
 
 
 def _bare_name(name) -> bool:
-    return _bare_shape(name) and _portable_name_problem(name) is None
+    return _bare_shape(name) and _portable_name_problem(name) is None and not _is_dot_git(name)
+
+
+# A name git reads as its own. Verify writes the embedded files under their names into a temporary
+# folder and re-runs the certifier there, and the certifier's receipt binding starts git in that
+# folder. Git takes a FILE named `.git` in the folder it is started in for the address of a
+# repository (`gitdir: <path>`). So a capsule whose document or receipt was named `.git` chose the
+# repository those git commands read: `git rev-parse HEAD` answered with the head of a directory
+# the capsule named, and the capsule verified with nothing said (found by a review on 2026-11-12;
+# reproduced with a directory on the same machine; the same in 7.50.0 and 8.0.0; whether a path on
+# another host makes git contact that host was not tested). The name is refused in create and in
+# verify, on every system: in any letter case (NTFS, APFS and HFS+ compare names without case) and
+# with the code points HFS+ drops when it compares names (_HFS_IGNORED), which is the list git
+# itself guards `.git` with. The 8.3 short name of `.git`, GIT~1, is refused by the rule for
+# short names above. This closes the one name. It does not make the re-run free of git: that is
+# its own change.
+_DOT_GIT_WHY = ("is `.git` to git, or to a file system git runs on (in any letter case, and with "
+                "the code points HFS+ drops from a name): git reads a file of that name, in the "
+                "folder it is started in, as the address of a repository, and the certifier's "
+                "receipt binding starts git where the embedded files are written")
+
+
+def _is_dot_git(name) -> bool:
+    if not isinstance(name, str):
+        return False
+    return unicodedata.normalize("NFC", _HFS_IGNORED.sub("", name)).casefold() == ".git"
 
 
 def _bare_shape(name) -> bool:
@@ -166,6 +191,9 @@ def _unsafe_names(payload: dict) -> List[str]:
         if not _bare_shape(n):
             out.append(f"embedded name {n!r} is not a bare file name; nothing was written and the "
                        f"certifier was not re-run")
+        elif _is_dot_git(n):
+            out.append(f"embedded name {_short(n, 120)} {_DOT_GIT_WHY}; it is refused on every "
+                       f"system; nothing was written and the certifier was not re-run")
         elif _portable_name_problem(n):
             out.append(f"embedded name {_short(n, 120)} {_portable_name_problem(n)}; it is refused "
                        f"on every system, so that a capsule's verdict does not depend on the "
@@ -263,6 +291,10 @@ def create_capsule(doc: Path, receipts: List[Path], cert: Path, out: Path) -> Pa
     # by the verify after the mint, whose refusal then blamed the ledger schema.
     names = [doc.name] + [r.name for r in receipts]
     for n in names:
+        if _bare_shape(n) and _is_dot_git(n):
+            raise SystemExit(f"REFUSED: the file name {_short(n, 120)} {_DOT_GIT_WHY}. verify "
+                             f"refuses such a name on every system; rename the file and certify "
+                             f"it again.")
         why = (None if _bare_shape(n) else
                "is not a bare file name under POSIX and Windows rules alike (it holds a "
                "separator, a drive, a control character or a trailing dot or space, or is a "

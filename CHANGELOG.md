@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [Unreleased] — `capsule verify` and `capsule create` refuse an embedded file named `.git`: a capsule could choose the repository the verifier's git commands read (2026-11-12)
+
+Found on 2026-11-12 by a review of the repairs below. Not released: 8.0.0 and the releases before it, back to the receipt binding of 2026-09-05, have it.
+
+- **What happens.** `capsule verify` writes the embedded document and receipts, under the names the capsule gives, into a temporary folder and re-runs the certifier there, and the certifier's receipt binding starts git in that folder. Git reads a file named `.git`, in the folder it is started in, as the address of a repository (`gitdir: <path>`). So a capsule whose document is named `.git` chooses the repository those git commands read, and it verifies with nothing said. Run here on one Windows machine, with a throwaway repository beside the capsule: verify started two git commands in its temporary folder, and the second, `git rev-parse HEAD`, answered with the head of that repository. For an ordinary capsule git answers that the folder is no repository.
+- **Not tested.** Whether a path on another machine in that file makes git contact that machine. No host was contacted to find out, here or in the review. What the git commands that follow can be made to do with a repository the capsule names was not explored either. On a release without this change, a capsule from a source that is not trusted can be verified with git taken off the PATH: the receipt binding then starts no git, and what verify compares does not need one.
+- **The change (`styxx/capsule.py`).** An embedded file may not be named `.git`. `capsule create` and `capsule verify` refuse the name on every system, before anything is written or read: in any letter case, since NTFS, APFS and HFS+ compare names without case, and with the code points HFS+ drops when it compares names, which is the list git itself guards the name with. The 8.3 short name of `.git` was already refused by the rule for short names. `styxx.charon` and `styxx.corpus_audit` re-run capsules through the same rule.
+- **Not closed here.** The re-run still starts git for every other capsule, in a folder that then holds no `.git`. Holding the embedded files in memory and taking git out of the re-run is its own change.
+- **Tests.** `tests/test_capsule_git_name.py` (27 tests): the names refused and the names left alone; verify starts no git for such a capsule, read from a recorder that does see the git an ordinary capsule starts; create refuses before it reads a file; the ferry log does not re-run such a capsule.
+
 ## [Unreleased] — `styxx publish`, `compare-agents`, `claim` and the stream name no host by default: their defaults pointed at a domain that is parked (2026-11-12)
 
 An audit of the published 8.0.0 files on 2026-11-12 found that four commands default to hosts under `darkflobi.com`, and that every name under that domain answered that day from a domain-parking service (`Server: Parking/1.0`), not from a lab server. Nothing here is released; 8.0.0 and the releases before it keep the defaults.
