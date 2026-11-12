@@ -26,8 +26,9 @@ nothing is sent unless the caller says where, and a reply counts as
 published only if it is a JSON object.
 
 a redirect is not followed (see styxx.stream.open_url): the endpoint
-named is the only address the payload goes to, and a 3xx reply is a
-failed publish that names the address the endpoint pointed to.
+named is the only address the payload goes to, and a reply of 301,
+302, 303, 307 or 308 is a failed publish that names the address the
+endpoint pointed to.
 
 uses only stdlib (urllib.request, json) — no external deps.
 """

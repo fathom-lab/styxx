@@ -19,8 +19,9 @@ A redirect is not followed. urllib answers a 301, 302 or 303 to a POST
 by sending a GET to the address the reply names, with every header of
 the POST but the body's two: the stream key went to that address, the
 vitals did not, and the 2xx that came back counted as delivered. Found
-on 2026-11-12 by review, the same in 8.0.0. Now a 3xx reply from a
-relay is a failed post, and a failed claim, that names the address.
+on 2026-11-12 by review, the same in 8.0.0. Now a reply of 301, 302,
+303, 307 or 308 from a relay is a failed post, and a failed claim,
+that names the address.
 
 The emitter is:
   * non-blocking (background daemon thread + bounded queue)
@@ -243,6 +244,8 @@ class ClaimError(Exception):
     # True when the relay answered and the answer is what failed the claim (an error reply, a
     # redirect, a reply that is not a name and a key): the relay is then not offline
     answered = False
+    # True when the request was refused before anything was sent
+    unsent = False
 
 
 def _answered(message: str) -> "ClaimError":
@@ -319,14 +322,31 @@ def claim_agent(name: str, relay: Optional[str] = None, timeout: float = 10.0) -
         except Exception:
             msg = str(e)
         raise _answered(show(msg)) from e
-    except (json.JSONDecodeError, UnicodeDecodeError, RecursionError) as e:
-        # the relay answered 2xx and the body is not JSON (a web page, a byte-order mark, a reply
-        # nested deeper than the JSON reader goes). Through 8.0.0 this read "relay unreachable".
+    except RecursionError as e:
+        # JSON, and nested deeper than the reader goes: an earlier form called this "not JSON"
+        raise _answered("the relay answered, and its reply is nested deeper than the JSON reader "
+                        "goes") from e
+    except (json.JSONDecodeError, UnicodeDecodeError) as e:
+        # the relay answered 2xx and the body is not JSON (a web page, a byte-order mark).
+        # Through 8.0.0 this read "relay unreachable".
         raise _answered(f"the relay answered, and its reply is not JSON "
                         f"({type(e).__name__}: {show(e, 120)})") from e
-    except (urllib.error.URLError, OSError, ValueError, http.client.HTTPException) as e:
-        # ValueError: a URL urllib refuses. HTTPException: a URL or a reply http.client refuses
-        # (InvalidURL and BadStatusLine are two).
+    except http.client.InvalidURL as e:
+        # refused before anything was sent
+        err = ClaimError(f"claim not sent: the http client refuses the relay URL "
+                         f"({show(e, 200)})")
+        err.unsent = True
+        raise err from e
+    except http.client.HTTPException as e:
+        # A status line that is not one, a line of any length, a body shorter than its stated
+        # length, a connection closed with nothing said: the request went out and what came
+        # back is not a whole HTTP reply. An earlier form called this "relay unreachable" and
+        # the command then said the relay may be offline.
+        raise _answered(f"the request was sent, and what came back is not a whole HTTP reply "
+                        f"({type(e).__name__}: {show(e, 120)}). the relay may hold the name "
+                        f"now") from e
+    except (urllib.error.URLError, OSError, ValueError) as e:
+        # nothing answered, or urllib refuses the URL
         raise ClaimError(f"relay unreachable: {type(e).__name__}: {show(e, 200)}") from e
 
     name_back = data.get("name") if isinstance(data, dict) else None
@@ -336,9 +356,20 @@ def claim_agent(name: str, relay: Optional[str] = None, timeout: float = 10.0) -
     # (An earlier commit asked for a name that _sanitize_name leaves unchanged; that function
     # cuts to 32 characters after it strips, so it can change its own result, and a relay's
     # echo of such a name was refused.)
-    if (not isinstance(name_back, str) or name_back != clean
-            or not isinstance(key_back, str) or not key_back or len(key_back) > _KEY_MAX):
-        raise _answered("malformed response")
+    # No message below quotes the reply: it can hold a key, another agent's among them.
+    if not isinstance(name_back, str) or not isinstance(key_back, str) or not key_back:
+        raise _answered("malformed response: the relay's reply is not a name and a key. nothing "
+                        "is stored")
+    if name_back != clean:
+        raise _answered("the relay answered with another name than the one that was sent. styxx "
+                        "stores a key only under the name it sent, so nothing is stored; the relay "
+                        "may hold a name now")
+    # a key http.client cannot put in a header would be stored and then fail every post in silence
+    if (len(key_back) > _KEY_MAX or not key_back.isascii() or not key_back.isprintable()
+            or key_back != key_back.strip()):
+        raise _answered("the relay answered with a key styxx cannot send: a key is at most "
+                        f"{_KEY_MAX} printable ASCII characters with no space around it. nothing is "
+                        "stored; the relay may hold the name now")
     link = data.get("url")
 
     # the dashboard address the relay gives is kept only if it is a web address: it is printed
@@ -603,7 +634,8 @@ def _post(packet: dict) -> bool:
                     f"styxx.stream: the relay {show(_relay)} answered HTTP {e.code}, a "
                     f"redirect to {where}. styxx does not follow a redirect, so the packet is "
                     f"counted as not delivered and the feed backs off. name the relay by the "
-                    f"URL that answers itself, in STYXX_STREAM_RELAY.",
+                    f"URL that answers itself (in STYXX_STREAM_RELAY, or as relay= where "
+                    f"the emitter is switched on).",
                     RuntimeWarning, stacklevel=2)
             except Exception:
                 pass        # warnings turned into errors: the worker thread still must not die
