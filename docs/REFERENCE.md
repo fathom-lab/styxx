@@ -332,7 +332,7 @@ Multi-agent cognitive routing.
 ```python
 styxx.set_agent_name("xendro")
 styxx.list_agents()                      # -> list[AgentProfile]
-styxx.compare_agents()                   # -> AgentComparison
+styxx.compare_agents(api_url=URL)        # -> AgentComparison (no default leaderboard)
 styxx.fleet_summary()                    # -> FleetSummary
 styxx.best_agent_for("reasoning")        # -> str
 ```
@@ -495,7 +495,7 @@ styxx fingerprint [diff]
 styxx agent-card
 
 styxx compare                       # 6 bundled atlas fixtures
-styxx compare-agents
+styxx compare-agents --api-url URL  # no default leaderboard: name one you run
 
 styxx dashboard                     # live TUI
 styxx log tail | stats | timeline | rotate
@@ -503,7 +503,7 @@ styxx log tail | stats | timeline | rotate
 styxx export --days 30 --format json        # compliance export
 styxx ci-test --min-pass 0.80               # CI/CD gate
 styxx ci-baseline
-styxx publish                               # push to remote dashboard
+styxx publish --name NAME --endpoint URL    # push to a dashboard you run (no default endpoint)
 ```
 
 Run `styxx --help` or `styxx <command> --help` for exhaustive flags.
