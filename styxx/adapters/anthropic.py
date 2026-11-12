@@ -145,7 +145,7 @@ def _warn_once() -> None:
         "Anthropic Messages API (no logprobs=True parameter exists); route "
         "Claude through an OpenAI-compatible gateway with logprobs enabled "
         "(e.g. OpenRouter) via styxx.OpenAI(base_url=...) if you need that "
-        "signal. Details: https://fathom.darkflobi.com/styxx#install",
+        "signal. Details: https://github.com/fathom-lab/styxx#readme",
         RuntimeWarning,
         stacklevel=2,
     )

@@ -70,7 +70,7 @@ except ImportError:  # pragma: no cover — Python < 3.8
 
 __author__ = "flobi"
 __license__ = "MIT"
-__url__ = "https://fathom.darkflobi.com/styxx"
+__url__ = "https://github.com/fathom-lab/styxx"
 __tagline__ = "nothing crosses unseen."
 
 

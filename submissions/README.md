@@ -3,8 +3,8 @@
 **Add your hallucination detector to the public leaderboard.**
 One file, one PR, reproducible numbers.
 
-The leaderboard lives at https://fathom.darkflobi.com/cognometry/leaderboard.
-This directory is how new entries get there.
+The public leaderboard page is offline (its host answered from a domain-parking service on 2026-11-12).
+This directory is how new entries are submitted.
 
 ---
 
@@ -127,7 +127,7 @@ undeclared-below-chance warning. Honesty is load-bearing here.
 
 ## What you get
 
-- A permanent row on https://fathom.darkflobi.com/cognometry/leaderboard.
+- A permanent row on the leaderboard (its public page is offline today; see the top of this file).
 - Your per-seed raw results archived in this repo's `submissions/_results/`.
 - Citation of your submission in the cognometry v0.1 update paper
   (if your numbers are above any of ours on any benchmark, we will cite

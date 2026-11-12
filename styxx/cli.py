@@ -87,11 +87,22 @@ def cmd_claim(args):
         sys.stderr.write("  invalid name. use lowercase letters, digits, - or _.\n")
         return 1
 
+    relay = _stream.relay_url(args.relay)
+    if not relay:
+        # no default relay: say so before printing steps that would not happen
+        sys.stderr.write(f"  claim not sent: {_stream.NO_RELAY}.\n"
+                         "  name one you run: styxx claim NAME --relay URL, or set STYXX_STREAM_RELAY.\n")
+        return 1
+    if not _stream.is_http_url(relay):
+        sys.stderr.write(f"  claim not sent: {relay!r} is not an http or https URL with a host "
+                         "(no spaces, no user name or password in it).\n")
+        return 1
+
     sys.stdout.write("\n")
     sys.stdout.write("  generating identity\n")
     sys.stdout.write("  reserving subdomain\n")
     try:
-        res = _stream.claim_agent(clean, relay=args.relay)
+        res = _stream.claim_agent(clean, relay=relay)
     except _stream.ClaimError as e:
         sys.stderr.write(f"\n  claim failed: {e}\n")
         sys.stderr.write("  (the relay may be offline, or the name is taken)\n")
@@ -100,9 +111,12 @@ def cmd_claim(args):
     sys.stdout.write("\n")
     sys.stdout.write("  registered.\n\n")
     sys.stdout.write(f"    name         {res['name']}\n")
-    sys.stdout.write(f"    feed         {res['url']}\n")
+    sys.stdout.write(f"    feed         {res['url'] or '(the relay gave no dashboard URL)'}\n")
     sys.stdout.write("    credentials  ~/.styxx/credentials.json\n\n")
-    sys.stdout.write("  next: enable streaming\n\n")
+    sys.stdout.write("  next: enable streaming. styxx has no default relay, so name this one\n")
+    sys.stdout.write("  in the environment of the agent, then turn the stream on. the vitals\n")
+    sys.stdout.write("  are POSTed to this URL as it is written:\n\n")
+    sys.stdout.write(f"      STYXX_STREAM_RELAY={relay}\n\n")
     sys.stdout.write("      import styxx\n")
     sys.stdout.write(f"      styxx.autoboot(agent_name=\"{res['name']}\", stream=True)\n\n")
     sys.stdout.write("  nothing crosses unseen.\n\n")
@@ -120,7 +134,13 @@ def cmd_feed(args):
     if not name:
         sys.stderr.write("  no agent claimed yet. run: styxx claim <name>\n")
         return 1
-    sys.stdout.write(_stream.dashboard_url(name) + "\n")
+    url = _stream.dashboard_url(name)
+    if not url:
+        sys.stderr.write("  no URL is built here: no dashboard base is set, and styxx has no default "
+                         "dashboard (the public one is offline). set STYXX_DASHBOARD_BASE to the base "
+                         "URL of one you run.\n")
+        return 1
+    sys.stdout.write(url + "\n")
     return 0
 
 
@@ -2519,7 +2539,7 @@ def cmd_compare_agents(args):
     """Compare your fingerprint against the population."""
     from .compare import compare_agents as compare_fn
 
-    comparison = compare_fn()
+    comparison = compare_fn(api_url=getattr(args, "api_url", None))
 
     fmt = getattr(args, "format", "ascii")
     if fmt == "json":
@@ -3351,6 +3371,11 @@ def _build_parser() -> argparse.ArgumentParser:
         default="ascii",
         help="output format (default: ascii)",
     )
+    p_cmp_agents.add_argument(
+        "--api-url", dest="api_url", default=None,
+        help="leaderboard URL to compare against (required to compare: styxx has no "
+             "default leaderboard; the public one is offline)",
+    )
     p_cmp_agents.set_defaults(func=cmd_compare_agents)
 
     # attack — 7.0.0 inverse cognometry (adversarial seeds per instrument)
@@ -3405,8 +3430,9 @@ def _build_parser() -> argparse.ArgumentParser:
     )
     p_publish.add_argument(
         "--endpoint", type=str,
-        default="https://fathom.darkflobi.com/api/styxx-submit",
-        help="custom endpoint URL (default: fathom.darkflobi.com)",
+        default=None,
+        help="endpoint URL to POST to (required to send: styxx has no default "
+             "endpoint; the public dashboard is offline)",
     )
     p_publish.set_defaults(func=cmd_publish)
 
@@ -3420,7 +3446,10 @@ def _build_parser() -> argparse.ArgumentParser:
         help="lowercase agent name (a-z, 0-9, - _). If omitted, prompts interactively.",
     )
     p_claim.add_argument(
-        "--relay", help="override the relay URL (default: live.darkflobi.com)",
+        "--relay", help="URL of the relay's ingest endpoint, where the vitals are POSTed (for "
+                        "example https://host/ingest); the claim goes to /claim beside it. "
+                        "required, here or in STYXX_STREAM_RELAY: styxx has no default relay "
+                        "(the public relay is offline)",
     )
     p_claim.set_defaults(func=cmd_claim)
 

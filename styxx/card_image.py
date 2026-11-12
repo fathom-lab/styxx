@@ -291,7 +291,7 @@ def build_card_lines(
     ]))
     lines.append(box_line([
         Span("  ", WHITE),
-        Span("fathom.darkflobi.com/styxx", DIM),
+        Span("github.com/fathom-lab/styxx", DIM),
     ]))
     lines.append(blank())
     lines.append(bot_border())

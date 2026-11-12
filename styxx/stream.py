@@ -2,11 +2,18 @@
 """
 styxx.stream — live cognitive telemetry emitter.
 
-When STYXX_STREAM=on (or stream=True passed to autoboot), every
-vitals computation is fire-and-forget POSTed to the public relay,
-where it powers the agent's live dashboard at
+When STYXX_STREAM=on (or stream=True passed to autoboot) and a relay
+is named (STYXX_STREAM_RELAY, or relay=...), every vitals computation
+is fire-and-forget POSTed to that relay, which can power a live
+dashboard for the agent.
 
-    https://<agent>.live.darkflobi.com
+There is no default relay and no default dashboard. Until 2026-11-12
+both were hosts under darkflobi.com, where the public relay lived. On
+that day the names under that domain answered from a domain-parking
+service, not from a lab server (the relay's own name failed its TLS
+handshake that day, so a POST to it could not complete). With no
+relay named, claiming fails with a message, the emitter stays off,
+and nothing is sent.
 
 The emitter is:
   * non-blocking (background daemon thread + bounded queue)
@@ -22,7 +29,8 @@ Public surface
 Env vars
 ────────
     STYXX_STREAM=on|off           master toggle (default off)
-    STYXX_STREAM_RELAY=<url>      override the POST endpoint
+    STYXX_STREAM_RELAY=<url>      the POST endpoint (required: no default)
+    STYXX_DASHBOARD_BASE=<url>    base of the dashboard URLs (no default)
     STYXX_STREAM_AGENT=<name>     override agent name (else uses
                                   STYXX_AGENT_NAME or ~/.styxx/config)
 """
@@ -35,6 +43,8 @@ import queue
 import subprocess
 import threading
 import time
+import http.client
+import urllib.parse
 import urllib.request
 import urllib.error
 from pathlib import Path
@@ -45,8 +55,11 @@ from typing import Optional
 # Defaults
 # ══════════════════════════════════════════════════════════════════
 
-DEFAULT_RELAY = "https://live.darkflobi.com/ingest"
-DEFAULT_DASHBOARD_BASE = "https://live.darkflobi.com"
+# No defaults: see the module docstring. Kept as names so code that read them still imports.
+DEFAULT_RELAY: Optional[str] = None
+DEFAULT_DASHBOARD_BASE: Optional[str] = None
+# said by every caller that finds no relay; each adds the way to name one that it offers
+NO_RELAY = "no relay is named, and styxx has no default relay (the public relay it used is offline)"
 
 _QUEUE_MAX = 200            # drop events rather than grow unbounded
 _POST_TIMEOUT = 3.0         # seconds; short, so we never stall on shutdown
@@ -61,7 +74,7 @@ _lock = threading.Lock()
 _enabled: bool = False
 _agent: Optional[str] = None
 _key: Optional[str] = None
-_relay: str = DEFAULT_RELAY
+_relay: Optional[str] = DEFAULT_RELAY
 _queue: "queue.Queue[dict]" = queue.Queue(maxsize=_QUEUE_MAX)
 _worker: Optional[threading.Thread] = None
 _backoff: float = 0.0
@@ -158,24 +171,28 @@ def claim_agent(name: str, relay: Optional[str] = None, timeout: float = 10.0) -
     """Claim an agent name on the live relay.
 
     Returns {name, key, url}. Persists to ~/.styxx/credentials.json.
-    Raises ClaimError on network failure or name conflict.
+    Raises ClaimError on network failure or name conflict, and when no
+    relay is named (there is no default relay). `url` is the dashboard
+    URL the relay gives, else the one built from STYXX_DASHBOARD_BASE,
+    else an empty string.
     """
     clean = _sanitize_name(name)
     if not clean:
         raise ClaimError("invalid name")
 
-    relay = relay or os.environ.get("STYXX_STREAM_RELAY") or DEFAULT_RELAY
-    base = relay.rsplit("/", 1)[0]
-    url = f"{base}/claim"
+    relay = relay_url(relay)
+    if not relay:
+        raise ClaimError(f"{NO_RELAY}. name one you run: relay=URL, or STYXX_STREAM_RELAY")
+    url = claim_url(relay)
 
     body = json.dumps({"name": clean}).encode("utf-8")
-    req = urllib.request.Request(
-        url,
-        data=body,
-        headers={"Content-Type": "application/json"},
-        method="POST",
-    )
     try:
+        req = urllib.request.Request(
+            url,
+            data=body,
+            headers={"Content-Type": "application/json"},
+            method="POST",
+        )
         with urllib.request.urlopen(req, timeout=timeout) as resp:
             raw = resp.read().decode("utf-8")
             data = json.loads(raw)
@@ -185,10 +202,12 @@ def claim_agent(name: str, relay: Optional[str] = None, timeout: float = 10.0) -
         except Exception:
             msg = str(e)
         raise ClaimError(msg) from e
-    except (urllib.error.URLError, OSError, json.JSONDecodeError) as e:
+    except (urllib.error.URLError, OSError, ValueError, http.client.HTTPException) as e:
+        # ValueError: a reply that is not JSON (json.JSONDecodeError is one), or a URL urllib
+        # refuses. HTTPException: a URL or a reply http.client refuses (InvalidURL is one).
         raise ClaimError(f"relay unreachable: {e}") from e
 
-    if "key" not in data or "name" not in data:
+    if not isinstance(data, dict) or "key" not in data or "name" not in data:
         raise ClaimError("malformed response")
 
     dashboard = data.get("url") or dashboard_url(data["name"])
@@ -206,10 +225,55 @@ def claim_agent(name: str, relay: Optional[str] = None, timeout: float = 10.0) -
     return {"name": data["name"], "key": data["key"], "url": dashboard}
 
 
+def is_http_url(url) -> bool:
+    """True for a string that is an http or https URL with a host, a port that is a number if
+    it has one, no user name or password in it, and no space or control character."""
+    if not isinstance(url, str) or url != url.strip() or any(c.isspace() or ord(c) < 32 for c in url):
+        return False
+    try:
+        parts = urllib.parse.urlsplit(url)
+        parts.port          # raises ValueError for a port that is not a number
+    except ValueError:
+        return False
+    if parts.username is not None or parts.password is not None:
+        return False
+    return parts.scheme in ("http", "https") and bool(parts.hostname)
+
+
+def claim_url(relay: str) -> str:
+    """The claim endpoint beside a relay's ingest endpoint: the relay URL with its last path
+    segment replaced by `claim`, on the same host. `https://host/ingest`, `https://host/` and
+    `https://host` all give `https://host/claim`. Raises ClaimError for anything is_http_url
+    refuses. The relay URL itself is where the vitals are POSTed, so a relay given without a
+    path receives them at its root.
+
+    Until 2026-11-12 this was `relay.rsplit("/", 1)[0] + "/claim"`, which for a relay given as
+    a bare origin (`https://host`) built `https://claim`: the name was sent to a host called
+    `claim`, not to the relay. The default relay had a path, so the default never took that
+    road; a relay the caller names can."""
+    if not is_http_url(relay):
+        raise ClaimError(f"not a relay URL: {relay!r} (it needs http:// or https:// and a host)")
+    parts = urllib.parse.urlsplit(relay)
+    head = parts.path.rsplit("/", 1)[0] if "/" in parts.path else ""
+    return urllib.parse.urlunsplit((parts.scheme, parts.netloc, head + "/claim", "", ""))
+
+
+def relay_url(relay: Optional[str] = None) -> Optional[str]:
+    """The relay a claim or the emitter would use: the one given, else STYXX_STREAM_RELAY, else
+    None. There is no default relay. Spaces around the value are dropped, as urllib drops them:
+    a relay pasted with a trailing space is that relay."""
+    value = relay or os.environ.get("STYXX_STREAM_RELAY") or DEFAULT_RELAY
+    value = value.strip() if isinstance(value, str) else value
+    return value or None
+
+
 def dashboard_url(name: str) -> str:
-    """Return the canonical dashboard URL for an agent name."""
+    """Return the dashboard URL for an agent name under STYXX_DASHBOARD_BASE, or an empty string
+    when no base is set: there is no default dashboard."""
     base = os.environ.get("STYXX_DASHBOARD_BASE") or DEFAULT_DASHBOARD_BASE
-    return f"{base}/a/{_sanitize_name(name)}"
+    if not base:
+        return ""
+    return f"{base.rstrip('/')}/a/{_sanitize_name(name)}"
 
 
 # ══════════════════════════════════════════════════════════════════
@@ -245,6 +309,15 @@ def enable(
 
     Looks up agent/key from creds file when not supplied. Safe to
     call multiple times; the worker thread is singleton.
+
+    Returns False when there is no agent name to stream as, or no relay
+    is named (relay=..., or STYXX_STREAM_RELAY) and the emitter is not
+    already on, or the relay named is not an http or https URL: there
+    is no default relay. A call that names no relay while the emitter
+    is on keeps the relay it has and returns True. A False here changes
+    nothing: an emitter that was on stays on (see is_enabled). The
+    relay stored with a claimed name in the credentials file is not
+    used here, as before.
     """
     global _enabled, _agent, _key, _relay, _worker
 
@@ -257,9 +330,13 @@ def enable(
         if not agent:
             return False  # nothing to stream as
 
+        target = relay_url(relay) or (_relay if _enabled else None)
+        if not target or not is_http_url(target):
+            return False  # nowhere to stream to; what is already on stays as it is
+
         _agent = _sanitize_name(agent)
         _key = key
-        _relay = relay or os.environ.get("STYXX_STREAM_RELAY") or DEFAULT_RELAY
+        _relay = target
         _enabled = True
 
         if _worker is None or not _worker.is_alive():
@@ -357,6 +434,8 @@ def _run() -> None:
 
 
 def _post(packet: dict) -> bool:
+    if not _relay:
+        return False        # no relay named: nothing is sent
     headers = {"Content-Type": "application/json"}
     if _key:
         headers["X-Styxx-Key"] = _key

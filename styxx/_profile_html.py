@@ -566,7 +566,7 @@ def render_flamegraph(profile: "CognitiveProfile") -> str:
     </details>
 
     <div class="footer">
-      <div>styxx · <a href="https://fathom.darkflobi.com/styxx">fathom.darkflobi.com/styxx</a> · pip install -U styxx</div>
+      <div>styxx · <a href="https://github.com/fathom-lab/styxx">github.com/fathom-lab/styxx</a> · pip install -U styxx</div>
       <div>nothing crosses unseen</div>
     </div>
   </div>

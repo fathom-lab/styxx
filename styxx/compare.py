@@ -3,7 +3,7 @@
 styxx.compare — multi-agent fingerprint comparison.
 
     my_fp = styxx.fingerprint()
-    comparison = styxx.compare_agents(my_fp)
+    comparison = styxx.compare_agents(my_fp, api_url=URL)   # no default leaderboard
     print(comparison.percentile_reasoning)  # 90th percentile
     print(comparison.similar_agents)        # agents with similar shape
     print(comparison.narrative)             # "you're reasoning-dominant..."
@@ -41,6 +41,10 @@ class AgentComparison:
     population_means: Dict[str, float] = field(default_factory=dict)
     nearest_shape: Optional[str] = None
     narrative: str = ""
+    # what the comparison had to work with: "ok" (a population was read), "empty" (a leaderboard
+    # was read and has no agent with a fingerprint), "unreadable" (the URL did not answer, or its
+    # answer is not a leaderboard), "no_url" (no leaderboard was named), "no_fingerprint"
+    status: str = "ok"
 
     def render(self) -> str:
         lines: List[str] = []
@@ -50,7 +54,11 @@ class AgentComparison:
         lines.append("")
         if self.n_agents == 0 or not self.percentiles:
             lines.append("  no population data — percentile ranks unavailable.")
-            lines.append("  you may be the first agent. publish with 'styxx publish'.")
+            if self.status == "empty":
+                # only for a leaderboard that was read: until 2026-11-12 this line was printed for
+                # every result with no agents, a web page read as a leaderboard among them
+                lines.append("  the leaderboard has no agents yet. publish to it with "
+                             "'styxx publish --name NAME --endpoint URL'.")
         else:
             lines.append("  -- your percentile rank " + "-" * 24)
             for cat in _CATEGORY_ORDER:
@@ -71,6 +79,7 @@ class AgentComparison:
             "population_means": self.population_means,
             "nearest_shape": self.nearest_shape,
             "narrative": self.narrative,
+            "status": self.status,
         }
 
 
@@ -81,29 +90,56 @@ class AgentComparison:
 def compare_agents(
     my_fingerprint: Optional[Fingerprint] = None,
     *,
-    api_url: str = "https://fathom.darkflobi.com/api/styxx-leaderboard",
+    api_url: Optional[str] = None,
 ) -> AgentComparison:
     """Compare your fingerprint against the population.
 
-    Fetches the leaderboard API, extracts anonymous fingerprint
-    vectors, and computes percentile ranks for each category.
+    Fetches the leaderboard API at `api_url`, extracts anonymous
+    fingerprint vectors, and computes percentile ranks for each
+    category.
 
     If no fingerprint is provided, computes one from the local
     audit log.
+
+    There is no default `api_url`. Until 2026-11-12 it was a host
+    under darkflobi.com; on that day the host answered from a
+    domain-parking service, and its page was read as a leaderboard
+    with no agents on it yet. With no URL nothing is fetched, and a
+    URL that cannot be read as a leaderboard is reported as that,
+    not as an empty population. `status` on the result says which.
     """
     if my_fingerprint is None:
         from .analytics import fingerprint
         my_fingerprint = fingerprint(last_n=500)
 
     if my_fingerprint is None:
-        return AgentComparison(narrative="not enough local data to compute a fingerprint.")
+        return AgentComparison(narrative="not enough local data to compute a fingerprint.",
+                               status="no_fingerprint")
+
+    if not api_url:
+        return AgentComparison(
+            n_agents=0,
+            narrative=("no leaderboard to compare against: styxx has no default leaderboard "
+                       "(the public one is offline). pass the URL of one you run "
+                       "(api_url=..., or styxx compare-agents --api-url URL)."),
+            status="no_url",
+        )
 
     # Fetch population data
     population = _fetch_population(api_url)
+    if population is None:
+        return AgentComparison(
+            n_agents=0,
+            narrative=(f"the leaderboard at {api_url} could not be read: it did not answer, or "
+                       "its answer is not a leaderboard (a JSON object with an agents list)."),
+            status="unreadable",
+        )
     if not population:
         return AgentComparison(
             n_agents=0,
-            narrative="no population data available — you may be the first agent on the leaderboard.",
+            narrative=(f"the leaderboard at {api_url} was read and has no agent with a "
+                       "fingerprint on it yet."),
+            status="empty",
         )
 
     n = len(population)
@@ -151,8 +187,13 @@ def compare_agents(
     )
 
 
-def _fetch_population(api_url: str) -> List[tuple]:
-    """Fetch anonymous fingerprint vectors from the leaderboard API."""
+def _fetch_population(api_url: str) -> Optional[List[tuple]]:
+    """Fetch anonymous fingerprint vectors from the leaderboard API.
+
+    None when the URL did not answer or its answer is not a leaderboard (a JSON object whose
+    `agents` is a list); a list, empty when the leaderboard has no agent with a fingerprint.
+    Until 2026-11-12 both cases returned an empty list, so a web page read as a leaderboard with
+    no agents on it."""
     try:
         import urllib.request
         from styxx import __version__
@@ -160,14 +201,22 @@ def _fetch_population(api_url: str) -> List[tuple]:
         with urllib.request.urlopen(req, timeout=10) as resp:
             data = json.loads(resp.read().decode("utf-8"))
     except Exception:
-        return []
+        return None
 
-    agents = data.get("agents", [])
+    agents = data.get("agents") if isinstance(data, dict) else None
+    if not isinstance(agents, list):
+        return None
     vectors: List[tuple] = []
 
     for agent in agents:
+        if not isinstance(agent, dict):
+            continue
         fp = agent.get("fingerprint", {})
+        if not isinstance(fp, dict):
+            continue
         vec = tuple(fp.get(cat, 0) for cat in _CATEGORY_ORDER)
+        if not all(isinstance(v, (int, float)) and not isinstance(v, bool) for v in vec):
+            continue      # a fingerprint value that is not a number: not a vector
         if any(v > 0 for v in vec):
             vectors.append(vec)
 

@@ -248,10 +248,23 @@ def autoboot(
             from . import stream as _stream
             ok = _stream.enable(agent=name)
             if ok and not quiet:
-                _print_stderr(f"  live feed: {_stream.dashboard_url(name)}")
+                _print_stderr(f"  live feed: {_stream.dashboard_url(name) or 'on (no dashboard base set)'}")
                 _print_stderr("")
+            elif not quiet and not ok and not _stream.is_enabled():
+                # asked for and not started: say which of the reasons applies, where one is known
+                named = _stream.relay_url()
+                if not named:
+                    _print_stderr(f"  live feed: off. {_stream.NO_RELAY}. "
+                                  "set STYXX_STREAM_RELAY to a relay you run.")
+                    _print_stderr("")
+                elif not _stream.is_http_url(named):
+                    _print_stderr("  live feed: off. STYXX_STREAM_RELAY is not an http or https "
+                                  "URL with a host.")
+                    _print_stderr("")
+            # what is true now: a call that changed nothing leaves an emitter that was on, on
+            ok = bool(ok) or _stream.is_enabled()
             result["stream_enabled"] = bool(ok)
-            result["stream_url"] = _stream.dashboard_url(name) if ok else None
+            result["stream_url"] = (_stream.dashboard_url(name) or None) if ok else None
         except Exception:
             result["stream_enabled"] = False
 
