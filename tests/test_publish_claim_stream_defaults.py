@@ -442,7 +442,7 @@ def test_claim_command_prints_a_next_step_that_names_the_relay(net, capsys):
     assert cli.main(["claim", "agent", "--relay", "https://relay.example.invalid/ingest"]) == 0
     out = capsys.readouterr().out
     assert "STYXX_STREAM_RELAY=https://relay.example.invalid/ingest" in out
-    assert "(none: the relay gave no dashboard address that is an http or https URL)" in out
+    assert "(none: the relay gave no dashboard address styxx keeps: an http or https URL" in out
 
 
 def test_feed_command_without_a_dashboard_base_fails(capsys):
@@ -1125,8 +1125,10 @@ def test_a_dashboard_address_with_a_format_character_or_of_great_length_is_dropp
     assert stream.claim_agent("agent", relay="https://relay.example.invalid/ingest")["url"] == ""
     assert cli.main(["claim", "agent", "--relay", "https://relay.example.invalid/ingest"]) == 0
     out = capsys.readouterr().out
-    # "the relay gave no dashboard URL" was false where it gave one that was dropped
-    assert "(none: the relay gave no dashboard address that is an http or https URL)" in out
+    # "the relay gave no dashboard URL" was false where it gave one that was dropped, and so
+    # was "none that is an http or https URL" where one was dropped for its length
+    assert ("(none: the relay gave no dashboard address styxx keeps: an http or https URL of at most "
+            "2,048 characters with no user name in it)") in out
 
 
 def test_text_a_relay_chose_is_printed_with_its_control_characters_as_escapes(net, capsys):
@@ -1254,3 +1256,127 @@ def test_a_credentials_file_that_is_not_an_object_holds_no_credentials(monkeypat
         assert _REAL_LOAD_CREDS() == {}
     path.write_text('{"agent": {"key": "k"}}', encoding="utf-8")
     assert _REAL_LOAD_CREDS() == {"agent": {"key": "k"}}
+
+
+# ── added after the review of the merged change ───────────────────
+
+def test_no_claim_message_quotes_the_reply(monkeypatch, net, capsys):
+    """A refused reply can hold a key, another agent's among them. A single change that put the
+    reply into the message passed every earlier test."""
+    saved = []
+    monkeypatch.setattr(stream, "_save_creds", saved.append)
+    for body in (b'{"name": "someone-else", "key": "KEY-OF-ANOTHER-AGENT"}',
+                 b'{"name": "agent", "key": "KEY-WITH-A-LINE-END\\n"}',
+                 b'{"name": ["agent"], "key": "KEY-BESIDE-A-LIST"}'):
+        net.body = body
+        with pytest.raises(stream.ClaimError) as e:
+            stream.claim_agent("agent", relay="https://relay.example.invalid/ingest")
+        assert "KEY-" not in str(e.value)
+        assert cli.main(["claim", "agent", "--relay", "https://relay.example.invalid/ingest"]) == 1
+        captured = capsys.readouterr()
+        assert "KEY-" not in captured.out + captured.err
+    assert saved == []
+
+
+def test_a_reply_under_another_name_says_the_relay_may_hold_a_name(net):
+    """A relay that normalises names its own way answers with another form of the name. Nothing is
+    stored, and the message does not call the reply malformed and stop there."""
+    net.body = b'{"name": "agent-renamed", "key": "k"}'
+    with pytest.raises(stream.ClaimError) as e:
+        stream.claim_agent("agent", relay="https://relay.example.invalid/ingest")
+    assert "another name" in str(e.value) and "may hold a name" in str(e.value)
+    assert e.value.answered is True
+
+
+@pytest.mark.parametrize("key", ["k\n", " k", "k ", "k\u00e9", "\u0000k", "k\tk", "\u202ek"],
+                         ids=["line_end", "space_before", "space_after", "outside_ascii", "nul", "tab", "override"])
+def test_a_key_the_http_client_cannot_send_is_not_stored(monkeypatch, net, key):
+    """Stored, such a key failed every post inside the http client with nothing shown, while
+    autoboot reported the feed on."""
+    saved = []
+    monkeypatch.setattr(stream, "_save_creds", saved.append)
+    net.body = json.dumps({"name": "agent", "key": key}).encode("utf-8")
+    with pytest.raises(stream.ClaimError) as e:
+        stream.claim_agent("agent", relay="https://relay.example.invalid/ingest")
+    assert saved == [] and "cannot send" in str(e.value)
+
+
+def test_the_claim_command_never_prints_the_key(net, capsys):
+    net.body = b'{"name": "agent", "key": "THE-KEY-OF-THIS-AGENT"}'
+    assert cli.main(["claim", "agent", "--relay", "https://relay.example.invalid/ingest"]) == 0
+    captured = capsys.readouterr()
+    assert "registered" in captured.out and "THE-KEY-OF-THIS-AGENT" not in captured.out + captured.err
+
+
+def test_an_answer_that_is_not_http_is_an_answer(monkeypatch, capsys):
+    """BadStatusLine and its kin mean something took the request. An earlier form printed "relay
+    unreachable" and "(the relay may be offline)" for a relay that held the name."""
+    import http.client
+    import urllib.request
+
+    def garbage(self, req, *a, **k):
+        raise http.client.BadStatusLine("\x1b[2Jnot http at all")
+
+    monkeypatch.setattr(urllib.request.OpenerDirector, "open", garbage)
+    with pytest.raises(stream.ClaimError) as e:
+        stream.claim_agent("agent", relay="https://relay.example.invalid/ingest")
+    assert e.value.answered is True and "not a whole HTTP reply" in str(e.value) and "\x1b" not in str(e.value)
+    assert "may hold the name" in str(e.value)
+    assert cli.main(["claim", "agent", "--relay", "https://relay.example.invalid/ingest"]) == 1
+    err = capsys.readouterr().err
+    assert "may be offline" not in err and "unreachable" not in err
+
+
+def test_a_url_the_http_client_refuses_is_not_called_offline(monkeypatch, capsys):
+    import http.client
+    import urllib.request
+
+    def refuse(self, req, *a, **k):
+        raise http.client.InvalidURL("nonnumeric port")
+
+    monkeypatch.setattr(urllib.request.OpenerDirector, "open", refuse)
+    with pytest.raises(stream.ClaimError) as e:
+        stream.claim_agent("agent", relay="https://relay.example.invalid/ingest")
+    assert e.value.unsent is True and e.value.answered is False and "claim not sent" in str(e.value)
+    assert cli.main(["claim", "agent", "--relay", "https://relay.example.invalid/ingest"]) == 1
+    assert "may be offline" not in capsys.readouterr().err
+
+
+def test_a_reply_nested_too_deep_is_not_called_not_json(net):
+    net.body = b"[" * 100000 + b"]" * 100000
+    with pytest.raises(stream.ClaimError) as e:
+        stream.claim_agent("agent", relay="https://relay.example.invalid/ingest")
+    assert "nested deeper" in str(e.value) and "not JSON" not in str(e.value)
+
+
+def test_publish_prints_an_exception_with_its_control_characters_as_escapes(monkeypatch, capsys):
+    def boom(req, timeout):
+        raise OSError("refused\x1b[2J\u202e by something")
+
+    monkeypatch.setattr(stream, "open_url", boom)
+    monkeypatch.setattr(publish_mod, "prepare_payload", lambda *a, **k: {"agent_name": "agent"})
+    assert publish_mod.publish("agent", "https://example.invalid/api") is None
+    err = capsys.readouterr().err
+    assert "\x1b" not in err and "\u202e" not in err and "refused\\x1b[2J" in err
+
+
+@pytest.mark.parametrize("code", [307, 308])
+def test_an_address_urllib_cannot_parse_is_named_under_307_and_308_too(origins, monkeypatch, code):
+    """The handler's own methods for 307 and 308 could be removed and nothing was followed, but
+    the stock ones parse the address first and raise: the stream then said nothing."""
+    a, b = _post_under(monkeypatch, origins, f"/r{code}/ingest")
+    a.target = "http://[::1/landed"
+    with pytest.warns(RuntimeWarning) as caught:
+        assert stream._post({"agent": "agent"}) is False
+    assert a.target in " ".join(str(w.message) for w in caught) and b.connections == 0
+    with pytest.raises(stream.ClaimError) as e:
+        stream.claim_agent("agent", relay=a.url(f"/r{code}/ingest"))
+    assert "redirect" in str(e.value) and "unreachable" not in str(e.value)
+
+
+def test_the_stream_warning_names_both_ways_to_name_a_relay(origins, monkeypatch):
+    _post_under(monkeypatch, origins)
+    with pytest.warns(RuntimeWarning) as caught:
+        stream._post({"agent": "agent"})
+    text = " ".join(str(w.message) for w in caught)
+    assert "STYXX_STREAM_RELAY" in text and "relay=" in text
