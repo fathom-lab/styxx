@@ -49,6 +49,10 @@ from typing import List, Optional
 # the identity of the instrument that wrote or re-ran a diffgate record (AMENDMENT_capsule_v02_instrument_
 # identity_2026_10_11): imports nothing from styxx itself, so it is imported here at the top
 from styxx import instrument as _instrument
+from styxx import receipt_binding as _receipt_binding
+
+# why the receipt binding of a re-run names no repository: see styxx.receipt_binding.no_repository
+_RE_RUN_ASKS_NO_REPOSITORY = "a re-run of embedded bytes asks no repository"
 
 # The v0.13 UNCOVERED band appends ", N uncovered" to a verdict string. That suffix is a
 # COVERAGE report travelling in the headline, not a verdict change: `counts["UNGROUNDED"]` is
@@ -136,7 +140,32 @@ def _portable_name_problem(name: str) -> Optional[str]:
 
 
 def _bare_name(name) -> bool:
-    return _bare_shape(name) and _portable_name_problem(name) is None
+    return _bare_shape(name) and _portable_name_problem(name) is None and not _is_dot_git(name)
+
+
+# A name git reads as its own. Verify writes the embedded files under their names into a temporary
+# folder and re-runs the certifier there, and the certifier's receipt binding starts git in that
+# folder. Git takes a FILE named `.git` in the folder it is started in for the address of a
+# repository (`gitdir: <path>`). So a capsule whose document or receipt was named `.git` chose the
+# repository those git commands read: `git rev-parse HEAD` answered with the head of a directory
+# the capsule named, and the capsule verified with nothing said (found by a review on 2026-11-12;
+# reproduced with a directory on the same machine; the same in 7.50.0 and 8.0.0; whether a path on
+# another host makes git contact that host was not tested). The name is refused in create and in
+# verify, on every system: in any letter case (NTFS, APFS and HFS+ compare names without case) and
+# with the code points HFS+ drops when it compares names (_HFS_IGNORED), which is the list git
+# itself guards `.git` with. The 8.3 short name of `.git`, GIT~1, is refused by the rule for
+# short names above. Refusing the name is the second of two guards: the re-run itself starts no
+# git any more (styxx.receipt_binding.no_repository), whatever the files are called.
+_DOT_GIT_WHY = ("is `.git` to git, or to a file system git runs on (in any letter case, and with "
+                "the code points HFS+ drops from a name): git reads a file of that name, in the "
+                "folder it is started in, as the address of a repository, and the certifier's "
+                "receipt binding starts git where the embedded files are written")
+
+
+def _is_dot_git(name) -> bool:
+    if not isinstance(name, str):
+        return False
+    return unicodedata.normalize("NFC", _HFS_IGNORED.sub("", name)).casefold() == ".git"
 
 
 def _bare_shape(name) -> bool:
@@ -166,6 +195,9 @@ def _unsafe_names(payload: dict) -> List[str]:
         if not _bare_shape(n):
             out.append(f"embedded name {n!r} is not a bare file name; nothing was written and the "
                        f"certifier was not re-run")
+        elif _is_dot_git(n):
+            out.append(f"embedded name {_short(n, 120)} {_DOT_GIT_WHY}; it is refused on every "
+                       f"system; nothing was written and the certifier was not re-run")
         elif _portable_name_problem(n):
             out.append(f"embedded name {_short(n, 120)} {_portable_name_problem(n)}; it is refused "
                        f"on every system, so that a capsule's verdict does not depend on the "
@@ -263,6 +295,10 @@ def create_capsule(doc: Path, receipts: List[Path], cert: Path, out: Path) -> Pa
     # by the verify after the mint, whose refusal then blamed the ledger schema.
     names = [doc.name] + [r.name for r in receipts]
     for n in names:
+        if _bare_shape(n) and _is_dot_git(n):
+            raise SystemExit(f"REFUSED: the file name {_short(n, 120)} {_DOT_GIT_WHY}. verify "
+                             f"refuses such a name on every system; rename the file and certify "
+                             f"it again.")
         why = (None if _bare_shape(n) else
                "is not a bare file name under POSIX and Windows rules alike (it holds a "
                "separator, a drive, a control character or a trailing dot or space, or is a "
@@ -345,7 +381,9 @@ def create_capsule(doc: Path, receipts: List[Path], cert: Path, out: Path) -> Pa
             rp = Path(td) / name
             rp.write_bytes(rb)
             rps.append(rp)
-        live = certify_doc(d, rps)
+        # no git in this folder either: only the verdict and the counts of this re-run are read
+        with _receipt_binding.no_repository(_RE_RUN_ASKS_NO_REPOSITORY):
+            live = certify_doc(d, rps)
     if live["verdict"] != cert_obj["verdict"] or live["counts"] != cert_obj["counts"]:
         raise SystemExit(
             "REFUSED: certificate is not reproducible at the installed verifier "
@@ -539,13 +577,17 @@ def _verify_capsule_v01(html: str, payload: dict) -> dict:
                                 f"file system with stricter rules than the rule's): verify the "
                                 f"capsule where its temporary directory can hold the files")
             else:
+                # No git is started here: the folder holds bytes the capsule supplied, under names
+                # the capsule chose, and git reads what it finds where it is started.
                 try:
-                    live = certify_doc(d, rps)
+                    with _receipt_binding.no_repository(_RE_RUN_ASKS_NO_REPOSITORY):
+                        live = certify_doc(d, rps)
                 except Exception as e:  # noqa: BLE001 - bytes the certifier cannot read fail
                     problems.append(f"the installed verifier could not re-run on the embedded "
                                     f"bytes ({type(e).__name__}: {str(e)[:160]})")
                 else:
-                    earlier = _earlier_reader_certificate(cert, live, d, rps)
+                    with _receipt_binding.no_repository(_RE_RUN_ASKS_NO_REPOSITORY):
+                        earlier = _earlier_reader_certificate(cert, live, d, rps)
     if live is not None:
         # the certificate as certify's own command writes it: through JSON, so a tuple is a list
         # and every number has the type a reader of the file sees
