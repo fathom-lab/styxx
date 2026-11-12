@@ -475,7 +475,8 @@ def _verify_capsule_v01(html: str, payload: dict) -> dict:
 
     problems: List[str] = []
     advisory: List[str] = []
-    cmp: dict = {"not_checked": [], "stated": [], "compared": [], "mint_refusals": []}
+    cmp: dict = {"not_checked": [], "stated": [], "compared": [], "mint_refusals": [],
+                 "reader_v2_refusals": []}
     live = None
     earlier = None
     doc = payload.get("document") if isinstance(payload.get("document"), dict) else {}
@@ -558,7 +559,8 @@ def _verify_capsule_v01(html: str, payload: dict) -> dict:
     # The page around the payload is what a reader's browser runs. It must be the page some
     # styxx renders for exactly this payload, or what it shows was never checked by anything.
     _check_page_v01(html, payload, cert, live if not problems else None, doc_bytes, problems,
-                    advisory, cmp["compared"], cmp["mint_refusals"])
+                    advisory, cmp["compared"], cmp["mint_refusals"],
+                    cmp.get("reader_v2_refusals") or ())
     return report()
 
 
@@ -605,8 +607,10 @@ def _earlier_reader_certificate(cert: dict, live: dict, doc: Path,
                                 receipts: List[Path]) -> Optional[dict]:
     """The certificate the installed certify issues for the embedded bytes with the numeral reader
     v2 off, for a certificate that names no reader. None when the question does not arise (the
-    certificate names a reader, it carries no policy block, or the installed certify is itself
-    running with the reader off) or when that certificate cannot be derived.
+    certificate names a reader, or the installed certify is itself running with the reader off)
+    or when that certificate cannot be derived. A certificate with no policy block gets one too
+    (until the review of this repair it did not): the row keys of the reader v2 are judged
+    against it, see _READER_V2_ROW_FIELDS.
 
     The numeral reader v2 (2026-10-25) rewrote the certificate's `uncovered_policy` block: its
     schema string, its note, the reasons it counts. A certificate issued before it carries the
@@ -624,7 +628,7 @@ def _earlier_reader_certificate(cert: dict, live: dict, doc: Path,
     (_issued_by_the_earlier_reader), and does every field but the policy block equal what the
     installed reader issues. The one shows which reader issued it. The other is the check
     layer 2 always made, so a row the two readers disagree on still fails."""
-    if not isinstance(cert, dict) or "numeral_reader" in cert or "uncovered_policy" not in cert:
+    if not isinstance(cert, dict) or "numeral_reader" in cert:
         return None
     if not isinstance(live, dict) or "numeral_reader" not in live:
         return None
@@ -633,6 +637,22 @@ def _earlier_reader_certificate(cert: dict, live: dict, doc: Path,
         return json.loads(json.dumps(earlier, ensure_ascii=False))
     except Exception:  # noqa: BLE001 - no earlier certificate to compare with: the field fails as before
         return None
+
+
+def _carries_the_earlier_readers_fields(cert: dict, earlier: dict) -> bool:
+    """True when every field the certificate carries, the mint-environment fields left out, is a
+    field of the certificate the installed certify issues with the numeral reader v2 off, and
+    equal to it, type for type.
+
+    Weaker than _issued_by_the_earlier_reader in one way: the certificate may lack fields. A
+    certificate of an older certify lacks the ones written since (the band, the binding), and
+    layer 2 judges each missing field by its date, as it always did. This asks only whether what
+    the certificate does say is the earlier reader's. It is the test for the row keys of the
+    reader v2 (_READER_V2_ROW_FIELDS); the policy block keeps the stricter one."""
+    if not isinstance(cert, dict) or not isinstance(earlier, dict):
+        return False
+    carried = [k for k in cert if k not in _CERT_MINT_FIELDS]
+    return all(k in earlier and _same(cert[k], earlier[k]) for k in carried)
 
 
 def _issued_by_the_earlier_reader(cert: dict, earlier: dict) -> bool:
@@ -753,6 +773,29 @@ _ROW_FIELDS_SINCE = {"binding_context": ("2026-06-10", "7e70cb4e"),
                      "magnitude": ("2026-10-25", "numeral reader v2"),
                      "sign_form": ("2026-10-25", "numeral reader v2"),
                      "ellipsis": ("2026-10-25", "numeral reader v2")}
+
+
+# The row keys the numeral reader v2 began writing. The page create_capsule renders has been
+# rendered since 2026-10-05, twenty days before that reader: styxx 7.49.0 and 7.50.0 minted it around
+# certificates that carry none of these keys.
+#
+# Around that page a mint refusal fails verify with the words "no styxx minted this page around
+# it". For these keys the sentence was false. styxx 8.0.0 printed it on an intact capsule of those
+# releases whose document has a numeral directly before U+2026 on a spec, historical or notation
+# line, where the reader v2 adds `ellipsis` to the row and moves nothing else (found on 2026-11-12
+# by review of the repair for the policy block). The same certificate around the older page
+# verified, so the page decided the verdict. The rule now does not ask which page it is
+# (_compare_certificate_v01):
+#   - a certificate that shows the reader v2 (it names a reader, or its policy block is that
+#     reader's) and lacks such a key fails: the reader that wrote the one wrote the other;
+#   - a certificate whose every carried field is what the installed certify issues with the reader
+#     v2 off (_carries_the_earlier_readers_fields) is the earlier reader's own, which never wrote
+#     the key: the key is NOT CHECKED, and that is no reason to fail or to refuse a mint;
+#   - where neither can be shown (no earlier certificate could be derived, or the certificate is
+#     neither reader's), the key is NOT CHECKED and a mint refusal as before, and the page check
+#     says of it what is true (_check_page_v01).
+_READER_V2_ROW_FIELDS = tuple(k for k, (_, origin) in _ROW_FIELDS_SINCE.items()
+                              if origin == "numeral reader v2")
 
 
 def _since(name: str) -> Optional[str]:
@@ -1004,7 +1047,10 @@ def _compare_certificate_v01(cert: dict, live: dict, payload: dict, recs: dict,
     """Compare an embedded certificate with the one certify_doc re-derives from the embedded
     bytes. A field both carry must be equal, type for type. One exception: the policy block of a
     certificate that names no numeral reader and is, whole, the certificate `earlier` that the
-    installed certify issues with the reader v2 off (see _earlier_reader_certificate). A field the installed certify writes
+    installed certify issues with the reader v2 off (see _earlier_reader_certificate). A row key
+    the reader v2 began writing and the certificate lacks is judged by which reader the
+    certificate is shown to be of, whatever page carries it (see _READER_V2_ROW_FIELDS); every
+    field a row does carry is compared as always. A field the installed certify writes
     and the certificate lacks is NOT CHECKED, by name, with the value the installed verifier finds
     and the day certify began writing it, unless the certificate shows it is not that old: it
     carries a field certify began writing later, or names the installed certify.py as its issuer.
@@ -1019,6 +1065,8 @@ def _compare_certificate_v01(cert: dict, live: dict, payload: dict, recs: dict,
     # what create_capsule refuses to mint even though verify passes: a ledger missing fields the
     # page draws its bands from, or a verdict compared by class only
     mint_refusals: List[str] = []
+    # those of mint_refusals that are over a row key of the reader v2 (_READER_V2_ROW_FIELDS)
+    reader_v2_refusals: List[str] = []
 
     for k in _CERT_REQUIRED:
         if k not in cert:
@@ -1038,6 +1086,31 @@ def _compare_certificate_v01(cert: dict, live: dict, payload: dict, recs: dict,
     removed = _generation_problems(cert)
     problems.extend(removed.values())
     shown = _shown_generation(cert)
+    whole_earlier: List[bool] = []
+    carried_earlier: List[bool] = []
+
+    def issued_by_the_earlier_reader() -> bool:
+        if not whole_earlier:
+            whole_earlier.append(earlier is not None and _issued_by_the_earlier_reader(cert, earlier))
+        return whole_earlier[0]
+
+    def carries_the_earlier_readers_fields() -> bool:
+        if not carried_earlier:
+            carried_earlier.append(earlier is not None
+                                   and _carries_the_earlier_readers_fields(cert, earlier))
+        return carried_earlier[0]
+
+    def shows_the_reader_v2() -> Optional[str]:
+        """What in the certificate only the reader v2 writes, by name, else None."""
+        if "numeral_reader" in cert:
+            return "certificate.numeral_reader"
+        cp, lp = cert.get("uncovered_policy"), live.get("uncovered_policy")
+        ep = earlier.get("uncovered_policy") if isinstance(earlier, dict) else None
+        if isinstance(cp, dict) and isinstance(lp, dict) and isinstance(ep, dict):
+            schema = cp.get("schema")
+            if isinstance(schema, str) and schema == lp.get("schema") and schema != ep.get("schema"):
+                return f"a policy block of schema {schema}"
+        return None
 
     def absent_field(name: str, what: str) -> None:
         if name in removed:
@@ -1114,13 +1187,13 @@ def _compare_certificate_v01(cert: dict, live: dict, payload: dict, recs: dict,
             if k not in _CERT_REQUIRED:
                 absent_field(k, f"not carried (installed verifier: {_short(lval, 160)})")
         elif not _same(cert[k], lval):
-            if (k == "uncovered_policy" and earlier is not None
-                    and _issued_by_the_earlier_reader(cert, earlier)):
+            if k == "uncovered_policy" and issued_by_the_earlier_reader():
                 # The certificate names no reader and is, whole, what the installed certify issues
                 # with the reader v2 off, so its policy block is that reader's own. The advisory
                 # below names the two readers.
                 compared.append("uncovered_policy (the block the installed certify writes with the "
-                                "numeral reader v2 off; the whole certificate is what that reader "
+                                "numeral reader v2 off; apart from the two fields its minter "
+                                "states, the certificate is field for field what that reader "
                                 "issues for these bytes, and it names no reader)")
             elif k == "document" and isinstance(cert[k], str) and isinstance(lval, str):
                 # certify writes the document's file name; the re-run's file has the capsule's
@@ -1185,12 +1258,38 @@ def _compare_certificate_v01(cert: dict, live: dict, payload: dict, recs: dict,
                                 f"{shown[1]}: no certify issued that combination, so it was "
                                 f"removed")
             else:
+                row = fld.split("[].", 1)[1]
+                of_v2 = row in _READER_V2_ROW_FIELDS
+                if of_v2 and not same_issuer:
+                    # see _READER_V2_ROW_FIELDS for the three cases
+                    shown_v2 = shows_the_reader_v2()
+                    if shown_v2 is not None:
+                        problems.append(
+                            f"certificate.{fld} is absent from {n} of {total} row(s), where the "
+                            f"installed verifier writes it, and the certificate carries "
+                            f"{shown_v2}, which only the numeral reader v2 writes: the reader "
+                            f"that wrote the one writes the other, so it was removed")
+                        continue
+                    if carries_the_earlier_readers_fields():
+                        unchecked += 1
+                        not_checked.append(
+                            f"certificate.{fld}: absent from {n} of {total} row(s); the numeral "
+                            f"reader v2 began writing it on {_since(fld)}, and every field this "
+                            f"certificate carries, apart from the two its minter states "
+                            f"(verifier_sha256, receipt_binding), is what the installed certify "
+                            f"issues for these bytes with that reader off, which does not write it")
+                        continue
                 unchecked += 1
                 absent_field(fld, f"absent from {n} of {total} row(s)")
-                draws = name == "ledger" and fld.split("[].", 1)[1] in ("col", "epistemics")
-                mint_refusals.append(f"certificate.{fld} is absent from {n} of {total} row(s)"
-                                     + (", and the page draws each band from its row" if draws
-                                        else ", and the installed certify writes it"))
+                if of_v2 and same_issuer:
+                    continue        # failed just above, as a field the named issuer writes
+                draws = name == "ledger" and row in ("col", "epistemics")
+                refusal = (f"certificate.{fld} is absent from {n} of {total} row(s)"
+                           + (", and the page draws each band from its row" if draws
+                              else ", and the installed certify writes it"))
+                mint_refusals.append(refusal)
+                if of_v2:
+                    reader_v2_refusals.append(refusal)
         if len(problems) == before:
             # "every field" only when no field of these rows went unchecked (review round 3)
             compared.append(f"{name} ({len(live[name])} rows, both directions, in order, "
@@ -1207,12 +1306,21 @@ def _compare_certificate_v01(cert: dict, live: dict, payload: dict, recs: dict,
     _er = (cert.get("numeral_reader") or {}).get("schema") if isinstance(cert.get("numeral_reader"), dict) else None
     _lr = (live.get("numeral_reader") or {}).get("schema") if isinstance(live.get("numeral_reader"), dict) else None
     if _er != _lr:
+        # Through 8.0.0 the second sentence read "A row the two readers disagree on is reported
+        # above": on a capsule that verifies no row is reported, and on one that fails the rows
+        # are printed below this line. An earlier commit of this repair printed the rest only when
+        # the comparison had found a problem, which left a capsule that fails by its page alone
+        # with no word of the flag, and said every difference is among the problems, which is not
+        # so for a row key listed NOT CHECKED.
         advisory.append(
             f"numeral_reader: the installed verifier reads numerals under "
             f"{_lr or 'the reader before styxx-oath/numerals/v2 (V15_READER_V2 off)'}; this certificate "
-            f"was issued under {_er or 'the reader before styxx-oath/numerals/v2 (no numeral_reader block)'}. "
-            f"A row the two readers disagree on is reported above; to verify under the minting reader, "
-            f"re-derive with V15_READER_V2 = {'True' if _er else 'False'} in styxx.certify")
+            f"names {_er or 'no reader (it has no numeral_reader block), as a certificate issued before styxx-oath/numerals/v2 names none'}. "
+            f"Where the installed reader gives something else for these bytes than the certificate "
+            f"carries, it is listed below, as a problem or as NOT CHECKED. To verify under the "
+            f"reader the certificate names, re-derive with V15_READER_V2 = "
+            f"{'True' if _er else 'False'} set on the module styxx.certify (take the module with "
+            f"importlib.import_module: the attribute styxx.certify can be a function of that name)")
     # the minting environment: stated, never verified
     stated.append(f"certificate.verifier_sha256 {vs} (the certify.py that issued it; the "
                   f"installed certify.py is "
@@ -1236,7 +1344,8 @@ def _compare_certificate_v01(cert: dict, live: dict, payload: dict, recs: dict,
                         f"fails, so check a capsule with styxx>={_LAYER2_FLOOR}, not with the "
                         f"version it states")
     return {"problems": problems, "advisory": advisory, "not_checked": not_checked,
-            "stated": stated, "compared": compared, "mint_refusals": mint_refusals}
+            "stated": stated, "compared": compared, "mint_refusals": mint_refusals,
+            "reader_v2_refusals": reader_v2_refusals}
 
 
 def _binding_path_problem(path) -> Optional[str]:
@@ -1397,7 +1506,7 @@ _PAGE_V01_LEGACY_SPLIT = re.compile("\r\n|\n")
 
 def _check_page_v01(html: str, payload: dict, cert: dict, live: Optional[dict], doc_bytes,
                     problems: List[str], advisory: List[str], compared: List[str],
-                    mint_refusals: List[str]) -> None:
+                    mint_refusals: List[str], reader_v2_refusals=()) -> None:
     """The page must be what some styxx renders for exactly this payload.
 
     The payload is located by text; a browser locates it as an element, skipping comments. Until
@@ -1416,7 +1525,13 @@ def _check_page_v01(html: str, payload: dict, cert: dict, live: Optional[dict], 
     verified while the page painted a green OATH-HELD over a number nothing checked. NOT CHECKED
     stays for the older page, which honest capsules of that age carry. A later certify that writes
     a field this one does not must keep the pages this renderer minted verifying: it treats this
-    renderer as an older one, as this module treats the page before it."""
+    renderer as an older one, as this module treats the page before it.
+
+    The numeral reader v2 (2026-10-25) is such a later certify, and 8.0.0 did not keep that rule
+    for the row keys it began writing: see _READER_V2_ROW_FIELDS. A refusal over one of those keys
+    (`reader_v2_refusals`) reaches this function only for a certificate that was shown to be
+    neither reader's own, and it fails here with a sentence that says that, not "no styxx minted
+    this page"."""
     from styxx._capsule_page_v01_legacy import render_html_v01_legacy
 
     # A leading byte-order mark and the line ends (read_text folds CRLF and CR) are transport, and
@@ -1434,7 +1549,12 @@ def _check_page_v01(html: str, payload: dict, cert: dict, live: Optional[dict], 
         if mint_refusals:
             problems.extend(
                 f"the page is the one create_capsule renders, and create_capsule refuses this "
-                f"certificate ({r}), so no styxx minted this page around it" for r in mint_refusals)
+                f"certificate ({r}), "
+                + ("and what the certificate carries was not shown to be what the installed "
+                   "certify issues for these bytes with the numeral reader v2 off, so the missing "
+                   "field is not put down to the reader before v2" if r in reader_v2_refusals
+                   else "so no styxx minted this page around it")
+                for r in mint_refusals)
             return
         compared.append("the page (the page this styxx renders for this payload)")
         return

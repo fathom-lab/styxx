@@ -27,6 +27,28 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from styxx.publish import prepare_payload, publish
 
 
+@pytest.fixture(autouse=True)
+def _nothing_leaves_this_file(monkeypatch):
+    """No test here may open a connection. Each stands in for `styxx.stream.open_url`, the one
+    function publish sends through; this notes anything that reaches urllib below a stand-in,
+    refuses it, and fails the test that caused it.
+
+    Why it exists: until 2026-11-12 these tests stood in for `urllib.request.urlopen`. A commit
+    that was never pushed moved publish to its own opener and left them as they were, so three of
+    them sent their payload to the documentation host they named. They name a host that cannot
+    resolve now, and this fixture makes the same slip a failure, not a request."""
+    import urllib.request
+    opened = []
+
+    def refuse(self, req, *a, **k):
+        opened.append(getattr(req, "full_url", str(req)))
+        raise OSError("no network in tests")
+
+    monkeypatch.setattr(urllib.request.OpenerDirector, "open", refuse)
+    yield
+    assert opened == [], f"a test of publish reached for the network: {opened}"
+
+
 # ══════════════════════════════════════════════════════════════════
 # 1. prepare_payload returns expected keys
 # ══════════════════════════════════════════════════════════════════
@@ -82,25 +104,27 @@ def test_publish_http_error():
     import urllib.error
 
     exc = urllib.error.HTTPError(
-        url="https://example.com",
+        url="https://example.invalid",
         code=500,
         msg="Internal Server Error",
         hdrs=None,
         fp=BytesIO(b""),
     )
-    with patch("styxx.publish.urllib.request.urlopen", side_effect=exc):
-        result = publish("test-agent", "https://example.com/api")
+    with patch("styxx.stream.open_url", side_effect=exc) as stand_in:
+        result = publish("test-agent", "https://example.invalid/api")
     assert result is None
+    assert stand_in.call_count == 1, "the stand-in was not on the road"
 
 
 def test_publish_connection_error():
     """publish() should return None on network errors, not raise."""
     with patch(
-        "styxx.publish.urllib.request.urlopen",
+        "styxx.stream.open_url",
         side_effect=ConnectionError("refused"),
-    ):
-        result = publish("test-agent", "https://example.com/api")
+    ) as stand_in:
+        result = publish("test-agent", "https://example.invalid/api")
     assert result is None
+    assert stand_in.call_count == 1, "the stand-in was not on the road"
 
 
 # ══════════════════════════════════════════════════════════════════
@@ -116,8 +140,8 @@ def test_publish_success():
     mock_resp.__enter__ = lambda s: s
     mock_resp.__exit__ = MagicMock(return_value=False)
 
-    with patch("styxx.publish.urllib.request.urlopen", return_value=mock_resp):
-        result = publish("test-agent", "https://example.com/api")
+    with patch("styxx.stream.open_url", return_value=mock_resp):
+        result = publish("test-agent", "https://example.invalid/api")
 
     assert result is not None
     assert result["status"] == 200
@@ -145,7 +169,7 @@ def test_cli_dry_run(capsys):
     """styxx publish --name x --dry-run should print JSON and not POST."""
     from styxx.cli import main
 
-    with patch("styxx.publish.urllib.request.urlopen") as mock_urlopen:
+    with patch("styxx.stream.open_url") as mock_urlopen:
         rc = main(["publish", "--name", "test-agent", "--dry-run"])
 
     # should not have called urlopen at all

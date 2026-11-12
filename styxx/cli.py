@@ -105,13 +105,16 @@ def cmd_claim(args):
         res = _stream.claim_agent(clean, relay=relay)
     except _stream.ClaimError as e:
         sys.stderr.write(f"\n  claim failed: {e}\n")
-        sys.stderr.write("  (the relay may be offline, or the name is taken)\n")
+        if not getattr(e, "answered", False):
+            # only where nothing answered: under a reply of the relay this line was false
+            sys.stderr.write("  (the relay may be offline)\n")
         return 1
 
     sys.stdout.write("\n")
     sys.stdout.write("  registered.\n\n")
     sys.stdout.write(f"    name         {res['name']}\n")
-    sys.stdout.write(f"    feed         {res['url'] or '(the relay gave no dashboard URL)'}\n")
+    sys.stdout.write(f"    feed         "
+                     f"{res['url'] or '(none: the relay gave no dashboard address that is an http or https URL)'}\n")
     sys.stdout.write("    credentials  ~/.styxx/credentials.json\n\n")
     sys.stdout.write("  next: enable streaming. styxx has no default relay, so name this one\n")
     sys.stdout.write("  in the environment of the agent, then turn the stream on. the vitals\n")
@@ -132,7 +135,8 @@ def cmd_feed(args):
         creds = _stream._load_creds()
         name = creds.get("_default", "")
     if not name:
-        sys.stderr.write("  no agent claimed yet. run: styxx claim <name>\n")
+        sys.stderr.write("  no agent claimed yet. run: styxx claim NAME --relay URL "
+                         "(styxx has no default relay)\n")
         return 1
     url = _stream.dashboard_url(name)
     if not url:

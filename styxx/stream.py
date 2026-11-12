@@ -7,13 +7,20 @@ is named (STYXX_STREAM_RELAY, or relay=...), every vitals computation
 is fire-and-forget POSTed to that relay, which can power a live
 dashboard for the agent.
 
-There is no default relay and no default dashboard. Until 2026-11-12
-both were hosts under darkflobi.com, where the public relay lived. On
-that day the names under that domain answered from a domain-parking
-service, not from a lab server (the relay's own name failed its TLS
-handshake that day, so a POST to it could not complete). With no
-relay named, claiming fails with a message, the emitter stays off,
-and nothing is sent.
+There is no default relay and no default dashboard. Through styxx
+8.0.0 both were hosts under darkflobi.com, where the public relay
+lived. On 2026-11-12 the names under that domain answered from a
+domain-parking service, not from a lab server (the relay's own name
+failed its TLS handshake that day, so a POST to it could not
+complete). With no relay named, claiming fails with a message, the
+emitter stays off, and nothing is sent.
+
+A redirect is not followed. urllib answers a 301, 302 or 303 to a POST
+by sending a GET to the address the reply names, with every header of
+the POST but the body's two: the stream key went to that address, the
+vitals did not, and the 2xx that came back counted as delivered. Found
+on 2026-11-12 by review, the same in 8.0.0. Now a 3xx reply from a
+relay is a failed post, and a failed claim, that names the address.
 
 The emitter is:
   * non-blocking (background daemon thread + bounded queue)
@@ -62,6 +69,11 @@ DEFAULT_DASHBOARD_BASE: Optional[str] = None
 NO_RELAY = "no relay is named, and styxx has no default relay (the public relay it used is offline)"
 
 _QUEUE_MAX = 200            # drop events rather than grow unbounded
+_LOCATION_MAX = 200         # characters of a redirect's address shown in a message
+_SHOWN_MAX = 300            # characters of any other text a relay chose, shown in a message
+_KEY_MAX = 512              # characters of a key a relay may hand out
+_LINK_MAX = 2048            # characters of a dashboard address a relay may hand out
+_REDIRECT_CODES = (301, 302, 303, 307, 308)     # the replies urllib treats as a redirect
 _POST_TIMEOUT = 3.0         # seconds; short, so we never stall on shutdown
 _BACKOFF_MAX = 30.0         # seconds between retries when relay is down
 
@@ -81,6 +93,79 @@ _backoff: float = 0.0
 
 
 # ══════════════════════════════════════════════════════════════════
+# Requests: no redirect is followed
+# ══════════════════════════════════════════════════════════════════
+
+_OPENER = None              # built when a request needs it: see open_url
+
+
+class _NoRedirect(urllib.request.HTTPRedirectHandler):
+    """Follows no redirect and reads no Location. The reply is left to urllib's default handler,
+    which raises it as an HTTPError with its headers as they came. (The stock handler parses the
+    Location before it asks whether to follow and raises ValueError for one it cannot parse, so
+    the bytes of a reply chose which error a caller saw, and the stream said nothing at all.)"""
+
+    def http_error_302(self, req, fp, code, msg, headers):
+        return None
+
+    http_error_301 = http_error_303 = http_error_307 = http_error_308 = http_error_302
+
+    def redirect_request(self, req, fp, code, msg, headers, newurl):
+        return None     # not reached through the methods above; nothing is followed if it is
+
+
+def show(text, limit: int = _SHOWN_MAX) -> str:
+    """Text a relay, an endpoint or an exception chose, made safe to print: control and format
+    characters (the escape, the line ends and the direction overrides among them) and unpaired
+    or private code points as escapes, cut to `limit` characters."""
+    import unicodedata
+    s = str(text)
+    out = "".join(c if unicodedata.category(c) not in ("Cc", "Cf", "Cs", "Co", "Zl", "Zp")
+                  else c.encode("unicode_escape").decode("ascii") for c in s[:limit])
+    return out + ("..." if len(s) > limit else "")
+
+
+def open_url(req, timeout: float):
+    """`urllib.request.urlopen(req, timeout=timeout)` with one difference: a redirect is not
+    followed. A 3xx reply is raised as urllib.error.HTTPError, whatever the method, and
+    `redirect_target` reads the address a redirect names.
+
+    This function is the one place to stand in for these requests. A test or a program that
+    replaced `urllib.request.urlopen` to do so stands in for nothing now: through 8.0.0 the
+    calls went through urlopen, and they no longer do.
+
+    Every request styxx.stream, styxx.publish and styxx.compare send goes through here. The
+    caller named one address: a reply from another one is not that address's reply, and a POST
+    that urllib re-sends as a GET carries its headers (the stream key among them) and not its
+    body. The opener is built once in a process, when a request needs it, so the proxy settings
+    are read then, as urlopen reads them when it builds its own. An opener a program installed with
+    `urllib.request.install_opener` is not used here; through 8.0.0 it was, since these calls
+    went through urlopen."""
+    global _OPENER
+    opener = _OPENER
+    if opener is None:
+        opener = _OPENER = urllib.request.build_opener(_NoRedirect)
+    return opener.open(req, timeout=timeout)
+
+
+def redirect_target(exc) -> Optional[str]:
+    """For the HTTPError of a redirect (301, 302, 303, 307, 308): the address it names, as a
+    quoted string cut to _LOCATION_MAX characters and safe to print (`'(none given)'` when the
+    reply names none). None for any other error, the other 3xx codes among them: a 304 or a 300
+    is an HTTP error and names no address to go to."""
+    code = getattr(exc, "code", None)
+    if code not in _REDIRECT_CODES:
+        return None
+    try:
+        where = exc.headers.get("Location") if exc.headers is not None else None
+    except Exception:
+        where = None
+    if not where:
+        return "(none given)"
+    return "'" + show(where, _LOCATION_MAX).replace("'", "\\'") + "'"
+
+
+# ══════════════════════════════════════════════════════════════════
 # Credentials
 # ══════════════════════════════════════════════════════════════════
 
@@ -93,9 +178,12 @@ def _load_creds() -> dict:
     if not p.exists():
         return {}
     try:
-        return json.loads(p.read_text(encoding="utf-8"))
-    except (json.JSONDecodeError, OSError):
+        data = json.loads(p.read_text(encoding="utf-8"))
+    except (ValueError, OSError, RecursionError):
         return {}
+    # a file that is JSON and not an object held no credentials; through 8.0.0 it ended
+    # enable(), a claim and `styxx feed` in a traceback
+    return data if isinstance(data, dict) else {}
 
 
 def _restrict_acl_windows(p: Path) -> None:
@@ -152,7 +240,15 @@ def _save_creds(data: dict) -> None:
 # ══════════════════════════════════════════════════════════════════
 
 class ClaimError(Exception):
-    pass
+    # True when the relay answered and the answer is what failed the claim (an error reply, a
+    # redirect, a reply that is not a name and a key): the relay is then not offline
+    answered = False
+
+
+def _answered(message: str) -> "ClaimError":
+    err = ClaimError(message)
+    err.answered = True
+    return err
 
 
 def _sanitize_name(raw: str) -> str:
@@ -175,6 +271,19 @@ def claim_agent(name: str, relay: Optional[str] = None, timeout: float = 10.0) -
     relay is named (there is no default relay). `url` is the dashboard
     URL the relay gives, else the one built from STYXX_DASHBOARD_BASE,
     else an empty string.
+
+    A redirect is not followed (see open_url): the claim fails and the
+    message names the address the relay pointed to. styxx then read no
+    reply and stored no key; whether the relay took the name before it
+    redirected is the relay's to say, and the message says so. The
+    reply must be a JSON object whose `name` is the name that was sent
+    and whose `key` is a string that is not empty; anything else is a
+    malformed response and nothing is stored. Through 8.0.0 a reply
+    with a null or a list there was stored, or ended in a traceback,
+    and a reply that named another agent overwrote that agent's key. A
+    dashboard `url` in the reply is kept only if it is an http or https
+    URL. Text the relay chose is printed with its control characters as
+    escapes (see show).
     """
     clean = _sanitize_name(name)
     if not clean:
@@ -193,24 +302,48 @@ def claim_agent(name: str, relay: Optional[str] = None, timeout: float = 10.0) -
             headers={"Content-Type": "application/json"},
             method="POST",
         )
-        with urllib.request.urlopen(req, timeout=timeout) as resp:
+        with open_url(req, timeout=timeout) as resp:
             raw = resp.read().decode("utf-8")
             data = json.loads(raw)
     except urllib.error.HTTPError as e:
+        where = redirect_target(e)
+        if where is not None:
+            raise _answered(
+                f"the relay answered HTTP {e.code}, a redirect to {where}. styxx does not "
+                f"follow a redirect, so it read no reply and stored no key. the name was sent "
+                f"to {show(url)} and to no other address; a relay that takes a claim and then "
+                f"redirects may hold the name now. name the relay by the URL that answers "
+                f"itself") from e
         try:
             msg = json.loads(e.read().decode("utf-8")).get("error", str(e))
         except Exception:
             msg = str(e)
-        raise ClaimError(msg) from e
+        raise _answered(show(msg)) from e
+    except (json.JSONDecodeError, UnicodeDecodeError, RecursionError) as e:
+        # the relay answered 2xx and the body is not JSON (a web page, a byte-order mark, a reply
+        # nested deeper than the JSON reader goes). Through 8.0.0 this read "relay unreachable".
+        raise _answered(f"the relay answered, and its reply is not JSON "
+                        f"({type(e).__name__}: {show(e, 120)})") from e
     except (urllib.error.URLError, OSError, ValueError, http.client.HTTPException) as e:
-        # ValueError: a reply that is not JSON (json.JSONDecodeError is one), or a URL urllib
-        # refuses. HTTPException: a URL or a reply http.client refuses (InvalidURL is one).
-        raise ClaimError(f"relay unreachable: {e}") from e
+        # ValueError: a URL urllib refuses. HTTPException: a URL or a reply http.client refuses
+        # (InvalidURL and BadStatusLine are two).
+        raise ClaimError(f"relay unreachable: {type(e).__name__}: {show(e, 200)}") from e
 
-    if not isinstance(data, dict) or "key" not in data or "name" not in data:
-        raise ClaimError("malformed response")
+    name_back = data.get("name") if isinstance(data, dict) else None
+    key_back = data.get("key") if isinstance(data, dict) else None
+    # The name must be the one that was sent: it is the key the credentials are stored and
+    # looked up under, and a reply that names another agent would overwrite that agent's key.
+    # (An earlier commit asked for a name that _sanitize_name leaves unchanged; that function
+    # cuts to 32 characters after it strips, so it can change its own result, and a relay's
+    # echo of such a name was refused.)
+    if (not isinstance(name_back, str) or name_back != clean
+            or not isinstance(key_back, str) or not key_back or len(key_back) > _KEY_MAX):
+        raise _answered("malformed response")
+    link = data.get("url")
 
-    dashboard = data.get("url") or dashboard_url(data["name"])
+    # the dashboard address the relay gives is kept only if it is a web address: it is printed
+    dashboard = ((link if isinstance(link, str) and len(link) <= _LINK_MAX and is_http_url(link)
+                  else "") or dashboard_url(data["name"]))
 
     creds = _load_creds()
     creds[data["name"]] = {
@@ -227,8 +360,18 @@ def claim_agent(name: str, relay: Optional[str] = None, timeout: float = 10.0) -
 
 def is_http_url(url) -> bool:
     """True for a string that is an http or https URL with a host, a port that is a number if
-    it has one, no user name or password in it, and no space or control character."""
-    if not isinstance(url, str) or url != url.strip() or any(c.isspace() or ord(c) < 32 for c in url):
+    it has one, no user name or password in it, and no space, control character (U+0000 to
+    U+001F and U+007F to U+009F) or format character (a direction override is one). Spaces
+    around a URL are refused here too: a caller that takes them, as urllib does, drops them
+    before it asks (relay_url, publish). urllib also unwraps `<URL>` and `URL:...`; those forms
+    are refused here, though 8.0.0 sent to them.
+
+    It does not promise that urllib can send to the URL: a path with a character outside ASCII,
+    or a host name no resolver takes, passes here and fails when the request is made."""
+    if not isinstance(url, str) or url != url.strip():
+        return False
+    import unicodedata
+    if any(c.isspace() or unicodedata.category(c) in ("Cc", "Cf") for c in url):
         return False
     try:
         parts = urllib.parse.urlsplit(url)
@@ -247,7 +390,7 @@ def claim_url(relay: str) -> str:
     refuses. The relay URL itself is where the vitals are POSTed, so a relay given without a
     path receives them at its root.
 
-    Until 2026-11-12 this was `relay.rsplit("/", 1)[0] + "/claim"`, which for a relay given as
+    Through 8.0.0 this was `relay.rsplit("/", 1)[0] + "/claim"`, which for a relay given as
     a bare origin (`https://host`) built `https://claim`: the name was sent to a host called
     `claim`, not to the relay. The default relay had a path, so the default never took that
     road; a relay the caller names can."""
@@ -434,6 +577,11 @@ def _run() -> None:
 
 
 def _post(packet: dict) -> bool:
+    """POST one packet to the relay. True for a 2xx reply from the relay itself. A redirect is
+    not followed (see open_url): it is counted as a failed post like any other, so the worker
+    backs off, and a warning names where the relay pointed. (Python shows a warning of one text
+    once per place it is raised from, under its default filters; a program that changes the
+    filters sees it more or less often.) The key is in no message."""
     if not _relay:
         return False        # no relay named: nothing is sent
     headers = {"Content-Type": "application/json"}
@@ -444,9 +592,23 @@ def _post(packet: dict) -> bool:
         req = urllib.request.Request(
             _relay, data=body, headers=headers, method="POST"
         )
-        with urllib.request.urlopen(req, timeout=_POST_TIMEOUT) as resp:
+        with open_url(req, timeout=_POST_TIMEOUT) as resp:
             return 200 <= resp.status < 300
-    except (urllib.error.URLError, urllib.error.HTTPError, OSError):
+    except urllib.error.HTTPError as e:
+        where = redirect_target(e)
+        if where is not None:
+            try:
+                import warnings
+                warnings.warn(
+                    f"styxx.stream: the relay {show(_relay)} answered HTTP {e.code}, a "
+                    f"redirect to {where}. styxx does not follow a redirect, so the packet is "
+                    f"counted as not delivered and the feed backs off. name the relay by the "
+                    f"URL that answers itself, in STYXX_STREAM_RELAY.",
+                    RuntimeWarning, stacklevel=2)
+            except Exception:
+                pass        # warnings turned into errors: the worker thread still must not die
+        return False
+    except (urllib.error.URLError, OSError):
         return False
     except Exception:
         return False

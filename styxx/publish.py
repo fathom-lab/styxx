@@ -15,13 +15,19 @@ the data that gets sent is the same data `styxx personality`,
 `styxx weather`, and `styxx fingerprint` already compute locally. no
 new data is captured.
 
-there is no default endpoint. until 2026-11-12 the default was a host
-under darkflobi.com, where the public dashboard lived. on that day
-every name under that domain answered from a domain-parking service,
-not from a lab server, so `styxx publish --name X` handed its payload
-to a server the lab does not run, and any 2xx reply was reported as
-published. now nothing is sent unless the caller says where, and a
-reply counts as published only if it is a JSON object.
+there is no default endpoint. through styxx 8.0.0 the default was a
+host under darkflobi.com, where the public dashboard lived. on
+2026-11-12 every name under that domain answered from a
+domain-parking service, not from a lab server, so by the code
+`styxx publish --name X` hands its payload to a server the lab does
+not run and reports any 2xx reply as published (read from the code
+and run against a local stand-in: no POST was sent to that host). now
+nothing is sent unless the caller says where, and a reply counts as
+published only if it is a JSON object.
+
+a redirect is not followed (see styxx.stream.open_url): the endpoint
+named is the only address the payload goes to, and a 3xx reply is a
+failed publish that names the address the endpoint pointed to.
 
 uses only stdlib (urllib.request, json) — no external deps.
 """
@@ -34,24 +40,15 @@ import urllib.error
 import urllib.request
 from typing import Any, Dict, Optional
 
+# One URL check and one way of opening a URL for publish, the claim and the stream. The opener
+# is called as an attribute of the module, so that replacing styxx.stream.open_url stands in for
+# every request the three modules send.
+from . import stream as _stream
+
+_is_http_url = _stream.is_http_url
+
 # No default: see the module docstring. Kept as a name so code that read it still imports.
 _DEFAULT_ENDPOINT: Optional[str] = None
-
-
-def _is_http_url(url) -> bool:
-    """True for a string that is an http or https URL with a host, a port that is a number if
-    it has one, no user name or password in it, and no space or control character."""
-    import urllib.parse
-    if not isinstance(url, str) or url != url.strip() or any(c.isspace() or ord(c) < 32 for c in url):
-        return False
-    try:
-        parts = urllib.parse.urlsplit(url)
-        parts.port          # raises ValueError for a port that is not a number
-    except ValueError:
-        return False
-    if parts.username is not None or parts.password is not None:
-        return False
-    return parts.scheme in ("http", "https") and bool(parts.hostname)
 
 
 def prepare_payload(
@@ -167,7 +164,15 @@ def publish(
     is no default (see the module docstring). a 2xx reply whose body
     is not a JSON object is not success: a parked or mistyped host
     answers a POST with a web page, and by then the payload is sent.
+
+    spaces around the endpoint are dropped, as urllib drops them and as
+    styxx.stream.relay_url does: an endpoint read from a file with its
+    line end is that endpoint. a redirect is not followed: the payload
+    went to the endpoint named, and the reply of another address is
+    not that endpoint's reply.
     """
+    if isinstance(endpoint, str):
+        endpoint = endpoint.strip()
     if not endpoint:
         import sys
         print(
@@ -205,7 +210,7 @@ def publish(
             },
             method="POST",
         )
-        with urllib.request.urlopen(req, timeout=15) as resp:
+        with _stream.open_url(req, timeout=15) as resp:
             status = resp.status
             try:
                 resp_body = json.loads(resp.read().decode("utf-8"))
@@ -228,6 +233,16 @@ def publish(
             }
     except urllib.error.HTTPError as exc:
         import sys
+        where = _stream.redirect_target(exc)
+        if where is not None:
+            print(
+                f"  warn: publish failed: the payload was sent to {endpoint}, which answered "
+                f"HTTP {exc.code}, a redirect to {where}. styxx does not follow a redirect, so "
+                "it read no reply there and this is not counted as published. name the "
+                "endpoint by the URL that answers itself.",
+                file=sys.stderr,
+            )
+            return None
         print(
             f"  warn: publish failed: HTTP {exc.code} from {endpoint}",
             file=sys.stderr,
@@ -236,7 +251,7 @@ def publish(
     except Exception as exc:
         import sys
         print(
-            f"  warn: publish failed: {type(exc).__name__}: {exc}",
+            f"  warn: publish failed: {type(exc).__name__}: {_stream.show(exc, 200)}",
             file=sys.stderr,
         )
         return None

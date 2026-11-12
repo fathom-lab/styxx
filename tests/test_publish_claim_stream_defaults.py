@@ -3,34 +3,48 @@
 
 Found on 2026-11-12, after styxx 8.0.0 was published: those four defaulted to hosts under
 darkflobi.com, and every name under that domain answered that day from a domain-parking service,
-not from a lab server. `styxx publish --name X` handed its payload to that server and reported
-any 2xx reply as published; `styxx compare-agents` read the parking page as a leaderboard with no
-agents on it.
+not from a lab server. By its code, `styxx publish --name X` in 8.0.0 hands its payload to that
+server and reports any 2xx reply as published, and `styxx compare-agents` reads a web page there
+as a leaderboard with no agents on it (read from the code and run against stand-ins: no POST was
+sent to that host from here).
 
 What these tests pin: with no endpoint, relay or leaderboard URL named, none of the four opens a
 connection; a 2xx reply that is not a JSON object is not "published"; a reply that is not a
 leaderboard is not an empty one; a relay given as a bare origin is claimed on that host and no
-other; and no file under `styxx/` names that domain apart from eight listed lines.
+other; no redirect is followed, so the stream key and the reply stay with the address named; and
+no file under `styxx/` names that domain apart from eight listed lines.
 
 Scope. Other commands of the package contact a named service by design and are not the subject
 here: `styxx.clock` reads two public Solana RPC hosts, `styxx.guardrail.entity_verify` queries
 Wikipedia, the diff gate fetches a pull request the caller names.
 
-No test here opens a connection. Each replaces urllib's `urlopen` with a recorder that notes the
-URL and answers or refuses, and asserts on the recorder: several of the functions under test catch
-every exception, so a guard that only raised would be swallowed and prove nothing (a review of
-an earlier version of this file put a default host or a link on the domain back eight ways, and
-seven went unseen).
+Most tests here open no connection. They replace `urllib.request.OpenerDirector.open`, the one
+method both `urlopen` and the package's own opener go through, with a recorder that notes the URL
+and answers or refuses, and they assert on the recorder: several of the functions under test
+catch every exception, so a guard that only raised would be swallowed and prove nothing (a review
+of an earlier version of this file put a default host or a link on the domain back eight ways,
+and seven went unseen).
+
+A recorder at that level cannot see a redirect, which urllib follows below it. A later review
+showed exactly that: a relay answering 301, 302 or 303 had the stream key forwarded to the
+address it named, in 8.0.0 and under these tests alike. The redirect tests at the end of this
+file therefore run the real urllib against two servers on 127.0.0.1 that this file starts, with
+every proxy setting switched off, and read what each server received.
 """
 from __future__ import annotations
 
+import http.server
 import importlib
 import inspect
 import json
 import os
 import re
+import socketserver
 import subprocess
 import sys
+import threading
+import urllib.error
+import warnings
 from pathlib import Path
 from unittest.mock import MagicMock
 
@@ -47,6 +61,7 @@ analytics = importlib.import_module("styxx.analytics")
 
 ROOT = Path(__file__).resolve().parent.parent
 OLD_RELAY = "https://live.old-default.invalid/ingest"
+_REAL_LOAD_CREDS = stream._load_creds       # the fixture below replaces it for every test
 
 
 def _reply(body: bytes, status: int = 200):
@@ -59,14 +74,15 @@ def _reply(body: bytes, status: int = 200):
 
 
 class Net:
-    """Stands in for urlopen: records every URL asked for, then answers `body` or refuses."""
+    """Stands in for the opener: records every URL asked for, then answers `body` or refuses."""
 
     def __init__(self, body=None):
-        self.opened, self.bodies, self.body = [], [], body
+        self.opened, self.bodies, self.timeouts, self.body = [], [], [], body
 
     def __call__(self, req, *a, **k):
         self.opened.append(getattr(req, "full_url", req))
         self.bodies.append(getattr(req, "data", None))
+        self.timeouts.append(k.get("timeout"))
         if self.body is None:
             raise OSError("no network in tests")
         return _reply(self.body)
@@ -74,10 +90,12 @@ class Net:
 
 @pytest.fixture
 def net(monkeypatch):
-    """One recorder behind every urlopen these modules can reach (they share urllib.request)."""
+    """One recorder behind every request these modules can send: `urlopen` and the opener of
+    styxx.stream.open_url both end in OpenerDirector.open. (An instance set on the class is not
+    bound, so it is called with the request as its leading argument, as `urlopen` was.)"""
     import urllib.request
     rec = Net()
-    monkeypatch.setattr(urllib.request, "urlopen", rec)
+    monkeypatch.setattr(urllib.request.OpenerDirector, "open", rec)
     return rec
 
 
@@ -90,9 +108,10 @@ def _no_ambient_settings(monkeypatch, tmp_path):
     # never the credentials file of whoever runs the tests
     monkeypatch.setattr(stream, "_load_creds", lambda: {})
     monkeypatch.setattr(stream, "_save_creds", lambda data: None)
-    # the emitter's state, as a fresh process has it
+    # the emitter's state, as a fresh process has it; and no opener built under another test's
+    # proxy settings
     for name, value in (("_enabled", False), ("_agent", None), ("_key", None), ("_relay", None),
-                        ("_worker", None)):
+                        ("_worker", None), ("_OPENER", None)):
         monkeypatch.setattr(stream, name, value)
 
 
@@ -248,6 +267,22 @@ def test_fetch_population_is_none_when_the_host_does_not_answer(net):
     assert net.opened == ["https://example.invalid/board"]
 
 
+def test_compare_agents_without_a_fingerprint_says_so_and_fetches_nothing(monkeypatch, net):
+    monkeypatch.setattr(analytics, "fingerprint", lambda *a, **k: None)
+    out = compare.compare_agents(api_url="https://example.invalid/board")
+    assert out.status == "no_fingerprint" and net.opened == []
+
+
+@pytest.mark.parametrize("value", [b"9" * 400, b"NaN", b"Infinity", b"-Infinity", b"1e400"],
+                         ids=["integer_of_400_digits", "nan", "infinity", "minus_infinity", "1e400"])
+def test_a_fingerprint_value_no_finite_float_holds_is_not_a_vector(net, value):
+    """A 400-digit integer ended the comparison in an OverflowError through 8.0.0, and NaN or
+    Infinity, which Python's JSON reader takes, came out as a population mean."""
+    net.body = b'{"agents": [{"fingerprint": {"retrieval": 0.5, "reasoning": ' + value + b"}}]}"
+    assert compare._fetch_population("https://example.invalid/board") == []
+    assert compare.compare_agents(_fingerprint(), api_url="https://example.invalid/board").status == "empty"
+
+
 def test_compare_agents_command_end_to_end(monkeypatch, net, capsys):
     """The real command, not a stand-in for it: what a user sees with no URL and with a web page."""
     monkeypatch.setattr(analytics, "fingerprint", lambda *a, **k: _fingerprint())
@@ -331,10 +366,73 @@ def test_claim_posts_the_name_to_the_relay_and_to_no_other_host(net, relay):
     assert out == {"name": "agent", "key": "k", "url": ""}
 
 
-def test_claim_with_a_reply_that_is_not_an_object_is_malformed(net):
-    net.body = b"[]"
+@pytest.mark.parametrize("body", [
+    b"[]",
+    b'["key", "name"]',                                  # holds both words and is no object
+    b'"key name"',
+    b'{"name": null, "key": "k"}',
+    b'{"name": ["agent"], "key": "k"}',                  # a traceback through 8.0.0
+    b'{"name": {"a": 1}, "key": "k"}',
+    b'{"name": "_default", "key": "k"}',                 # would overwrite the file's own pointer
+    b'{"name": "Agent\\u001b[2J", "key": "k"}',           # not a name styxx can look up or print
+    b'{"name": "", "key": "k"}',
+    b'{"name": "agent", "key": null}',
+    b'{"name": "agent", "key": ""}',
+    b'{"name": "agent", "key": {"k": 1}}',
+    b"[" * 100000 + b"]" * 100000,                       # deeper than the JSON reader goes
+], ids=["empty_list", "list_of_the_words", "string_of_the_words", "null_name", "list_name",
+        "object_name", "default_name", "escape_in_name", "empty_name", "null_key", "empty_key",
+        "object_key", "nested_deep"])
+def test_claim_with_a_reply_that_is_not_a_name_and_a_key_is_refused_and_stores_nothing(monkeypatch, net, body):
+    saved = []
+    monkeypatch.setattr(stream, "_save_creds", saved.append)
+    net.body = body
     with pytest.raises(stream.ClaimError):
         stream.claim_agent("agent", relay="https://relay.example.invalid/ingest")
+    assert saved == []
+    assert net.opened == ["https://relay.example.invalid/claim"]
+
+
+def test_claim_stores_the_key_beside_the_relay_that_gave_it(monkeypatch, net):
+    saved = []
+    monkeypatch.setattr(stream, "_save_creds", saved.append)
+    net.body = json.dumps({"name": "agent", "key": "k"}).encode("utf-8")
+    stream.claim_agent("agent", relay="https://relay.example.invalid/ingest")
+    assert len(saved) == 1 and saved[0]["_default"] == "agent"
+    assert saved[0]["agent"]["key"] == "k"
+    assert saved[0]["agent"]["relay"] == "https://relay.example.invalid/ingest"
+
+
+@pytest.mark.parametrize("link, want", [
+    ("https://dash.example.invalid/a/agent", "https://dash.example.invalid/a/agent"),
+    ("javascript:alert(1)", ""),
+    ("https://dash.example.invalid/\u001b[2J", ""),
+    (7, ""),
+])
+def test_a_dashboard_address_from_the_relay_is_kept_only_if_it_is_a_web_address(net, link, want):
+    net.body = json.dumps({"name": "agent", "key": "k", "url": link}).encode("utf-8")
+    assert stream.claim_agent("agent", relay="https://relay.example.invalid/ingest")["url"] == want
+
+
+def test_claim_does_not_fall_back_to_a_relay_an_earlier_claim_stored(monkeypatch, net, capsys):
+    """A credentials file written by 8.0.0 holds the relay that was the default then. Neither the
+    command nor the function reads it: with no relay named now, nothing is sent."""
+    monkeypatch.setattr(stream, "_load_creds", lambda: {
+        "agent": {"key": "k", "relay": OLD_RELAY, "dashboard": "https://live.old-default.invalid/a/agent"},
+        "_default": "agent"})
+    assert cli.main(["claim", "agent"]) == 1
+    captured = capsys.readouterr()
+    assert net.opened == []
+    assert "old-default" not in captured.out + captured.err and "no default relay" in captured.err
+    with pytest.raises(stream.ClaimError):
+        stream.claim_agent("agent")
+    assert net.opened == []
+    # and a claim that names a relay prints that relay as the next step, not the one stored
+    net.body = json.dumps({"name": "agent", "key": "k"}).encode("utf-8")
+    assert cli.main(["claim", "agent", "--relay", "https://relay.example.invalid/ingest"]) == 0
+    out = capsys.readouterr().out
+    assert "STYXX_STREAM_RELAY=https://relay.example.invalid/ingest" in out and "old-default" not in out
+    assert net.opened == ["https://relay.example.invalid/claim"]
 
 
 def test_claim_command_prints_a_next_step_that_names_the_relay(net, capsys):
@@ -344,13 +442,20 @@ def test_claim_command_prints_a_next_step_that_names_the_relay(net, capsys):
     assert cli.main(["claim", "agent", "--relay", "https://relay.example.invalid/ingest"]) == 0
     out = capsys.readouterr().out
     assert "STYXX_STREAM_RELAY=https://relay.example.invalid/ingest" in out
-    assert "(the relay gave no dashboard URL)" in out
+    assert "(none: the relay gave no dashboard address that is an http or https URL)" in out
 
 
 def test_feed_command_without_a_dashboard_base_fails(capsys):
     assert cli.main(["feed", "agent"]) == 1
     captured = capsys.readouterr()
     assert "no default dashboard" in captured.err and captured.out == ""
+
+
+def test_feed_command_with_no_name_claimed_names_a_command_that_can_work(capsys):
+    """It used to say `run: styxx claim <name>`, which exits 1 now that there is no default relay."""
+    assert cli.main(["feed"]) == 1
+    captured = capsys.readouterr()
+    assert "styxx claim NAME --relay URL" in captured.err and captured.out == ""
 
 
 def test_feed_command_with_a_dashboard_base_prints_the_url(monkeypatch, capsys):
@@ -413,14 +518,18 @@ sys.meta_path = [f for f in sys.meta_path if "editable" not in type(f).__module_
 sys.path.insert(0, sys.argv[1])
 import socket, urllib.request
 attempts = []
-def _urlopen(req, *a, **k):
+def _open(self, req, *a, **k):
     attempts.append(getattr(req, "full_url", str(req)))
     raise OSError("no network in tests")
 def _connect(self, address, *a, **k):
     attempts.append(repr(address))
     raise OSError("no network in tests")
-urllib.request.urlopen = _urlopen
+def _lookup(host, *a, **k):
+    attempts.append("lookup " + repr(host))
+    raise OSError("no network in tests")
+urllib.request.OpenerDirector.open = _open      # urlopen and styxx.stream.open_url both end here
 socket.socket.connect = _connect
+socket.getaddrinfo = _lookup
 import styxx
 assert os.path.abspath(styxx.__file__).startswith(os.path.abspath(sys.argv[1])), styxx.__file__
 import importlib
@@ -465,6 +574,9 @@ def test_autoboot_with_the_relay_named_in_the_environment_turns_the_stream_on(tm
     out, err = _autoboot_in_a_fresh_process(
         tmp_path, {"STYXX_STREAM": "on", "STYXX_STREAM_RELAY": "https://relay.example.invalid/ingest"})
     assert out["stream_enabled"] is True and out["relay"] == "https://relay.example.invalid/ingest"
+    assert out["stream_url"] is None, "no dashboard base is set"
+    # the driver posts one packet itself, so the list is not empty and the check below is not idle
+    assert "https://relay.example.invalid/ingest" in out["attempts"]
     assert all("relay.example.invalid" in a for a in out["attempts"]), out["attempts"]
     assert "live feed: on (no dashboard base set)" in err
 
@@ -480,9 +592,9 @@ _ALLOWED_LINES = {
     ("styxx/schema.py", '"$id": "https://fathom.darkflobi.com/styxx/schema/verification.json",'),
     ("styxx/schema.py", '"$id": "https://fathom.darkflobi.com/styxx/schema/error.json",'),
     ("styxx/schema.py", '"$id": "https://fathom.darkflobi.com/styxx/schema/thought.json",'),
-    ("styxx/publish.py", "under darkflobi.com, where the public dashboard lived. on that day"),
-    ("styxx/compare.py", "under darkflobi.com; on that day the host answered from a"),
-    ("styxx/stream.py", "both were hosts under darkflobi.com, where the public relay lived. On"),
+    ("styxx/publish.py", "host under darkflobi.com, where the public dashboard lived. on"),
+    ("styxx/compare.py", "under darkflobi.com; on 2026-11-12 that host answered from a"),
+    ("styxx/stream.py", "8.0.0 both were hosts under darkflobi.com, where the public relay"),
 }
 _TEXT_SUFFIXES = {".py", ".md", ".txt", ".json", ".html", ".js", ".yaml", ".yml", ".toml", ".cfg", ".css"}
 
@@ -501,6 +613,21 @@ def test_no_file_of_the_package_names_the_parked_domain_except_the_listed_lines(
             if re.search(r"darkflobi\s*\.\s*com", line, re.I):
                 found.add((rel, line.strip()))
     assert found == _ALLOWED_LINES, sorted(found ^ _ALLOWED_LINES)
+
+
+@pytest.mark.parametrize("rel", [
+    "README.md", "docs/REFERENCE.md", "openapi/styxx-v1.yaml", ".well-known/agent-card.json",
+    "docs/agents/peer-recommendation.md", "packages/styxx-js/package.json", "submissions/README.md",
+])
+def test_the_files_corrected_outside_the_package_do_not_name_the_parked_domain(rel):
+    """The links of these seven files were moved off the domain with the package's own. Other
+    tracked files outside the package still name it and are listed in the CHANGELOG."""
+    path = ROOT / rel
+    if not path.is_file():
+        pytest.skip(f"{rel} is not in this tree (a source distribution ships the tests without it)")
+    hits = [line.strip() for line in path.read_text(encoding="utf-8").splitlines()
+            if re.search(r"darkflobi\s*\.\s*com", line, re.I)]
+    assert hits == []
 
 
 def test_the_package_url_is_the_project_homepage(monkeypatch):
@@ -528,11 +655,15 @@ def test_the_package_url_is_the_project_homepage(monkeypatch):
     "https://relay.example.invalid:port/ingest",
     "https://relay.example.invalid /ingest",
     "https://relay.example.invalid/in\ngest",
-    " https://relay.example.invalid/ingest",
+    "https://relay.example.invalid/in\x7fgest",                # DEL, and a C1 control below
+    "https://relay.example.invalid/in\x85gest",
 ])
 def test_a_url_the_http_client_would_refuse_is_refused_before_it_gets_there(monkeypatch, net, capsys, url):
-    """Each of these passed the scheme-and-host check of an earlier draft and ended `styxx claim`
-    in a traceback from http.client after its two step lines."""
+    """The four at the top of the list each passed the scheme-and-host check of an earlier draft
+    and ended `styxx claim` in a traceback from http.client after its two step lines. (Until the third
+    review this list held a URL with a space before it. The http client does not refuse that
+    one: urllib drops the space, and 8.0.0 published to such an endpoint. See
+    test_spaces_around_a_publish_endpoint_are_dropped.)"""
     assert not stream.is_http_url(url) and not publish_mod._is_http_url(url)
     with pytest.raises(stream.ClaimError):
         stream.claim_url(url)
@@ -540,11 +671,35 @@ def test_a_url_the_http_client_would_refuse_is_refused_before_it_gets_there(monk
     assert publish_mod.publish("agent", url) is None
     assert net.opened == []
     capsys.readouterr()
-    if url == url.strip():           # relay_url drops outer spaces; the rest reach the command as typed
-        assert cli.main(["claim", "agent", "--relay", url]) == 1
-        captured = capsys.readouterr()
-        assert "reserving subdomain" not in captured.out and "secret" not in captured.out
-        assert net.opened == []
+    assert cli.main(["claim", "agent", "--relay", url]) == 1
+    captured = capsys.readouterr()
+    assert "reserving subdomain" not in captured.out and "secret" not in captured.out
+    assert net.opened == []
+
+
+def test_publish_and_the_stream_check_a_url_with_one_function():
+    assert publish_mod._is_http_url is stream.is_http_url
+
+
+@pytest.mark.parametrize("pad", [" {}", "{} ", "{}\n", "{}\r\n", "\t{}\t"],
+                         ids=["space_before", "space_after", "line_feed", "cr_lf", "tabs"])
+def test_spaces_around_a_publish_endpoint_are_dropped(monkeypatch, net, pad):
+    """8.0.0 published to an endpoint given with a space or a line end around it (urllib drops
+    them), and the stream of this change does. An earlier commit of this change refused it in
+    publish alone, and its change log said such a value used to end in a traceback."""
+    monkeypatch.setattr(publish_mod, "prepare_payload", lambda *a, **k: {"agent_name": "agent"})
+    net.body = b'{"ok": true}'
+    out = publish_mod.publish("agent", pad.format("https://example.invalid/api"))
+    assert net.opened == ["https://example.invalid/api"]
+    assert out is not None and "published agent to https://example.invalid/api (" in out["summary"]
+
+
+def test_an_endpoint_of_spaces_alone_is_no_endpoint(monkeypatch, net, capsys):
+    collected = []
+    monkeypatch.setattr(publish_mod, "prepare_payload", lambda *a, **k: collected.append(a) or {})
+    assert publish_mod.publish("agent", " \n") is None
+    assert net.opened == [] and collected == []
+    assert "no default publish endpoint" in capsys.readouterr().err
 
 
 def test_spaces_around_a_relay_are_dropped_and_the_claim_goes_to_that_relay(net):
@@ -561,7 +716,7 @@ def test_an_exception_of_the_http_client_is_a_claim_error(monkeypatch):
     def refuse(*a, **k):
         raise http.client.InvalidURL("nonnumeric port")
 
-    monkeypatch.setattr(urllib.request, "urlopen", refuse)
+    monkeypatch.setattr(urllib.request.OpenerDirector, "open", refuse)
     with pytest.raises(stream.ClaimError):
         stream.claim_agent("agent", relay="https://relay.example.invalid/ingest")
 
@@ -622,3 +777,480 @@ def test_autoboot_says_so_when_the_relay_named_is_not_a_url(tmp_path):
         tmp_path, {"STYXX_STREAM": "on", "STYXX_STREAM_RELAY": "relay.example.invalid/ingest"})
     assert out["stream_enabled"] is False and out["relay"] is None and out["attempts"] == []
     assert "live feed: off" in err and "not an http or https URL" in err
+
+
+# ── no redirect is followed (added after the third review) ────────
+
+class _Origin(http.server.BaseHTTPRequestHandler):
+    """Answers a path that starts /r301, /r302, /r303, /r307 or /r308 with that redirect to the
+    server's `target`, and anything else with 200 and the server's `reply`. Notes every request."""
+    protocol_version = "HTTP/1.0"
+
+    def _any(self):
+        n = int(self.headers.get("Content-Length") or 0)
+        body = self.rfile.read(n) if n else b""
+        self.server.seen.append({"method": self.command, "path": self.path, "body": body,
+                                 "key": self.headers.get("X-Styxx-Key")})
+        head = self.path.strip("/").split("/")[0]
+        if head[:1] == "r" and head[1:].isdigit():
+            self.send_response(int(head[1:]))
+            self.send_header("Location", self.server.target)
+            self.send_header("Content-Length", "0")
+            self.end_headers()
+            return
+        self.send_response(200)
+        self.send_header("Content-Type", "application/json")
+        self.send_header("Content-Length", str(len(self.server.reply)))
+        self.end_headers()
+        self.wfile.write(self.server.reply)
+
+    do_GET = do_POST = _any
+
+    def log_message(self, *a):
+        pass
+
+
+class _Server(socketserver.ThreadingMixIn, http.server.HTTPServer):
+    daemon_threads = True
+    connections = 0                 # every connection taken, a request read from it or not
+
+    def get_request(self):
+        self.connections += 1
+        return super().get_request()
+
+    def server_bind(self):          # the stock one asks the resolver for this machine's name
+        socketserver.TCPServer.server_bind(self)
+        self.server_name, self.server_port = self.server_address[:2]
+
+    def url(self, path: str) -> str:
+        return f"http://127.0.0.1:{self.server_address[1]}{path}"
+
+
+_BOARD = [{"fingerprint": {"reasoning": 0.9}}]
+REDIRECTS = [301, 302, 303, 307, 308]
+
+
+@pytest.fixture
+def origins(monkeypatch):
+    """Two servers on 127.0.0.1. `a` is the address a test names; `b` is where `a` points when
+    asked for a redirect. No proxy: urllib must reach 127.0.0.1 itself, whatever the machine or
+    its environment is set to."""
+    for name in list(os.environ):
+        if name.lower() in ("http_proxy", "https_proxy", "all_proxy", "ftp_proxy", "no_proxy"):
+            monkeypatch.delenv(name)
+    monkeypatch.setenv("NO_PROXY", "*")
+    servers = []
+    for label in ("a", "b"):
+        srv = _Server(("127.0.0.1", 0), _Origin)
+        srv.seen = []
+        srv.reply = json.dumps({"name": "agent" if label == "a" else "from-b", "ok": True,
+                                "key": f"KEY-FROM-{label.upper()}", "agents": _BOARD}).encode("utf-8")
+        threading.Thread(target=srv.serve_forever, daemon=True).start()
+        servers.append(srv)
+    a, b = servers
+    a.target = b.url("/landed")
+    b.target = a.url("/back")
+    try:
+        yield a, b
+    finally:
+        for srv in servers:
+            srv.shutdown()
+            srv.server_close()
+
+
+def test_the_two_servers_can_show_a_followed_redirect(origins):
+    """What these tests would see if a redirect were followed, shown with urllib's stock opener,
+    which follows one: the second server receives the request, key and all. Without this, an
+    empty `b.seen` below could mean only that nothing can reach `b`."""
+    import urllib.request
+    a, b = origins
+    req = urllib.request.Request(a.url("/r302/ingest"), data=b"{}", method="POST",
+                                 headers={"X-Styxx-Key": "KEY", "Content-Type": "application/json"})
+    with urllib.request.build_opener().open(req, timeout=10) as resp:      # as urlopen opens
+        assert resp.status == 200
+    assert [(r["method"], r["key"]) for r in a.seen] == [("POST", "KEY")]
+    assert [(r["method"], r["path"], r["key"], r["body"]) for r in b.seen] == [("GET", "/landed", "KEY", b"")]
+
+
+@pytest.mark.parametrize("code", REDIRECTS)
+def test_a_redirect_from_the_relay_is_a_failed_post_and_the_key_goes_nowhere_else(origins, monkeypatch, code):
+    a, b = origins
+    monkeypatch.setattr(stream, "_relay", a.url(f"/r{code}/ingest"))
+    monkeypatch.setattr(stream, "_key", "KEY-OF-THE-USER")
+    with pytest.warns(RuntimeWarning) as caught:
+        assert stream._post({"agent": "agent", "v": 1}) is False
+    assert b.seen == [], "the address the relay pointed to received a request"
+    assert [(r["method"], r["path"], r["key"]) for r in a.seen] == [("POST", f"/r{code}/ingest", "KEY-OF-THE-USER")]
+    assert json.loads(a.seen[0]["body"]) == {"agent": "agent", "v": 1}
+    text = " ".join(str(w.message) for w in caught)
+    assert f"HTTP {code}" in text and b.url("/landed") in text and "does not follow a redirect" in text
+    assert "KEY-OF-THE-USER" not in text and b.connections == 0
+
+
+def test_a_post_the_relay_takes_is_delivered_to_it_alone(origins, monkeypatch):
+    a, b = origins
+    monkeypatch.setattr(stream, "_relay", a.url("/ok/ingest"))
+    monkeypatch.setattr(stream, "_key", "KEY-OF-THE-USER")
+    with warnings.catch_warnings():
+        warnings.simplefilter("error")
+        assert stream._post({"agent": "agent"}) is True
+    assert [(r["method"], r["key"]) for r in a.seen] == [("POST", "KEY-OF-THE-USER")] and b.seen == []
+
+
+def test_a_redirect_to_the_relay_itself_is_not_followed_either(origins, monkeypatch):
+    """urllib would re-send the POST as a GET with no body and count the 200 as delivered."""
+    a, b = origins
+    a.target = a.url("/ok/ingest")
+    monkeypatch.setattr(stream, "_relay", a.url("/r302/ingest"))
+    with pytest.warns(RuntimeWarning):
+        assert stream._post({"agent": "agent"}) is False
+    assert [(r["method"], r["path"]) for r in a.seen] == [("POST", "/r302/ingest")] and b.seen == []
+
+
+def test_a_redirect_does_not_end_the_worker_where_warnings_are_errors(origins, monkeypatch):
+    a, b = origins
+    monkeypatch.setattr(stream, "_relay", a.url("/r302/ingest"))
+    with warnings.catch_warnings():
+        warnings.simplefilter("error")
+        assert stream._post({"agent": "agent"}) is False
+    assert b.seen == []
+
+
+@pytest.mark.parametrize("code", REDIRECTS)
+def test_a_redirect_from_the_relay_fails_the_claim_and_stores_nothing(origins, monkeypatch, capsys, code):
+    """Through 8.0.0 the name and the key a second address answered with were stored beside the
+    relay the caller named."""
+    a, b = origins
+    saved = []
+    monkeypatch.setattr(stream, "_save_creds", saved.append)
+    with pytest.raises(stream.ClaimError) as e:
+        stream.claim_agent("agent", relay=a.url(f"/r{code}/ingest"))
+    assert f"HTTP {code}" in str(e.value) and b.url("/landed") in str(e.value)
+    assert b.seen == [] and saved == []
+    assert [(r["method"], r["path"]) for r in a.seen] == [("POST", f"/r{code}/claim")]
+    assert json.loads(a.seen[0]["body"]) == {"name": "agent"}
+    assert cli.main(["claim", "agent", "--relay", a.url(f"/r{code}/ingest")]) == 1
+    captured = capsys.readouterr()
+    assert "redirect" in captured.err and "registered" not in captured.out
+    assert b.seen == [] and saved == []
+
+
+def test_a_claim_the_relay_takes_is_stored(origins, monkeypatch):
+    a, b = origins
+    saved = []
+    monkeypatch.setattr(stream, "_save_creds", saved.append)
+    out = stream.claim_agent("agent", relay=a.url("/ok/ingest"))
+    assert out["name"] == "agent" and out["key"] == "KEY-FROM-A"
+    assert len(saved) == 1 and b.seen == []
+
+
+@pytest.mark.parametrize("code", REDIRECTS)
+def test_a_redirect_from_the_endpoint_is_not_published(origins, monkeypatch, capsys, code):
+    """Through 8.0.0 the reply of the second address was reported as the endpoint's: `published
+    NAME to ENDPOINT (HTTP 200)`."""
+    a, b = origins
+    monkeypatch.setattr(publish_mod, "prepare_payload", lambda *a_, **k: {"agent_name": "agent"})
+    assert publish_mod.publish("agent", a.url(f"/r{code}/submit")) is None
+    err = capsys.readouterr().err
+    assert f"HTTP {code}" in err and b.url("/landed") in err and "not counted as published" in err
+    assert b.seen == []
+    assert [(r["method"], r["path"]) for r in a.seen] == [("POST", f"/r{code}/submit")]
+    assert cli.main(["publish", "--name", "agent", "--endpoint", a.url(f"/r{code}/submit")]) == 1
+    assert b.seen == []
+
+
+def test_a_payload_the_endpoint_takes_is_published(origins, monkeypatch):
+    a, b = origins
+    monkeypatch.setattr(publish_mod, "prepare_payload", lambda *a_, **k: {"agent_name": "agent"})
+    out = publish_mod.publish("agent", a.url("/ok/submit"))
+    assert out is not None and out["status"] == 200 and out["response"]["ok"] is True
+    assert [(r["method"], r["path"]) for r in a.seen] == [("POST", "/ok/submit")] and b.seen == []
+
+
+@pytest.mark.parametrize("code", REDIRECTS)
+def test_a_redirect_from_the_leaderboard_is_not_read_as_its_answer(origins, code):
+    a, b = origins
+    out = compare.compare_agents(_fingerprint(), api_url=a.url(f"/r{code}/board"))
+    assert out.status == "unreadable" and out.n_agents == 0
+    assert f"HTTP {code}" in out.narrative and b.url("/landed") in out.narrative
+    assert compare._fetch_population(a.url(f"/r{code}/board")) is None
+    assert b.seen == [] and [r["method"] for r in a.seen] == ["GET", "GET"]
+
+
+def test_a_leaderboard_that_answers_is_read(origins):
+    a, b = origins
+    out = compare.compare_agents(_fingerprint(), api_url=a.url("/ok/board"))
+    assert out.status == "ok" and out.n_agents == 1 and b.seen == []
+
+
+def _http_error(code, location):
+    import email.message
+    headers = email.message.Message()
+    if location is not None:
+        headers["Location"] = location
+    return urllib.error.HTTPError("http://relay.example.invalid/ingest", code, "x", headers, None)
+
+
+def test_the_address_of_a_redirect_is_printed_quoted_and_cut():
+    assert stream.redirect_target(_http_error(404, "http://other.example.invalid/")) is None
+    assert stream.redirect_target(_http_error(500, None)) is None
+    assert stream.redirect_target(OSError("no")) is None
+    assert stream.redirect_target(_http_error(302, None)) == "(none given)"
+    assert stream.redirect_target(_http_error(302, "http://other.example.invalid/x")) == "'http://other.example.invalid/x'"
+    shown = stream.redirect_target(_http_error(301, "http://other.example.invalid/\x1b[2J" + "a" * 500))
+    assert "\x1b" not in shown and "\\x1b[2J" in shown, "an escape sequence is shown, not sent to the terminal"
+    assert len(shown) < stream._LOCATION_MAX + 20 and shown.endswith("...'")
+
+
+# ── added after the review of the redirect repair ─────────────────
+
+def _post_under(monkeypatch, origins, path="/r302/ingest"):
+    a, b = origins
+    monkeypatch.setattr(stream, "_relay", a.url(path))
+    monkeypatch.setattr(stream, "_key", "KEY-OF-THE-USER")
+    return a, b
+
+
+@pytest.mark.parametrize("target", ["other_name", "https", "relative", "unparsable"])
+def test_no_form_of_address_is_followed(origins, monkeypatch, target):
+    """A handler that followed only to another host name, only to an https address or only a
+    relative address passed every redirect test of an earlier commit (a review made each). And
+    for an address urllib cannot parse, the stock handler raised ValueError before it was asked
+    anything, so the stream said nothing at all."""
+    a, b = _post_under(monkeypatch, origins)
+    a.target = {"other_name": f"http://localhost:{b.server_address[1]}/landed",
+                "https": f"https://127.0.0.1:{b.server_address[1]}/landed",
+                "relative": "/ok/ingest",
+                "unparsable": "http://[::1/landed"}[target]
+    with pytest.warns(RuntimeWarning) as caught:
+        assert stream._post({"agent": "agent"}) is False
+    assert b.connections == 0, "the address the relay pointed to was connected to"
+    assert [(r["method"], r["path"]) for r in a.seen] == [("POST", "/r302/ingest")]
+    text = " ".join(str(w.message) for w in caught)
+    assert a.target in text and "KEY-OF-THE-USER" not in text
+
+
+def test_the_two_servers_can_show_a_redirect_followed_to_another_name(origins):
+    """The control for the test above: urllib's stock opener follows to `localhost`, so an empty
+    connection count there is not for want of a road."""
+    import urllib.request
+    a, b = origins
+    a.target = f"http://localhost:{b.server_address[1]}/landed"
+    req = urllib.request.Request(a.url("/r302/ingest"), data=b"{}", method="POST",
+                                 headers={"X-Styxx-Key": "KEY"})
+    with urllib.request.build_opener().open(req, timeout=10):
+        pass
+    assert b.connections >= 1 and [r["key"] for r in b.seen] == ["KEY"]
+
+
+@pytest.mark.parametrize("code", [300, 304, 305, 306])
+def test_a_3xx_that_is_no_redirect_is_an_http_error_and_is_not_called_one(origins, monkeypatch, capsys, code):
+    """An earlier commit called a 304 "a redirect to (none given)"."""
+    a, b = _post_under(monkeypatch, origins, f"/r{code}/ingest")
+    with warnings.catch_warnings():
+        warnings.simplefilter("error")
+        assert stream._post({"agent": "agent"}) is False
+    with pytest.raises(stream.ClaimError) as e:
+        stream.claim_agent("agent", relay=a.url(f"/r{code}/ingest"))
+    assert "redirect" not in str(e.value)
+    monkeypatch.setattr(publish_mod, "prepare_payload", lambda *a_, **k: {"agent_name": "agent"})
+    assert publish_mod.publish("agent", a.url(f"/r{code}/submit")) is None
+    err = capsys.readouterr().err
+    assert f"HTTP {code} from" in err and "redirect" not in err
+    assert b.connections == 0
+
+
+def test_the_redirect_messages_do_not_say_what_the_relay_did(origins, monkeypatch, capsys):
+    """An earlier commit said "nothing is claimed" and "nothing is delivered". A relay that takes
+    the POST and then redirects (post, redirect, get) holds the name, or the packet. styxx knows
+    only that it read no reply."""
+    a, b = _post_under(monkeypatch, origins, "/r303/ingest")
+    with pytest.warns(RuntimeWarning) as caught:
+        stream._post({"agent": "agent"})
+    text = " ".join(str(w.message) for w in caught)
+    assert "counted as not delivered" in text and "nothing is delivered" not in text
+    with pytest.raises(stream.ClaimError) as e:
+        stream.claim_agent("agent", relay=a.url("/r303/ingest"))
+    assert "stored no key" in str(e.value) and "nothing is claimed" not in str(e.value)
+    assert e.value.answered is True
+    assert cli.main(["claim", "agent", "--relay", a.url("/r303/ingest")]) == 1
+    assert "may be offline" not in capsys.readouterr().err, "the relay answered"
+
+
+def test_the_offline_hint_is_printed_only_where_nothing_answered(net, capsys):
+    assert cli.main(["claim", "agent", "--relay", "https://relay.example.invalid/ingest"]) == 1
+    assert "may be offline" in capsys.readouterr().err
+    for body in (b"<!doctype html><html>a page</html>", b"\xef\xbb\xbf{}", b'{"name": "agent"}'):
+        net.body = body
+        assert cli.main(["claim", "agent", "--relay", "https://relay.example.invalid/ingest"]) == 1
+        err = capsys.readouterr().err
+        assert "may be offline" not in err and "name is taken" not in err, body
+    net.body = b"<!doctype html><html>a page</html>"
+    with pytest.raises(stream.ClaimError) as e:
+        stream.claim_agent("agent", relay="https://relay.example.invalid/ingest")
+    assert "its reply is not JSON" in str(e.value) and "unreachable" not in str(e.value)
+
+
+@pytest.mark.parametrize("name", ["a" * 31 + "-x", "b" * 31 + "_tail", "plain"])
+def test_the_relays_echo_of_the_name_that_was_sent_is_taken(monkeypatch, net, name):
+    """_sanitize_name strips hyphens and underscores and then cuts to 32 characters, so what it
+    sends can end in one. An earlier commit refused the relay's echo of exactly that name."""
+    sent = stream._sanitize_name(name)
+    saved = []
+    monkeypatch.setattr(stream, "_save_creds", saved.append)
+    net.body = json.dumps({"name": sent, "key": "k"}).encode("utf-8")
+    out = stream.claim_agent(name, relay="https://relay.example.invalid/ingest")
+    assert json.loads(net.bodies[0]) == {"name": sent}
+    assert out["name"] == sent and list(saved[0]) == [sent, "_default"]
+
+
+@pytest.mark.parametrize("body", [
+    b'{"name": "someone-else", "key": "k"}',             # would overwrite that agent's key
+    b'{"name": "Agent", "key": "k"}',
+    b'{"name": "agent", "key": "' + b"k" * 513 + b'"}',
+], ids=["another_agent", "another_case", "a_key_of_513_characters"])
+def test_a_reply_that_is_not_for_the_name_sent_is_refused(monkeypatch, net, body):
+    saved = []
+    monkeypatch.setattr(stream, "_save_creds", saved.append)
+    net.body = body
+    with pytest.raises(stream.ClaimError) as e:
+        stream.claim_agent("agent", relay="https://relay.example.invalid/ingest")
+    assert saved == [] and e.value.answered is True
+
+
+@pytest.mark.parametrize("link", ["https://dash.example.invalid/\u202egnp.exe", "https://dash.example.invalid/" + "a" * 2048,
+                                  "<https://dash.example.invalid/a>"])
+def test_a_dashboard_address_with_a_format_character_or_of_great_length_is_dropped(net, capsys, link):
+    net.body = json.dumps({"name": "agent", "key": "k", "url": link}).encode("utf-8")
+    assert stream.claim_agent("agent", relay="https://relay.example.invalid/ingest")["url"] == ""
+    assert cli.main(["claim", "agent", "--relay", "https://relay.example.invalid/ingest"]) == 0
+    out = capsys.readouterr().out
+    # "the relay gave no dashboard URL" was false where it gave one that was dropped
+    assert "(none: the relay gave no dashboard address that is an http or https URL)" in out
+
+
+def test_text_a_relay_chose_is_printed_with_its_control_characters_as_escapes(net, capsys):
+    import urllib.error
+
+    def error_reply(self, req, *a, **k):
+        import io
+        raise urllib.error.HTTPError(req.full_url, 409, "Conflict\x1b[2J", None,
+                                     io.BytesIO(b'{"error": "taken\\u001b[2J\\u202e' + b"x" * 5000 + b'"}'))
+
+    import urllib.request
+    urllib_open = urllib.request.OpenerDirector.open
+    try:
+        urllib.request.OpenerDirector.open = error_reply
+        assert cli.main(["claim", "agent", "--relay", "https://relay.example.invalid/ingest"]) == 1
+    finally:
+        urllib.request.OpenerDirector.open = urllib_open
+    err = capsys.readouterr().err
+    assert "\x1b" not in err and "\u202e" not in err and "taken\\x1b[2J" in err
+    assert len(err) < 1000
+    assert stream.show("a\x1b\u202e\nb" + "c" * 400, 10) == "a\\x1b\\u202e\\nb" + "c" * 5 + "..."
+
+
+def test_a_c1_control_and_a_format_character_are_no_part_of_a_url():
+    """U+0085 is white space to Python, so the C1 half of the rule had no test of its own."""
+    for ch in ("\x9f", "\x80", "\u202e", "\u200b"):
+        assert not ch.isspace()
+        assert not stream.is_http_url("https://relay.example.invalid/in" + ch + "gest")
+    assert stream.is_http_url("https://relay.example.invalid/ingest")
+
+
+def test_every_request_carries_its_timeout(monkeypatch, net):
+    monkeypatch.setattr(stream, "_relay", "https://relay.example.invalid/ingest")
+    stream._post({"agent": "agent"})
+    with pytest.raises(stream.ClaimError):
+        stream.claim_agent("agent", relay="https://relay.example.invalid/ingest", timeout=7.5)
+    monkeypatch.setattr(publish_mod, "prepare_payload", lambda *a, **k: {"agent_name": "agent"})
+    publish_mod.publish("agent", "https://example.invalid/api")
+    compare._fetch_population("https://example.invalid/board")
+    assert net.timeouts == [stream._POST_TIMEOUT, 7.5, 15, 10]
+
+
+def test_the_opener_keeps_proxies_and_certificate_checks_and_is_built_once(monkeypatch, net):
+    """What open_url changes from urlopen is the redirect handler and nothing else."""
+    import urllib.request
+    monkeypatch.setenv("HTTP_PROXY", "http://127.0.0.1:9")
+    monkeypatch.setenv("NO_PROXY", "")
+    monkeypatch.setattr(stream, "_relay", "https://relay.example.invalid/ingest")
+    stream._post({"agent": "agent"})
+    opener = stream._OPENER
+    assert opener is not None
+    kinds = [type(h) for h in opener.handlers]
+    redirectors = [k for k in kinds if issubclass(k, urllib.request.HTTPRedirectHandler)]
+    assert redirectors == [stream._NoRedirect]
+    (https,) = [h for h in opener.handlers if isinstance(h, urllib.request.HTTPSHandler)]
+    context = getattr(https, "_context", None)
+    if context is not None:     # Python 3.12 builds the default context in the handler; before it, http.client does
+        import ssl
+        assert context.verify_mode == ssl.CERT_REQUIRED and context.check_hostname is True
+    (proxy,) = [h for h in opener.handlers if isinstance(h, urllib.request.ProxyHandler)]
+    assert proxy.proxies.get("http") == "http://127.0.0.1:9"
+    stream._post({"agent": "agent"})
+    assert stream._OPENER is opener, "one opener for the process"
+
+
+def test_an_opener_a_program_installed_is_not_used(monkeypatch, net):
+    """Declared in the change log: through 8.0.0 these calls went through urlopen and so through
+    an installed opener, which follows redirects."""
+    import urllib.request
+
+    class Installed:
+        calls = 0
+
+        def open(self, *a, **k):
+            type(self).calls += 1
+            raise OSError("the installed opener was used")
+
+    monkeypatch.setattr(urllib.request, "_opener", Installed())
+    monkeypatch.setattr(stream, "_relay", "https://relay.example.invalid/ingest")
+    stream._post({"agent": "agent"})
+    assert Installed.calls == 0 and net.opened == ["https://relay.example.invalid/ingest"]
+
+
+def test_standing_in_for_open_url_stands_in_for_all_four_requests(monkeypatch):
+    """The one patch point. publish and compare call it as an attribute of styxx.stream, so a
+    stand-in there is on the road of each."""
+    calls = []
+
+    def stand_in(req, timeout):
+        calls.append(req.full_url)
+        raise OSError("stand-in")
+
+    monkeypatch.setattr(stream, "open_url", stand_in)
+    monkeypatch.setattr(stream, "_relay", "https://relay.example.invalid/ingest")
+    stream._post({"agent": "agent"})
+    with pytest.raises(stream.ClaimError):
+        stream.claim_agent("agent", relay="https://relay.example.invalid/ingest")
+    monkeypatch.setattr(publish_mod, "prepare_payload", lambda *a, **k: {"agent_name": "agent"})
+    publish_mod.publish("agent", "https://example.invalid/api")
+    compare._fetch_population("https://example.invalid/board")
+    assert calls == ["https://relay.example.invalid/ingest", "https://relay.example.invalid/claim",
+                     "https://example.invalid/api", "https://example.invalid/board"]
+
+
+def test_compare_agents_calls_the_fetch_function_with_the_url_alone(monkeypatch, net):
+    """tests/test_0_6_0.py and a caller's own tests replace compare._fetch_population with a
+    function of one argument. An earlier commit moved compare_agents to another function, so the
+    replacement was called by nothing and the real request went out."""
+    monkeypatch.setattr(compare, "_fetch_population", lambda url: [(0.1, 0.5, 0.1, 0.2, 0.05, 0.05)])
+    out = compare.compare_agents(_fingerprint(), api_url="https://example.invalid/board")
+    assert out.status == "ok" and out.n_agents == 1 and net.opened == []
+
+
+def test_values_too_large_to_sum_are_not_a_vector(net):
+    net.body = b'{"agents": [{"fingerprint": {"reasoning": 1e308}}, {"fingerprint": {"reasoning": 1e308}}]}'
+    assert compare._fetch_population("https://example.invalid/board") == []
+
+
+def test_a_credentials_file_that_is_not_an_object_holds_no_credentials(monkeypatch, tmp_path):
+    """Through 8.0.0 it ended enable(), a claim and `styxx feed` in a traceback."""
+    path = tmp_path / "credentials.json"
+    monkeypatch.setattr(stream, "_creds_path", lambda: path)
+    for text in ("[1, 2]", '"a string"', "7", "null", "{not json"):
+        path.write_text(text, encoding="utf-8")
+        assert _REAL_LOAD_CREDS() == {}
+    path.write_text('{"agent": {"key": "k"}}', encoding="utf-8")
+    assert _REAL_LOAD_CREDS() == {"agent": {"key": "k"}}

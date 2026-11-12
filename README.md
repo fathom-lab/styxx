@@ -515,6 +515,6 @@ MIT on code. CC-BY-4.0 on calibrated atlas centroid data.
 ```
   drop-in     · one import change. zero config.
   fail-open   · if styxx can't read vitals, your agent runs.
-  local-first · no telemetry unless you opt in (STYXX_STREAM). all on your machine by default.
+  local-first · no telemetry unless you opt in (STYXX_STREAM plus a relay you name). by default styxx.trust and guardrail.check look names up on Wikipedia, and model commands fetch their model.
   honest      · every number from a committed, reproducible run.
 ```
