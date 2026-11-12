@@ -468,7 +468,9 @@ def _capsule_live_v01(payload: dict) -> Tuple[Optional[str], Optional[dict]]:
                 rp = Path(td) / r["name"]
                 rp.write_bytes(base64.b64decode(r["b64"]))
                 rps.append(rp)
-            live = certify_doc(d, rps)
+            from styxx import receipt_binding as _receipt_binding
+            with _receipt_binding.no_repository("a re-run of embedded bytes asks no repository"):
+                live = certify_doc(d, rps)
         return live["verdict"], dict(live.get("counts") or {})
     except Exception as e:                             # noqa: BLE001 - recorded on the line, never raised
         return None, {"live_error": type(e).__name__}

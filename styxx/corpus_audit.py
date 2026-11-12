@@ -286,7 +286,10 @@ def _binding_for(repo, cert_path: Path, cert: dict, resolved: dict, doc: Path) -
                 (tdp / name).write_bytes(raw)
                 rps.append(tdp / name)
             try:
-                at_issue = certify_doc(d, rps)
+                # no git in the scratch folder: the bytes come from history, and the temporary
+                # folder is not always outside a repository
+                with _rb.no_repository("a re-run of embedded bytes asks no repository"):
+                    at_issue = certify_doc(d, rps)
                 cl["verdict_over_sworn_bytes"] = at_issue["verdict"]
                 cl["stands_over_sworn_bytes"] = (verdict_class(at_issue["verdict"])
                                                  == verdict_class(cert.get("verdict")))

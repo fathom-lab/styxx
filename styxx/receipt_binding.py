@@ -36,10 +36,12 @@ says where the bytes are.
 """
 from __future__ import annotations
 
+import contextlib
 import hashlib
 import os
 import shutil
 import subprocess
+import threading
 from pathlib import Path
 from typing import Optional
 
@@ -50,7 +52,39 @@ DOCUMENT_CELLS = ("same", "at_issue", "moved", "unrecoverable")
 
 __all__ = ["SCHEMA", "CONTENT_RULE", "CELLS", "DOCUMENT_CELLS", "content_sha256", "raw_sha256",
            "git_blob_id", "match_normalisation", "Repo", "RepoUnavailable", "bind_at_mint",
-           "classify_citation", "classify_certificate", "sworn_bytes_at_issue"]
+           "classify_citation", "classify_certificate", "sworn_bytes_at_issue", "no_repository"]
+
+
+# ---------------------------------------------------------------- a re-run asks no repository
+#
+# A verifier that re-runs the certifier over bytes somebody else supplied must not start git in the
+# folder those bytes were written to: git reads what it finds there (a file named `.git` is the
+# address of a repository), so the supplier chose what git read. Found by review on 2026-11-12 for
+# capsule verify. The receipt binding of a re-run has nothing to say about a repository anyway:
+# layer 2 prints the minter's repository facts as stated, never as verified, and compares the
+# digests, which are computed from the bytes.
+#
+# The switch is per thread and lasts for one `with` block, so a verify in one thread does not stop
+# a mint in another from seeing its repository. (A module-level flag was the mistake of the draft
+# of the reader repair in styxx.capsule; this is thread-local for that reason.)
+_NO_REPOSITORY = threading.local()
+
+
+@contextlib.contextmanager
+def no_repository(reason: str):
+    """Inside this block, in this thread, `Repo(...)` raises RepoUnavailable(reason) before it
+    looks for git, so `bind_at_mint` starts no git: it returns the block it returns where there is
+    no repository, with `reason` in its note. Blocks nest; leaving one restores what was set.
+    `reason` must be a string that is not empty: an empty one would switch nothing off, and
+    inside another block it would switch the lookup back on."""
+    if not isinstance(reason, str) or not reason:
+        raise ValueError("no_repository needs a reason: a string that is not empty")
+    before = getattr(_NO_REPOSITORY, "reason", None)
+    _NO_REPOSITORY.reason = reason
+    try:
+        yield
+    finally:
+        _NO_REPOSITORY.reason = before
 
 
 # ---------------------------------------------------------------- digests
@@ -112,6 +146,9 @@ class Repo:
     """A thin, subprocess-only view of one git repository. No GitPython, no dulwich (R7)."""
 
     def __init__(self, path: Path):
+        off = getattr(_NO_REPOSITORY, "reason", None)
+        if off:
+            raise RepoUnavailable(off)
         self.git = shutil.which("git")
         if not self.git:
             raise RepoUnavailable("git not on PATH")

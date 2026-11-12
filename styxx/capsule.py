@@ -49,6 +49,10 @@ from typing import List, Optional
 # the identity of the instrument that wrote or re-ran a diffgate record (AMENDMENT_capsule_v02_instrument_
 # identity_2026_10_11): imports nothing from styxx itself, so it is imported here at the top
 from styxx import instrument as _instrument
+from styxx import receipt_binding as _receipt_binding
+
+# why the receipt binding of a re-run names no repository: see styxx.receipt_binding.no_repository
+_RE_RUN_ASKS_NO_REPOSITORY = "a re-run of embedded bytes asks no repository"
 
 # The v0.13 UNCOVERED band appends ", N uncovered" to a verdict string. That suffix is a
 # COVERAGE report travelling in the headline, not a verdict change: `counts["UNGROUNDED"]` is
@@ -150,8 +154,8 @@ def _bare_name(name) -> bool:
 # verify, on every system: in any letter case (NTFS, APFS and HFS+ compare names without case) and
 # with the code points HFS+ drops when it compares names (_HFS_IGNORED), which is the list git
 # itself guards `.git` with. The 8.3 short name of `.git`, GIT~1, is refused by the rule for
-# short names above. This closes the one name. It does not make the re-run free of git: that is
-# its own change.
+# short names above. Refusing the name is the second of two guards: the re-run itself starts no
+# git any more (styxx.receipt_binding.no_repository), whatever the files are called.
 _DOT_GIT_WHY = ("is `.git` to git, or to a file system git runs on (in any letter case, and with "
                 "the code points HFS+ drops from a name): git reads a file of that name, in the "
                 "folder it is started in, as the address of a repository, and the certifier's "
@@ -377,7 +381,9 @@ def create_capsule(doc: Path, receipts: List[Path], cert: Path, out: Path) -> Pa
             rp = Path(td) / name
             rp.write_bytes(rb)
             rps.append(rp)
-        live = certify_doc(d, rps)
+        # no git in this folder either: only the verdict and the counts of this re-run are read
+        with _receipt_binding.no_repository(_RE_RUN_ASKS_NO_REPOSITORY):
+            live = certify_doc(d, rps)
     if live["verdict"] != cert_obj["verdict"] or live["counts"] != cert_obj["counts"]:
         raise SystemExit(
             "REFUSED: certificate is not reproducible at the installed verifier "
@@ -571,13 +577,17 @@ def _verify_capsule_v01(html: str, payload: dict) -> dict:
                                 f"file system with stricter rules than the rule's): verify the "
                                 f"capsule where its temporary directory can hold the files")
             else:
+                # No git is started here: the folder holds bytes the capsule supplied, under names
+                # the capsule chose, and git reads what it finds where it is started.
                 try:
-                    live = certify_doc(d, rps)
+                    with _receipt_binding.no_repository(_RE_RUN_ASKS_NO_REPOSITORY):
+                        live = certify_doc(d, rps)
                 except Exception as e:  # noqa: BLE001 - bytes the certifier cannot read fail
                     problems.append(f"the installed verifier could not re-run on the embedded "
                                     f"bytes ({type(e).__name__}: {str(e)[:160]})")
                 else:
-                    earlier = _earlier_reader_certificate(cert, live, d, rps)
+                    with _receipt_binding.no_repository(_RE_RUN_ASKS_NO_REPOSITORY):
+                        earlier = _earlier_reader_certificate(cert, live, d, rps)
     if live is not None:
         # the certificate as certify's own command writes it: through JSON, so a tuple is a list
         # and every number has the type a reader of the file sees
