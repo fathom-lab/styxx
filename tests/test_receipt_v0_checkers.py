@@ -12,6 +12,10 @@ file receipt/v0/vectors/receipt_v0_vectors.json.
     FAILS, it does not skip, when node is missing), byte-identical canonical receipts between the
     two checkers on every vector that emits a core, the same answers on the large inputs, its
     purity by the source, its command line, and a run with no Node globals at all.
+  - the fixer's round: both checkers carry 7.2's Unicode 15.0.0 tables as data (checked against
+    unicodedata at 15.0.0 and against the digests the text states), both sources are pure ASCII,
+    the JavaScript sha256 at every padding boundary, and each mutant that nothing caught before the
+    round now fails a vector.
 
 check_v0 and check_v0.js are lab-written and not independent of the lab's checker (its docstring says so). These
 tests show that it answers its own vectors; they do not show that any other party agrees.
@@ -235,7 +239,8 @@ def test_imports_are_standard_library_only():
             pure_imports |= {a.name for a in node.names}
         elif isinstance(node, ast.ImportFrom):
             pure_imports.add(node.module)
-    assert pure_imports == {"hashlib", "unicodedata", "binascii"}, pure_imports
+    # no unicodedata: 7.2's classes are carried as data (the fixer's round), never the host's
+    assert pure_imports == {"hashlib", "binascii"}, pure_imports
 
 
 def test_the_checking_code_names_nothing_impure():
@@ -525,8 +530,9 @@ JS_PROBES = V0 / "vectors" / "check_v0_js_probes.json"
 def test_check_v0_js_and_check_v0_py_agree_on_the_javascript_pitfall_probes():
     """check_v0_js_probes.json: inputs aimed at what JavaScript gets wrong by default. No expected
     answer is stored; the two checkers must give the same answer and byte-identical canonical
-    receipts on every probe, except those marked unicode_gap (13.1: the text pins no Unicode
-    version, and Node's and Python's tables differ), which are run and not compared."""
+    receipts on every probe. The three marked unicode_gap split the two checkers while check_v0.js
+    read the host's Unicode 16.0 tables and check_v0.py Python's 15.0.0; 7.2 now pins 15.0.0 and
+    both checkers carry its tables as data, so those three are compared like the rest."""
     probes = json.loads(JS_PROBES.read_text(encoding="utf-8"))["vectors"]
     js = _js_lines(JS_PROBES)
     assert len(js) == len(probes) > 80
@@ -536,10 +542,168 @@ def test_check_v0_js_and_check_v0_py_agree_on_the_javascript_pitfall_probes():
         py_got, core = _run(v)
         if v["unicode_gap"]:
             gap += 1
-            continue
         if j["got"] != py_got:
             wrong.append((v["id"], v["label"], py_got, j["got"]))
         elif core is not None and base64.b64decode(j["receipt_b64"]) != C.jcs(C.receipt(core)).encode("utf-8"):
             wrong.append((v["id"], v["label"], "receipt bytes differ"))
     assert gap == 3
     assert not wrong, wrong[:3]
+
+
+# ---------------------------------------------------------------------------------------------
+# the fixer's round (2026-11-13): 7.2's Unicode pin, pure-ASCII sources, the JavaScript sha256 at
+# every padding boundary, and the mutants that nothing caught before the round
+# ---------------------------------------------------------------------------------------------
+
+# the digests RECEIPT_v0.md 7.2 states for its two tables
+_LN_SHA = "4ca0e4c9044e908691020e69f4bd19bea0dbb8f67fb7c5488aa1e70f19121bf5"
+_ND_SHA = "ef10fe9b74cef6d6af8debed5957b7c2b2af8909759ddabff75d8c34f95f222c"
+
+
+def _table_text(pred):
+    out, s = [], None
+    for cp in range(0x110000):
+        ok = pred(chr(cp))
+        if ok and s is None:
+            s = cp
+        if not ok and s is not None:
+            out.append((s, cp - 1))
+            s = None
+    if s is not None:
+        out.append((s, 0x10FFFF))
+    return " ".join(("%X" % a) if a == b else ("%X-%X" % (a, b)) for a, b in out)
+
+
+def test_the_unicode_tables_are_the_ones_the_text_states():
+    text = (V0 / "RECEIPT_v0.md").read_text(encoding="utf-8")
+    assert "Unicode 15.0.0" in text and _LN_SHA in text and _ND_SHA in text
+    assert hashlib.sha256(C._UNICODE_15_0_0_LN.encode("ascii")).hexdigest() == _LN_SHA
+    assert hashlib.sha256(C._UNICODE_15_0_0_ND.encode("ascii")).hexdigest() == _ND_SHA
+    assert len(C._UNICODE_15_0_0_LN.split(" ")) == 747 and len(C._UNICODE_15_0_0_ND.split(" ")) == 64
+    import unicodedata
+    if unicodedata.unidata_version != "15.0.0":
+        pytest.skip("this Python's unicodedata is %s; the tables were checked against 15.0.0 only"
+                    % unicodedata.unidata_version)
+    assert C._UNICODE_15_0_0_LN == _table_text(lambda c: unicodedata.category(c)[0] in "LN")
+    assert C._UNICODE_15_0_0_ND == _table_text(lambda c: unicodedata.category(c) == "Nd")
+
+
+def test_check_v0_reads_no_host_unicode_table():
+    assert "unicodedata" not in {a.name for n in ast.walk(_TREE) if isinstance(n, ast.Import)
+                                 for a in n.names}
+    assert not any(isinstance(n, ast.Attribute) and n.attr in ("isalnum", "isalpha", "isdigit",
+                                                               "isdecimal", "isnumeric")
+                   for n in ast.walk(_TREE))
+
+
+def test_check_v0_js_carries_the_same_unicode_tables():
+    script = ("const R = require(process.argv[1]); "
+              "process.stdout.write(JSON.stringify(R.UNICODE_TABLES));")
+    out = _node_run(["-e", script, JS])
+    assert out.returncode == 0, out.stderr.decode("utf-8", "replace")[-2000:]
+    assert json.loads(out.stdout) == {"version": "15.0.0", "LN": C._UNICODE_15_0_0_LN,
+                                      "ND": C._UNICODE_15_0_0_ND}
+    assert "\\p{" not in _JS_CORE
+
+
+@pytest.mark.parametrize("path", [V0 / "check_v0.py", V0 / "check_v0.js"], ids=["py", "js"])
+def test_the_checker_source_is_pure_ascii(path):
+    """A browser that decodes check_v0.js under another charset must read the same program."""
+    raw = path.read_bytes()
+    bad = [i for i, x in enumerate(raw) if x > 0x7E or (x < 0x20 and x != 0x0A)]
+    assert not bad, bad[:5]
+
+
+def test_check_v0_js_sha256_at_every_padding_boundary():
+    script = ("const R = require(process.argv[1]); const out = [];"
+              "for (let n = 0; n <= 200; n++) { const b = new Uint8Array(n);"
+              " for (let i = 0; i < n; i++) b[i] = (i * 7 + n) & 255; out.push(R.sha256(b)); }"
+              "process.stdout.write(JSON.stringify(out));")
+    out = _node_run(["-e", script, JS])
+    assert out.returncode == 0, out.stderr.decode("utf-8", "replace")[-2000:]
+    want = [hashlib.sha256(bytes((i * 7 + n) & 255 for i in range(n))).hexdigest()
+            for n in range(201)]
+    assert json.loads(out.stdout) == want
+
+
+# (id, file, rule, old line, new line): the differential attacker's mutants of check_v0.py and
+# check_v0.js that its generator, the vectors and its probes let through before the fixer's round
+# (PM30 and JM08 are equivalent and left out: no input can tell them apart). Each must now fail at
+# least one vector. A line that no longer occurs exactly once fails the test, so an edit to the
+# checker that moves one of these lines is noticed.
+_LET_THROUGH = [
+    ('PM14', 'py', '6.10 no whitespace in strict base64',
+     '    if body.translate(_B64_DELETE):',
+     '    if body.translate(_B64_DELETE).strip():'),
+    ('PM31', 'py', '6.13 RFC 8259 control characters',
+     '        if len(chunk.translate(_CTRL)) != len(chunk):',
+     '        if False:'),
+    ('PM34', 'py', '6.5 sha256 64 LOWERCASE hex',
+     '    if not isinstance(entry, JObj) or not _is_hex64_lower(entry.get("sha256")):      # 6.5',
+     '    if not isinstance(entry, JObj) or not _is_hex64_lower(str(entry.get("sha256")).lower()):      # 6.5'),
+    ('PM39', 'py', '7.5 occurrences without overlap',
+     '        occ = hay.count(needle)',
+     '        occ = sum(1 for i in range(len(hay)) if hay.startswith(needle, i))'),
+    ('PM41', 'py', '7.1b VT is ASCII whitespace',
+     '_ASCII_WS = b" \\t\\n\\x0b\\x0c\\r"',
+     '_ASCII_WS = b" \\t\\n\\x0c\\r"'),
+    ('PM43', 'py', '4.4 U+0085 banned in a path target',
+     '    "\\u007f", "\\u0085", "\\u00a0", "\\u1680", "\\u2028", "\\u2029", "\\u202f", "\\u205f", "\\u3000"} | set(',
+     '    "\\u007f", "\\u00a0", "\\u1680", "\\u2028", "\\u2029", "\\u202f", "\\u205f", "\\u3000"} | set('),
+    ('PM47', 'py', '7.3 adjusted exponent of a huge negative exponent',
+     '        return True, _str_add(d.exp_text, d.nfrac - shift)',
+     '        return True, _str_add(d.exp_text, shift - d.nfrac)'),
+    ('JM06', 'js', '3.1 1E2 is not an integer',
+     '    isIntegerToken() { return !/[.eE]/.test(this.text); }',
+     '    isIntegerToken() { return !/[.e]/.test(this.text); }'),
+    ('JM10', 'js', '7.3 leaf: first 80 code points',
+     '    const head = cpHead(text, 80);',
+     '    const head = text.slice(0, 80);'),
+    ('JM14', 'js', '6.13 JSON whitespace is four bytes',
+     '      if (c === 0x20 || c === 0x09 || c === 0x0a || c === 0x0d) i++;',
+     '      if (c === 0x20 || c === 0x09 || c === 0x0a || c === 0x0d || c === 0x0b) i++;'),
+    ('JM15', 'js', '7.5 occurrences without overlap',
+     '      i = j + needle.length;',
+     '      i = j + 1;'),
+    ('JM19', 'js', '7.3 adjusted exponent of a huge negative exponent',
+     '    if (d.expNeg) return [true, strAddSmall(d.expText, d.nfrac - shift)];',
+     '    if (d.expNeg) return [true, strAddSmall(d.expText, shift - d.nfrac)];'),
+]
+
+
+def _run_mod(M, v):
+    i = v["inputs"]
+    try:
+        if v["op"] == "check":
+            return {"core_digest": M.digest(M.check(_b(i["document_b64"]), i["name"],
+                                                    _b(i["manifest_b64"]), i["commit"]))}
+        if v["op"] == "recheck":
+            return {"answer": M.recheck(_b(i["receipt_b64"]), _b(i["document_b64"]),
+                                        _b(i["manifest_b64"]))}
+        return {"canonical": M.jcs(M.parse_json(_b(i["value_b64"])))}
+    except M.Refusal as e:
+        return {"refusal": e.code}
+    except Exception as e:                      # a crash is a wrong answer
+        return {"error": type(e).__name__}
+
+
+@pytest.mark.parametrize("mid,lang,rule,old,new", _LET_THROUGH, ids=[m[0] for m in _LET_THROUGH])
+def test_a_mutant_that_nothing_caught_now_fails_a_vector(mid, lang, rule, old, new, tmp_path):
+    path = V0 / ("check_v0.py" if lang == "py" else "check_v0.js")
+    lines = path.read_text(encoding="utf-8").split("\n")
+    assert sum(1 for x in lines if x == old) == 1, (mid, "the mutated line moved")
+    src = "\n".join(new if x == old else x for x in lines)
+    if lang == "py":
+        import types
+        M = types.ModuleType("receipt_check_v0_mutant_" + mid)
+        exec(compile(src, str(tmp_path / (mid + ".py")), "exec"), M.__dict__)
+        failing = [v["id"] for v in ALL if _run_mod(M, v) != v["expect"]]
+    else:
+        mp = tmp_path / (mid + ".js")
+        mp.write_bytes(src.encode("utf-8"))
+        out = _node_run([JS_RUNNER, VECTORS, mp])
+        if out.returncode != 0:
+            return                                  # the mutant does not even run: caught
+        got = [json.loads(x) for x in out.stdout.decode("utf-8").split("\n") if x]
+        failing = [v["id"] for v, j in zip(ALL, got) if j["got"] != v["expect"]]
+    assert failing, "%s (%s) passes every vector" % (mid, rule)

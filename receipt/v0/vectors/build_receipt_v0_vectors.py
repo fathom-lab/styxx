@@ -8,9 +8,12 @@ Four sources, each vector carrying its own expected answer:
                check_v0's answer. Where the text is stricter than today's code on purpose
                (RECEIPT_v0.md 13.14) the vector carries the text's answer and a note.
   hand         written from the text: every reason code, every refusal of 11.1, every worked
-               example. Each carries the rows the text gives ([verdict, reason] per row, plus the
-               detail values a worked example states); the builder refuses to write a vector
-               whose check_v0 rows differ from those, and only then records check_v0's digest.
+               example, and the entries of hand_vectors_more.py (coverage probes, one vector per
+               mutant nothing else caught, the rules the fixer's round pinned). Each carries the
+               rows the text gives ([verdict, reason] per row, plus the detail values a worked
+               example states); the builder refuses to write a vector whose check_v0 rows differ
+               from those, and only then records check_v0's digest. The detail fields not stated
+               by hand are therefore check_v0's own, cross-checked only by check_v0.js.
   recheck      11.3: REDERIVES, DOES-NOT-REDERIVE and each refusal of 11.3.
   jcs          section 3: known canonical texts and each refusal code JSON can reach.
 
@@ -716,9 +719,10 @@ R("5.5 manifest_spec: 0.1 (13.14)", N7, "manifest_spec", manifest=mbytes(spec="s
 R("5.5 manifest_spec: spec missing", N7, "manifest_spec", manifest=mbytes(spec=KeyError))
 R("5.5 manifest_spec: not an object", N7, "manifest_spec", manifest=b"[]")
 R("5.5 manifest_spec: null", N7, "manifest_spec", manifest=b"null")
-R("5.5 manifest_spec: bytes that are not JSON (text gap: no code named)", N7, "manifest_spec",
-  manifest=b"{not json", note="the text names no code for manifest bytes that do not parse; "
-  "this checker reads them as not an object (11.1)")
+R("5.5 manifest_spec: bytes that are not JSON", N7, "manifest_spec",
+  manifest=b"{not json", note="5.5: manifest bytes that do not parse under 6.13 are manifest_spec")
+R("5.5 manifest_spec: a trailing byte after the object", N7, "manifest_spec",
+  manifest=mbytes() + b"x", note="5.5: manifest bytes that do not parse under 6.13 are manifest_spec")
 R("5.5 manifest_spec: a byte order mark", N7, "manifest_spec",
   manifest=b"\xef\xbb\xbf" + mbytes(), note="6.13: UTF-8 without a byte order mark")
 R("5.5 manifest_receipts_shape", N7, "manifest_receipts_shape", manifest=mbytes(receipts=[]))
@@ -737,8 +741,19 @@ R("5.5 worked example: a receipts key written twice (13.14)", N7, "manifest_form
   note="stricter than today's code on purpose (13.14): today the last value wins")
 R("5.5 a key written twice in an ignored top-level key still refuses", N7, "manifest_form",
   manifest=mbytes()[:-1] + b', "x": {"a": 1, "a": 2}}')
-R("5.5 order: manifest_spec before manifest_form", N7, "manifest_spec",
-  manifest=mbytes(spec="sworn/manifest/0.1").replace(b'"receipts": {', b'"receipts": {"r1": {}, ', 1))
+R("5.5 order: a key written twice is refused before spec is read", N7, "manifest_form",
+  manifest=mbytes(spec="sworn/manifest/0.1").replace(b'"receipts": {', b'"receipts": {"r1": {}, ', 1),
+  note="5.5 (fixer's round): the duplicate-key refusal comes first; this vector expected "
+       "manifest_spec before the text settled the order")
+R("5.5 order: spec written twice, the last value right, is manifest_form", N7, "manifest_form",
+  manifest=mbytes().replace(b'"spec": ', b'"spec": "sworn/manifest/0.1", "spec": ', 1))
+R("5.5 order: spec written twice, the last value wrong, is manifest_form", N7, "manifest_form",
+  manifest=mbytes().replace(b'"spec": "sworn/manifest/0.2"',
+                            b'"spec": "sworn/manifest/0.2", "spec": "sworn/manifest/0.1"', 1))
+R("5.5 order: receipts written twice, the last value a string, is manifest_form", N7,
+  "manifest_form", manifest=mbytes()[:-1] + b', "receipts": "x"}')
+R("5.5 order: a key written twice inside an array that is the whole manifest is manifest_form", N7,
+  "manifest_form", manifest=b'[{"a": 1, "a": 2}]')
 R("5.5 order: manifest_receipts_shape before manifest_authored_shape", N7,
   "manifest_receipts_shape", manifest=mbytes(receipts=5, authored_sha256=5))
 R("5.5 order: manifest_authored_shape before manifest_form", N7, "manifest_authored_shape",
@@ -747,6 +762,27 @@ R("11.1 order: name_form before commit_form", N7, "name_form", name="\ud800", co
 R("11.1 order: commit_form before the manifest", N7, "commit_form", commit="X", manifest=b"[]")
 R("11.1 a refused manifest refuses a document with no span", "plain", "manifest_spec",
   manifest=b"[]")
+
+# more hand vectors: hand_vectors_more.py (coverage probes, mutant killers, the fixer's pins)
+HM = _load("receipt_v0_hand_vectors_more", HERE / "hand_vectors_more.py")
+
+
+def _dv(rows):
+    """9.2 from the rows alone (none of these documents has document_malformed)."""
+    vs = [r[0] for r in rows]
+    if not vs:
+        return "UNSWORN"
+    if "FAILED" in vs or "MALFORMED" in vs:
+        return "SWORN-FAILED"
+    if "HELD" not in vs:
+        return "SWORN-UNCHECKED"
+    return "SWORN-HELD"
+
+
+for _x in HM.P:
+    H(_x["label"], _x["doc"], [tuple(r) for r in _x["rows"]], _dv(_x["rows"]),
+      manifest=_x["manifest"], name=_x["name"], details=_x["details"],
+      note="hand_vectors_more.py, group %s" % _x["group"])
 
 
 def hand_vectors():
@@ -878,10 +914,34 @@ def recheck_vectors():
        C.jcs({"core": core, "digest": C.digest(core)}).encode(), {"refusal": "receipt_shape"})
     rv("receipt_shape: a fourteenth core key", remint(edited(lambda c: c.update(extra=1))),
        {"refusal": "receipt_shape"})
-    rv("receipt_shape: a count written 1.0 (text gap)",
+    rv("receipt_shape: a count written 2.0",
        good.replace(b'"sworn_total":2', b'"sworn_total":2.0', 1), {"refusal": "receipt_shape"},
-       note="JSON Schema calls 2.0 an integer; 3.1 calls it a float. This checker refuses it as "
-            "receipt_shape (see the writer's report)")
+       note="11.3: every number in a receipt is read as written under 3.1; JSON Schema alone "
+            "would call 2.0 an integer")
+    rv("receipt_shape: an offset written with an exponent",
+       good.replace(b'"at":0,', b'"at":0e0,', 1), {"refusal": "receipt_shape"},
+       note="11.3: every number in a receipt is read as written under 3.1")
+    rv("REDERIVES: -0 written for an offset of 0",
+       good.replace(b'"at":0,', b'"at":-0,', 1), {"answer": "REDERIVES"},
+       note="11.3: REDERIVES is a statement about the parsed core; -0 is an integer with no "
+            "fraction or exponent, and its canonical text is 0")
+    rv("REDERIVES: a key spelled with an escape",
+       good.replace(b'"schema":', b'"\\u0073chema":', 1), {"answer": "REDERIVES"},
+       note="11.3: the receipt's bytes need not be its canonical text")
+    rv("REDERIVES: a verifier holding a non-integer number",
+       good[:-1] + b',"verifier":{"name":"x","version":1.5}}', {"answer": "REDERIVES"},
+       note="9.4 and 11.3: verifier is outside the core and never read")
+    lp_doc = b'<sworn r="path:a.json" k="numeric">7</sworn>'
+    lp_core = C.check(lp_doc, "d.md", None, None)
+    for prof, want in ((C.PROFILE_RN, {"refusal": "receipt_shape"}),
+                       (C.PROFILE_LEGACY, {"refusal": "profile_not_checkable"})):
+        c = json.loads(json.dumps(lp_core))
+        c["profile"] = prof
+        c["spans"][0]["reason"] = "no_commit"
+        rv("a legacy-only reason inside a %s receipt" % prof, remint(c), want,
+           document=lp_doc, mani=None,
+           note="section 10: the legacy reasons appear only under legacy-projection, which 11.3 "
+                "does not check")
     rv("receipt_shape: a reason outside the closed list",
        remint(edited(lambda c: c["spans"][0].update(verdict="FAILED", reason="WITHHELD"))),
        {"refusal": "receipt_shape"})
@@ -896,12 +956,16 @@ def recheck_vectors():
        good.replace(b'"digest":"' + C.digest(core).encode(),
                     b'"digest":"' + ("0" if C.digest(core)[0] != "0" else "1").encode()
                     + C.digest(core)[1:].encode()), {"refusal": "receipt_digest"})
-    rv("receipt_digest: a core with no canonical form (text gap)",
+    rv("receipt_digest: a core with no canonical form",
        good.replace(b'"claim":"n is 7"', b'"claim":"n is 7\\ud800"', 1), {"refusal": "receipt_digest"},
-       note="the core holds an unpaired surrogate: its digest cannot be computed")
+       note="11.3: a core that matches the schema and has no canonical form is receipt_digest; "
+            "this one holds an unpaired surrogate")
     rv("profile_not_checkable", remint(edited(lambda c: c.update(profile="legacy-projection/v0-draft"))),
        {"refusal": "profile_not_checkable"})
     rv("document_mismatch", good, {"refusal": "document_mismatch"}, document=doc + b" ")
+    rv("order: attestations_not_empty before receipt_digest",
+       C.jcs({"core": core, "digest": "0" * 64, "attestations": [{"by": "x"}]}).encode(),
+       {"refusal": "attestations_not_empty"})
     rv("order: receipt_digest before profile_not_checkable",
        C.jcs({"core": edited(lambda c: c.update(profile="legacy-projection/v0-draft")),
               "digest": "0" * 64, "attestations": []}).encode(), {"refusal": "receipt_digest"})
@@ -930,6 +994,10 @@ def jcs_vectors():
         (b"-9007199254740992", {"refusal": "int_range"}),
         (b"1.0", {"refusal": "float"}),
         (b"1e2", {"refusal": "float"}),
+        (b"1E2", {"refusal": "float"}),
+        (b"-0e0", {"refusal": "float"}),
+        (b'{"a": 1, "a": 2}', {"canonical": '{"a":2}'}),
+        (b'{"b": {"x": [1], "x": [2, 3]}, "a": 0}', {"canonical": '{"a":0,"b":{"x":[2,3]}}'}),
         (b"0.5", {"refusal": "float"}),
         (b"NaN", {"refusal": "float"}),
         (b"-Infinity", {"refusal": "float"}),
@@ -992,6 +1060,12 @@ def build():
         "schema": "receipt/v0-draft/vectors",
         "status": "DRAFT, unsigned. Lab-written vectors for a lab draft; not a standard.",
         "text": "receipt/v0/RECEIPT_v0.md",
+        "built_from": {
+            "styxx/sworn.py sha256": sha((ROOT / "styxx" / "sworn.py").read_bytes()),
+            "receipt/v0/to_v0.py sha256": sha((V0 / "to_v0.py").read_bytes()),
+            "note": ("the conformance expectations are digest_v0(to_v0(sworn.verify(...))) over these "
+                     "two files; no vector id depends on them"),
+        },
         "id_rule": ("sha256 of the UTF-8 canonical text (section 3) of {op, inputs}; an input string "
                     "with no canonical form is replaced inside the id object by "
                     "{utf16be_hex: its UTF-16BE code units in lowercase hex}"),

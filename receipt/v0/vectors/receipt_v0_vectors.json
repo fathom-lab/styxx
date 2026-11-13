@@ -2,6 +2,11 @@
  "schema": "receipt/v0-draft/vectors",
  "status": "DRAFT, unsigned. Lab-written vectors for a lab draft; not a standard.",
  "text": "receipt/v0/RECEIPT_v0.md",
+ "built_from": {
+  "styxx/sworn.py sha256": "3f32da0fdd69d2f448c54d87fc9bfdb07917c3fc076c86d591ba771ec2267fcb",
+  "receipt/v0/to_v0.py sha256": "4ed6ecf8bd32735cff93ee9b0a6843501792ef6c3177d9c5c39688b06f2bce9f",
+  "note": "the conformance expectations are digest_v0(to_v0(sworn.verify(...))) over these two files; no vector id depends on them"
+ },
  "id_rule": "sha256 of the UTF-8 canonical text (section 3) of {op, inputs}; an input string with no canonical form is replaced inside the id object by {utf16be_hex: its UTF-16BE code units in lowercase hex}",
  "expect_rule": {
   "conformance": "digest_v0(to_v0(sworn.verify(...))) at the commit this file was built from, except where a note cites RECEIPT_v0.md 13.14",
@@ -11,11 +16,11 @@
  },
  "counts": {
   "conformance": 1718,
-  "hand": 284,
-  "hand_merged_into_conformance": 2,
-  "recheck": 25,
-  "jcs": 23,
-  "total": 2050
+  "hand": 414,
+  "hand_merged_into_conformance": 6,
+  "recheck": 32,
+  "jcs": 27,
+  "total": 2191
  },
  "codes_produced_by_hand_vectors": [
   "absent_over_partial",
@@ -55129,6 +55134,18 @@
     "9.1",
     "9.2",
     "9.3"
+   ],
+   "also": [
+    {
+     "source": "hand",
+     "label": "4.4 path: U+0020 refused",
+     "expect_rows": [
+      [
+       "MALFORMED",
+       "receipt_form"
+      ]
+     ]
+    }
    ]
   },
   {
@@ -55162,6 +55179,18 @@
     "9.1",
     "9.2",
     "9.3"
+   ],
+   "also": [
+    {
+     "source": "hand",
+     "label": "4.4 path: U+00A0 refused",
+     "expect_rows": [
+      [
+       "MALFORMED",
+       "receipt_form"
+      ]
+     ]
+    }
    ]
   },
   {
@@ -55195,6 +55224,18 @@
     "9.1",
     "9.2",
     "9.3"
+   ],
+   "also": [
+    {
+     "source": "hand",
+     "label": "4.4 path: '*' refused",
+     "expect_rows": [
+      [
+       "MALFORMED",
+       "receipt_form"
+      ]
+     ]
+    }
    ]
   },
   {
@@ -55228,6 +55269,18 @@
     "9.1",
     "9.2",
     "9.3"
+   ],
+   "also": [
+    {
+     "source": "hand",
+     "label": "4.4 path: '\\\\' refused",
+     "expect_rows": [
+      [
+       "MALFORMED",
+       "receipt_form"
+      ]
+     ]
+    }
    ]
   },
   {
@@ -62065,14 +62118,33 @@
    "id": "18c0025990810546737e109dfbadbe456bbbcb51205a72bad2befa3ff422d5ba",
    "source": "hand",
    "op": "check",
-   "label": "5.5 manifest_spec: bytes that are not JSON (text gap: no code named)",
+   "label": "5.5 manifest_spec: bytes that are not JSON",
    "inputs": {
     "document_b64": "PHN3b3JuIHI9InIxIiBrPSJudW1lcmljIj5uIGlzIDc8L3N3b3JuPg==",
     "name": "d.md",
     "manifest_b64": "e25vdCBqc29u",
     "commit": null
    },
-   "note": "the text names no code for manifest bytes that do not parse; this checker reads them as not an object (11.1)",
+   "note": "5.5: manifest bytes that do not parse under 6.13 are manifest_spec",
+   "expect": {
+    "refusal": "manifest_spec"
+   },
+   "rules": [
+    "11.1"
+   ]
+  },
+  {
+   "id": "641cf64e70ff2945228976a1eeaa742349d277a5900b265dee16cf2213bd5cb6",
+   "source": "hand",
+   "op": "check",
+   "label": "5.5 manifest_spec: a trailing byte after the object",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InIxIiBrPSJudW1lcmljIj5uIGlzIDc8L3N3b3JuPg==",
+    "name": "d.md",
+    "manifest_b64": "eyJhdXRob3JlZF9zaGEyNTYiOiBbXSwgImhhcm5lc3MiOiAiaGFybmVzcy14IiwgIm1pbnRlZF9hdCI6ICIyMDI2LTAxLTAxVDAwOjAwOjAwWiIsICJyZWNlaXB0cyI6IHsicjEiOiB7ImJ5dGVzIjogIk53PT0iLCAiY2FwdHVyZWRfYXQiOiAiMjAyNi0wMS0wMVQwMDowMDowMFoiLCAiY29tcGxldGUiOiB0cnVlLCAiaWQiOiAicjEiLCAia2luZF9vZl9zb3VyY2UiOiAidG9vbF9zdGRvdXQiLCAic2hhMjU2IjogIjc5MDI2OTliZTQyYzhhOGU0NmZiYmI0NTAxNzI2NTE3ZTg2YjIyYzU2YTE4OWY3NjI1YTZkYTQ5MDgxYjI0NTEifX0sICJydW5nIjogIkwyIiwgInNwZWMiOiAic3dvcm4vbWFuaWZlc3QvMC4yIiwgInR1cm4iOiAidHVybi0xIn14",
+    "commit": null
+   },
+   "note": "5.5: manifest bytes that do not parse under 6.13 are manifest_spec",
    "expect": {
     "refusal": "manifest_spec"
    },
@@ -62274,16 +62346,92 @@
    "id": "5af1b4200a40d250b72b728f192836b358bc601118afbf19fb11ff8afedc6024",
    "source": "hand",
    "op": "check",
-   "label": "5.5 order: manifest_spec before manifest_form",
+   "label": "5.5 order: a key written twice is refused before spec is read",
    "inputs": {
     "document_b64": "PHN3b3JuIHI9InIxIiBrPSJudW1lcmljIj5uIGlzIDc8L3N3b3JuPg==",
     "name": "d.md",
     "manifest_b64": "eyJhdXRob3JlZF9zaGEyNTYiOiBbXSwgImhhcm5lc3MiOiAiaGFybmVzcy14IiwgIm1pbnRlZF9hdCI6ICIyMDI2LTAxLTAxVDAwOjAwOjAwWiIsICJyZWNlaXB0cyI6IHsicjEiOiB7fSwgInIxIjogeyJieXRlcyI6ICJOdz09IiwgImNhcHR1cmVkX2F0IjogIjIwMjYtMDEtMDFUMDA6MDA6MDBaIiwgImNvbXBsZXRlIjogdHJ1ZSwgImlkIjogInIxIiwgImtpbmRfb2Zfc291cmNlIjogInRvb2xfc3Rkb3V0IiwgInNoYTI1NiI6ICI3OTAyNjk5YmU0MmM4YThlNDZmYmJiNDUwMTcyNjUxN2U4NmIyMmM1NmExODlmNzYyNWE2ZGE0OTA4MWIyNDUxIn19LCAicnVuZyI6ICJMMiIsICJzcGVjIjogInN3b3JuL21hbmlmZXN0LzAuMSIsICJ0dXJuIjogInR1cm4tMSJ9",
     "commit": null
    },
+   "note": "5.5 (fixer's round): the duplicate-key refusal comes first; this vector expected manifest_spec before the text settled the order",
+   "expect": {
+    "refusal": "manifest_form"
+   },
+   "rules": [
+    "11.1"
+   ]
+  },
+  {
+   "id": "ac8dc36b439a7cb41ea11214984d9ada373758d2f0cf135c98d1018f145ac210",
+   "source": "hand",
+   "op": "check",
+   "label": "5.5 order: spec written twice, the last value right, is manifest_form",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InIxIiBrPSJudW1lcmljIj5uIGlzIDc8L3N3b3JuPg==",
+    "name": "d.md",
+    "manifest_b64": "eyJhdXRob3JlZF9zaGEyNTYiOiBbXSwgImhhcm5lc3MiOiAiaGFybmVzcy14IiwgIm1pbnRlZF9hdCI6ICIyMDI2LTAxLTAxVDAwOjAwOjAwWiIsICJyZWNlaXB0cyI6IHsicjEiOiB7ImJ5dGVzIjogIk53PT0iLCAiY2FwdHVyZWRfYXQiOiAiMjAyNi0wMS0wMVQwMDowMDowMFoiLCAiY29tcGxldGUiOiB0cnVlLCAiaWQiOiAicjEiLCAia2luZF9vZl9zb3VyY2UiOiAidG9vbF9zdGRvdXQiLCAic2hhMjU2IjogIjc5MDI2OTliZTQyYzhhOGU0NmZiYmI0NTAxNzI2NTE3ZTg2YjIyYzU2YTE4OWY3NjI1YTZkYTQ5MDgxYjI0NTEifX0sICJydW5nIjogIkwyIiwgInNwZWMiOiAic3dvcm4vbWFuaWZlc3QvMC4xIiwgInNwZWMiOiAic3dvcm4vbWFuaWZlc3QvMC4yIiwgInR1cm4iOiAidHVybi0xIn0=",
+    "commit": null
+   },
    "note": null,
    "expect": {
-    "refusal": "manifest_spec"
+    "refusal": "manifest_form"
+   },
+   "rules": [
+    "11.1"
+   ]
+  },
+  {
+   "id": "f88daf890ac0485d267f7a915b49fed31f9ef4e11fb00b02d38bed2f04c6499a",
+   "source": "hand",
+   "op": "check",
+   "label": "5.5 order: spec written twice, the last value wrong, is manifest_form",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InIxIiBrPSJudW1lcmljIj5uIGlzIDc8L3N3b3JuPg==",
+    "name": "d.md",
+    "manifest_b64": "eyJhdXRob3JlZF9zaGEyNTYiOiBbXSwgImhhcm5lc3MiOiAiaGFybmVzcy14IiwgIm1pbnRlZF9hdCI6ICIyMDI2LTAxLTAxVDAwOjAwOjAwWiIsICJyZWNlaXB0cyI6IHsicjEiOiB7ImJ5dGVzIjogIk53PT0iLCAiY2FwdHVyZWRfYXQiOiAiMjAyNi0wMS0wMVQwMDowMDowMFoiLCAiY29tcGxldGUiOiB0cnVlLCAiaWQiOiAicjEiLCAia2luZF9vZl9zb3VyY2UiOiAidG9vbF9zdGRvdXQiLCAic2hhMjU2IjogIjc5MDI2OTliZTQyYzhhOGU0NmZiYmI0NTAxNzI2NTE3ZTg2YjIyYzU2YTE4OWY3NjI1YTZkYTQ5MDgxYjI0NTEifX0sICJydW5nIjogIkwyIiwgInNwZWMiOiAic3dvcm4vbWFuaWZlc3QvMC4yIiwgInNwZWMiOiAic3dvcm4vbWFuaWZlc3QvMC4xIiwgInR1cm4iOiAidHVybi0xIn0=",
+    "commit": null
+   },
+   "note": null,
+   "expect": {
+    "refusal": "manifest_form"
+   },
+   "rules": [
+    "11.1"
+   ]
+  },
+  {
+   "id": "25cf9650e9ffe4bdc2e8b54da4e83087be1a8565a839d5e03632bb921f01f614",
+   "source": "hand",
+   "op": "check",
+   "label": "5.5 order: receipts written twice, the last value a string, is manifest_form",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InIxIiBrPSJudW1lcmljIj5uIGlzIDc8L3N3b3JuPg==",
+    "name": "d.md",
+    "manifest_b64": "eyJhdXRob3JlZF9zaGEyNTYiOiBbXSwgImhhcm5lc3MiOiAiaGFybmVzcy14IiwgIm1pbnRlZF9hdCI6ICIyMDI2LTAxLTAxVDAwOjAwOjAwWiIsICJyZWNlaXB0cyI6IHsicjEiOiB7ImJ5dGVzIjogIk53PT0iLCAiY2FwdHVyZWRfYXQiOiAiMjAyNi0wMS0wMVQwMDowMDowMFoiLCAiY29tcGxldGUiOiB0cnVlLCAiaWQiOiAicjEiLCAia2luZF9vZl9zb3VyY2UiOiAidG9vbF9zdGRvdXQiLCAic2hhMjU2IjogIjc5MDI2OTliZTQyYzhhOGU0NmZiYmI0NTAxNzI2NTE3ZTg2YjIyYzU2YTE4OWY3NjI1YTZkYTQ5MDgxYjI0NTEifX0sICJydW5nIjogIkwyIiwgInNwZWMiOiAic3dvcm4vbWFuaWZlc3QvMC4yIiwgInR1cm4iOiAidHVybi0xIiwgInJlY2VpcHRzIjogIngifQ==",
+    "commit": null
+   },
+   "note": null,
+   "expect": {
+    "refusal": "manifest_form"
+   },
+   "rules": [
+    "11.1"
+   ]
+  },
+  {
+   "id": "6d570e7f623d25f400927e48d4d2389d4349fd0184f570d2bdfed9c197a96bd5",
+   "source": "hand",
+   "op": "check",
+   "label": "5.5 order: a key written twice inside an array that is the whole manifest is manifest_form",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InIxIiBrPSJudW1lcmljIj5uIGlzIDc8L3N3b3JuPg==",
+    "name": "d.md",
+    "manifest_b64": "W3siYSI6IDEsICJhIjogMn1d",
+    "commit": null
+   },
+   "note": null,
+   "expect": {
+    "refusal": "manifest_form"
    },
    "rules": [
     "11.1"
@@ -62382,6 +62530,4154 @@
    },
    "rules": [
     "11.1"
+   ]
+  },
+  {
+   "id": "497bf3f76661ea0f56d7286ec635139e45e1fa5e68b2c34461517aa0c1766f2c",
+   "source": "hand",
+   "op": "check",
+   "label": "2.3d '>' inside REF ends no opener: tag_syntax then stray_closer",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9ImE+YiIgaz0ibnVtZXJpYyI+Nzwvc3dvcm4+",
+    "name": "d.md",
+    "manifest_b64": null,
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "61e595d092ae60a3c2091f7c354d7807fe1d3fa660928d418f842358020ccb11"
+   },
+   "expect_rows": [
+    [
+     "MALFORMED",
+     "tag_syntax"
+    ],
+    [
+     "MALFORMED",
+     "stray_closer"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-FAILED",
+   "rules": [
+    "2.3",
+    "2.3d",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "d71add4da3ac95f22528c1f5729cdca97480e5229330dfb2ed9dacf09ad574e0",
+   "source": "hand",
+   "op": "check",
+   "label": "2.3d CR inside REF: tag_syntax then stray_closer",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InINMSIgaz0ibnVtZXJpYyI+Nzwvc3dvcm4+",
+    "name": "d.md",
+    "manifest_b64": null,
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "325aeee2395ce76fd92bd66db7c44ff45c2bf47e95b826532c66fd0ba9c11a9f"
+   },
+   "expect_rows": [
+    [
+     "MALFORMED",
+     "tag_syntax"
+    ],
+    [
+     "MALFORMED",
+     "stray_closer"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-FAILED",
+   "rules": [
+    "2.3",
+    "2.3d",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "71dfb4f9639d8348e9a9be0d857f5725e0a192d59107918814f8ac026b91b702",
+   "source": "hand",
+   "op": "check",
+   "label": "2.3d '<' inside KIND is swallowed into the tag_syntax raw",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InIxIiBrPSJudTxtZXJpYyI+Nzwvc3dvcm4+",
+    "name": "d.md",
+    "manifest_b64": null,
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "281a30ae3793e79f7c1b225a3767f22e1d1180103c42a5c33d2009c8020d7ed5"
+   },
+   "expect_rows": [
+    [
+     "MALFORMED",
+     "tag_syntax"
+    ],
+    [
+     "MALFORMED",
+     "stray_closer"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-FAILED",
+   "rules": [
+    "2.3",
+    "2.3d",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "a0a87e2c4d064f7b043eef911eb7b7b18288e4c293a1d77f76c30519127ed562",
+   "source": "hand",
+   "op": "check",
+   "label": "4.1 split at the FIRST '#': pointer token 'a#b' is well formed",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InIxIy9hI2IiIGs9Im51bWVyaWMiPjc8L3N3b3JuPg==",
+    "name": "d.md",
+    "manifest_b64": null,
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "59ea972d504e9bdfb2fe2c5cd33d1def6c78e45adece4d6dbcdbbee4fde81c10"
+   },
+   "expect_rows": [
+    [
+     "UNRESOLVED",
+     "manifest_absent"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-UNCHECKED",
+   "rules": [
+    "2.3",
+    "2.5",
+    "6.1",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "2a4b4d5789223a9b63714526fe628ea353442dfd41a40cf598a2e2225effeed2",
+   "source": "hand",
+   "op": "check",
+   "label": "4.1 first '#' resolves: key 'a#b'",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InIxIy9hI2IiIGs9Im51bWVyaWMiPjc8L3N3b3JuPg==",
+    "name": "d.md",
+    "manifest_b64": "eyJzcGVjIjogInN3b3JuL21hbmlmZXN0LzAuMiIsICJoYXJuZXNzIjogImgiLCAidHVybiI6ICJ0IiwgIm1pbnRlZF9hdCI6ICIyMDI2LTAxLTAxVDAwOjAwOjAwWiIsICJhdXRob3JlZF9zaGEyNTYiOiBbXSwgInJlY2VpcHRzIjogeyJyMSI6IHsic2hhMjU2IjogIjgxNjNhMDdmYjgxYTU3Y2NiYTNlMmJlYmJmMjY3NzY1YWM5NjBkYjJlYzk1ZGNjMWE0Nzk0MWZjNTRiMDRmZjIiLCAiYnl0ZXMiOiAiZXlKaEkySWlPaUEzTENBaVlTSTZJSHNpWWlJNklEaDlmUT09IiwgImlkIjogInIxIiwgImtpbmRfb2Zfc291cmNlIjogInRvb2xfc3Rkb3V0IiwgImNhcHR1cmVkX2F0IjogIjIwMjYtMDEtMDFUMDA6MDA6MDBaIiwgImNvbXBsZXRlIjogdHJ1ZX19LCAicnVuZyI6ICJMMiJ9",
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "bb9b1bcb2adcaaf95620c20d0a3f7b3f0f695df8d5613120e50966eb4fa6b6a2"
+   },
+   "expect_rows": [
+    [
+     "HELD",
+     null
+    ]
+   ],
+   "expect_document_verdict": "SWORN-HELD",
+   "rules": [
+    "2.3",
+    "2.5",
+    "5.4",
+    "5.5",
+    "6.9",
+    "7.3",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "ab49ba0ec21e9b8bc3712a3e9127d260d4d62a7bbbe31cf52c1ce2789521c394",
+   "source": "hand",
+   "op": "check",
+   "label": "4.3 '~01' unescapes to '~1' (not '/')",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InIxIy9+MDEiIGs9Im51bWVyaWMiPjU8L3N3b3JuPg==",
+    "name": "d.md",
+    "manifest_b64": "eyJzcGVjIjogInN3b3JuL21hbmlmZXN0LzAuMiIsICJoYXJuZXNzIjogImgiLCAidHVybiI6ICJ0IiwgIm1pbnRlZF9hdCI6ICIyMDI2LTAxLTAxVDAwOjAwOjAwWiIsICJhdXRob3JlZF9zaGEyNTYiOiBbXSwgInJlY2VpcHRzIjogeyJyMSI6IHsic2hhMjU2IjogIjBjYjljYzAxYjVjYTA3NGY4MzVkYTY1N2NhNmJkNmMzNmZhOWFkNDMyYmUyN2NiNzNjYmMwMTJlMzA1NzQ2NjkiLCAiYnl0ZXMiOiAiZXlKK01TSTZJRFVzSUNJdklqb2dOMzA9IiwgImlkIjogInIxIiwgImtpbmRfb2Zfc291cmNlIjogInRvb2xfc3Rkb3V0IiwgImNhcHR1cmVkX2F0IjogIjIwMjYtMDEtMDFUMDA6MDA6MDBaIiwgImNvbXBsZXRlIjogdHJ1ZX19LCAicnVuZyI6ICJMMiJ9",
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "1700c707ff68540d9533bb65a487f4691634e10ec799dd93dd107f4fa9e35742"
+   },
+   "expect_rows": [
+    [
+     "HELD",
+     null
+    ]
+   ],
+   "expect_document_verdict": "SWORN-HELD",
+   "rules": [
+    "2.3",
+    "2.5",
+    "5.4",
+    "5.5",
+    "6.9",
+    "7.3",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "3b0bdc56cd6b9d9f267fa38f33be8f0ffafd5df2ad83fc021d7d83a7b5ff8510",
+   "source": "hand",
+   "op": "check",
+   "label": "4.3 L1-L1 (b == a) is well formed and resolves",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InIxI0wxLUwxIiBrPSJudW1lcmljIj43PC9zd29ybj4=",
+    "name": "d.md",
+    "manifest_b64": "eyJzcGVjIjogInN3b3JuL21hbmlmZXN0LzAuMiIsICJoYXJuZXNzIjogImgiLCAidHVybiI6ICJ0IiwgIm1pbnRlZF9hdCI6ICIyMDI2LTAxLTAxVDAwOjAwOjAwWiIsICJhdXRob3JlZF9zaGEyNTYiOiBbXSwgInJlY2VpcHRzIjogeyJyMSI6IHsic2hhMjU2IjogImFkZGRiNTE0NmE4NTc4ZjYxN2FiMWY1ZTEwM2M1NDU0OTBlOTk0NjNkNDU5MzJlYTkzNzVhY2M0Y2Y5MDVlYzEiLCAiYnl0ZXMiOiAiTndvNENnPT0iLCAiaWQiOiAicjEiLCAia2luZF9vZl9zb3VyY2UiOiAidG9vbF9zdGRvdXQiLCAiY2FwdHVyZWRfYXQiOiAiMjAyNi0wMS0wMVQwMDowMDowMFoiLCAiY29tcGxldGUiOiB0cnVlfX0sICJydW5nIjogIkwyIn0=",
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "0d79ecd64f1925b51aa9b89af66fa35f803cedd711f6e00de026f8e8a8b6e0db"
+   },
+   "expect_rows": [
+    [
+     "HELD",
+     null
+    ]
+   ],
+   "expect_document_verdict": "SWORN-HELD",
+   "rules": [
+    "2.3",
+    "2.5",
+    "5.4",
+    "5.5",
+    "6.9",
+    "7.3",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "81a6ccacf2078605c0829ffb7e8d4ba2d109da237e101dd62ee4ba49a7a944dd",
+   "source": "hand",
+   "op": "check",
+   "label": "4.3 '/' fragment names the key ''",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InIxIy8iIGs9Im51bWVyaWMiPjc8L3N3b3JuPg==",
+    "name": "d.md",
+    "manifest_b64": "eyJzcGVjIjogInN3b3JuL21hbmlmZXN0LzAuMiIsICJoYXJuZXNzIjogImgiLCAidHVybiI6ICJ0IiwgIm1pbnRlZF9hdCI6ICIyMDI2LTAxLTAxVDAwOjAwOjAwWiIsICJhdXRob3JlZF9zaGEyNTYiOiBbXSwgInJlY2VpcHRzIjogeyJyMSI6IHsic2hhMjU2IjogIjc2Y2EwYTlkYzA0YmUxYmJhNDA0NmEyMTYyMDVlZjhlMmY4NTc3YjUzYTUyMTk5NTQ0Y2MxZmUwNjMwZTljOGUiLCAiYnl0ZXMiOiAiZXlJaU9pQTNmUT09IiwgImlkIjogInIxIiwgImtpbmRfb2Zfc291cmNlIjogInRvb2xfc3Rkb3V0IiwgImNhcHR1cmVkX2F0IjogIjIwMjYtMDEtMDFUMDA6MDA6MDBaIiwgImNvbXBsZXRlIjogdHJ1ZX19LCAicnVuZyI6ICJMMiJ9",
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "3ce9ff087f2dbd5317ccc6262d30680ab01b24ca0fc8aa248703c5f0aef6f8a1"
+   },
+   "expect_rows": [
+    [
+     "HELD",
+     null
+    ]
+   ],
+   "expect_document_verdict": "SWORN-HELD",
+   "rules": [
+    "2.3",
+    "2.5",
+    "5.4",
+    "5.5",
+    "6.9",
+    "7.3",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "57812fcd97236fe9bb1b54324d90966bb15c43220a2cbfb91a9de0ba8614cf5d",
+   "source": "hand",
+   "op": "check",
+   "label": "4.4 path: U+0000 refused",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InBhdGg6YQBiIiBrPSJudW1lcmljIj43PC9zd29ybj4=",
+    "name": "d.md",
+    "manifest_b64": null,
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "209f03453841365e29f63af3ef917d471e107d73d0b6d76d4f16b1504d236458"
+   },
+   "expect_rows": [
+    [
+     "MALFORMED",
+     "receipt_form"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-FAILED",
+   "rules": [
+    "2.3",
+    "2.5",
+    "4",
+    "7.1e",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "81246c076d8292b913a370955a2e38d86262f0bd892fa313eebf46c016aac9b6",
+   "source": "hand",
+   "op": "check",
+   "label": "4.4 path: U+001F refused",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InBhdGg6YR9iIiBrPSJudW1lcmljIj43PC9zd29ybj4=",
+    "name": "d.md",
+    "manifest_b64": null,
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "4462034d070224690d2ef62a1867e2e566102e67a535f73b6330443230905609"
+   },
+   "expect_rows": [
+    [
+     "MALFORMED",
+     "receipt_form"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-FAILED",
+   "rules": [
+    "2.3",
+    "2.5",
+    "4",
+    "7.1e",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "1a70b7dc6f5d931040032b5daa89f5270300acb2cfb4693721c0be1341a403ed",
+   "source": "hand",
+   "op": "check",
+   "label": "4.4 path: U+007F refused",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InBhdGg6YX9iIiBrPSJudW1lcmljIj43PC9zd29ybj4=",
+    "name": "d.md",
+    "manifest_b64": null,
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "9456da036ccdbe4f9cf06c863dd895cbc9eddaa6cb1aa0bf8a71671cf13fb6ce"
+   },
+   "expect_rows": [
+    [
+     "MALFORMED",
+     "receipt_form"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-FAILED",
+   "rules": [
+    "2.3",
+    "2.5",
+    "4",
+    "7.1e",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "4d8d8b82626f8b472e8b7ab40eafb41ec9ea84e8d086e7f252b852da473ce78e",
+   "source": "hand",
+   "op": "check",
+   "label": "4.4 path: U+0085 refused",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InBhdGg6YcKFYiIgaz0ibnVtZXJpYyI+Nzwvc3dvcm4+",
+    "name": "d.md",
+    "manifest_b64": null,
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "bf32bae406c077cfd23bcef5b2db2bc2be73c125fed571c9568878b093b47ad0"
+   },
+   "expect_rows": [
+    [
+     "MALFORMED",
+     "receipt_form"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-FAILED",
+   "rules": [
+    "2.3",
+    "2.5",
+    "4",
+    "7.1e",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "8eebc3967ac97d6ddcfc93a415bee9521d0c17ea931fe19c2ee099584f564db3",
+   "source": "hand",
+   "op": "check",
+   "label": "4.4 path: U+1680 refused",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InBhdGg6YeGagGIiIGs9Im51bWVyaWMiPjc8L3N3b3JuPg==",
+    "name": "d.md",
+    "manifest_b64": null,
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "e69625bbfe5f3497af3c715bffe80d2c2c60765e706db4c0850d8737e7ae5b6b"
+   },
+   "expect_rows": [
+    [
+     "MALFORMED",
+     "receipt_form"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-FAILED",
+   "rules": [
+    "2.3",
+    "2.5",
+    "4",
+    "7.1e",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "e07014a9273faa6ab057ce1567c862479aa9899c14afb0d52368f18a83743300",
+   "source": "hand",
+   "op": "check",
+   "label": "4.4 path: U+2000 refused",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InBhdGg6YeKAgGIiIGs9Im51bWVyaWMiPjc8L3N3b3JuPg==",
+    "name": "d.md",
+    "manifest_b64": null,
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "b53194c035b8f65042b212829c0dcd95bcc95ca4a3ecf481373ff06719d8bdc9"
+   },
+   "expect_rows": [
+    [
+     "MALFORMED",
+     "receipt_form"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-FAILED",
+   "rules": [
+    "2.3",
+    "2.5",
+    "4",
+    "7.1e",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "ca2b3b9b639434c2cb9086311b86b1de1fce11016c4446a861e667b84ed8c6ee",
+   "source": "hand",
+   "op": "check",
+   "label": "4.4 path: U+2005 refused",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InBhdGg6YeKAhWIiIGs9Im51bWVyaWMiPjc8L3N3b3JuPg==",
+    "name": "d.md",
+    "manifest_b64": null,
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "83980ebf026b528c0924166d9009dd36c02cc45ccb468d4c44a822a38df9ed59"
+   },
+   "expect_rows": [
+    [
+     "MALFORMED",
+     "receipt_form"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-FAILED",
+   "rules": [
+    "2.3",
+    "2.5",
+    "4",
+    "7.1e",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "1b7ca91b032ea76eaf9d1be9a4a89e97cde306d9ad565a912a17c48a1f7bc982",
+   "source": "hand",
+   "op": "check",
+   "label": "4.4 path: U+200A refused",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InBhdGg6YeKAimIiIGs9Im51bWVyaWMiPjc8L3N3b3JuPg==",
+    "name": "d.md",
+    "manifest_b64": null,
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "7146ef7a8d2eefc90c7c17b02430dad4d6e2006c4ba41ecb107465da28d87325"
+   },
+   "expect_rows": [
+    [
+     "MALFORMED",
+     "receipt_form"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-FAILED",
+   "rules": [
+    "2.3",
+    "2.5",
+    "4",
+    "7.1e",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "4e329364999e57c1db24d50d3a45d54d492d5d61cb7432589d4bfefb6a2524ff",
+   "source": "hand",
+   "op": "check",
+   "label": "4.4 path: U+2028 refused",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InBhdGg6YeKAqGIiIGs9Im51bWVyaWMiPjc8L3N3b3JuPg==",
+    "name": "d.md",
+    "manifest_b64": null,
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "25e7cbd825b03ca3bab662d2a788bc18c39717f2f741ce3ef199a983dbc281b5"
+   },
+   "expect_rows": [
+    [
+     "MALFORMED",
+     "receipt_form"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-FAILED",
+   "rules": [
+    "2.3",
+    "2.5",
+    "4",
+    "7.1e",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "11fd97fdf8e2fa0336dbe2cd73c059c3e536aee05d8b25f7f41505351a008d0a",
+   "source": "hand",
+   "op": "check",
+   "label": "4.4 path: U+2029 refused",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InBhdGg6YeKAqWIiIGs9Im51bWVyaWMiPjc8L3N3b3JuPg==",
+    "name": "d.md",
+    "manifest_b64": null,
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "8198c5bab2fa5476abf43c408d9f31b6c7365fd56ea28f685dbee2717071a50e"
+   },
+   "expect_rows": [
+    [
+     "MALFORMED",
+     "receipt_form"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-FAILED",
+   "rules": [
+    "2.3",
+    "2.5",
+    "4",
+    "7.1e",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "910cdbe6244d557bc051ef44166ebc295105495519ee059bf2d9f92710abf603",
+   "source": "hand",
+   "op": "check",
+   "label": "4.4 path: U+202F refused",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InBhdGg6YeKAr2IiIGs9Im51bWVyaWMiPjc8L3N3b3JuPg==",
+    "name": "d.md",
+    "manifest_b64": null,
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "c7fdeeb15ac4177da4c2b02c7aa5968b3667d95c15d1f7893aed7d152d101564"
+   },
+   "expect_rows": [
+    [
+     "MALFORMED",
+     "receipt_form"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-FAILED",
+   "rules": [
+    "2.3",
+    "2.5",
+    "4",
+    "7.1e",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "593a005b70b54828776db2006ff6926c86a3d788239963c703819f8f80082f70",
+   "source": "hand",
+   "op": "check",
+   "label": "4.4 path: U+205F refused",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InBhdGg6YeKBn2IiIGs9Im51bWVyaWMiPjc8L3N3b3JuPg==",
+    "name": "d.md",
+    "manifest_b64": null,
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "d42bea9e2882db7b834a33fdf6152ba45cf9d5f1127221a02d364f32625bff13"
+   },
+   "expect_rows": [
+    [
+     "MALFORMED",
+     "receipt_form"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-FAILED",
+   "rules": [
+    "2.3",
+    "2.5",
+    "4",
+    "7.1e",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "020f36ed22d3df66179f9a9efa274945d299fc7ee311841814fc1df020895416",
+   "source": "hand",
+   "op": "check",
+   "label": "4.4 path: U+3000 refused",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InBhdGg6YeOAgGIiIGs9Im51bWVyaWMiPjc8L3N3b3JuPg==",
+    "name": "d.md",
+    "manifest_b64": null,
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "c010bf03ea1e5510f6944d9df6657b3b421f590f7ed1d73fc406453ad9df2f58"
+   },
+   "expect_rows": [
+    [
+     "MALFORMED",
+     "receipt_form"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-FAILED",
+   "rules": [
+    "2.3",
+    "2.5",
+    "4",
+    "7.1e",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "28a35238209da59252731a7623317f5540bee3c8b44c2c54ba16b983900927f9",
+   "source": "hand",
+   "op": "check",
+   "label": "4.4 path: '?' refused",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InBhdGg6YT9iIiBrPSJudW1lcmljIj43PC9zd29ybj4=",
+    "name": "d.md",
+    "manifest_b64": null,
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "e1c345f3763ed24e8a5c4dbdbb0ed627ae02fbe3f25f76384c6569adc385b65f"
+   },
+   "expect_rows": [
+    [
+     "MALFORMED",
+     "receipt_form"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-FAILED",
+   "rules": [
+    "2.3",
+    "2.5",
+    "4",
+    "7.1e",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "6430770434e1b1dfa38af423daa3c45796da5ca859ac6f9a383fc3ca90beafde",
+   "source": "hand",
+   "op": "check",
+   "label": "4.4 path: '[' refused",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InBhdGg6YVtiIiBrPSJudW1lcmljIj43PC9zd29ybj4=",
+    "name": "d.md",
+    "manifest_b64": null,
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "2305f09c78fe303f182e93931b3ad5820d924040159b2c958a3759383586363b"
+   },
+   "expect_rows": [
+    [
+     "MALFORMED",
+     "receipt_form"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-FAILED",
+   "rules": [
+    "2.3",
+    "2.5",
+    "4",
+    "7.1e",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "7f83786452e07ba38183c2660771dc84db9be7a5befed622e3bc8dc223f3f416",
+   "source": "hand",
+   "op": "check",
+   "label": "4.4 path: ']' refused",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InBhdGg6YV1iIiBrPSJudW1lcmljIj43PC9zd29ybj4=",
+    "name": "d.md",
+    "manifest_b64": null,
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "940703787ee83859f67f5ff209b468d4fc688b28b41ae5c788ad67ee0a6e61f9"
+   },
+   "expect_rows": [
+    [
+     "MALFORMED",
+     "receipt_form"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-FAILED",
+   "rules": [
+    "2.3",
+    "2.5",
+    "4",
+    "7.1e",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "cf736d41df0cdd0b79c075e1d7de49d951084ee70f0cdb76cb6051c8c652d23b",
+   "source": "hand",
+   "op": "check",
+   "label": "4.4 path: U+200B allowed",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InBhdGg6YeKAi2IiIGs9Im51bWVyaWMiPjc8L3N3b3JuPg==",
+    "name": "d.md",
+    "manifest_b64": null,
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "a0e40367bbbc5aa79e459a7747ace4adee4eb635e7fa4924795d2060d13e2677"
+   },
+   "expect_rows": [
+    [
+     "UNRESOLVED",
+     "no_repository"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-UNCHECKED",
+   "rules": [
+    "2.3",
+    "2.5",
+    "4.4",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "cd36854fa6f4aea6e97931240119d004aed3dc3f64b1a6e830edaa2425ccd287",
+   "source": "hand",
+   "op": "check",
+   "label": "4.4 path: U+2030 allowed",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InBhdGg6YeKAsGIiIGs9Im51bWVyaWMiPjc8L3N3b3JuPg==",
+    "name": "d.md",
+    "manifest_b64": null,
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "35ac0de4328e3fe3e7b163fb7568534a328590dcb4a5e66eb4ad4e5b65ec6420"
+   },
+   "expect_rows": [
+    [
+     "UNRESOLVED",
+     "no_repository"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-UNCHECKED",
+   "rules": [
+    "2.3",
+    "2.5",
+    "4.4",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "9daf4ff7ad3d6311c593250bc54bccf537a54a4cf9d4612b02731967d3133fac",
+   "source": "hand",
+   "op": "check",
+   "label": "4.4 path: U+00A1 allowed",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InBhdGg6YcKhYiIgaz0ibnVtZXJpYyI+Nzwvc3dvcm4+",
+    "name": "d.md",
+    "manifest_b64": null,
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "a1e968feda7d4cc7b7330b3255cbb21a993e52472836ccbd7a45b6c04799cbf7"
+   },
+   "expect_rows": [
+    [
+     "UNRESOLVED",
+     "no_repository"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-UNCHECKED",
+   "rules": [
+    "2.3",
+    "2.5",
+    "4.4",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "c95fbb9b36a1b897c945a7eece479bee14188f9fb526caf0a2ba53e1a76aa94d",
+   "source": "hand",
+   "op": "check",
+   "label": "4.4 path: U+0021 allowed",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InBhdGg6YSFiIiBrPSJudW1lcmljIj43PC9zd29ybj4=",
+    "name": "d.md",
+    "manifest_b64": null,
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "65ad2ae046b31940ab449cd740ab2052bf6a3a748158a2738719cead0238517f"
+   },
+   "expect_rows": [
+    [
+     "UNRESOLVED",
+     "no_repository"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-UNCHECKED",
+   "rules": [
+    "2.3",
+    "2.5",
+    "4.4",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "91d3609c6de7f7df5f91437c395d4b1759f40a8570ad9001beeec2d2b59a768c",
+   "source": "hand",
+   "op": "check",
+   "label": "4.4 path: '...' segment allowed",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InBhdGg6YS8uLi4vYiIgaz0ibnVtZXJpYyI+Nzwvc3dvcm4+",
+    "name": "d.md",
+    "manifest_b64": null,
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "16f662db372720cfb440e6ea1d61266aa2544d6248e72732e08b13cecc0c8eb2"
+   },
+   "expect_rows": [
+    [
+     "UNRESOLVED",
+     "no_repository"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-UNCHECKED",
+   "rules": [
+    "2.3",
+    "2.5",
+    "4.4",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "50f7e60a142ccf992f6b5203c97195c3d1a9d121236c5dfd6e7bd0e6acc05b4b",
+   "source": "hand",
+   "op": "check",
+   "label": "4.4 path: '.x' segment allowed",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InBhdGg6LngiIGs9Im51bWVyaWMiPjc8L3N3b3JuPg==",
+    "name": "d.md",
+    "manifest_b64": null,
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "c2545f63dcb777a1a25d156c406bb2d252da1463924e10d31cfb7cfa57060fed"
+   },
+   "expect_rows": [
+    [
+     "UNRESOLVED",
+     "no_repository"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-UNCHECKED",
+   "rules": [
+    "2.3",
+    "2.5",
+    "4.4",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "0e030a5bd84a70045432c8cc29328c5896f1d0da718de4b73995514bdcc80610",
+   "source": "hand",
+   "op": "check",
+   "label": "4.4 prereg: 63 hex refused",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InByZXJlZzphYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWEiIGs9Im51bWVyaWMiPjc8L3N3b3JuPg==",
+    "name": "d.md",
+    "manifest_b64": null,
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "4dd110189e653bed3485754f6076fafba95bc4c7ee2726fe281a15a48840d3bd"
+   },
+   "expect_rows": [
+    [
+     "MALFORMED",
+     "receipt_form"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-FAILED",
+   "rules": [
+    "2.3",
+    "2.5",
+    "4",
+    "7.1e",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "6298fb76cd22ad94713bf5d651ad1bdddaa648d69676096e8f5de9eaa3f047e0",
+   "source": "hand",
+   "op": "check",
+   "label": "4.4 prereg: 65 hex refused",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InByZXJlZzphYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYSIgaz0ibnVtZXJpYyI+Nzwvc3dvcm4+",
+    "name": "d.md",
+    "manifest_b64": null,
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "4706516fcdc04ddf776b1dc1efe49aef76df3dfa0861c12beda768b8dd32a54c"
+   },
+   "expect_rows": [
+    [
+     "MALFORMED",
+     "receipt_form"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-FAILED",
+   "rules": [
+    "2.3",
+    "2.5",
+    "4",
+    "7.1e",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "c69778718e1ef4eacd6537a422649b449a9c0b172b90a380520ce5e4852122a3",
+   "source": "hand",
+   "op": "check",
+   "label": "4.4 prereg: upper case 64 hex",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InByZXJlZzpBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBIiBrPSJudW1lcmljIj43PC9zd29ybj4=",
+    "name": "d.md",
+    "manifest_b64": null,
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "aef560c4aeeeb125da139d28f5a2ec3d76df3e43ec14a1ee2b82c459e1c43bc8"
+   },
+   "expect_rows": [
+    [
+     "UNRESOLVED",
+     "no_repository"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-UNCHECKED",
+   "rules": [
+    "2.3",
+    "2.5",
+    "4.4",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "c2429ed33a5c71c02e5ae0db4c1ac679d5d2fed484e1d3259143c53ca4d07d5b",
+   "source": "hand",
+   "op": "check",
+   "label": "4.4 prereg: with a line fragment",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InByZXJlZzphYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhI0wxLUwyIiBrPSJudW1lcmljIj43PC9zd29ybj4=",
+    "name": "d.md",
+    "manifest_b64": null,
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "660d2aa6d7f2443b55d4dbd92963f3324e8d8cade011854a5a640ecda62eb60a"
+   },
+   "expect_rows": [
+    [
+     "UNRESOLVED",
+     "no_repository"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-UNCHECKED",
+   "rules": [
+    "2.3",
+    "2.5",
+    "4.4",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "ab499df63227b4a606b967406144159b0162e2c487e2a94542ebed418bbc694c",
+   "source": "hand",
+   "op": "check",
+   "label": "4.4 prereg: with a pointer fragment",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InByZXJlZzphYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhIy94IiBrPSJxdW90ZSI+YGFiY2A8L3N3b3JuPg==",
+    "name": "d.md",
+    "manifest_b64": null,
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "ddbf72006e16e5212d3b49c5ed637d8f52b9967043f7da2c81973cb984e00a21"
+   },
+   "expect_rows": [
+    [
+     "UNRESOLVED",
+     "no_repository"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-UNCHECKED",
+   "rules": [
+    "2.3",
+    "2.5",
+    "4.4",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "5aa413964fafc739ba2772f1f1166b9708221053aeeed3267f154b274c9eb143",
+   "source": "hand",
+   "op": "check",
+   "label": "4.4 prereg: hash over a fragment is hash_over_partial",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InByZXJlZzphYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhI0wxIiBrPSJoYXNoIj5hYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhPC9zd29ybj4=",
+    "name": "d.md",
+    "manifest_b64": null,
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "7091fff9ff301dac3126e9001efe72b7a052a659fa6e706a85d607eda1baffcd"
+   },
+   "expect_rows": [
+    [
+     "MALFORMED",
+     "hash_over_partial"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-FAILED",
+   "rules": [
+    "2.3",
+    "2.5",
+    "7.1f",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "45406441c1eead6f68f2486546299e0e6e7c496dcfb680f5c88c2405faefbadb",
+   "source": "hand",
+   "op": "check",
+   "label": "6.3 before 6.4: rung L3 and id missing",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InI5IiBrPSJudW1lcmljIj43PC9zd29ybj4=",
+    "name": "d.md",
+    "manifest_b64": "eyJzcGVjIjogInN3b3JuL21hbmlmZXN0LzAuMiIsICJoYXJuZXNzIjogImgiLCAidHVybiI6ICJ0IiwgIm1pbnRlZF9hdCI6ICIyMDI2LTAxLTAxVDAwOjAwOjAwWiIsICJhdXRob3JlZF9zaGEyNTYiOiBbXSwgInJlY2VpcHRzIjogeyJyMSI6IHsic2hhMjU2IjogIjc5MDI2OTliZTQyYzhhOGU0NmZiYmI0NTAxNzI2NTE3ZTg2YjIyYzU2YTE4OWY3NjI1YTZkYTQ5MDgxYjI0NTEiLCAiYnl0ZXMiOiAiTnc9PSIsICJpZCI6ICJyMSIsICJraW5kX29mX3NvdXJjZSI6ICJ0b29sX3N0ZG91dCIsICJjYXB0dXJlZF9hdCI6ICIyMDI2LTAxLTAxVDAwOjAwOjAwWiIsICJjb21wbGV0ZSI6IHRydWV9fSwgInJ1bmciOiAiTDMifQ==",
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "c1db6c89997142d7b3657c882accc4abd386209cec333b25c50efdefb02e7b19"
+   },
+   "expect_rows": [
+    [
+     "UNRESOLVED",
+     "rung_unknown"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-UNCHECKED",
+   "rules": [
+    "2.3",
+    "2.5",
+    "5.4",
+    "5.5",
+    "6.3",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "3a9c3f28214026b123c649ce2aeda3994fb67c0dc94c63814b597dbded8f4e24",
+   "source": "hand",
+   "op": "check",
+   "label": "6.2 before 6.3: rung L3 and a wrong digest",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InIxIiBrPSJudW1lcmljIj43PC9zd29ybj4=",
+    "name": "d.md",
+    "manifest_b64": "eyJzcGVjIjogInN3b3JuL21hbmlmZXN0LzAuMiIsICJoYXJuZXNzIjogImgiLCAidHVybiI6ICJ0IiwgIm1pbnRlZF9hdCI6ICIyMDI2LTAxLTAxVDAwOjAwOjAwWiIsICJhdXRob3JlZF9zaGEyNTYiOiBbXSwgInJlY2VpcHRzIjogeyJyMSI6IHsic2hhMjU2IjogIjc5MDI2OTliZTQyYzhhOGU0NmZiYmI0NTAxNzI2NTE3ZTg2YjIyYzU2YTE4OWY3NjI1YTZkYTQ5MDgxYjI0NTEiLCAiYnl0ZXMiOiAiTnc9PSIsICJpZCI6ICJyMSIsICJraW5kX29mX3NvdXJjZSI6ICJ0b29sX3N0ZG91dCIsICJjYXB0dXJlZF9hdCI6ICIyMDI2LTAxLTAxVDAwOjAwOjAwWiIsICJjb21wbGV0ZSI6IHRydWV9fSwgInJ1bmciOiAiTDMiLCAiZGlnZXN0IjogIjAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAifQ==",
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "adaef3867bd2e7f11675397f7889bc626b6bd60f4b5d92517fb3752d599066a7"
+   },
+   "expect_rows": [
+    [
+     "UNRESOLVED",
+     "manifest_integrity"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-UNCHECKED",
+   "rules": [
+    "2.3",
+    "2.5",
+    "5.4",
+    "5.5",
+    "5.6",
+    "6.2",
+    "6.5",
+    "6.10",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "2f159a3c74644404aadc7e53636ffc2c70de10ef8f14925dd72c116e4f0f67f2",
+   "source": "hand",
+   "op": "check",
+   "label": "6.3 rung 'l2' (lower case) unknown",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InIxIiBrPSJudW1lcmljIj43PC9zd29ybj4=",
+    "name": "d.md",
+    "manifest_b64": "eyJzcGVjIjogInN3b3JuL21hbmlmZXN0LzAuMiIsICJoYXJuZXNzIjogImgiLCAidHVybiI6ICJ0IiwgIm1pbnRlZF9hdCI6ICIyMDI2LTAxLTAxVDAwOjAwOjAwWiIsICJhdXRob3JlZF9zaGEyNTYiOiBbXSwgInJlY2VpcHRzIjogeyJyMSI6IHsic2hhMjU2IjogIjc5MDI2OTliZTQyYzhhOGU0NmZiYmI0NTAxNzI2NTE3ZTg2YjIyYzU2YTE4OWY3NjI1YTZkYTQ5MDgxYjI0NTEiLCAiYnl0ZXMiOiAiTnc9PSIsICJpZCI6ICJyMSIsICJraW5kX29mX3NvdXJjZSI6ICJ0b29sX3N0ZG91dCIsICJjYXB0dXJlZF9hdCI6ICIyMDI2LTAxLTAxVDAwOjAwOjAwWiIsICJjb21wbGV0ZSI6IHRydWV9fSwgInJ1bmciOiAibDIifQ==",
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "70f5455273def0917fdbec564918a8e08ac6b606f315202b4263743b50dfeaf0"
+   },
+   "expect_rows": [
+    [
+     "UNRESOLVED",
+     "rung_unknown"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-UNCHECKED",
+   "rules": [
+    "2.3",
+    "2.5",
+    "5.4",
+    "5.5",
+    "6.3",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "937f717d43d8e3ae8a6e3a31f9e5c93af9a0087cadfd09c311a1f54064b49ab4",
+   "source": "hand",
+   "op": "check",
+   "label": "6.5 upper-case sha256, no bytes, hash kind: manifest_integrity",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InIxIiBrPSJoYXNoIj5BQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBPC9zd29ybj4=",
+    "name": "d.md",
+    "manifest_b64": "eyJzcGVjIjogInN3b3JuL21hbmlmZXN0LzAuMiIsICJoYXJuZXNzIjogImgiLCAidHVybiI6ICJ0IiwgIm1pbnRlZF9hdCI6ICIyMDI2LTAxLTAxVDAwOjAwOjAwWiIsICJhdXRob3JlZF9zaGEyNTYiOiBbXSwgInJlY2VpcHRzIjogeyJyMSI6IHsic2hhMjU2IjogIkFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUEiLCAiaWQiOiAicjEiLCAia2luZF9vZl9zb3VyY2UiOiAidG9vbF9zdGRvdXQiLCAiY2FwdHVyZWRfYXQiOiAiMjAyNi0wMS0wMVQwMDowMDowMFoiLCAiY29tcGxldGUiOiB0cnVlfX0sICJydW5nIjogIkwyIn0=",
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "a08c6cd4f9fd5a306fb2ce5f0a7e5823d8c7d54cbb6e16de87b18c9679f0b725"
+   },
+   "expect_rows": [
+    [
+     "UNRESOLVED",
+     "manifest_integrity"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-UNCHECKED",
+   "rules": [
+    "2.3",
+    "2.5",
+    "5.4",
+    "5.5",
+    "5.6",
+    "6.2",
+    "6.5",
+    "6.10",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "c1e28245f9dbbcb36b7c1a2f402c8b99474740b949822fa344d5ebfd38f4c76e",
+   "source": "hand",
+   "op": "check",
+   "label": "6.5 63-digit sha256, no bytes, numeric: manifest_integrity (not bytes_absent)",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InIxIiBrPSJudW1lcmljIj43PC9zd29ybj4=",
+    "name": "d.md",
+    "manifest_b64": "eyJzcGVjIjogInN3b3JuL21hbmlmZXN0LzAuMiIsICJoYXJuZXNzIjogImgiLCAidHVybiI6ICJ0IiwgIm1pbnRlZF9hdCI6ICIyMDI2LTAxLTAxVDAwOjAwOjAwWiIsICJhdXRob3JlZF9zaGEyNTYiOiBbXSwgInJlY2VpcHRzIjogeyJyMSI6IHsic2hhMjU2IjogImFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYSIsICJpZCI6ICJyMSIsICJraW5kX29mX3NvdXJjZSI6ICJ0b29sX3N0ZG91dCIsICJjYXB0dXJlZF9hdCI6ICIyMDI2LTAxLTAxVDAwOjAwOjAwWiIsICJjb21wbGV0ZSI6IHRydWV9fSwgInJ1bmciOiAiTDIifQ==",
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "e256edc7c32ba458fad041fae3df95b5cba0d87da9b7888f01212c69414243f3"
+   },
+   "expect_rows": [
+    [
+     "UNRESOLVED",
+     "manifest_integrity"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-UNCHECKED",
+   "rules": [
+    "2.3",
+    "2.5",
+    "5.4",
+    "5.5",
+    "5.6",
+    "6.2",
+    "6.5",
+    "6.10",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "b4e18186ad35749956e8456c63e411d7b797c217d688b3c1a84c0b4d24e51691",
+   "source": "hand",
+   "op": "check",
+   "label": "6.5 entry an array",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InIxIiBrPSJudW1lcmljIj43PC9zd29ybj4=",
+    "name": "d.md",
+    "manifest_b64": "eyJzcGVjIjogInN3b3JuL21hbmlmZXN0LzAuMiIsICJoYXJuZXNzIjogImgiLCAidHVybiI6ICJ0IiwgIm1pbnRlZF9hdCI6ICJ4IiwgImF1dGhvcmVkX3NoYTI1NiI6IFtdLCAicmVjZWlwdHMiOiB7InIxIjogWzFdfSwgInJ1bmciOiBudWxsfQ==",
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "9dfc7d463b75cc55827d3ee6b5ceb08b7cebf4c568eca494d06988aebfc843df"
+   },
+   "expect_rows": [
+    [
+     "UNRESOLVED",
+     "manifest_integrity"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-UNCHECKED",
+   "rules": [
+    "2.3",
+    "2.5",
+    "5.4",
+    "5.5",
+    "5.6",
+    "6.2",
+    "6.5",
+    "6.10",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "eda42a2058e8b0605c5abab7fb5d3281a71a027f02754b568f3f93461602d687",
+   "source": "hand",
+   "op": "check",
+   "label": "6.11 CR kept: quote over L1 counts the CR in haystack_bytes",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InIxI0wxIiBrPSJxdW90ZSI+YGNkZWZnaGlqa2xtbm9wYDwvc3dvcm4+",
+    "name": "d.md",
+    "manifest_b64": "eyJzcGVjIjogInN3b3JuL21hbmlmZXN0LzAuMiIsICJoYXJuZXNzIjogImgiLCAidHVybiI6ICJ0IiwgIm1pbnRlZF9hdCI6ICIyMDI2LTAxLTAxVDAwOjAwOjAwWiIsICJhdXRob3JlZF9zaGEyNTYiOiBbXSwgInJlY2VpcHRzIjogeyJyMSI6IHsic2hhMjU2IjogIjNmNDIwMGVmZGIwODg5OWE5NjMzMWQ2OGNmM2U1MjUzYjlhYmIyZGYzNzAzYTBkZTExNDk3ZWMzM2QyNTU2NDEiLCAiYnl0ZXMiOiAiWVdKalpHVm1aMmhwYW10c2JXNXZjQTBLY1FvPSIsICJpZCI6ICJyMSIsICJraW5kX29mX3NvdXJjZSI6ICJ0b29sX3N0ZG91dCIsICJjYXB0dXJlZF9hdCI6ICIyMDI2LTAxLTAxVDAwOjAwOjAwWiIsICJjb21wbGV0ZSI6IHRydWV9fSwgInJ1bmciOiAiTDIifQ==",
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "b667030975db3dfefc6cb9fa6bb22f9174f1f074942916fd95d92b7a19b1d9d3"
+   },
+   "expect_rows": [
+    [
+     "HELD",
+     null
+    ]
+   ],
+   "expect_document_verdict": "SWORN-HELD",
+   "rules": [
+    "2.3",
+    "2.5",
+    "5.4",
+    "5.5",
+    "6.9",
+    "7.5",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "9d4dcd886f37ea5d503b36e7383234788902e89c1248db7aca354e45e974109f",
+   "source": "hand",
+   "op": "check",
+   "label": "6.11 CR kept: needle ending in CR found in a line slice",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InIxI0wxIiBrPSJxdW90ZSI+YG5vcA1gPC9zd29ybj4=",
+    "name": "d.md",
+    "manifest_b64": "eyJzcGVjIjogInN3b3JuL21hbmlmZXN0LzAuMiIsICJoYXJuZXNzIjogImgiLCAidHVybiI6ICJ0IiwgIm1pbnRlZF9hdCI6ICIyMDI2LTAxLTAxVDAwOjAwOjAwWiIsICJhdXRob3JlZF9zaGEyNTYiOiBbXSwgInJlY2VpcHRzIjogeyJyMSI6IHsic2hhMjU2IjogIjNmNDIwMGVmZGIwODg5OWE5NjMzMWQ2OGNmM2U1MjUzYjlhYmIyZGYzNzAzYTBkZTExNDk3ZWMzM2QyNTU2NDEiLCAiYnl0ZXMiOiAiWVdKalpHVm1aMmhwYW10c2JXNXZjQTBLY1FvPSIsICJpZCI6ICJyMSIsICJraW5kX29mX3NvdXJjZSI6ICJ0b29sX3N0ZG91dCIsICJjYXB0dXJlZF9hdCI6ICIyMDI2LTAxLTAxVDAwOjAwOjAwWiIsICJjb21wbGV0ZSI6IHRydWV9fSwgInJ1bmciOiAiTDIifQ==",
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "c7cd8d98af335612b7b0c7f64ff608722e28fe4c7bc5cab2ec3a1d02ec490e62"
+   },
+   "expect_rows": [
+    [
+     "HELD",
+     null
+    ]
+   ],
+   "expect_document_verdict": "SWORN-HELD",
+   "rules": [
+    "2.3",
+    "2.5",
+    "5.4",
+    "5.5",
+    "6.9",
+    "7.5",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "f5a3918172aa4ec1d138ff80461ff92ebdd0e232978d8a74e9b32ba7f6d4dbc7",
+   "source": "hand",
+   "op": "check",
+   "label": "6.11 a range ending on the last line without LF",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InIxI0wyLUwyIiBrPSJudW1lcmljIj44PC9zd29ybj4=",
+    "name": "d.md",
+    "manifest_b64": "eyJzcGVjIjogInN3b3JuL21hbmlmZXN0LzAuMiIsICJoYXJuZXNzIjogImgiLCAidHVybiI6ICJ0IiwgIm1pbnRlZF9hdCI6ICIyMDI2LTAxLTAxVDAwOjAwOjAwWiIsICJhdXRob3JlZF9zaGEyNTYiOiBbXSwgInJlY2VpcHRzIjogeyJyMSI6IHsic2hhMjU2IjogImVkZmEyODhhMmRhZGU5ODE1NzM2ZWFjOGYwZGY5N2YwM2VhMWVlMTMwZjM1ZDY0NTUzMWQ5YjQ4ZDQ5MTJiZWIiLCAiYnl0ZXMiOiAiTndvNCIsICJpZCI6ICJyMSIsICJraW5kX29mX3NvdXJjZSI6ICJ0b29sX3N0ZG91dCIsICJjYXB0dXJlZF9hdCI6ICIyMDI2LTAxLTAxVDAwOjAwOjAwWiIsICJjb21wbGV0ZSI6IHRydWV9fSwgInJ1bmciOiAiTDIifQ==",
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "94bf9aa2700ed8850dec124c4e8c7e3489b0ce2306f9fe1d286306e9cf413a72"
+   },
+   "expect_rows": [
+    [
+     "HELD",
+     null
+    ]
+   ],
+   "expect_document_verdict": "SWORN-HELD",
+   "rules": [
+    "2.3",
+    "2.5",
+    "5.4",
+    "5.5",
+    "6.9",
+    "7.3",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "9480b96848ed7f7565e18dc2bf75f13430114ccda0eafc533dcef66800f70410",
+   "source": "hand",
+   "op": "check",
+   "label": "6.11 a range past the last line, receipt ending LF",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InIxI0wzIiBrPSJudW1lcmljIj44PC9zd29ybj4=",
+    "name": "d.md",
+    "manifest_b64": "eyJzcGVjIjogInN3b3JuL21hbmlmZXN0LzAuMiIsICJoYXJuZXNzIjogImgiLCAidHVybiI6ICJ0IiwgIm1pbnRlZF9hdCI6ICIyMDI2LTAxLTAxVDAwOjAwOjAwWiIsICJhdXRob3JlZF9zaGEyNTYiOiBbXSwgInJlY2VpcHRzIjogeyJyMSI6IHsic2hhMjU2IjogImFkZGRiNTE0NmE4NTc4ZjYxN2FiMWY1ZTEwM2M1NDU0OTBlOTk0NjNkNDU5MzJlYTkzNzVhY2M0Y2Y5MDVlYzEiLCAiYnl0ZXMiOiAiTndvNENnPT0iLCAiaWQiOiAicjEiLCAia2luZF9vZl9zb3VyY2UiOiAidG9vbF9zdGRvdXQiLCAiY2FwdHVyZWRfYXQiOiAiMjAyNi0wMS0wMVQwMDowMDowMFoiLCAiY29tcGxldGUiOiB0cnVlfX0sICJydW5nIjogIkwyIn0=",
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "010aaa21d5fe26ad92aeab5d4ca983c2170666dde09625b4110ac94d5c2c6fe6"
+   },
+   "expect_rows": [
+    [
+     "MALFORMED",
+     "anchor_out_of_range"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-FAILED",
+   "rules": [
+    "2.3",
+    "2.5",
+    "5.4",
+    "5.5",
+    "6.11",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "a7934d46b98ae335aa72310a14d06832be6009ae473fad38dce2fa83792230c9",
+   "source": "hand",
+   "op": "check",
+   "label": "6.11 '7 LF LF' has two lines, the second empty: L3 is anchor_out_of_range",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InIxI0wzIiBrPSJudW1lcmljIj44PC9zd29ybj4=",
+    "name": "d.md",
+    "manifest_b64": "eyJzcGVjIjogInN3b3JuL21hbmlmZXN0LzAuMiIsICJoYXJuZXNzIjogImgiLCAidHVybiI6ICJ0IiwgIm1pbnRlZF9hdCI6ICIyMDI2LTAxLTAxVDAwOjAwOjAwWiIsICJhdXRob3JlZF9zaGEyNTYiOiBbXSwgInJlY2VpcHRzIjogeyJyMSI6IHsic2hhMjU2IjogImU2Mjg1M2RlNDg4MzMxYWYwZTAxZmYwMmIzZmM2YmQ3YzRkZTU4ODhjMjM3Yzk3ODA4ODRiZDk5ZmJmNTBiNGUiLCAiYnl0ZXMiOiAiTndvSyIsICJpZCI6ICJyMSIsICJraW5kX29mX3NvdXJjZSI6ICJ0b29sX3N0ZG91dCIsICJjYXB0dXJlZF9hdCI6ICIyMDI2LTAxLTAxVDAwOjAwOjAwWiIsICJjb21wbGV0ZSI6IHRydWV9fSwgInJ1bmciOiAiTDIifQ==",
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "18a7b749c5ba375ce2d33e08df650584bee2c00be0466627ac4ab8a2acbaf29c"
+   },
+   "expect_rows": [
+    [
+     "MALFORMED",
+     "anchor_out_of_range"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-FAILED",
+   "rules": [
+    "2.3",
+    "2.5",
+    "5.4",
+    "5.5",
+    "6.11",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "6cd7cbfc90496b579d5fc2f32afcf5abd717823c52a7a918214d84f25e91f812",
+   "source": "hand",
+   "op": "check",
+   "label": "6.12 '-' is not an array index",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InIxIy8tIiBrPSJudW1lcmljIj43PC9zd29ybj4=",
+    "name": "d.md",
+    "manifest_b64": "eyJzcGVjIjogInN3b3JuL21hbmlmZXN0LzAuMiIsICJoYXJuZXNzIjogImgiLCAidHVybiI6ICJ0IiwgIm1pbnRlZF9hdCI6ICIyMDI2LTAxLTAxVDAwOjAwOjAwWiIsICJhdXRob3JlZF9zaGEyNTYiOiBbXSwgInJlY2VpcHRzIjogeyJyMSI6IHsic2hhMjU2IjogIjU4OWZmZDNhY2Y1MjJhZTgxMTkyNTc5ZjI5NzU4OWU5M2IwYzQxZjc0OGIyMjRkMWI0YmI1Yzg1N2EyZjcwY2IiLCAiYnl0ZXMiOiAiV3pkZCIsICJpZCI6ICJyMSIsICJraW5kX29mX3NvdXJjZSI6ICJ0b29sX3N0ZG91dCIsICJjYXB0dXJlZF9hdCI6ICIyMDI2LTAxLTAxVDAwOjAwOjAwWiIsICJjb21wbGV0ZSI6IHRydWV9fSwgInJ1bmciOiAiTDIifQ==",
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "496c97100304824ec8311b7b33081d5a7cab95a3d9fe0c036e5c355ed32a4773"
+   },
+   "expect_rows": [
+    [
+     "MALFORMED",
+     "pointer_unresolvable"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-FAILED",
+   "rules": [
+    "2.3",
+    "2.5",
+    "5.4",
+    "5.5",
+    "6.12",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "0cf9a4d734b6ebc130d0baad9711fe4da4176ec2be49e6fa5325f92d4c47f769",
+   "source": "hand",
+   "op": "check",
+   "label": "6.12 key present with a dup elsewhere at the same level is fine",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InIxIy9hIiBrPSJudW1lcmljIj43PC9zd29ybj4=",
+    "name": "d.md",
+    "manifest_b64": "eyJzcGVjIjogInN3b3JuL21hbmlmZXN0LzAuMiIsICJoYXJuZXNzIjogImgiLCAidHVybiI6ICJ0IiwgIm1pbnRlZF9hdCI6ICIyMDI2LTAxLTAxVDAwOjAwOjAwWiIsICJhdXRob3JlZF9zaGEyNTYiOiBbXSwgInJlY2VpcHRzIjogeyJyMSI6IHsic2hhMjU2IjogIjQzZWNkZDg3ODkyM2EyMDg0MWYwZDAxOTExNTdkZDYwMzRkYjJlNDZhNzk2MzRiMGNiNzE1ZDQxMjJkZTA4NjQiLCAiYnl0ZXMiOiAiZXlKaElqb2dOeXdnSW1JaU9pQXhMQ0FpWWlJNklESjkiLCAiaWQiOiAicjEiLCAia2luZF9vZl9zb3VyY2UiOiAidG9vbF9zdGRvdXQiLCAiY2FwdHVyZWRfYXQiOiAiMjAyNi0wMS0wMVQwMDowMDowMFoiLCAiY29tcGxldGUiOiB0cnVlfX0sICJydW5nIjogIkwyIn0=",
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "3b9c74ea65da4726e38e73e757def9a45cc0139b8a7fbbc09784ed1b69b3b77a"
+   },
+   "expect_rows": [
+    [
+     "HELD",
+     null
+    ]
+   ],
+   "expect_document_verdict": "SWORN-HELD",
+   "rules": [
+    "2.3",
+    "2.5",
+    "5.4",
+    "5.5",
+    "6.9",
+    "7.3",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "d873e6b2815ba4f89e540e8b220cd78296cbe3399a1178f610a09149dd47f7e3",
+   "source": "hand",
+   "op": "check",
+   "label": "7.1 b before c: 301 spaces is empty_span",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InIxIiBrPSJudW1lcmljIj4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPC9zd29ybj4=",
+    "name": "d.md",
+    "manifest_b64": null,
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "1891fba5777c03eec62bac2f96c4869b012a4e984b118c194f7991d942054e80"
+   },
+   "expect_rows": [
+    [
+     "MALFORMED",
+     "empty_span"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-FAILED",
+   "rules": [
+    "2.3",
+    "2.3d",
+    "2.5",
+    "7.1b",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "02ae970b99093d021553aa812d37151be438f1ee9006654300c3f42974f79370",
+   "source": "hand",
+   "op": "check",
+   "label": "7.1 c before d: 301 code points with an unknown kind",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InIxIiBrPSJib2d1cyI+eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eDwvc3dvcm4+",
+    "name": "d.md",
+    "manifest_b64": null,
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "02365e7344dbe7f211f3d8556cdf8f85c1a599b146dca302a86c31505609c7e0"
+   },
+   "expect_rows": [
+    [
+     "MALFORMED",
+     "length_cap"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-FAILED",
+   "rules": [
+    "2.3",
+    "2.5",
+    "7.1c",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "16bcd73fd783790907b3baca47951331b3fc42710e2d81af758254fd0acca2f8",
+   "source": "hand",
+   "op": "check",
+   "label": "7.1 e before f: absent over 'r1#'",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InIxIyIgaz0iYWJzZW50Ij5gYWJjYDwvc3dvcm4+",
+    "name": "d.md",
+    "manifest_b64": null,
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "251ec91eda5b54a452dd2f85ab37020ec354aa436b322ca4fbae9fe8da6bfc01"
+   },
+   "expect_rows": [
+    [
+     "MALFORMED",
+     "receipt_form"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-FAILED",
+   "rules": [
+    "2.3",
+    "2.5",
+    "4",
+    "7.1e",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "107c602a6e5ae03c52f80c6468d4dc7a500251d06e88efb9db816f5c4c7391ed",
+   "source": "hand",
+   "op": "check",
+   "label": "7.1 f before g: absent with a fragment and U+202E",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InIxI0wxIiBrPSJhYnNlbnQiPmBhYmNgIOKArjwvc3dvcm4+",
+    "name": "d.md",
+    "manifest_b64": null,
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "8b61ad71ceb488e623af05b0fd115610c815e3b7c6c953ccd22b45ab5b70d5b9"
+   },
+   "expect_rows": [
+    [
+     "MALFORMED",
+     "absent_over_partial"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-FAILED",
+   "rules": [
+    "2.3",
+    "2.5",
+    "7.1f",
+    "7.1j",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "aebf5e2bdeb7b87493243ab64af52ccc4e48d69b0409542df77ddcfaf90daec4",
+   "source": "hand",
+   "op": "check",
+   "label": "7.1 g before h: override inside a bad number",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InIxIiBrPSJudW1lcmljIj7igK0xZTU8L3N3b3JuPg==",
+    "name": "d.md",
+    "manifest_b64": null,
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "1d0338c6ec8319d910c28672f6a7e1ba2ce3e25fa008ea8419dd5d4e6f1841e4"
+   },
+   "expect_rows": [
+    [
+     "MALFORMED",
+     "directional_override"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-FAILED",
+   "rules": [
+    "2.3",
+    "2.5",
+    "7.1g",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "823c4e74073976856467ed4bede6676025f11bdd079cbb2e0b4815005cae6271",
+   "source": "hand",
+   "op": "check",
+   "label": "7.1 i before j: absent, no bytes, no complete",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InIxIiBrPSJhYnNlbnQiPmBhYmNgPC9zd29ybj4=",
+    "name": "d.md",
+    "manifest_b64": "eyJzcGVjIjogInN3b3JuL21hbmlmZXN0LzAuMiIsICJoYXJuZXNzIjogImgiLCAidHVybiI6ICJ0IiwgIm1pbnRlZF9hdCI6ICIyMDI2LTAxLTAxVDAwOjAwOjAwWiIsICJhdXRob3JlZF9zaGEyNTYiOiBbXSwgInJlY2VpcHRzIjogeyJyMSI6IHsic2hhMjU2IjogImJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmIiLCAiY29tcGxldGUiOiBudWxsLCAiaWQiOiAicjEiLCAia2luZF9vZl9zb3VyY2UiOiAidG9vbF9zdGRvdXQiLCAiY2FwdHVyZWRfYXQiOiAiMjAyNi0wMS0wMVQwMDowMDowMFoifX0sICJydW5nIjogIkwyIn0=",
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "0750aebeb307cd0b29934ce99e767f2462a3e3a8a88cce95c78dcd46f94bab38"
+   },
+   "expect_rows": [
+    [
+     "UNRESOLVED",
+     "manifest_bytes_absent"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-UNCHECKED",
+   "rules": [
+    "2.3",
+    "2.5",
+    "5.4",
+    "5.5",
+    "6.10",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "e2825a0e2547186688b0220b20918b534144bf471583f3111aa3110dc87a72d0",
+   "source": "hand",
+   "op": "check",
+   "label": "7.1b NBSP only is not empty: number_count",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InIxIiBrPSJudW1lcmljIj7CoDwvc3dvcm4+",
+    "name": "d.md",
+    "manifest_b64": null,
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "8ebedb52e255b1ea54088554fb199692d8e582f82d04fc9e60d0a71fd6241a8f"
+   },
+   "expect_rows": [
+    [
+     "MALFORMED",
+     "number_count"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-FAILED",
+   "rules": [
+    "2.3",
+    "2.5",
+    "7.2",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "6bee466596ea891081cf2c0fc77b8d333debcfac55750e29bb81465941ce3394",
+   "source": "hand",
+   "op": "check",
+   "label": "7.1b VT FF only is empty_span",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InIxIiBrPSJudW1lcmljIj4LDDwvc3dvcm4+",
+    "name": "d.md",
+    "manifest_b64": null,
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "b374886af3857009470974a9a4801c750cb28b1f9d018ec18ff75226c8eea347"
+   },
+   "expect_rows": [
+    [
+     "MALFORMED",
+     "empty_span"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-FAILED",
+   "rules": [
+    "2.3",
+    "2.3d",
+    "2.5",
+    "7.1b",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "fdef8b40e7448ea7a1c375818114f070e8fd4975bb438445f3d91f54c2a10548",
+   "source": "hand",
+   "op": "check",
+   "label": "7.2 dash U+00AD joins: number_grammar",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InIxIiBrPSJudW1lcmljIj4xMsKtMTM8L3N3b3JuPg==",
+    "name": "d.md",
+    "manifest_b64": null,
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "73a483e37ff09aa3fec44174dce66a0e946171832713ebd3dd0d491b38ea7f1b"
+   },
+   "expect_rows": [
+    [
+     "MALFORMED",
+     "number_grammar"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-FAILED",
+   "rules": [
+    "2.3",
+    "2.5",
+    "7.2",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "5b471791b98b2d98f11b3d0ad192ceab9040dce7cf59d84b6e2ec75746e7bed9",
+   "source": "hand",
+   "op": "check",
+   "label": "7.2 dash U+058A joins: number_grammar",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InIxIiBrPSJudW1lcmljIj4xMtaKMTM8L3N3b3JuPg==",
+    "name": "d.md",
+    "manifest_b64": null,
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "1d17293df5a97e1e9feb9bf400e5759c640e38e9cddc3d3c2f328b3ce8b72fdf"
+   },
+   "expect_rows": [
+    [
+     "MALFORMED",
+     "number_grammar"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-FAILED",
+   "rules": [
+    "2.3",
+    "2.5",
+    "7.2",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "32ca0dd1471a13f151c3fbfa93790620d43b4b2bc3677dbdf83ae1eba94345ba",
+   "source": "hand",
+   "op": "check",
+   "label": "7.2 dash U+05BE joins: number_grammar",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InIxIiBrPSJudW1lcmljIj4xMta+MTM8L3N3b3JuPg==",
+    "name": "d.md",
+    "manifest_b64": null,
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "472134b4b77ec7f080b630923a9d8d9885c7add32fa19fe106a0a2a674377b79"
+   },
+   "expect_rows": [
+    [
+     "MALFORMED",
+     "number_grammar"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-FAILED",
+   "rules": [
+    "2.3",
+    "2.5",
+    "7.2",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "e39d6fc83a7a3771d33cbebec4c618cb5ae8f2341c474f3635fffc283546d107",
+   "source": "hand",
+   "op": "check",
+   "label": "7.2 dash U+1400 joins: number_grammar",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InIxIiBrPSJudW1lcmljIj4xMuGQgDEzPC9zd29ybj4=",
+    "name": "d.md",
+    "manifest_b64": null,
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "d651e3ff58a1980bc916427b076bb30ac2326a33394573fa44667df9a2870b37"
+   },
+   "expect_rows": [
+    [
+     "MALFORMED",
+     "number_grammar"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-FAILED",
+   "rules": [
+    "2.3",
+    "2.5",
+    "7.2",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "7d6a23d2e9bb0cbfbcfd8549faf77e9a356795a4ef2ea67e73f65379a07c0f3c",
+   "source": "hand",
+   "op": "check",
+   "label": "7.2 dash U+1806 joins: number_grammar",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InIxIiBrPSJudW1lcmljIj4xMuGghjEzPC9zd29ybj4=",
+    "name": "d.md",
+    "manifest_b64": null,
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "51a27292bcfe90937d329a8539e438f4057dac162b1d5f3325bca7155086ce75"
+   },
+   "expect_rows": [
+    [
+     "MALFORMED",
+     "number_grammar"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-FAILED",
+   "rules": [
+    "2.3",
+    "2.5",
+    "7.2",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "4a541e97c411d44003b1e3f782e40b8b85cd1df7c583596056cf5dd024dffd6f",
+   "source": "hand",
+   "op": "check",
+   "label": "7.2 dash U+2010 joins: number_grammar",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InIxIiBrPSJudW1lcmljIj4xMuKAkDEzPC9zd29ybj4=",
+    "name": "d.md",
+    "manifest_b64": null,
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "a528159c1c18c584eaca02ce902f0eebe0498bddd3228975ec130b8724ff5742"
+   },
+   "expect_rows": [
+    [
+     "MALFORMED",
+     "number_grammar"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-FAILED",
+   "rules": [
+    "2.3",
+    "2.5",
+    "7.2",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "6c87d080c209e7d06411c46f313dbd60b77484e72eedf9c7921f1c931f793b76",
+   "source": "hand",
+   "op": "check",
+   "label": "7.2 dash U+2011 joins: number_grammar",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InIxIiBrPSJudW1lcmljIj4xMuKAkTEzPC9zd29ybj4=",
+    "name": "d.md",
+    "manifest_b64": null,
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "f96daa224cbe4638b5a35230991f8ccb8ed440948c6225d12a8b094b9dec8706"
+   },
+   "expect_rows": [
+    [
+     "MALFORMED",
+     "number_grammar"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-FAILED",
+   "rules": [
+    "2.3",
+    "2.5",
+    "7.2",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "864b3e8647d606e9a5c76a9e47291b7a2353775ebd66c64e564d77f3af5a0abb",
+   "source": "hand",
+   "op": "check",
+   "label": "7.2 dash U+2012 joins: number_grammar",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InIxIiBrPSJudW1lcmljIj4xMuKAkjEzPC9zd29ybj4=",
+    "name": "d.md",
+    "manifest_b64": null,
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "20d8823b36a522034e1f27faf410bd38d3e54c9eafed0a4261a4c0702e8a9442"
+   },
+   "expect_rows": [
+    [
+     "MALFORMED",
+     "number_grammar"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-FAILED",
+   "rules": [
+    "2.3",
+    "2.5",
+    "7.2",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "85ea827941d9f817af1e33711d00d4a782ce930c49a7ea33f19d064f03a9ee71",
+   "source": "hand",
+   "op": "check",
+   "label": "7.2 dash U+2013 joins: number_grammar",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InIxIiBrPSJudW1lcmljIj4xMuKAkzEzPC9zd29ybj4=",
+    "name": "d.md",
+    "manifest_b64": null,
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "be060d0ff8e5835673d8a10fc1ff13d927d2c3733c7f4bcdefb23de50b0af0d6"
+   },
+   "expect_rows": [
+    [
+     "MALFORMED",
+     "number_grammar"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-FAILED",
+   "rules": [
+    "2.3",
+    "2.5",
+    "7.2",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "5a7b5937e022a5259d6aed289e69dfc5767aeeb5178f20240571694ef4f53653",
+   "source": "hand",
+   "op": "check",
+   "label": "7.2 dash U+2014 joins: number_grammar",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InIxIiBrPSJudW1lcmljIj4xMuKAlDEzPC9zd29ybj4=",
+    "name": "d.md",
+    "manifest_b64": null,
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "f9b513a1f8f46f053ca367ca1023fcbf65c048f881e7a2b969fc650433b6b1a6"
+   },
+   "expect_rows": [
+    [
+     "MALFORMED",
+     "number_grammar"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-FAILED",
+   "rules": [
+    "2.3",
+    "2.5",
+    "7.2",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "b8ef00dfa3be910487372b85339ff1de0b8a2eac854f4183e5dc212331c4f037",
+   "source": "hand",
+   "op": "check",
+   "label": "7.2 dash U+2015 joins: number_grammar",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InIxIiBrPSJudW1lcmljIj4xMuKAlTEzPC9zd29ybj4=",
+    "name": "d.md",
+    "manifest_b64": null,
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "4d6b542368cf26d70203a506f2a9b4206a9696129534225db5644e718e92d084"
+   },
+   "expect_rows": [
+    [
+     "MALFORMED",
+     "number_grammar"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-FAILED",
+   "rules": [
+    "2.3",
+    "2.5",
+    "7.2",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "393c2173657d2acca7567e4302ac5fbe888e8917f1ae851f5c60980c2d39e000",
+   "source": "hand",
+   "op": "check",
+   "label": "7.2 dash U+2E17 joins: number_grammar",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InIxIiBrPSJudW1lcmljIj4xMuK4lzEzPC9zd29ybj4=",
+    "name": "d.md",
+    "manifest_b64": null,
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "67e9dfd0eb784a8f6d58657376672ec039e9dc6606cdb35ce6f57f928fe13af7"
+   },
+   "expect_rows": [
+    [
+     "MALFORMED",
+     "number_grammar"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-FAILED",
+   "rules": [
+    "2.3",
+    "2.5",
+    "7.2",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "cbe688120e83d4e278938d022dee88b979fd5c4b2cdaed35c49968fe23780d34",
+   "source": "hand",
+   "op": "check",
+   "label": "7.2 dash U+2E1A joins: number_grammar",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InIxIiBrPSJudW1lcmljIj4xMuK4mjEzPC9zd29ybj4=",
+    "name": "d.md",
+    "manifest_b64": null,
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "df40b1cdb9ca5a437120c947a72834cd46df7e0a48c38cb135199e3d92876591"
+   },
+   "expect_rows": [
+    [
+     "MALFORMED",
+     "number_grammar"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-FAILED",
+   "rules": [
+    "2.3",
+    "2.5",
+    "7.2",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "015dbb552bc0acdc6198e180967c0398a9b12f1c069a8ab46a27ccddc49da91d",
+   "source": "hand",
+   "op": "check",
+   "label": "7.2 dash U+2E3A joins: number_grammar",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InIxIiBrPSJudW1lcmljIj4xMuK4ujEzPC9zd29ybj4=",
+    "name": "d.md",
+    "manifest_b64": null,
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "1d132e7017ee92586d533e356a507cad352447b99339c508033bea55b00e999d"
+   },
+   "expect_rows": [
+    [
+     "MALFORMED",
+     "number_grammar"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-FAILED",
+   "rules": [
+    "2.3",
+    "2.5",
+    "7.2",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "2f7c19bce2bdd7d8b5ede84815b59e8e582beb5cd0cac4f6004ec20dd138bd92",
+   "source": "hand",
+   "op": "check",
+   "label": "7.2 dash U+2E3B joins: number_grammar",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InIxIiBrPSJudW1lcmljIj4xMuK4uzEzPC9zd29ybj4=",
+    "name": "d.md",
+    "manifest_b64": null,
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "f4f04aad7416ce9a77464f54d427c0bc8d4dac738e95d088ce4129bd81ace40f"
+   },
+   "expect_rows": [
+    [
+     "MALFORMED",
+     "number_grammar"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-FAILED",
+   "rules": [
+    "2.3",
+    "2.5",
+    "7.2",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "d9c6d3df26b6e614746d16526635c9602f069e7c888429e223b0f45f25b20923",
+   "source": "hand",
+   "op": "check",
+   "label": "7.2 dash U+2E40 joins: number_grammar",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InIxIiBrPSJudW1lcmljIj4xMuK5gDEzPC9zd29ybj4=",
+    "name": "d.md",
+    "manifest_b64": null,
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "77ee68ba3450565a18b9f420f05f61392f53e5f80884d83a4517bcf08600c892"
+   },
+   "expect_rows": [
+    [
+     "MALFORMED",
+     "number_grammar"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-FAILED",
+   "rules": [
+    "2.3",
+    "2.5",
+    "7.2",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "ea6ff2043ad9f1af7135342b5d3331a97d0270dedec65e1fc9cd12d4f4fb2164",
+   "source": "hand",
+   "op": "check",
+   "label": "7.2 dash U+2E5D joins: number_grammar",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InIxIiBrPSJudW1lcmljIj4xMuK5nTEzPC9zd29ybj4=",
+    "name": "d.md",
+    "manifest_b64": null,
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "7a8d7b2064292f8bb77a98836a1f998edfce608c1b0d8f3601ba8a73733fd0e9"
+   },
+   "expect_rows": [
+    [
+     "MALFORMED",
+     "number_grammar"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-FAILED",
+   "rules": [
+    "2.3",
+    "2.5",
+    "7.2",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "11eeb7a4293f8b73b1a873bedbb847148cc775566f502e39983732056c026653",
+   "source": "hand",
+   "op": "check",
+   "label": "7.2 dash U+301C joins: number_grammar",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InIxIiBrPSJudW1lcmljIj4xMuOAnDEzPC9zd29ybj4=",
+    "name": "d.md",
+    "manifest_b64": null,
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "5dab5a53095eaf2e0ae8427f3723241a4095f0bdc89b5b036791770e14ad56c8"
+   },
+   "expect_rows": [
+    [
+     "MALFORMED",
+     "number_grammar"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-FAILED",
+   "rules": [
+    "2.3",
+    "2.5",
+    "7.2",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "c6bb71072211f4621b91a3b258df7f6c156d57994c40018f8a997f037e23468d",
+   "source": "hand",
+   "op": "check",
+   "label": "7.2 dash U+3030 joins: number_grammar",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InIxIiBrPSJudW1lcmljIj4xMuOAsDEzPC9zd29ybj4=",
+    "name": "d.md",
+    "manifest_b64": null,
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "5fcf547f29bac1a06294ed86054d9b77aa034b783f2ba23978a3699fe167dbcf"
+   },
+   "expect_rows": [
+    [
+     "MALFORMED",
+     "number_grammar"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-FAILED",
+   "rules": [
+    "2.3",
+    "2.5",
+    "7.2",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "a78bb10233186f9821f97a422939afff2055a46ed6d0e2e5eb30a4b5e76659aa",
+   "source": "hand",
+   "op": "check",
+   "label": "7.2 dash U+30A0 joins: number_grammar",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InIxIiBrPSJudW1lcmljIj4xMuOCoDEzPC9zd29ybj4=",
+    "name": "d.md",
+    "manifest_b64": null,
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "ea88d32b66c47fbe7bb47f5ee2ea90e34798b4cab492a4b93c88380afe99548a"
+   },
+   "expect_rows": [
+    [
+     "MALFORMED",
+     "number_grammar"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-FAILED",
+   "rules": [
+    "2.3",
+    "2.5",
+    "7.2",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "361c84ed2cee5d2b2d0c8137a605923d46250ea2d21441b2d6b452fd0d07fb5a",
+   "source": "hand",
+   "op": "check",
+   "label": "7.2 dash U+FE31 joins: number_grammar",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InIxIiBrPSJudW1lcmljIj4xMu+4sTEzPC9zd29ybj4=",
+    "name": "d.md",
+    "manifest_b64": null,
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "d89d39c3403a70893169d651b2e1927cb46d1606c7ef2d223cab3f8333862399"
+   },
+   "expect_rows": [
+    [
+     "MALFORMED",
+     "number_grammar"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-FAILED",
+   "rules": [
+    "2.3",
+    "2.5",
+    "7.2",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "2e89686584300c42d1a052fa00623bad0ab9e026d3104c3f2c43875f655c0b73",
+   "source": "hand",
+   "op": "check",
+   "label": "7.2 dash U+FE32 joins: number_grammar",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InIxIiBrPSJudW1lcmljIj4xMu+4sjEzPC9zd29ybj4=",
+    "name": "d.md",
+    "manifest_b64": null,
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "ac1069675bf92cef450d9641aba8bd0a1551a4d989903158c3949b7374762196"
+   },
+   "expect_rows": [
+    [
+     "MALFORMED",
+     "number_grammar"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-FAILED",
+   "rules": [
+    "2.3",
+    "2.5",
+    "7.2",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "ce3d4e51819ad04aa0c3808b47686975bc348b53ddf60ea7af2e95f6e012a924",
+   "source": "hand",
+   "op": "check",
+   "label": "7.2 dash U+FE58 joins: number_grammar",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InIxIiBrPSJudW1lcmljIj4xMu+5mDEzPC9zd29ybj4=",
+    "name": "d.md",
+    "manifest_b64": null,
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "77e6d11038bc57ca5df6571fb647599c6c54d62a4fb7d831e65c027b5382ffd9"
+   },
+   "expect_rows": [
+    [
+     "MALFORMED",
+     "number_grammar"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-FAILED",
+   "rules": [
+    "2.3",
+    "2.5",
+    "7.2",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "0d55434b62b8c90d3799b1994862fbd654a15f2c6a3542438af51ac0cf619e98",
+   "source": "hand",
+   "op": "check",
+   "label": "7.2 dash U+FE63 joins: number_grammar",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InIxIiBrPSJudW1lcmljIj4xMu+5ozEzPC9zd29ybj4=",
+    "name": "d.md",
+    "manifest_b64": null,
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "00a17bca2fc5e3838ccd6cc1ad0d15d815db09766886ecb193a355bbfa987bba"
+   },
+   "expect_rows": [
+    [
+     "MALFORMED",
+     "number_grammar"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-FAILED",
+   "rules": [
+    "2.3",
+    "2.5",
+    "7.2",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "cd5bc1f3e7b77ed14859e0cf2839977096f5fa43abeaa3c4eff5066e19410622",
+   "source": "hand",
+   "op": "check",
+   "label": "7.2 dash U+FF0D joins: number_grammar",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InIxIiBrPSJudW1lcmljIj4xMu+8jTEzPC9zd29ybj4=",
+    "name": "d.md",
+    "manifest_b64": null,
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "ed2ef5b3d4ace0e70ab8429eeca44b298ef4765ec882eccc233c0630e7e15e74"
+   },
+   "expect_rows": [
+    [
+     "MALFORMED",
+     "number_grammar"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-FAILED",
+   "rules": [
+    "2.3",
+    "2.5",
+    "7.2",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "af55ae406349d3032ed524a87b506ac0b653d2eca1a1153df3686485728bea04",
+   "source": "hand",
+   "op": "check",
+   "label": "7.2 dash U+10EAD joins: number_grammar",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InIxIiBrPSJudW1lcmljIj4xMvCQuq0xMzwvc3dvcm4+",
+    "name": "d.md",
+    "manifest_b64": null,
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "3bfa381a8806641109bb42650d7d5199229398d920a52bd49b12e606fe521387"
+   },
+   "expect_rows": [
+    [
+     "MALFORMED",
+     "number_grammar"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-FAILED",
+   "rules": [
+    "2.3",
+    "2.5",
+    "7.2",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "366ad98dcd3e92949707cbb48ae9a6c7f916e531279fc467fd229fc53dd8f58d",
+   "source": "hand",
+   "op": "check",
+   "label": "7.2 U+2043 HYPHEN BULLET is not a token char: number_count",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InIxIiBrPSJudW1lcmljIj4xMuKBgzEzPC9zd29ybj4=",
+    "name": "d.md",
+    "manifest_b64": null,
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "3b0972cf0259e29c966ac3adff3281b53103139d85b7b544c5de47c2ba4ea945"
+   },
+   "expect_rows": [
+    [
+     "MALFORMED",
+     "number_count"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-FAILED",
+   "rules": [
+    "2.3",
+    "2.5",
+    "7.2",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "c07511915979534fe01e3a2072f06f927f1069b829dec9d483c59915fbb2533c",
+   "source": "hand",
+   "op": "check",
+   "label": "7.2 a No digit (superscript two) is not digit-bearing",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InIxIiBrPSJudW1lcmljIj54wrIgaXMgNTwvc3dvcm4+",
+    "name": "d.md",
+    "manifest_b64": null,
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "b67442e022095bf3513e537d18bdf18a05fceb5879bc5c9e9bace97f10d48c63"
+   },
+   "expect_rows": [
+    [
+     "UNRESOLVED",
+     "manifest_absent"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-UNCHECKED",
+   "rules": [
+    "2.3",
+    "2.5",
+    "6.1",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "7f6eed874fe7db01aff7af78f96115013704a125e1cfdba220bf803616251622",
+   "source": "hand",
+   "op": "check",
+   "label": "7.2 '42.,' strips both",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InIxIiBrPSJudW1lcmljIj5pcyA0Mi4sPC9zd29ybj4=",
+    "name": "d.md",
+    "manifest_b64": null,
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "144a99984f1fd94d1b9005db708a9d69ee96ae6d4c29858f6c99f073394e6534"
+   },
+   "expect_rows": [
+    [
+     "UNRESOLVED",
+     "manifest_absent"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-UNCHECKED",
+   "rules": [
+    "2.3",
+    "2.5",
+    "6.1",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "6a01898ee3887db1c5e5eaab2a11001e32eb4b329839caab9e55dc0acd7198ee",
+   "source": "hand",
+   "op": "check",
+   "label": "7.2 '1.2,3' number_grammar",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InIxIiBrPSJudW1lcmljIj4xLjIsMzwvc3dvcm4+",
+    "name": "d.md",
+    "manifest_b64": null,
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "1aa6a42c6e957c44c905dacee8f5d2ac7aa9c809e82c16ccae8535e8c0598bb8"
+   },
+   "expect_rows": [
+    [
+     "MALFORMED",
+     "number_grammar"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-FAILED",
+   "rules": [
+    "2.3",
+    "2.5",
+    "7.2",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "103b63bbdd6cae45b0e6c768a964c762c56021db84437225a5ace031f7d1a34d",
+   "source": "hand",
+   "op": "check",
+   "label": "7.2 '-.5' is a number",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InIxIiBrPSJudW1lcmljIj4tLjU8L3N3b3JuPg==",
+    "name": "d.md",
+    "manifest_b64": null,
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "8df854e424fa49292bf12b08c1b10f9992e3d1ccf739def1867f6bd4a22ec87e"
+   },
+   "expect_rows": [
+    [
+     "UNRESOLVED",
+     "manifest_absent"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-UNCHECKED",
+   "rules": [
+    "2.3",
+    "2.5",
+    "6.1",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "6f9cc3a26928f5b28c09f36204b64b598c0a7d6300777e92d7d73c2ada220712",
+   "source": "hand",
+   "op": "check",
+   "label": "7.2 '1,234,' strips the comma",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InIxIiBrPSJudW1lcmljIj4xLDIzNCw8L3N3b3JuPg==",
+    "name": "d.md",
+    "manifest_b64": null,
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "4e0bd2daef282643e3e016750f52730557d0881cc0fc6a82e940570ffa142022"
+   },
+   "expect_rows": [
+    [
+     "UNRESOLVED",
+     "manifest_absent"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-UNCHECKED",
+   "rules": [
+    "2.3",
+    "2.5",
+    "6.1",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "f3780478fb82de93bcfd15174848ac742aea5720b715878414e7ada2180122e7",
+   "source": "hand",
+   "op": "check",
+   "label": "7.2 '%42' number_grammar",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InIxIiBrPSJudW1lcmljIj4lNDI8L3N3b3JuPg==",
+    "name": "d.md",
+    "manifest_b64": null,
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "a1b02ae21a7a056344c1e84a1a05dd8774c1c49fbb343b90b782c19648b9d3ec"
+   },
+   "expect_rows": [
+    [
+     "MALFORMED",
+     "number_grammar"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-FAILED",
+   "rules": [
+    "2.3",
+    "2.5",
+    "7.2",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "81a0c8febad8c277399ba6c36688ddf6854d215b67c95da188b53fdf91e9a9c0",
+   "source": "hand",
+   "op": "check",
+   "label": "7.2 '42%:' strips ':'",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InIxIiBrPSJudW1lcmljIj40MiU6PC9zd29ybj4=",
+    "name": "d.md",
+    "manifest_b64": null,
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "0f9d0fe3552f96bab95d250b628e5080c36e7c9dc2a51741cfab4be4a48cc09d"
+   },
+   "expect_rows": [
+    [
+     "UNRESOLVED",
+     "manifest_absent"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-UNCHECKED",
+   "rules": [
+    "2.3",
+    "2.5",
+    "6.1",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "6c7df9e31c076d0c37e29e4a4b71f5a8fb72faadb6862ee968cf5fe141872a74",
+   "source": "hand",
+   "op": "check",
+   "label": "7.2 '+-4' number_grammar",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InIxIiBrPSJudW1lcmljIj4rLTQ8L3N3b3JuPg==",
+    "name": "d.md",
+    "manifest_b64": null,
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "2974443f44d6478ba5ff95b6329c8264bc61477dcbfd384c6bb948b8cb592479"
+   },
+   "expect_rows": [
+    [
+     "MALFORMED",
+     "number_grammar"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-FAILED",
+   "rules": [
+    "2.3",
+    "2.5",
+    "7.2",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "a95b42867a2ea465f9c21bd4d3af769916bf71258731f56b9b8cb28458c38812",
+   "source": "hand",
+   "op": "check",
+   "label": "7.2 '0,123' grouped",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InIxIiBrPSJudW1lcmljIj4wLDEyMzwvc3dvcm4+",
+    "name": "d.md",
+    "manifest_b64": null,
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "70aef6357b3d5a082e7259402d5d41e913fafe6cf1615d363446c5708543bcf4"
+   },
+   "expect_rows": [
+    [
+     "UNRESOLVED",
+     "manifest_absent"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-UNCHECKED",
+   "rules": [
+    "2.3",
+    "2.5",
+    "6.1",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "7aff3a8856e37fe2e612a55f4feb7b8ae92fbbf2d1e30672d56941b2f767a604",
+   "source": "hand",
+   "op": "check",
+   "label": "7.4 a code span cannot cross a line: needle_count",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InIxIiBrPSJxdW90ZSI+YGFiYwpkZWZgPC9zd29ybj4=",
+    "name": "d.md",
+    "manifest_b64": null,
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "2d4cd7a5c883f0195821f83d88308b112bf7173db65c90b90ebd95b7d831d0c7"
+   },
+   "expect_rows": [
+    [
+     "MALFORMED",
+     "needle_count"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-FAILED",
+   "rules": [
+    "2.3",
+    "2.5",
+    "7.4",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "853faa8b24f080d6c51a77a5b72ae4837fee12ea913c4a067d32cf228c11ed86",
+   "source": "hand",
+   "op": "check",
+   "label": "7.4 a double-backtick span holding a backtick is one needle",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InIxIiBrPSJxdW90ZSI+YGBhYGJgYDwvc3dvcm4+",
+    "name": "d.md",
+    "manifest_b64": null,
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "35c5440b6cd31bce2c460cf0e04b6a6c7d753aa826759b5f1049bd282916299a"
+   },
+   "expect_rows": [
+    [
+     "UNRESOLVED",
+     "manifest_absent"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-UNCHECKED",
+   "rules": [
+    "2.3",
+    "2.5",
+    "6.1",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "8921de3b0ec81a30e97ce36e00caf63c6768874f262d61da0c7b22f6f683c3d8",
+   "source": "hand",
+   "op": "check",
+   "label": "7.6 a 96-digit run: digest_form",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InIxIiBrPSJoYXNoIj5hYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhIGJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYjwvc3dvcm4+",
+    "name": "d.md",
+    "manifest_b64": null,
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "2aeac6634fda98bc1cca85cbd9973efb887a70b27511927b8a6ec7e2c0d96ecf"
+   },
+   "expect_rows": [
+    [
+     "MALFORMED",
+     "digest_form"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-FAILED",
+   "rules": [
+    "2.3",
+    "2.5",
+    "7.6",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "40477b8c323e48101e80326c4075195b0fc911afda78dc70a1f0b35248637019",
+   "source": "hand",
+   "op": "check",
+   "label": "7.6 a 128-digit run: digest_form",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InIxIiBrPSJoYXNoIj5hYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhIGJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiPC9zd29ybj4=",
+    "name": "d.md",
+    "manifest_b64": null,
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "2934d0901b617e3557816f7d6318c95f4625b2011b7d2d9e64fbbf4783c5d068"
+   },
+   "expect_rows": [
+    [
+     "MALFORMED",
+     "digest_form"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-FAILED",
+   "rules": [
+    "2.3",
+    "2.5",
+    "7.6",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "45efaa16032def0178f05635266aad44b2e9a49c026655e6f89188b70ee4ae61",
+   "source": "hand",
+   "op": "check",
+   "label": "7.6 a 64 run beside e-acute counts",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InIxIiBrPSJoYXNoIj7DqWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWE8L3N3b3JuPg==",
+    "name": "d.md",
+    "manifest_b64": null,
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "6852b4b411b43ba888d5984dc756bb9dc2b5b3ec7caf97e9e557923c7791b063"
+   },
+   "expect_rows": [
+    [
+     "UNRESOLVED",
+     "manifest_absent"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-UNCHECKED",
+   "rules": [
+    "2.3",
+    "2.5",
+    "6.1",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "2f367c5e07937b0a66085c71769cfa1f8c7984ff292043fd67f353955679884d",
+   "source": "hand",
+   "op": "check",
+   "label": "7.6 a 65-digit run alone: digest_form",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InIxIiBrPSJoYXNoIj5hYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYTwvc3dvcm4+",
+    "name": "d.md",
+    "manifest_b64": null,
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "562976edfa991fe2918ec38437c617759afc4cc77b77fa88a39049894215dee5"
+   },
+   "expect_rows": [
+    [
+     "MALFORMED",
+     "digest_form"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-FAILED",
+   "rules": [
+    "2.3",
+    "2.5",
+    "7.6",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "8b7b3757bf8d06fd38fd9646fdaf006d2d86b26acfd12150fcd30119ccffa747",
+   "source": "hand",
+   "op": "check",
+   "label": "7.6 a 64 run and a 63 run: passes",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InIxIiBrPSJoYXNoIj5hYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhIGJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYjwvc3dvcm4+",
+    "name": "d.md",
+    "manifest_b64": null,
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "ee556fd265237f6163595e3b04f7683063b7f7672d78d57acb7c397a59231a2b"
+   },
+   "expect_rows": [
+    [
+     "UNRESOLVED",
+     "manifest_absent"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-UNCHECKED",
+   "rules": [
+    "2.3",
+    "2.5",
+    "6.1",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "2711ce25465faada5bfc321b2e001b058414e99ab7f1fab2c1f7e55f406726bd",
+   "source": "hand",
+   "op": "check",
+   "label": "7.5 receipt of 16 bytes, whole-content L1 does not narrow",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InIxI0wxIiBrPSJxdW90ZSI+YGFiY2A8L3N3b3JuPg==",
+    "name": "d.md",
+    "manifest_b64": "eyJzcGVjIjogInN3b3JuL21hbmlmZXN0LzAuMiIsICJoYXJuZXNzIjogImgiLCAidHVybiI6ICJ0IiwgIm1pbnRlZF9hdCI6ICIyMDI2LTAxLTAxVDAwOjAwOjAwWiIsICJhdXRob3JlZF9zaGEyNTYiOiBbXSwgInJlY2VpcHRzIjogeyJyMSI6IHsic2hhMjU2IjogImYzOWRhYzZjYmFiYTUzNWUyYzIwN2NkMGNkOGYxNTQ5NzQyMjNjODQ4ZjcyN2Y5OGIzNTY0Y2VhNTY5YjQxY2YiLCAiYnl0ZXMiOiAiWVdKalpHVm1aMmhwYW10c2JXNXZjQT09IiwgImlkIjogInIxIiwgImtpbmRfb2Zfc291cmNlIjogInRvb2xfc3Rkb3V0IiwgImNhcHR1cmVkX2F0IjogIjIwMjYtMDEtMDFUMDA6MDA6MDBaIiwgImNvbXBsZXRlIjogdHJ1ZX19LCAicnVuZyI6ICJMMiJ9",
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "2a56074d64a9799f0260e6fc9b12f380fdcc5fb3f1f24ce2580ad945190c2e1c"
+   },
+   "expect_rows": [
+    [
+     "MALFORMED",
+     "short_needle"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-FAILED",
+   "rules": [
+    "2.3",
+    "2.5",
+    "5.4",
+    "5.5",
+    "7.5",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "b779640b81091037eb2fdc5764f13661df955b4c31493d45577375f5c70a5fef",
+   "source": "hand",
+   "op": "check",
+   "label": "7.5 receipt of 15 bytes narrows under L1",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InIxI0wxIiBrPSJxdW90ZSI+YGFiY2A8L3N3b3JuPg==",
+    "name": "d.md",
+    "manifest_b64": "eyJzcGVjIjogInN3b3JuL21hbmlmZXN0LzAuMiIsICJoYXJuZXNzIjogImgiLCAidHVybiI6ICJ0IiwgIm1pbnRlZF9hdCI6ICIyMDI2LTAxLTAxVDAwOjAwOjAwWiIsICJhdXRob3JlZF9zaGEyNTYiOiBbXSwgInJlY2VpcHRzIjogeyJyMSI6IHsic2hhMjU2IjogIjQxYzc3NjBjNTBlZmRlOTliZjU3NGVkOGZmZmM3YTZkZDM0MDVkNTQ2ZDNkYTkyOWIyMTRjODk0NWFjZjhhOTciLCAiYnl0ZXMiOiAiWVdKalpHVm1aMmhwYW10c2JXNXYiLCAiaWQiOiAicjEiLCAia2luZF9vZl9zb3VyY2UiOiAidG9vbF9zdGRvdXQiLCAiY2FwdHVyZWRfYXQiOiAiMjAyNi0wMS0wMVQwMDowMDowMFoiLCAiY29tcGxldGUiOiB0cnVlfX0sICJydW5nIjogIkwyIn0=",
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "f40f3cd3dc0e30c26333524dfbc2327e7776f270de68c3612703e0dd9df0cea8"
+   },
+   "expect_rows": [
+    [
+     "HELD",
+     null
+    ]
+   ],
+   "expect_document_verdict": "SWORN-HELD",
+   "rules": [
+    "2.3",
+    "2.5",
+    "5.4",
+    "5.5",
+    "6.9",
+    "7.5",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "1f8f8bb7400e14f101b320835bbd938fd959fa05da237da98acc6cd888a62d05",
+   "source": "hand",
+   "op": "check",
+   "label": "7.5 a needle of exactly 16 bytes over the whole receipt",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InIxIiBrPSJxdW90ZSI+YGFiY2RlZmdoaWprbG1ub3BgPC9zd29ybj4=",
+    "name": "d.md",
+    "manifest_b64": "eyJzcGVjIjogInN3b3JuL21hbmlmZXN0LzAuMiIsICJoYXJuZXNzIjogImgiLCAidHVybiI6ICJ0IiwgIm1pbnRlZF9hdCI6ICIyMDI2LTAxLTAxVDAwOjAwOjAwWiIsICJhdXRob3JlZF9zaGEyNTYiOiBbXSwgInJlY2VpcHRzIjogeyJyMSI6IHsic2hhMjU2IjogImVhMDRjMzY4M2RiOGU5MmFhYjJkMjY3MDhlZGExZjk3Y2E3ZjZlOGM4Y2JjMzQyZWEwM2NmYTk0OTBhMDA0MDgiLCAiYnl0ZXMiOiAiZUhoaFltTmtaV1puYUdscWEyeHRibTl3ZUhnPSIsICJpZCI6ICJyMSIsICJraW5kX29mX3NvdXJjZSI6ICJ0b29sX3N0ZG91dCIsICJjYXB0dXJlZF9hdCI6ICIyMDI2LTAxLTAxVDAwOjAwOjAwWiIsICJjb21wbGV0ZSI6IHRydWV9fSwgInJ1bmciOiAiTDIifQ==",
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "87b9dec45e7913c0bee6d5380330efa46e8a1717501875d705ed5b31fa207f0d"
+   },
+   "expect_rows": [
+    [
+     "HELD",
+     null
+    ]
+   ],
+   "expect_document_verdict": "SWORN-HELD",
+   "rules": [
+    "2.3",
+    "2.5",
+    "5.4",
+    "5.5",
+    "6.9",
+    "7.5",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "6c5bfdd9ae7ddd062e4fe07d777526a9e4086bbb272f11e11653d5ce4204daac",
+   "source": "hand",
+   "op": "check",
+   "label": "7.3 '+0' against 0",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InIxIiBrPSJudW1lcmljIj4rMDwvc3dvcm4+",
+    "name": "d.md",
+    "manifest_b64": "eyJzcGVjIjogInN3b3JuL21hbmlmZXN0LzAuMiIsICJoYXJuZXNzIjogImgiLCAidHVybiI6ICJ0IiwgIm1pbnRlZF9hdCI6ICIyMDI2LTAxLTAxVDAwOjAwOjAwWiIsICJhdXRob3JlZF9zaGEyNTYiOiBbXSwgInJlY2VpcHRzIjogeyJyMSI6IHsic2hhMjU2IjogIjVmZWNlYjY2ZmZjODZmMzhkOTUyNzg2YzZkNjk2Yzc5YzJkYmMyMzlkZDRlOTFiNDY3MjlkNzNhMjdmYjU3ZTkiLCAiYnl0ZXMiOiAiTUE9PSIsICJpZCI6ICJyMSIsICJraW5kX29mX3NvdXJjZSI6ICJ0b29sX3N0ZG91dCIsICJjYXB0dXJlZF9hdCI6ICIyMDI2LTAxLTAxVDAwOjAwOjAwWiIsICJjb21wbGV0ZSI6IHRydWV9fSwgInJ1bmciOiAiTDIifQ==",
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "971877cd346ed99730b4f3533f9d2623eab8e2a0aed81c6875b45b4acac8e191"
+   },
+   "expect_rows": [
+    [
+     "HELD",
+     null
+    ]
+   ],
+   "expect_document_verdict": "SWORN-HELD",
+   "rules": [
+    "2.3",
+    "2.5",
+    "5.4",
+    "5.5",
+    "6.9",
+    "7.3",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "2fbdaf4d5cd3a08b469740d4f3007644677d01ec7f8c56d6839541cd3f1e09aa",
+   "source": "hand",
+   "op": "check",
+   "label": "7.3 receipt 0.05 against 0.1: rounded at f=1, ties to even, it is 0.0: value_mismatch",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InIxIiBrPSJudW1lcmljIj4wLjE8L3N3b3JuPg==",
+    "name": "d.md",
+    "manifest_b64": "eyJzcGVjIjogInN3b3JuL21hbmlmZXN0LzAuMiIsICJoYXJuZXNzIjogImgiLCAidHVybiI6ICJ0IiwgIm1pbnRlZF9hdCI6ICIyMDI2LTAxLTAxVDAwOjAwOjAwWiIsICJhdXRob3JlZF9zaGEyNTYiOiBbXSwgInJlY2VpcHRzIjogeyJyMSI6IHsic2hhMjU2IjogIjA2MDJkN2M4MTNjMWY2ZTczNTFhNTgzMjczMGYyOWRhZjczOTY3NDk3NmNhYmE4ZDlkZDk1NWJlODM4ZDQ2ZWEiLCAiYnl0ZXMiOiAiTUM0d05RPT0iLCAiaWQiOiAicjEiLCAia2luZF9vZl9zb3VyY2UiOiAidG9vbF9zdGRvdXQiLCAiY2FwdHVyZWRfYXQiOiAiMjAyNi0wMS0wMVQwMDowMDowMFoiLCAiY29tcGxldGUiOiB0cnVlfX0sICJydW5nIjogIkwyIn0=",
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "4c947f675a46c4ec2bc487108be724bd54981279009b6af195f3d3b53744de91"
+   },
+   "expect_rows": [
+    [
+     "FAILED",
+     "value_mismatch"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-FAILED",
+   "rules": [
+    "2.3",
+    "2.5",
+    "5.4",
+    "5.5",
+    "7.3",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "90b83e87ad9b2c5fee6008c9b746ca4931a95d1c6b2a5ae714f15ec3ff860772",
+   "source": "hand",
+   "op": "check",
+   "label": "7.3 receipt 0.15 against 0.2 (half even up)",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InIxIiBrPSJudW1lcmljIj4wLjI8L3N3b3JuPg==",
+    "name": "d.md",
+    "manifest_b64": "eyJzcGVjIjogInN3b3JuL21hbmlmZXN0LzAuMiIsICJoYXJuZXNzIjogImgiLCAidHVybiI6ICJ0IiwgIm1pbnRlZF9hdCI6ICIyMDI2LTAxLTAxVDAwOjAwOjAwWiIsICJhdXRob3JlZF9zaGEyNTYiOiBbXSwgInJlY2VpcHRzIjogeyJyMSI6IHsic2hhMjU2IjogIjc5MzJhMDdhOGNiYzA4ODU5MTlkMzBjNDM3OTlmMDI0N2VmOTZiYWRiYzc5YmE1NDI3ZTYzMDYyMzI1MDhjNzgiLCAiYnl0ZXMiOiAiTUM0eE5RPT0iLCAiaWQiOiAicjEiLCAia2luZF9vZl9zb3VyY2UiOiAidG9vbF9zdGRvdXQiLCAiY2FwdHVyZWRfYXQiOiAiMjAyNi0wMS0wMVQwMDowMDowMFoiLCAiY29tcGxldGUiOiB0cnVlfX0sICJydW5nIjogIkwyIn0=",
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "db11ef73717bd00a79cbe27b3504dc1a364b3b875d5a5c2f49ada2013d4394df"
+   },
+   "expect_rows": [
+    [
+     "HELD",
+     null
+    ]
+   ],
+   "expect_document_verdict": "SWORN-HELD",
+   "rules": [
+    "2.3",
+    "2.5",
+    "5.4",
+    "5.5",
+    "6.9",
+    "7.3",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "51414221df5cda98b34c020b08dee7762f1b8202758c765ce2ddd3e80e1c7b54",
+   "source": "hand",
+   "op": "check",
+   "label": "7.3 receipt 0.25 against 0.2 (half even down)",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InIxIiBrPSJudW1lcmljIj4wLjI8L3N3b3JuPg==",
+    "name": "d.md",
+    "manifest_b64": "eyJzcGVjIjogInN3b3JuL21hbmlmZXN0LzAuMiIsICJoYXJuZXNzIjogImgiLCAidHVybiI6ICJ0IiwgIm1pbnRlZF9hdCI6ICIyMDI2LTAxLTAxVDAwOjAwOjAwWiIsICJhdXRob3JlZF9zaGEyNTYiOiBbXSwgInJlY2VpcHRzIjogeyJyMSI6IHsic2hhMjU2IjogImEzMGEwNDMzMTRmYTg5Mjk0ZmEyYzFjOTg5YTAxZmJiNTMyOWU1YzA4NWE1YzVhOGQyNzMxNzY1NmRlMjRhZTAiLCAiYnl0ZXMiOiAiTUM0eU5RPT0iLCAiaWQiOiAicjEiLCAia2luZF9vZl9zb3VyY2UiOiAidG9vbF9zdGRvdXQiLCAiY2FwdHVyZWRfYXQiOiAiMjAyNi0wMS0wMVQwMDowMDowMFoiLCAiY29tcGxldGUiOiB0cnVlfX0sICJydW5nIjogIkwyIn0=",
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "dd0dc101096d188e66bc1e8382274ce75fb4bd3242e3d2e82dc120b88fbbe1f1"
+   },
+   "expect_rows": [
+    [
+     "HELD",
+     null
+    ]
+   ],
+   "expect_document_verdict": "SWORN-HELD",
+   "rules": [
+    "2.3",
+    "2.5",
+    "5.4",
+    "5.5",
+    "6.9",
+    "7.3",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "7649330e741c012af4a188820924f2052d86c2cf7c4993a975907f6b01822000",
+   "source": "hand",
+   "op": "check",
+   "label": "7.3 receipt -0.5 against 0: rounds_to_zero",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InIxIiBrPSJudW1lcmljIj4wPC9zd29ybj4=",
+    "name": "d.md",
+    "manifest_b64": "eyJzcGVjIjogInN3b3JuL21hbmlmZXN0LzAuMiIsICJoYXJuZXNzIjogImgiLCAidHVybiI6ICJ0IiwgIm1pbnRlZF9hdCI6ICIyMDI2LTAxLTAxVDAwOjAwOjAwWiIsICJhdXRob3JlZF9zaGEyNTYiOiBbXSwgInJlY2VpcHRzIjogeyJyMSI6IHsic2hhMjU2IjogIjFiMDdiMGNmZmEwYjNmNTk2YjVlMDQ4YjAxMTUxNjg4ODZjYzUxODNkZDUxODY1NWI1NTE1ZWU1ZGRkYWM2ZDEiLCAiYnl0ZXMiOiAiTFRBdU5RPT0iLCAiaWQiOiAicjEiLCAia2luZF9vZl9zb3VyY2UiOiAidG9vbF9zdGRvdXQiLCAiY2FwdHVyZWRfYXQiOiAiMjAyNi0wMS0wMVQwMDowMDowMFoiLCAiY29tcGxldGUiOiB0cnVlfX0sICJydW5nIjogIkwyIn0=",
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "3328461a5e562295d6964ee64aacba5b231b4b7a036e6f224e78a696b8464203"
+   },
+   "expect_rows": [
+    [
+     "FAILED",
+     "rounds_to_zero"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-FAILED",
+   "rules": [
+    "2.3",
+    "2.5",
+    "5.4",
+    "5.5",
+    "7.3a",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "3ddeb752a64f2f8ae23fd358229b0e9a924c9709c09ff6d21256807410cc6d59",
+   "source": "hand",
+   "op": "check",
+   "label": "7.3 receipt -0.5 against a printed -0: both are written unsigned as 0: rounds_to_zero",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InIxIiBrPSJudW1lcmljIj4tMDwvc3dvcm4+",
+    "name": "d.md",
+    "manifest_b64": "eyJzcGVjIjogInN3b3JuL21hbmlmZXN0LzAuMiIsICJoYXJuZXNzIjogImgiLCAidHVybiI6ICJ0IiwgIm1pbnRlZF9hdCI6ICIyMDI2LTAxLTAxVDAwOjAwOjAwWiIsICJhdXRob3JlZF9zaGEyNTYiOiBbXSwgInJlY2VpcHRzIjogeyJyMSI6IHsic2hhMjU2IjogIjFiMDdiMGNmZmEwYjNmNTk2YjVlMDQ4YjAxMTUxNjg4ODZjYzUxODNkZDUxODY1NWI1NTE1ZWU1ZGRkYWM2ZDEiLCAiYnl0ZXMiOiAiTFRBdU5RPT0iLCAiaWQiOiAicjEiLCAia2luZF9vZl9zb3VyY2UiOiAidG9vbF9zdGRvdXQiLCAiY2FwdHVyZWRfYXQiOiAiMjAyNi0wMS0wMVQwMDowMDowMFoiLCAiY29tcGxldGUiOiB0cnVlfX0sICJydW5nIjogIkwyIn0=",
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group coverage",
+   "expect": {
+    "core_digest": "e06708cdb9e499041164e1a1f3e852d56ddce387f8d70e7361d4def377866b4a"
+   },
+   "expect_rows": [
+    [
+     "FAILED",
+     "rounds_to_zero"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-FAILED",
+   "rules": [
+    "2.3",
+    "2.5",
+    "5.4",
+    "5.5",
+    "7.3a",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "7d8108dac858dffca0ac4320b9c3a85de077ab1ad630929e2882c90f1111e7b3",
+   "source": "hand",
+   "op": "check",
+   "label": "6.10 interior whitespace in base64 of a length that is a multiple of 4 (PM14)",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InIxIiBrPSJxdW90ZSI+YEFCQ2A8L3N3b3JuPg==",
+    "name": "d.md",
+    "manifest_b64": "eyJzcGVjIjogInN3b3JuL21hbmlmZXN0LzAuMiIsICJoYXJuZXNzIjogImgiLCAidHVybiI6ICJ0IiwgIm1pbnRlZF9hdCI6ICIyMDI2LTAxLTAxVDAwOjAwOjAwWiIsICJhdXRob3JlZF9zaGEyNTYiOiBbXSwgInJlY2VpcHRzIjogeyJyMSI6IHsic2hhMjU2IjogImI1ZDQwNDVjM2Y0NjZmYTkxZmUyY2M2YWJlNzkyMzJhMWE1N2NkZjEwNGY3YTI2ZTcxNmUwYTFlMjc4OWRmNzgiLCAiYnl0ZXMiOiAiUVVKRFxuXG5cblxuIiwgImlkIjogInIxIiwgImtpbmRfb2Zfc291cmNlIjogInRvb2xfc3Rkb3V0IiwgImNhcHR1cmVkX2F0IjogIjIwMjYtMDEtMDFUMDA6MDA6MDBaIiwgImNvbXBsZXRlIjogdHJ1ZX19LCAicnVuZyI6ICJMMiJ9",
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group killers",
+   "expect": {
+    "core_digest": "0042463e1a1d09b7f78f11b1ed4883eaa91a1224296847ea35f70c7174a6bcda"
+   },
+   "expect_rows": [
+    [
+     "UNRESOLVED",
+     "manifest_integrity"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-UNCHECKED",
+   "rules": [
+    "2.3",
+    "2.5",
+    "5.4",
+    "5.5",
+    "5.6",
+    "6.2",
+    "6.5",
+    "6.10",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "d80c1bddfbbf64a7da5879222301561f19be5f16804ab77ffe3fbe4a561aaacb",
+   "source": "hand",
+   "op": "check",
+   "label": "6.13 a raw U+0001 inside a JSON string is not JSON (PM31)",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InIxIiBrPSJudW1lcmljIj43PC9zd29ybj4=",
+    "name": "d.md",
+    "manifest_b64": "eyJzcGVjIjogInN3b3JuL21hbmlmZXN0LzAuMiIsICJoYXJuZXNzIjogImgiLCAidHVybiI6ICJ0IiwgIm1pbnRlZF9hdCI6ICIyMDI2LTAxLTAxVDAwOjAwOjAwWiIsICJhdXRob3JlZF9zaGEyNTYiOiBbXSwgInJlY2VpcHRzIjogeyJyMSI6IHsic2hhMjU2IjogImEyYmNhNjJhYjdlN2YxNGM3ZDM5OTBhYTQ5YjAwZjlmNTU3MDBmZjY5ZTExMzFjYTA4NTM0YzgzNDU4MjgzMzQiLCAiYnl0ZXMiOiAiSWdFaSIsICJpZCI6ICJyMSIsICJraW5kX29mX3NvdXJjZSI6ICJ0b29sX3N0ZG91dCIsICJjYXB0dXJlZF9hdCI6ICIyMDI2LTAxLTAxVDAwOjAwOjAwWiIsICJjb21wbGV0ZSI6IHRydWV9fSwgInJ1bmciOiAiTDIifQ==",
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group killers",
+   "expect": {
+    "core_digest": "79b8cea43fefd8a648f3556a2559f84ccdd2031148dee9b87fdbda339bda8bf1"
+   },
+   "expect_rows": [
+    [
+     "MALFORMED",
+     "receipt_not_json"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-FAILED",
+   "rules": [
+    "2.3",
+    "2.5",
+    "5.4",
+    "5.5",
+    "6.12",
+    "7.3",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "de03407230ab6eb9e984944352aca6737a73f4eda9277b231611da6347724572",
+   "source": "hand",
+   "op": "check",
+   "label": "6.13 VT before a number is not JSON whitespace (JM14)",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InIxIiBrPSJudW1lcmljIj40Mjwvc3dvcm4+",
+    "name": "d.md",
+    "manifest_b64": "eyJzcGVjIjogInN3b3JuL21hbmlmZXN0LzAuMiIsICJoYXJuZXNzIjogImgiLCAidHVybiI6ICJ0IiwgIm1pbnRlZF9hdCI6ICIyMDI2LTAxLTAxVDAwOjAwOjAwWiIsICJhdXRob3JlZF9zaGEyNTYiOiBbXSwgInJlY2VpcHRzIjogeyJyMSI6IHsic2hhMjU2IjogIjFkNjJmMTgwYTc4NmMyMzFlMzRiMmE4YWY4NzM3NTA4MmMxYzUzNTk2MThmNzU3YTcxYmNiNDYxZWZkN2JjYjYiLCAiYnl0ZXMiOiAiQ3pReSIsICJpZCI6ICJyMSIsICJraW5kX29mX3NvdXJjZSI6ICJ0b29sX3N0ZG91dCIsICJjYXB0dXJlZF9hdCI6ICIyMDI2LTAxLTAxVDAwOjAwOjAwWiIsICJjb21wbGV0ZSI6IHRydWV9fSwgInJ1bmciOiAiTDIifQ==",
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group killers",
+   "expect": {
+    "core_digest": "0d841fdfa53711a3f51d3372268c53a7d6b6822aa6c2d0b1e4b97f6985e08f59"
+   },
+   "expect_rows": [
+    [
+     "MALFORMED",
+     "receipt_not_json"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-FAILED",
+   "rules": [
+    "2.3",
+    "2.5",
+    "5.4",
+    "5.5",
+    "6.12",
+    "7.3",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "f9e446293edd100452208dc9066c5b882082e73b91e78f53a91f96355255632d",
+   "source": "hand",
+   "op": "check",
+   "label": "7.1b VT alone is ASCII whitespace: empty_span (PM41)",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InIxIiBrPSJxdW90ZSI+Czwvc3dvcm4+",
+    "name": "d.md",
+    "manifest_b64": "eyJzcGVjIjogInN3b3JuL21hbmlmZXN0LzAuMiIsICJoYXJuZXNzIjogImgiLCAidHVybiI6ICJ0IiwgIm1pbnRlZF9hdCI6ICIyMDI2LTAxLTAxVDAwOjAwOjAwWiIsICJhdXRob3JlZF9zaGEyNTYiOiBbXSwgInJlY2VpcHRzIjogeyJyMSI6IHsic2hhMjU2IjogIjJkNzExNjQyYjcyNmIwNDQwMTYyN2NhOWZiYWMzMmY1Yzg1MzBmYjE5MDNjYzRkYjAyMjU4NzE3OTIxYTQ4ODEiLCAiYnl0ZXMiOiAiZUE9PSIsICJpZCI6ICJyMSIsICJraW5kX29mX3NvdXJjZSI6ICJ0b29sX3N0ZG91dCIsICJjYXB0dXJlZF9hdCI6ICIyMDI2LTAxLTAxVDAwOjAwOjAwWiIsICJjb21wbGV0ZSI6IHRydWV9fSwgInJ1bmciOiAiTDIifQ==",
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group killers",
+   "expect": {
+    "core_digest": "e7663adc1a71c50062c26f6504c3f611d422300c61565c97eb60ac08100f40ac"
+   },
+   "expect_rows": [
+    [
+     "MALFORMED",
+     "empty_span"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-FAILED",
+   "rules": [
+    "2.3",
+    "2.3d",
+    "2.5",
+    "5.4",
+    "5.5",
+    "7.1b",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "368a28ecd342221ec31059022f9348985395b1c8fe1e87c810a4b1af3370795d",
+   "source": "hand",
+   "op": "check",
+   "label": "7.4 a needle of VT only is needle_empty (PM41)",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InIxIiBrPSJxdW90ZSI+YAtgPC9zd29ybj4=",
+    "name": "d.md",
+    "manifest_b64": "eyJzcGVjIjogInN3b3JuL21hbmlmZXN0LzAuMiIsICJoYXJuZXNzIjogImgiLCAidHVybiI6ICJ0IiwgIm1pbnRlZF9hdCI6ICIyMDI2LTAxLTAxVDAwOjAwOjAwWiIsICJhdXRob3JlZF9zaGEyNTYiOiBbXSwgInJlY2VpcHRzIjogeyJyMSI6IHsic2hhMjU2IjogIjJkNzExNjQyYjcyNmIwNDQwMTYyN2NhOWZiYWMzMmY1Yzg1MzBmYjE5MDNjYzRkYjAyMjU4NzE3OTIxYTQ4ODEiLCAiYnl0ZXMiOiAiZUE9PSIsICJpZCI6ICJyMSIsICJraW5kX29mX3NvdXJjZSI6ICJ0b29sX3N0ZG91dCIsICJjYXB0dXJlZF9hdCI6ICIyMDI2LTAxLTAxVDAwOjAwOjAwWiIsICJjb21wbGV0ZSI6IHRydWV9fSwgInJ1bmciOiAiTDIifQ==",
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group killers",
+   "expect": {
+    "core_digest": "a835119c77c4bd069907879bab5cce64c3724651e30aa89b919922d38325ac6a"
+   },
+   "expect_rows": [
+    [
+     "MALFORMED",
+     "needle_empty"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-FAILED",
+   "rules": [
+    "2.3",
+    "2.5",
+    "5.4",
+    "5.5",
+    "7.4",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "49d52fda74a954dc43faedb36812c2bca1908d5fee9ce3c9c47d1416a143d3e2",
+   "source": "hand",
+   "op": "check",
+   "label": "7.5 a periodic needle counts occurrences without overlap (PM39, JM15)",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InIxIiBrPSJxdW90ZSI+YGFhYWFhYWFhYWFhYWFhYWFgPC9zd29ybj4=",
+    "name": "d.md",
+    "manifest_b64": "eyJzcGVjIjogInN3b3JuL21hbmlmZXN0LzAuMiIsICJoYXJuZXNzIjogImgiLCAidHVybiI6ICJ0IiwgIm1pbnRlZF9hdCI6ICIyMDI2LTAxLTAxVDAwOjAwOjAwWiIsICJhdXRob3JlZF9zaGEyNTYiOiBbXSwgInJlY2VpcHRzIjogeyJyMSI6IHsic2hhMjU2IjogIjQyNDkyZGEwNjIzNGFkMGFjNzZmNWQ1ZGViZGI2ZDFhZTAyN2NmZmJlNzQ2YTFjMTNiODliYjhiYzAxMzkxMzciLCAiYnl0ZXMiOiAiWVdGaFlXRmhZV0ZoWVdGaFlXRmhZV0ZoWVdFPSIsICJpZCI6ICJyMSIsICJraW5kX29mX3NvdXJjZSI6ICJ0b29sX3N0ZG91dCIsICJjYXB0dXJlZF9hdCI6ICIyMDI2LTAxLTAxVDAwOjAwOjAwWiIsICJjb21wbGV0ZSI6IHRydWV9fSwgInJ1bmciOiAiTDIifQ==",
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group killers",
+   "expect": {
+    "core_digest": "7e94b9d699dea1078b974474ce7ec690d335884bac69a1955c95d1e59da51bc0"
+   },
+   "expect_rows": [
+    [
+     "HELD",
+     null
+    ]
+   ],
+   "expect_document_verdict": "SWORN-HELD",
+   "rules": [
+    "2.3",
+    "2.5",
+    "5.4",
+    "5.5",
+    "6.9",
+    "7.5",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "a122badcf82209ac213d341e99be6aed70bc58b8a2a3738af854934f76023631",
+   "source": "hand",
+   "op": "check",
+   "label": "7.3 a receipt exponent of 4,001 digits: the receipt string keeps the adjusted exponent (PM47, JM19)",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InIxIiBrPSJudW1lcmljIj4wPC9zd29ybj4=",
+    "name": "d.md",
+    "manifest_b64": "eyJzcGVjIjogInN3b3JuL21hbmlmZXN0LzAuMiIsICJoYXJuZXNzIjogImgiLCAidHVybiI6ICJ0IiwgIm1pbnRlZF9hdCI6ICIyMDI2LTAxLTAxVDAwOjAwOjAwWiIsICJhdXRob3JlZF9zaGEyNTYiOiBbXSwgInJlY2VpcHRzIjogeyJyMSI6IHsic2hhMjU2IjogIjFmZTVhOWE2ZGMyNjI5MGNkNzY3ZWJlYjg4ZGExMWNmNDZlMzRiYjc4MGU3YzYyMjY3MzQ5N2YyNjQzNDAyZmYiLCAiYnl0ZXMiOiAiTVRWbExURXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4TVRFeE1URXhNVEV4IiwgImlkIjogInIxIiwgImtpbmRfb2Zfc291cmNlIjogInRvb2xfc3Rkb3V0IiwgImNhcHR1cmVkX2F0IjogIjIwMjYtMDEtMDFUMDA6MDA6MDBaIiwgImNvbXBsZXRlIjogdHJ1ZX19LCAicnVuZyI6ICJMMiJ9",
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group killers",
+   "expect": {
+    "core_digest": "68769422eeb98e2c099c6d69ee749acbafa2827a3582cec662bbd88324a628f1"
+   },
+   "expect_rows": [
+    [
+     "FAILED",
+     "rounds_to_zero"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-FAILED",
+   "rules": [
+    "2.3",
+    "2.5",
+    "5.4",
+    "5.5",
+    "7.3a",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "f768f47e86317fcf2da708e7a0247798cb6e47d9d2443cd24708453a6812229c",
+   "source": "hand",
+   "op": "check",
+   "label": "7.3 leaf text: the first 80 code points of a string of 81 astral characters (JM10)",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InIxIy9zIiBrPSJudW1lcmljIj4xPC9zd29ybj4=",
+    "name": "d.md",
+    "manifest_b64": "eyJzcGVjIjogInN3b3JuL21hbmlmZXN0LzAuMiIsICJoYXJuZXNzIjogImgiLCAidHVybiI6ICJ0IiwgIm1pbnRlZF9hdCI6ICIyMDI2LTAxLTAxVDAwOjAwOjAwWiIsICJhdXRob3JlZF9zaGEyNTYiOiBbXSwgInJlY2VpcHRzIjogeyJyMSI6IHsic2hhMjU2IjogIjg3YTQ5ZGZiYjAyNjAzZDJhOTE0Mzg3ZGI0N2U1Y2VmN2RiNWE1MmVlZWExMWU1ZjA3Y2NhMGE3NzIwYjIxZWYiLCAiYnl0ZXMiOiAiZXlKeklqb2dJdkNmbUlEd241aUE4SitZZ1BDZm1JRHduNWlBOEorWWdQQ2ZtSUR3bjVpQThKK1lnUENmbUlEd241aUE4SitZZ1BDZm1JRHduNWlBOEorWWdQQ2ZtSUR3bjVpQThKK1lnUENmbUlEd241aUE4SitZZ1BDZm1JRHduNWlBOEorWWdQQ2ZtSUR3bjVpQThKK1lnUENmbUlEd241aUE4SitZZ1BDZm1JRHduNWlBOEorWWdQQ2ZtSUR3bjVpQThKK1lnUENmbUlEd241aUE4SitZZ1BDZm1JRHduNWlBOEorWWdQQ2ZtSUR3bjVpQThKK1lnUENmbUlEd241aUE4SitZZ1BDZm1JRHduNWlBOEorWWdQQ2ZtSUR3bjVpQThKK1lnUENmbUlEd241aUE4SitZZ1BDZm1JRHduNWlBOEorWWdQQ2ZtSUR3bjVpQThKK1lnUENmbUlEd241aUE4SitZZ1BDZm1JRHduNWlBOEorWWdQQ2ZtSUR3bjVpQThKK1lnUENmbUlEd241aUE4SitZZ1BDZm1JRHduNWlBOEorWWdQQ2ZtSUR3bjVpQThKK1lnQ0o5IiwgImlkIjogInIxIiwgImtpbmRfb2Zfc291cmNlIjogInRvb2xfc3Rkb3V0IiwgImNhcHR1cmVkX2F0IjogIjIwMjYtMDEtMDFUMDA6MDA6MDBaIiwgImNvbXBsZXRlIjogdHJ1ZX19LCAicnVuZyI6ICJMMiJ9",
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group killers",
+   "expect": {
+    "core_digest": "dc97d64bcfdb8656230245661f3a49b5b7559c586745051b12a1025ec7e8d45d"
+   },
+   "expect_rows": [
+    [
+     "MALFORMED",
+     "leaf_not_numeric"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-FAILED",
+   "rules": [
+    "2.3",
+    "2.5",
+    "5.4",
+    "5.5",
+    "7.3",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "22237512adadc9d825e98c2787cb7d265e0d634033dbd327cbab021fc73f1fd0",
+   "source": "hand",
+   "op": "check",
+   "label": "7.2 the detail lists the digit-bearing tokens as found, trailing marks kept: number_grammar",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InIxIiBrPSJudW1lcmljIj52MS4yLjwvc3dvcm4+",
+    "name": "d.md",
+    "manifest_b64": null,
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group killers",
+   "expect": {
+    "core_digest": "3a2d9ce4263a94740f124d613d72c0a67d702815b65eda0ef445ec9cc2ceb6ed"
+   },
+   "expect_rows": [
+    [
+     "MALFORMED",
+     "number_grammar"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-FAILED",
+   "rules": [
+    "2.3",
+    "2.5",
+    "7.2",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "b1eb7015dc7baa6b59e1788593a20950e88094e3d553e7482904e0e9ea681217",
+   "source": "hand",
+   "op": "check",
+   "label": "7.2 the detail lists the digit-bearing tokens as found, trailing marks kept: number_count",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InIxIiBrPSJudW1lcmljIj4xLiBhbmQgMjo8L3N3b3JuPg==",
+    "name": "d.md",
+    "manifest_b64": null,
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group killers",
+   "expect": {
+    "core_digest": "3e9d57c1a33ad911e54d714a94bf6d5a4d6a9286c78a4a64a12542cb1ec10c17"
+   },
+   "expect_rows": [
+    [
+     "MALFORMED",
+     "number_count"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-FAILED",
+   "rules": [
+    "2.3",
+    "2.5",
+    "7.2",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "0065676a4e3e61783d1e582499b98c6d84702fe26222338d7fbc355a566baa0c",
+   "source": "hand",
+   "op": "check",
+   "label": "7.2 Unicode 15.0.0: U+11BF0 (Nd only from Unicode 16.0) beside a 7 is no digit",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InIxIiBrPSJudW1lcmljIj5uIGlzIDcg8JGvsDwvc3dvcm4+",
+    "name": "d.md",
+    "manifest_b64": "eyJzcGVjIjogInN3b3JuL21hbmlmZXN0LzAuMiIsICJoYXJuZXNzIjogImgiLCAidHVybiI6ICJ0IiwgIm1pbnRlZF9hdCI6ICIyMDI2LTAxLTAxVDAwOjAwOjAwWiIsICJhdXRob3JlZF9zaGEyNTYiOiBbXSwgInJlY2VpcHRzIjogeyJyMSI6IHsic2hhMjU2IjogIjc5MDI2OTliZTQyYzhhOGU0NmZiYmI0NTAxNzI2NTE3ZTg2YjIyYzU2YTE4OWY3NjI1YTZkYTQ5MDgxYjI0NTEiLCAiYnl0ZXMiOiAiTnc9PSIsICJpZCI6ICJyMSIsICJraW5kX29mX3NvdXJjZSI6ICJ0b29sX3N0ZG91dCIsICJjYXB0dXJlZF9hdCI6ICIyMDI2LTAxLTAxVDAwOjAwOjAwWiIsICJjb21wbGV0ZSI6IHRydWV9fSwgInJ1bmciOiAiTDIifQ==",
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group pins",
+   "expect": {
+    "core_digest": "1092bd7c981ab29dc7bf23bfde04a0310a6916fc670f400ef36bf1bf8ff3e3b4"
+   },
+   "expect_rows": [
+    [
+     "HELD",
+     null
+    ]
+   ],
+   "expect_document_verdict": "SWORN-HELD",
+   "rules": [
+    "2.3",
+    "2.5",
+    "5.4",
+    "5.5",
+    "6.9",
+    "7.3",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "938824dc5cca0804007d2a9fc6c82be1ca9c70319556d67cce9c0ebee8be6d38",
+   "source": "hand",
+   "op": "check",
+   "label": "7.2 Unicode 15.0.0: U+1C89 (a letter only from Unicode 16.0) glued to a 7 is no token character",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InIxIiBrPSJudW1lcmljIj5uIGlzIDfhsok8L3N3b3JuPg==",
+    "name": "d.md",
+    "manifest_b64": "eyJzcGVjIjogInN3b3JuL21hbmlmZXN0LzAuMiIsICJoYXJuZXNzIjogImgiLCAidHVybiI6ICJ0IiwgIm1pbnRlZF9hdCI6ICIyMDI2LTAxLTAxVDAwOjAwOjAwWiIsICJhdXRob3JlZF9zaGEyNTYiOiBbXSwgInJlY2VpcHRzIjogeyJyMSI6IHsic2hhMjU2IjogIjc5MDI2OTliZTQyYzhhOGU0NmZiYmI0NTAxNzI2NTE3ZTg2YjIyYzU2YTE4OWY3NjI1YTZkYTQ5MDgxYjI0NTEiLCAiYnl0ZXMiOiAiTnc9PSIsICJpZCI6ICJyMSIsICJraW5kX29mX3NvdXJjZSI6ICJ0b29sX3N0ZG91dCIsICJjYXB0dXJlZF9hdCI6ICIyMDI2LTAxLTAxVDAwOjAwOjAwWiIsICJjb21wbGV0ZSI6IHRydWV9fSwgInJ1bmciOiAiTDIifQ==",
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group pins",
+   "expect": {
+    "core_digest": "d62b0dfeaf7a16f468756c4695aefdb407b9ccf777f0652cc577916eba61315c"
+   },
+   "expect_rows": [
+    [
+     "HELD",
+     null
+    ]
+   ],
+   "expect_document_verdict": "SWORN-HELD",
+   "rules": [
+    "2.3",
+    "2.5",
+    "5.4",
+    "5.5",
+    "6.9",
+    "7.3",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "cf8fadae4e23a6a580d999828e37585d1262801800a1074e31eb6b2543e477df",
+   "source": "hand",
+   "op": "check",
+   "label": "7.2 Unicode 15.0.0: U+1CCF0 (Nd only from Unicode 16.0) alone is no digit: number_count",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InIxIiBrPSJudW1lcmljIj7wnLOwPC9zd29ybj4=",
+    "name": "d.md",
+    "manifest_b64": "eyJzcGVjIjogInN3b3JuL21hbmlmZXN0LzAuMiIsICJoYXJuZXNzIjogImgiLCAidHVybiI6ICJ0IiwgIm1pbnRlZF9hdCI6ICIyMDI2LTAxLTAxVDAwOjAwOjAwWiIsICJhdXRob3JlZF9zaGEyNTYiOiBbXSwgInJlY2VpcHRzIjogeyJyMSI6IHsic2hhMjU2IjogIjc5MDI2OTliZTQyYzhhOGU0NmZiYmI0NTAxNzI2NTE3ZTg2YjIyYzU2YTE4OWY3NjI1YTZkYTQ5MDgxYjI0NTEiLCAiYnl0ZXMiOiAiTnc9PSIsICJpZCI6ICJyMSIsICJraW5kX29mX3NvdXJjZSI6ICJ0b29sX3N0ZG91dCIsICJjYXB0dXJlZF9hdCI6ICIyMDI2LTAxLTAxVDAwOjAwOjAwWiIsICJjb21wbGV0ZSI6IHRydWV9fSwgInJ1bmciOiAiTDIifQ==",
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group pins",
+   "expect": {
+    "core_digest": "1e1b1166e78bc88fccecc12fffb1c0ba815dfa3b36f37289fb947f50ef85825d"
+   },
+   "expect_rows": [
+    [
+     "MALFORMED",
+     "number_count"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-FAILED",
+   "rules": [
+    "2.3",
+    "2.5",
+    "5.4",
+    "5.5",
+    "7.2",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "e1a4a0d8872ad7d46f4f4e4edc922ae0588a16c98913584ac5cf036e6560cf74",
+   "source": "hand",
+   "op": "check",
+   "label": "7.2 Unicode 15.0.0: U+143E7 (assigned only from Unicode 16.0) before a 7",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InIxIiBrPSJudW1lcmljIj7wlI+nIDc8L3N3b3JuPg==",
+    "name": "d.md",
+    "manifest_b64": "eyJzcGVjIjogInN3b3JuL21hbmlmZXN0LzAuMiIsICJoYXJuZXNzIjogImgiLCAidHVybiI6ICJ0IiwgIm1pbnRlZF9hdCI6ICIyMDI2LTAxLTAxVDAwOjAwOjAwWiIsICJhdXRob3JlZF9zaGEyNTYiOiBbXSwgInJlY2VpcHRzIjogeyJyMSI6IHsic2hhMjU2IjogIjc5MDI2OTliZTQyYzhhOGU0NmZiYmI0NTAxNzI2NTE3ZTg2YjIyYzU2YTE4OWY3NjI1YTZkYTQ5MDgxYjI0NTEiLCAiYnl0ZXMiOiAiTnc9PSIsICJpZCI6ICJyMSIsICJraW5kX29mX3NvdXJjZSI6ICJ0b29sX3N0ZG91dCIsICJjYXB0dXJlZF9hdCI6ICIyMDI2LTAxLTAxVDAwOjAwOjAwWiIsICJjb21wbGV0ZSI6IHRydWV9fSwgInJ1bmciOiAiTDIifQ==",
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group pins",
+   "expect": {
+    "core_digest": "ae16e9bcc494fcf4d34927321c7ac8d67d9213669cfb4115457c3a42440c0074"
+   },
+   "expect_rows": [
+    [
+     "HELD",
+     null
+    ]
+   ],
+   "expect_document_verdict": "SWORN-HELD",
+   "rules": [
+    "2.3",
+    "2.5",
+    "5.4",
+    "5.5",
+    "6.9",
+    "7.3",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "9d61881f53044e014895573e5c7d47031be83233b306f0340ca97801f361ba00",
+   "source": "hand",
+   "op": "check",
+   "label": "7.2 Unicode 15.0.0: U+1C80 (a letter in 15.0.0) glued to a 7 joins the token: number_grammar",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InIxIiBrPSJudW1lcmljIj5uIGlzIDfhsoA8L3N3b3JuPg==",
+    "name": "d.md",
+    "manifest_b64": "eyJzcGVjIjogInN3b3JuL21hbmlmZXN0LzAuMiIsICJoYXJuZXNzIjogImgiLCAidHVybiI6ICJ0IiwgIm1pbnRlZF9hdCI6ICIyMDI2LTAxLTAxVDAwOjAwOjAwWiIsICJhdXRob3JlZF9zaGEyNTYiOiBbXSwgInJlY2VpcHRzIjogeyJyMSI6IHsic2hhMjU2IjogIjc5MDI2OTliZTQyYzhhOGU0NmZiYmI0NTAxNzI2NTE3ZTg2YjIyYzU2YTE4OWY3NjI1YTZkYTQ5MDgxYjI0NTEiLCAiYnl0ZXMiOiAiTnc9PSIsICJpZCI6ICJyMSIsICJraW5kX29mX3NvdXJjZSI6ICJ0b29sX3N0ZG91dCIsICJjYXB0dXJlZF9hdCI6ICIyMDI2LTAxLTAxVDAwOjAwOjAwWiIsICJjb21wbGV0ZSI6IHRydWV9fSwgInJ1bmciOiAiTDIifQ==",
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group pins",
+   "expect": {
+    "core_digest": "3c6b722b43b9c934f277c2a86276b2a694faa8b6c6825feb9f71f144465f2068"
+   },
+   "expect_rows": [
+    [
+     "MALFORMED",
+     "number_grammar"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-FAILED",
+   "rules": [
+    "2.3",
+    "2.5",
+    "5.4",
+    "5.5",
+    "7.2",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "af6df3c33f7d855a97cb28393590147751cdc4ef55e78d1f8500a99bdfc55efe",
+   "source": "hand",
+   "op": "check",
+   "label": "7.2 Unicode 15.0.0: U+0663 (Nd in 15.0.0) is digit-bearing and not ASCII: number_grammar",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InIxIiBrPSJudW1lcmljIj5uIGlzINmjPC9zd29ybj4=",
+    "name": "d.md",
+    "manifest_b64": "eyJzcGVjIjogInN3b3JuL21hbmlmZXN0LzAuMiIsICJoYXJuZXNzIjogImgiLCAidHVybiI6ICJ0IiwgIm1pbnRlZF9hdCI6ICIyMDI2LTAxLTAxVDAwOjAwOjAwWiIsICJhdXRob3JlZF9zaGEyNTYiOiBbXSwgInJlY2VpcHRzIjogeyJyMSI6IHsic2hhMjU2IjogIjc5MDI2OTliZTQyYzhhOGU0NmZiYmI0NTAxNzI2NTE3ZTg2YjIyYzU2YTE4OWY3NjI1YTZkYTQ5MDgxYjI0NTEiLCAiYnl0ZXMiOiAiTnc9PSIsICJpZCI6ICJyMSIsICJraW5kX29mX3NvdXJjZSI6ICJ0b29sX3N0ZG91dCIsICJjYXB0dXJlZF9hdCI6ICIyMDI2LTAxLTAxVDAwOjAwOjAwWiIsICJjb21wbGV0ZSI6IHRydWV9fSwgInJ1bmciOiAiTDIifQ==",
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group pins",
+   "expect": {
+    "core_digest": "d2ec34d1bb1bbfdf091eb8e759b030c436319fac4ef47cd16d8f3e4c93c88ec6"
+   },
+   "expect_rows": [
+    [
+     "MALFORMED",
+     "number_grammar"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-FAILED",
+   "rules": [
+    "2.3",
+    "2.5",
+    "5.4",
+    "5.5",
+    "7.2",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
    ]
   },
   {
@@ -62622,7 +66918,7 @@
    "id": "82e607387892e784a1b9cd1230e3baeec4e6829a544a0162a1820d08d4875ed7",
    "source": "recheck",
    "op": "recheck",
-   "label": "receipt_shape: a count written 1.0 (text gap)",
+   "label": "receipt_shape: a count written 2.0",
    "inputs": {
     "receipt_b64": "eyJhdHRlc3RhdGlvbnMiOltdLCJjb3JlIjp7ImNvbW1pdCI6bnVsbCwiY291bnRzIjp7IkZBSUxFRCI6MCwiSEVMRCI6MiwiTUFMRk9STUVEIjowLCJVTlJFU09MVkVEIjowfSwiZG9jdW1lbnQiOnsiY2Fub25pY2FsX3NoYTI1NiI6IjY3ZTQ3Zjg2NzVkYzRkYzg3MjBmNTJiZTQ1MGViNDEwOWUzMjVkZTg0ZTIzZWYyZjIxNWQxMmZmZWM3MWZiNGEiLCJpbmxpbmVfc2hhMjU2IjoiMWUwMmVkMmIxMzVhZmVhMGNiZmM1ZDNiZDUzOWIwN2ExMzhhNjczMjJlZGUwNjFiYjRkNDVkMWE2ZTEyZWQ0ZiIsIm5hbWUiOiJkLm1kIn0sImRvY3VtZW50X21hbGZvcm1lZCI6bnVsbCwiZG9jdW1lbnRfdmVyZGljdCI6IlNXT1JOLUhFTEQiLCJmb3JtYXQiOiJzd29ybi8wLjEiLCJtYW5pZmVzdF9kaWdlc3QiOiI1ZTQ5M2FkZmJmMzdjYTBkOGYxNmExZmUzMTE0ZTQxYjRjMTMxMzZlZTFjNzdmYzRjNGExMTgwN2JlZjk4Nzk3IiwicHJvZmlsZSI6InJuLWlubGluZS92MC1kcmFmdCIsInJ1bmdzIjp7IkwyIjoyfSwic2NoZW1hIjoicmVjZWlwdC92MC1kcmFmdCIsInNwYW5zIjpbeyJhdCI6MCwiY2xhaW0iOiJuIGlzIDciLCJjbGFpbV9zaGEyNTYiOiIyMjBjYzYzZGE5ZmYxNWNjNjY1MGY1OWZmOTljYzE1NWM1NGZiNGM3OWQ3OGM0ZDdiZjY3MjRmNGUxYjgwOWE1IiwiZGV0YWlsIjp7ImZyYWN0aW9uYWxfZGlnaXRzIjowLCJwcmludGVkIjoiNyIsInByaW50ZWRfdG9rZW4iOiI3IiwicmVjZWlwdCI6IjciLCJyZWNlaXB0X3JvdW5kZWQiOiI3Iiwicm91bmRpbmciOiJST1VORF9IQUxGX0VWRU4ifSwiZW5kIjo2LCJraW5kIjoibnVtZXJpYyIsInByb3ZlbmFuY2UiOnsiZm9ybSI6InJuIiwiaGFybmVzcyI6Imhhcm5lc3MteCIsImtpbmRfb2Zfc291cmNlIjoidG9vbF9zdGRvdXQiLCJydW5nIjoiTDIifSwicmVhc29uIjpudWxsLCJyZWNlaXB0IjoicjEiLCJyZXNvbHZlZF9zaGEyNTYiOiI3OTAyNjk5YmU0MmM4YThlNDZmYmJiNDUwMTcyNjUxN2U4NmIyMmM1NmExODlmNzYyNWE2ZGE0OTA4MWIyNDUxIiwic3RhcnQiOjAsInZlcmRpY3QiOiJIRUxEIn0seyJhdCI6NDUsImNsYWltIjoiYHRoZSBxdWljayBicm93biBmb3hgIiwiY2xhaW1fc2hhMjU2IjoiOTAzYTJlZmUwNGI1NzZhMDc1Y2VkMmE2YzcyZDQ2MjFiOTg4NWJjODRmY2VjNjEyYmEzZWMyNjY0YzNlNmJlOSIsImRldGFpbCI6eyJoYXlzdGFja19ieXRlcyI6MjUsIm5lZWRsZV9ieXRlcyI6MTksIm9jY3VycmVuY2VzIjoxfSwiZW5kIjozMiwia2luZCI6InF1b3RlIiwicHJvdmVuYW5jZSI6eyJmb3JtIjoicm4iLCJoYXJuZXNzIjoiaGFybmVzcy14Iiwia2luZF9vZl9zb3VyY2UiOiJ0b29sX3N0ZG91dCIsInJ1bmciOiJMMiJ9LCJyZWFzb24iOm51bGwsInJlY2VpcHQiOiJyMiIsInJlc29sdmVkX3NoYTI1NiI6IjhlZjQyNzUxZTg4ZjkwNDBkMjRiYmIxYmViODljZmRjYjI0OTMyYjZhZDVlYzliMzk4NmFmMjYwYjdjNmMyNWEiLCJzdGFydCI6MTEsInZlcmRpY3QiOiJIRUxEIn1dLCJzd29ybl90b3RhbCI6Mi4wLCJ1bnJlc29sdmVkIjowfSwiZGlnZXN0IjoiMmVhMGM0NzM4ZjdkOTYzMGIyMDg5ZTQ2ZDY3YTBlYTk4M2JkNDYzMGQyMzQ5OTg5YmY5ZGFhZTVhNGE4YmQ0NiJ9",
     "document_b64": "PHN3b3JuIHI9InIxIiBrPSJudW1lcmljIj5uIGlzIDc8L3N3b3JuPiBhbmQgPHN3b3JuIHI9InIyIiBrPSJxdW90ZSI+YHRoZSBxdWljayBicm93biBmb3hgPC9zd29ybj4=",
@@ -62634,7 +66930,115 @@
    "rules": [
     "11.3"
    ],
-   "note": "JSON Schema calls 2.0 an integer; 3.1 calls it a float. This checker refuses it as receipt_shape (see the writer's report)"
+   "note": "11.3: every number in a receipt is read as written under 3.1; JSON Schema alone would call 2.0 an integer"
+  },
+  {
+   "id": "32a950ec03e7454e3a062becf57d35bd32528d6edc664b46c7bed7c7a432d171",
+   "source": "recheck",
+   "op": "recheck",
+   "label": "receipt_shape: an offset written with an exponent",
+   "inputs": {
+    "receipt_b64": "eyJhdHRlc3RhdGlvbnMiOltdLCJjb3JlIjp7ImNvbW1pdCI6bnVsbCwiY291bnRzIjp7IkZBSUxFRCI6MCwiSEVMRCI6MiwiTUFMRk9STUVEIjowLCJVTlJFU09MVkVEIjowfSwiZG9jdW1lbnQiOnsiY2Fub25pY2FsX3NoYTI1NiI6IjY3ZTQ3Zjg2NzVkYzRkYzg3MjBmNTJiZTQ1MGViNDEwOWUzMjVkZTg0ZTIzZWYyZjIxNWQxMmZmZWM3MWZiNGEiLCJpbmxpbmVfc2hhMjU2IjoiMWUwMmVkMmIxMzVhZmVhMGNiZmM1ZDNiZDUzOWIwN2ExMzhhNjczMjJlZGUwNjFiYjRkNDVkMWE2ZTEyZWQ0ZiIsIm5hbWUiOiJkLm1kIn0sImRvY3VtZW50X21hbGZvcm1lZCI6bnVsbCwiZG9jdW1lbnRfdmVyZGljdCI6IlNXT1JOLUhFTEQiLCJmb3JtYXQiOiJzd29ybi8wLjEiLCJtYW5pZmVzdF9kaWdlc3QiOiI1ZTQ5M2FkZmJmMzdjYTBkOGYxNmExZmUzMTE0ZTQxYjRjMTMxMzZlZTFjNzdmYzRjNGExMTgwN2JlZjk4Nzk3IiwicHJvZmlsZSI6InJuLWlubGluZS92MC1kcmFmdCIsInJ1bmdzIjp7IkwyIjoyfSwic2NoZW1hIjoicmVjZWlwdC92MC1kcmFmdCIsInNwYW5zIjpbeyJhdCI6MGUwLCJjbGFpbSI6Im4gaXMgNyIsImNsYWltX3NoYTI1NiI6IjIyMGNjNjNkYTlmZjE1Y2M2NjUwZjU5ZmY5OWNjMTU1YzU0ZmI0Yzc5ZDc4YzRkN2JmNjcyNGY0ZTFiODA5YTUiLCJkZXRhaWwiOnsiZnJhY3Rpb25hbF9kaWdpdHMiOjAsInByaW50ZWQiOiI3IiwicHJpbnRlZF90b2tlbiI6IjciLCJyZWNlaXB0IjoiNyIsInJlY2VpcHRfcm91bmRlZCI6IjciLCJyb3VuZGluZyI6IlJPVU5EX0hBTEZfRVZFTiJ9LCJlbmQiOjYsImtpbmQiOiJudW1lcmljIiwicHJvdmVuYW5jZSI6eyJmb3JtIjoicm4iLCJoYXJuZXNzIjoiaGFybmVzcy14Iiwia2luZF9vZl9zb3VyY2UiOiJ0b29sX3N0ZG91dCIsInJ1bmciOiJMMiJ9LCJyZWFzb24iOm51bGwsInJlY2VpcHQiOiJyMSIsInJlc29sdmVkX3NoYTI1NiI6Ijc5MDI2OTliZTQyYzhhOGU0NmZiYmI0NTAxNzI2NTE3ZTg2YjIyYzU2YTE4OWY3NjI1YTZkYTQ5MDgxYjI0NTEiLCJzdGFydCI6MCwidmVyZGljdCI6IkhFTEQifSx7ImF0Ijo0NSwiY2xhaW0iOiJgdGhlIHF1aWNrIGJyb3duIGZveGAiLCJjbGFpbV9zaGEyNTYiOiI5MDNhMmVmZTA0YjU3NmEwNzVjZWQyYTZjNzJkNDYyMWI5ODg1YmM4NGZjZWM2MTJiYTNlYzI2NjRjM2U2YmU5IiwiZGV0YWlsIjp7ImhheXN0YWNrX2J5dGVzIjoyNSwibmVlZGxlX2J5dGVzIjoxOSwib2NjdXJyZW5jZXMiOjF9LCJlbmQiOjMyLCJraW5kIjoicXVvdGUiLCJwcm92ZW5hbmNlIjp7ImZvcm0iOiJybiIsImhhcm5lc3MiOiJoYXJuZXNzLXgiLCJraW5kX29mX3NvdXJjZSI6InRvb2xfc3Rkb3V0IiwicnVuZyI6IkwyIn0sInJlYXNvbiI6bnVsbCwicmVjZWlwdCI6InIyIiwicmVzb2x2ZWRfc2hhMjU2IjoiOGVmNDI3NTFlODhmOTA0MGQyNGJiYjFiZWI4OWNmZGNiMjQ5MzJiNmFkNWVjOWIzOTg2YWYyNjBiN2M2YzI1YSIsInN0YXJ0IjoxMSwidmVyZGljdCI6IkhFTEQifV0sInN3b3JuX3RvdGFsIjoyLCJ1bnJlc29sdmVkIjowfSwiZGlnZXN0IjoiMmVhMGM0NzM4ZjdkOTYzMGIyMDg5ZTQ2ZDY3YTBlYTk4M2JkNDYzMGQyMzQ5OTg5YmY5ZGFhZTVhNGE4YmQ0NiJ9",
+    "document_b64": "PHN3b3JuIHI9InIxIiBrPSJudW1lcmljIj5uIGlzIDc8L3N3b3JuPiBhbmQgPHN3b3JuIHI9InIyIiBrPSJxdW90ZSI+YHRoZSBxdWljayBicm93biBmb3hgPC9zd29ybj4=",
+    "manifest_b64": "eyJhdXRob3JlZF9zaGEyNTYiOiBbXSwgImRpZ2VzdCI6ICI1ZTQ5M2FkZmJmMzdjYTBkOGYxNmExZmUzMTE0ZTQxYjRjMTMxMzZlZTFjNzdmYzRjNGExMTgwN2JlZjk4Nzk3IiwgImhhcm5lc3MiOiAiaGFybmVzcy14IiwgIm1pbnRlZF9hdCI6ICIyMDI2LTAxLTAxVDAwOjAwOjAwWiIsICJyZWNlaXB0cyI6IHsicjEiOiB7ImJ5dGVzIjogIk53PT0iLCAiY2FwdHVyZWRfYXQiOiAiMjAyNi0wMS0wMVQwMDowMDowMFoiLCAiY29tcGxldGUiOiB0cnVlLCAiaWQiOiAicjEiLCAia2luZF9vZl9zb3VyY2UiOiAidG9vbF9zdGRvdXQiLCAic2hhMjU2IjogIjc5MDI2OTliZTQyYzhhOGU0NmZiYmI0NTAxNzI2NTE3ZTg2YjIyYzU2YTE4OWY3NjI1YTZkYTQ5MDgxYjI0NTEifSwgInIyIjogeyJieXRlcyI6ICJkR2hsSUhGMWFXTnJJR0p5YjNkdUlHWnZlQ0JxZFcxd2N3PT0iLCAiY2FwdHVyZWRfYXQiOiAiMjAyNi0wMS0wMVQwMDowMDowMFoiLCAiY29tcGxldGUiOiB0cnVlLCAiaWQiOiAicjIiLCAia2luZF9vZl9zb3VyY2UiOiAidG9vbF9zdGRvdXQiLCAic2hhMjU2IjogIjhlZjQyNzUxZTg4ZjkwNDBkMjRiYmIxYmViODljZmRjYjI0OTMyYjZhZDVlYzliMzk4NmFmMjYwYjdjNmMyNWEifX0sICJydW5nIjogIkwyIiwgInNwZWMiOiAic3dvcm4vbWFuaWZlc3QvMC4yIiwgInR1cm4iOiAidHVybi0xIn0="
+   },
+   "expect": {
+    "refusal": "receipt_shape"
+   },
+   "rules": [
+    "11.3"
+   ],
+   "note": "11.3: every number in a receipt is read as written under 3.1"
+  },
+  {
+   "id": "add8d2c9ca37226a47ca7f16f08c47ba041f87f92a3aac83763772f8ffa57ff9",
+   "source": "recheck",
+   "op": "recheck",
+   "label": "REDERIVES: -0 written for an offset of 0",
+   "inputs": {
+    "receipt_b64": "eyJhdHRlc3RhdGlvbnMiOltdLCJjb3JlIjp7ImNvbW1pdCI6bnVsbCwiY291bnRzIjp7IkZBSUxFRCI6MCwiSEVMRCI6MiwiTUFMRk9STUVEIjowLCJVTlJFU09MVkVEIjowfSwiZG9jdW1lbnQiOnsiY2Fub25pY2FsX3NoYTI1NiI6IjY3ZTQ3Zjg2NzVkYzRkYzg3MjBmNTJiZTQ1MGViNDEwOWUzMjVkZTg0ZTIzZWYyZjIxNWQxMmZmZWM3MWZiNGEiLCJpbmxpbmVfc2hhMjU2IjoiMWUwMmVkMmIxMzVhZmVhMGNiZmM1ZDNiZDUzOWIwN2ExMzhhNjczMjJlZGUwNjFiYjRkNDVkMWE2ZTEyZWQ0ZiIsIm5hbWUiOiJkLm1kIn0sImRvY3VtZW50X21hbGZvcm1lZCI6bnVsbCwiZG9jdW1lbnRfdmVyZGljdCI6IlNXT1JOLUhFTEQiLCJmb3JtYXQiOiJzd29ybi8wLjEiLCJtYW5pZmVzdF9kaWdlc3QiOiI1ZTQ5M2FkZmJmMzdjYTBkOGYxNmExZmUzMTE0ZTQxYjRjMTMxMzZlZTFjNzdmYzRjNGExMTgwN2JlZjk4Nzk3IiwicHJvZmlsZSI6InJuLWlubGluZS92MC1kcmFmdCIsInJ1bmdzIjp7IkwyIjoyfSwic2NoZW1hIjoicmVjZWlwdC92MC1kcmFmdCIsInNwYW5zIjpbeyJhdCI6LTAsImNsYWltIjoibiBpcyA3IiwiY2xhaW1fc2hhMjU2IjoiMjIwY2M2M2RhOWZmMTVjYzY2NTBmNTlmZjk5Y2MxNTVjNTRmYjRjNzlkNzhjNGQ3YmY2NzI0ZjRlMWI4MDlhNSIsImRldGFpbCI6eyJmcmFjdGlvbmFsX2RpZ2l0cyI6MCwicHJpbnRlZCI6IjciLCJwcmludGVkX3Rva2VuIjoiNyIsInJlY2VpcHQiOiI3IiwicmVjZWlwdF9yb3VuZGVkIjoiNyIsInJvdW5kaW5nIjoiUk9VTkRfSEFMRl9FVkVOIn0sImVuZCI6Niwia2luZCI6Im51bWVyaWMiLCJwcm92ZW5hbmNlIjp7ImZvcm0iOiJybiIsImhhcm5lc3MiOiJoYXJuZXNzLXgiLCJraW5kX29mX3NvdXJjZSI6InRvb2xfc3Rkb3V0IiwicnVuZyI6IkwyIn0sInJlYXNvbiI6bnVsbCwicmVjZWlwdCI6InIxIiwicmVzb2x2ZWRfc2hhMjU2IjoiNzkwMjY5OWJlNDJjOGE4ZTQ2ZmJiYjQ1MDE3MjY1MTdlODZiMjJjNTZhMTg5Zjc2MjVhNmRhNDkwODFiMjQ1MSIsInN0YXJ0IjowLCJ2ZXJkaWN0IjoiSEVMRCJ9LHsiYXQiOjQ1LCJjbGFpbSI6ImB0aGUgcXVpY2sgYnJvd24gZm94YCIsImNsYWltX3NoYTI1NiI6IjkwM2EyZWZlMDRiNTc2YTA3NWNlZDJhNmM3MmQ0NjIxYjk4ODViYzg0ZmNlYzYxMmJhM2VjMjY2NGMzZTZiZTkiLCJkZXRhaWwiOnsiaGF5c3RhY2tfYnl0ZXMiOjI1LCJuZWVkbGVfYnl0ZXMiOjE5LCJvY2N1cnJlbmNlcyI6MX0sImVuZCI6MzIsImtpbmQiOiJxdW90ZSIsInByb3ZlbmFuY2UiOnsiZm9ybSI6InJuIiwiaGFybmVzcyI6Imhhcm5lc3MteCIsImtpbmRfb2Zfc291cmNlIjoidG9vbF9zdGRvdXQiLCJydW5nIjoiTDIifSwicmVhc29uIjpudWxsLCJyZWNlaXB0IjoicjIiLCJyZXNvbHZlZF9zaGEyNTYiOiI4ZWY0Mjc1MWU4OGY5MDQwZDI0YmJiMWJlYjg5Y2ZkY2IyNDkzMmI2YWQ1ZWM5YjM5ODZhZjI2MGI3YzZjMjVhIiwic3RhcnQiOjExLCJ2ZXJkaWN0IjoiSEVMRCJ9XSwic3dvcm5fdG90YWwiOjIsInVucmVzb2x2ZWQiOjB9LCJkaWdlc3QiOiIyZWEwYzQ3MzhmN2Q5NjMwYjIwODllNDZkNjdhMGVhOTgzYmQ0NjMwZDIzNDk5ODliZjlkYWFlNWE0YThiZDQ2In0=",
+    "document_b64": "PHN3b3JuIHI9InIxIiBrPSJudW1lcmljIj5uIGlzIDc8L3N3b3JuPiBhbmQgPHN3b3JuIHI9InIyIiBrPSJxdW90ZSI+YHRoZSBxdWljayBicm93biBmb3hgPC9zd29ybj4=",
+    "manifest_b64": "eyJhdXRob3JlZF9zaGEyNTYiOiBbXSwgImRpZ2VzdCI6ICI1ZTQ5M2FkZmJmMzdjYTBkOGYxNmExZmUzMTE0ZTQxYjRjMTMxMzZlZTFjNzdmYzRjNGExMTgwN2JlZjk4Nzk3IiwgImhhcm5lc3MiOiAiaGFybmVzcy14IiwgIm1pbnRlZF9hdCI6ICIyMDI2LTAxLTAxVDAwOjAwOjAwWiIsICJyZWNlaXB0cyI6IHsicjEiOiB7ImJ5dGVzIjogIk53PT0iLCAiY2FwdHVyZWRfYXQiOiAiMjAyNi0wMS0wMVQwMDowMDowMFoiLCAiY29tcGxldGUiOiB0cnVlLCAiaWQiOiAicjEiLCAia2luZF9vZl9zb3VyY2UiOiAidG9vbF9zdGRvdXQiLCAic2hhMjU2IjogIjc5MDI2OTliZTQyYzhhOGU0NmZiYmI0NTAxNzI2NTE3ZTg2YjIyYzU2YTE4OWY3NjI1YTZkYTQ5MDgxYjI0NTEifSwgInIyIjogeyJieXRlcyI6ICJkR2hsSUhGMWFXTnJJR0p5YjNkdUlHWnZlQ0JxZFcxd2N3PT0iLCAiY2FwdHVyZWRfYXQiOiAiMjAyNi0wMS0wMVQwMDowMDowMFoiLCAiY29tcGxldGUiOiB0cnVlLCAiaWQiOiAicjIiLCAia2luZF9vZl9zb3VyY2UiOiAidG9vbF9zdGRvdXQiLCAic2hhMjU2IjogIjhlZjQyNzUxZTg4ZjkwNDBkMjRiYmIxYmViODljZmRjYjI0OTMyYjZhZDVlYzliMzk4NmFmMjYwYjdjNmMyNWEifX0sICJydW5nIjogIkwyIiwgInNwZWMiOiAic3dvcm4vbWFuaWZlc3QvMC4yIiwgInR1cm4iOiAidHVybi0xIn0="
+   },
+   "expect": {
+    "answer": "REDERIVES"
+   },
+   "rules": [
+    "11.3"
+   ],
+   "note": "11.3: REDERIVES is a statement about the parsed core; -0 is an integer with no fraction or exponent, and its canonical text is 0"
+  },
+  {
+   "id": "4c5fa6c97b6a83c6da5876de3e9af7ecde71a9dcebd0c9c814c22ca095e6a19a",
+   "source": "recheck",
+   "op": "recheck",
+   "label": "REDERIVES: a key spelled with an escape",
+   "inputs": {
+    "receipt_b64": "eyJhdHRlc3RhdGlvbnMiOltdLCJjb3JlIjp7ImNvbW1pdCI6bnVsbCwiY291bnRzIjp7IkZBSUxFRCI6MCwiSEVMRCI6MiwiTUFMRk9STUVEIjowLCJVTlJFU09MVkVEIjowfSwiZG9jdW1lbnQiOnsiY2Fub25pY2FsX3NoYTI1NiI6IjY3ZTQ3Zjg2NzVkYzRkYzg3MjBmNTJiZTQ1MGViNDEwOWUzMjVkZTg0ZTIzZWYyZjIxNWQxMmZmZWM3MWZiNGEiLCJpbmxpbmVfc2hhMjU2IjoiMWUwMmVkMmIxMzVhZmVhMGNiZmM1ZDNiZDUzOWIwN2ExMzhhNjczMjJlZGUwNjFiYjRkNDVkMWE2ZTEyZWQ0ZiIsIm5hbWUiOiJkLm1kIn0sImRvY3VtZW50X21hbGZvcm1lZCI6bnVsbCwiZG9jdW1lbnRfdmVyZGljdCI6IlNXT1JOLUhFTEQiLCJmb3JtYXQiOiJzd29ybi8wLjEiLCJtYW5pZmVzdF9kaWdlc3QiOiI1ZTQ5M2FkZmJmMzdjYTBkOGYxNmExZmUzMTE0ZTQxYjRjMTMxMzZlZTFjNzdmYzRjNGExMTgwN2JlZjk4Nzk3IiwicHJvZmlsZSI6InJuLWlubGluZS92MC1kcmFmdCIsInJ1bmdzIjp7IkwyIjoyfSwiXHUwMDczY2hlbWEiOiJyZWNlaXB0L3YwLWRyYWZ0Iiwic3BhbnMiOlt7ImF0IjowLCJjbGFpbSI6Im4gaXMgNyIsImNsYWltX3NoYTI1NiI6IjIyMGNjNjNkYTlmZjE1Y2M2NjUwZjU5ZmY5OWNjMTU1YzU0ZmI0Yzc5ZDc4YzRkN2JmNjcyNGY0ZTFiODA5YTUiLCJkZXRhaWwiOnsiZnJhY3Rpb25hbF9kaWdpdHMiOjAsInByaW50ZWQiOiI3IiwicHJpbnRlZF90b2tlbiI6IjciLCJyZWNlaXB0IjoiNyIsInJlY2VpcHRfcm91bmRlZCI6IjciLCJyb3VuZGluZyI6IlJPVU5EX0hBTEZfRVZFTiJ9LCJlbmQiOjYsImtpbmQiOiJudW1lcmljIiwicHJvdmVuYW5jZSI6eyJmb3JtIjoicm4iLCJoYXJuZXNzIjoiaGFybmVzcy14Iiwia2luZF9vZl9zb3VyY2UiOiJ0b29sX3N0ZG91dCIsInJ1bmciOiJMMiJ9LCJyZWFzb24iOm51bGwsInJlY2VpcHQiOiJyMSIsInJlc29sdmVkX3NoYTI1NiI6Ijc5MDI2OTliZTQyYzhhOGU0NmZiYmI0NTAxNzI2NTE3ZTg2YjIyYzU2YTE4OWY3NjI1YTZkYTQ5MDgxYjI0NTEiLCJzdGFydCI6MCwidmVyZGljdCI6IkhFTEQifSx7ImF0Ijo0NSwiY2xhaW0iOiJgdGhlIHF1aWNrIGJyb3duIGZveGAiLCJjbGFpbV9zaGEyNTYiOiI5MDNhMmVmZTA0YjU3NmEwNzVjZWQyYTZjNzJkNDYyMWI5ODg1YmM4NGZjZWM2MTJiYTNlYzI2NjRjM2U2YmU5IiwiZGV0YWlsIjp7ImhheXN0YWNrX2J5dGVzIjoyNSwibmVlZGxlX2J5dGVzIjoxOSwib2NjdXJyZW5jZXMiOjF9LCJlbmQiOjMyLCJraW5kIjoicXVvdGUiLCJwcm92ZW5hbmNlIjp7ImZvcm0iOiJybiIsImhhcm5lc3MiOiJoYXJuZXNzLXgiLCJraW5kX29mX3NvdXJjZSI6InRvb2xfc3Rkb3V0IiwicnVuZyI6IkwyIn0sInJlYXNvbiI6bnVsbCwicmVjZWlwdCI6InIyIiwicmVzb2x2ZWRfc2hhMjU2IjoiOGVmNDI3NTFlODhmOTA0MGQyNGJiYjFiZWI4OWNmZGNiMjQ5MzJiNmFkNWVjOWIzOTg2YWYyNjBiN2M2YzI1YSIsInN0YXJ0IjoxMSwidmVyZGljdCI6IkhFTEQifV0sInN3b3JuX3RvdGFsIjoyLCJ1bnJlc29sdmVkIjowfSwiZGlnZXN0IjoiMmVhMGM0NzM4ZjdkOTYzMGIyMDg5ZTQ2ZDY3YTBlYTk4M2JkNDYzMGQyMzQ5OTg5YmY5ZGFhZTVhNGE4YmQ0NiJ9",
+    "document_b64": "PHN3b3JuIHI9InIxIiBrPSJudW1lcmljIj5uIGlzIDc8L3N3b3JuPiBhbmQgPHN3b3JuIHI9InIyIiBrPSJxdW90ZSI+YHRoZSBxdWljayBicm93biBmb3hgPC9zd29ybj4=",
+    "manifest_b64": "eyJhdXRob3JlZF9zaGEyNTYiOiBbXSwgImRpZ2VzdCI6ICI1ZTQ5M2FkZmJmMzdjYTBkOGYxNmExZmUzMTE0ZTQxYjRjMTMxMzZlZTFjNzdmYzRjNGExMTgwN2JlZjk4Nzk3IiwgImhhcm5lc3MiOiAiaGFybmVzcy14IiwgIm1pbnRlZF9hdCI6ICIyMDI2LTAxLTAxVDAwOjAwOjAwWiIsICJyZWNlaXB0cyI6IHsicjEiOiB7ImJ5dGVzIjogIk53PT0iLCAiY2FwdHVyZWRfYXQiOiAiMjAyNi0wMS0wMVQwMDowMDowMFoiLCAiY29tcGxldGUiOiB0cnVlLCAiaWQiOiAicjEiLCAia2luZF9vZl9zb3VyY2UiOiAidG9vbF9zdGRvdXQiLCAic2hhMjU2IjogIjc5MDI2OTliZTQyYzhhOGU0NmZiYmI0NTAxNzI2NTE3ZTg2YjIyYzU2YTE4OWY3NjI1YTZkYTQ5MDgxYjI0NTEifSwgInIyIjogeyJieXRlcyI6ICJkR2hsSUhGMWFXTnJJR0p5YjNkdUlHWnZlQ0JxZFcxd2N3PT0iLCAiY2FwdHVyZWRfYXQiOiAiMjAyNi0wMS0wMVQwMDowMDowMFoiLCAiY29tcGxldGUiOiB0cnVlLCAiaWQiOiAicjIiLCAia2luZF9vZl9zb3VyY2UiOiAidG9vbF9zdGRvdXQiLCAic2hhMjU2IjogIjhlZjQyNzUxZTg4ZjkwNDBkMjRiYmIxYmViODljZmRjYjI0OTMyYjZhZDVlYzliMzk4NmFmMjYwYjdjNmMyNWEifX0sICJydW5nIjogIkwyIiwgInNwZWMiOiAic3dvcm4vbWFuaWZlc3QvMC4yIiwgInR1cm4iOiAidHVybi0xIn0="
+   },
+   "expect": {
+    "answer": "REDERIVES"
+   },
+   "rules": [
+    "11.3"
+   ],
+   "note": "11.3: the receipt's bytes need not be its canonical text"
+  },
+  {
+   "id": "00219c285e7037b1b4689dad3c791115585f599c9a9d459d26bfe0d2e208f83b",
+   "source": "recheck",
+   "op": "recheck",
+   "label": "REDERIVES: a verifier holding a non-integer number",
+   "inputs": {
+    "receipt_b64": "eyJhdHRlc3RhdGlvbnMiOltdLCJjb3JlIjp7ImNvbW1pdCI6bnVsbCwiY291bnRzIjp7IkZBSUxFRCI6MCwiSEVMRCI6MiwiTUFMRk9STUVEIjowLCJVTlJFU09MVkVEIjowfSwiZG9jdW1lbnQiOnsiY2Fub25pY2FsX3NoYTI1NiI6IjY3ZTQ3Zjg2NzVkYzRkYzg3MjBmNTJiZTQ1MGViNDEwOWUzMjVkZTg0ZTIzZWYyZjIxNWQxMmZmZWM3MWZiNGEiLCJpbmxpbmVfc2hhMjU2IjoiMWUwMmVkMmIxMzVhZmVhMGNiZmM1ZDNiZDUzOWIwN2ExMzhhNjczMjJlZGUwNjFiYjRkNDVkMWE2ZTEyZWQ0ZiIsIm5hbWUiOiJkLm1kIn0sImRvY3VtZW50X21hbGZvcm1lZCI6bnVsbCwiZG9jdW1lbnRfdmVyZGljdCI6IlNXT1JOLUhFTEQiLCJmb3JtYXQiOiJzd29ybi8wLjEiLCJtYW5pZmVzdF9kaWdlc3QiOiI1ZTQ5M2FkZmJmMzdjYTBkOGYxNmExZmUzMTE0ZTQxYjRjMTMxMzZlZTFjNzdmYzRjNGExMTgwN2JlZjk4Nzk3IiwicHJvZmlsZSI6InJuLWlubGluZS92MC1kcmFmdCIsInJ1bmdzIjp7IkwyIjoyfSwic2NoZW1hIjoicmVjZWlwdC92MC1kcmFmdCIsInNwYW5zIjpbeyJhdCI6MCwiY2xhaW0iOiJuIGlzIDciLCJjbGFpbV9zaGEyNTYiOiIyMjBjYzYzZGE5ZmYxNWNjNjY1MGY1OWZmOTljYzE1NWM1NGZiNGM3OWQ3OGM0ZDdiZjY3MjRmNGUxYjgwOWE1IiwiZGV0YWlsIjp7ImZyYWN0aW9uYWxfZGlnaXRzIjowLCJwcmludGVkIjoiNyIsInByaW50ZWRfdG9rZW4iOiI3IiwicmVjZWlwdCI6IjciLCJyZWNlaXB0X3JvdW5kZWQiOiI3Iiwicm91bmRpbmciOiJST1VORF9IQUxGX0VWRU4ifSwiZW5kIjo2LCJraW5kIjoibnVtZXJpYyIsInByb3ZlbmFuY2UiOnsiZm9ybSI6InJuIiwiaGFybmVzcyI6Imhhcm5lc3MteCIsImtpbmRfb2Zfc291cmNlIjoidG9vbF9zdGRvdXQiLCJydW5nIjoiTDIifSwicmVhc29uIjpudWxsLCJyZWNlaXB0IjoicjEiLCJyZXNvbHZlZF9zaGEyNTYiOiI3OTAyNjk5YmU0MmM4YThlNDZmYmJiNDUwMTcyNjUxN2U4NmIyMmM1NmExODlmNzYyNWE2ZGE0OTA4MWIyNDUxIiwic3RhcnQiOjAsInZlcmRpY3QiOiJIRUxEIn0seyJhdCI6NDUsImNsYWltIjoiYHRoZSBxdWljayBicm93biBmb3hgIiwiY2xhaW1fc2hhMjU2IjoiOTAzYTJlZmUwNGI1NzZhMDc1Y2VkMmE2YzcyZDQ2MjFiOTg4NWJjODRmY2VjNjEyYmEzZWMyNjY0YzNlNmJlOSIsImRldGFpbCI6eyJoYXlzdGFja19ieXRlcyI6MjUsIm5lZWRsZV9ieXRlcyI6MTksIm9jY3VycmVuY2VzIjoxfSwiZW5kIjozMiwia2luZCI6InF1b3RlIiwicHJvdmVuYW5jZSI6eyJmb3JtIjoicm4iLCJoYXJuZXNzIjoiaGFybmVzcy14Iiwia2luZF9vZl9zb3VyY2UiOiJ0b29sX3N0ZG91dCIsInJ1bmciOiJMMiJ9LCJyZWFzb24iOm51bGwsInJlY2VpcHQiOiJyMiIsInJlc29sdmVkX3NoYTI1NiI6IjhlZjQyNzUxZTg4ZjkwNDBkMjRiYmIxYmViODljZmRjYjI0OTMyYjZhZDVlYzliMzk4NmFmMjYwYjdjNmMyNWEiLCJzdGFydCI6MTEsInZlcmRpY3QiOiJIRUxEIn1dLCJzd29ybl90b3RhbCI6MiwidW5yZXNvbHZlZCI6MH0sImRpZ2VzdCI6IjJlYTBjNDczOGY3ZDk2MzBiMjA4OWU0NmQ2N2EwZWE5ODNiZDQ2MzBkMjM0OTk4OWJmOWRhYWU1YTRhOGJkNDYiLCJ2ZXJpZmllciI6eyJuYW1lIjoieCIsInZlcnNpb24iOjEuNX19",
+    "document_b64": "PHN3b3JuIHI9InIxIiBrPSJudW1lcmljIj5uIGlzIDc8L3N3b3JuPiBhbmQgPHN3b3JuIHI9InIyIiBrPSJxdW90ZSI+YHRoZSBxdWljayBicm93biBmb3hgPC9zd29ybj4=",
+    "manifest_b64": "eyJhdXRob3JlZF9zaGEyNTYiOiBbXSwgImRpZ2VzdCI6ICI1ZTQ5M2FkZmJmMzdjYTBkOGYxNmExZmUzMTE0ZTQxYjRjMTMxMzZlZTFjNzdmYzRjNGExMTgwN2JlZjk4Nzk3IiwgImhhcm5lc3MiOiAiaGFybmVzcy14IiwgIm1pbnRlZF9hdCI6ICIyMDI2LTAxLTAxVDAwOjAwOjAwWiIsICJyZWNlaXB0cyI6IHsicjEiOiB7ImJ5dGVzIjogIk53PT0iLCAiY2FwdHVyZWRfYXQiOiAiMjAyNi0wMS0wMVQwMDowMDowMFoiLCAiY29tcGxldGUiOiB0cnVlLCAiaWQiOiAicjEiLCAia2luZF9vZl9zb3VyY2UiOiAidG9vbF9zdGRvdXQiLCAic2hhMjU2IjogIjc5MDI2OTliZTQyYzhhOGU0NmZiYmI0NTAxNzI2NTE3ZTg2YjIyYzU2YTE4OWY3NjI1YTZkYTQ5MDgxYjI0NTEifSwgInIyIjogeyJieXRlcyI6ICJkR2hsSUhGMWFXTnJJR0p5YjNkdUlHWnZlQ0JxZFcxd2N3PT0iLCAiY2FwdHVyZWRfYXQiOiAiMjAyNi0wMS0wMVQwMDowMDowMFoiLCAiY29tcGxldGUiOiB0cnVlLCAiaWQiOiAicjIiLCAia2luZF9vZl9zb3VyY2UiOiAidG9vbF9zdGRvdXQiLCAic2hhMjU2IjogIjhlZjQyNzUxZTg4ZjkwNDBkMjRiYmIxYmViODljZmRjYjI0OTMyYjZhZDVlYzliMzk4NmFmMjYwYjdjNmMyNWEifX0sICJydW5nIjogIkwyIiwgInNwZWMiOiAic3dvcm4vbWFuaWZlc3QvMC4yIiwgInR1cm4iOiAidHVybi0xIn0="
+   },
+   "expect": {
+    "answer": "REDERIVES"
+   },
+   "rules": [
+    "11.3"
+   ],
+   "note": "9.4 and 11.3: verifier is outside the core and never read"
+  },
+  {
+   "id": "b82899edfade9bcfd04735759d0af9dd8f37845ea946951251e100e71534e3e0",
+   "source": "recheck",
+   "op": "recheck",
+   "label": "a legacy-only reason inside a rn-inline/v0-draft receipt",
+   "inputs": {
+    "receipt_b64": "eyJhdHRlc3RhdGlvbnMiOltdLCJjb3JlIjp7ImNvbW1pdCI6bnVsbCwiY291bnRzIjp7IkZBSUxFRCI6MCwiSEVMRCI6MCwiTUFMRk9STUVEIjowLCJVTlJFU09MVkVEIjoxfSwiZG9jdW1lbnQiOnsiY2Fub25pY2FsX3NoYTI1NiI6Ijc5MDI2OTliZTQyYzhhOGU0NmZiYmI0NTAxNzI2NTE3ZTg2YjIyYzU2YTE4OWY3NjI1YTZkYTQ5MDgxYjI0NTEiLCJpbmxpbmVfc2hhMjU2IjoiZGEzYjVhMmE0MDMzOTMwMGU5MTE1MTZmYmFiYmI5Y2MzYmRhNTUzM2I1NjA3OTEzZGIxYmEyNWEwMTA2MmY0OCIsIm5hbWUiOiJkLm1kIn0sImRvY3VtZW50X21hbGZvcm1lZCI6bnVsbCwiZG9jdW1lbnRfdmVyZGljdCI6IlNXT1JOLVVOQ0hFQ0tFRCIsImZvcm1hdCI6InN3b3JuLzAuMSIsIm1hbmlmZXN0X2RpZ2VzdCI6bnVsbCwicHJvZmlsZSI6InJuLWlubGluZS92MC1kcmFmdCIsInJ1bmdzIjp7InVucmVzb2x2ZWQiOjF9LCJzY2hlbWEiOiJyZWNlaXB0L3YwLWRyYWZ0Iiwic3BhbnMiOlt7ImF0IjowLCJjbGFpbSI6IjciLCJjbGFpbV9zaGEyNTYiOiI3OTAyNjk5YmU0MmM4YThlNDZmYmJiNDUwMTcyNjUxN2U4NmIyMmM1NmExODlmNzYyNWE2ZGE0OTA4MWIyNDUxIiwiZGV0YWlsIjp7fSwiZW5kIjoxLCJraW5kIjoibnVtZXJpYyIsInJlYXNvbiI6Im5vX2NvbW1pdCIsInJlY2VpcHQiOiJwYXRoOmEuanNvbiIsInN0YXJ0IjowLCJ2ZXJkaWN0IjoiVU5SRVNPTFZFRCJ9XSwic3dvcm5fdG90YWwiOjEsInVucmVzb2x2ZWQiOjF9LCJkaWdlc3QiOiI4MjI5ZmM3Y2FhZThlZmZkNDI0NThjMGUwMzIzZTBmNDdlOThmMmJlYmZhZTVmYTdiYjU4NmM0MDdmNTc3MWFiIn0=",
+    "document_b64": "PHN3b3JuIHI9InBhdGg6YS5qc29uIiBrPSJudW1lcmljIj43PC9zd29ybj4=",
+    "manifest_b64": null
+   },
+   "expect": {
+    "refusal": "receipt_shape"
+   },
+   "rules": [
+    "11.3"
+   ],
+   "note": "section 10: the legacy reasons appear only under legacy-projection, which 11.3 does not check"
+  },
+  {
+   "id": "312de006576f90f808195937ca6858a23a5cb71de206bd59b11f25f957b849b8",
+   "source": "recheck",
+   "op": "recheck",
+   "label": "a legacy-only reason inside a legacy-projection/v0-draft receipt",
+   "inputs": {
+    "receipt_b64": "eyJhdHRlc3RhdGlvbnMiOltdLCJjb3JlIjp7ImNvbW1pdCI6bnVsbCwiY291bnRzIjp7IkZBSUxFRCI6MCwiSEVMRCI6MCwiTUFMRk9STUVEIjowLCJVTlJFU09MVkVEIjoxfSwiZG9jdW1lbnQiOnsiY2Fub25pY2FsX3NoYTI1NiI6Ijc5MDI2OTliZTQyYzhhOGU0NmZiYmI0NTAxNzI2NTE3ZTg2YjIyYzU2YTE4OWY3NjI1YTZkYTQ5MDgxYjI0NTEiLCJpbmxpbmVfc2hhMjU2IjoiZGEzYjVhMmE0MDMzOTMwMGU5MTE1MTZmYmFiYmI5Y2MzYmRhNTUzM2I1NjA3OTEzZGIxYmEyNWEwMTA2MmY0OCIsIm5hbWUiOiJkLm1kIn0sImRvY3VtZW50X21hbGZvcm1lZCI6bnVsbCwiZG9jdW1lbnRfdmVyZGljdCI6IlNXT1JOLVVOQ0hFQ0tFRCIsImZvcm1hdCI6InN3b3JuLzAuMSIsIm1hbmlmZXN0X2RpZ2VzdCI6bnVsbCwicHJvZmlsZSI6ImxlZ2FjeS1wcm9qZWN0aW9uL3YwLWRyYWZ0IiwicnVuZ3MiOnsidW5yZXNvbHZlZCI6MX0sInNjaGVtYSI6InJlY2VpcHQvdjAtZHJhZnQiLCJzcGFucyI6W3siYXQiOjAsImNsYWltIjoiNyIsImNsYWltX3NoYTI1NiI6Ijc5MDI2OTliZTQyYzhhOGU0NmZiYmI0NTAxNzI2NTE3ZTg2YjIyYzU2YTE4OWY3NjI1YTZkYTQ5MDgxYjI0NTEiLCJkZXRhaWwiOnt9LCJlbmQiOjEsImtpbmQiOiJudW1lcmljIiwicmVhc29uIjoibm9fY29tbWl0IiwicmVjZWlwdCI6InBhdGg6YS5qc29uIiwic3RhcnQiOjAsInZlcmRpY3QiOiJVTlJFU09MVkVEIn1dLCJzd29ybl90b3RhbCI6MSwidW5yZXNvbHZlZCI6MX0sImRpZ2VzdCI6ImJkYTg0NzlkNWE0NTkxN2IwODM4NmYxMTFmYzlhZjk3YTA1NzA2MDQ3ZDEwY2Q3MzY4YjI3NTcxZjliODM3NmIifQ==",
+    "document_b64": "PHN3b3JuIHI9InBhdGg6YS5qc29uIiBrPSJudW1lcmljIj43PC9zd29ybj4=",
+    "manifest_b64": null
+   },
+   "expect": {
+    "refusal": "profile_not_checkable"
+   },
+   "rules": [
+    "11.3"
+   ],
+   "note": "section 10: the legacy reasons appear only under legacy-projection, which 11.3 does not check"
   },
   {
    "id": "fda03e3457cabe1ed728f97a211649e6f72c678eccab7aaffc55822b8ab8422f",
@@ -62730,7 +67134,7 @@
    "id": "8585bfac6cbfe31a607c84df7697a4644c71daf7e7f6e5c8620f2a59d330fd65",
    "source": "recheck",
    "op": "recheck",
-   "label": "receipt_digest: a core with no canonical form (text gap)",
+   "label": "receipt_digest: a core with no canonical form",
    "inputs": {
     "receipt_b64": "eyJhdHRlc3RhdGlvbnMiOltdLCJjb3JlIjp7ImNvbW1pdCI6bnVsbCwiY291bnRzIjp7IkZBSUxFRCI6MCwiSEVMRCI6MiwiTUFMRk9STUVEIjowLCJVTlJFU09MVkVEIjowfSwiZG9jdW1lbnQiOnsiY2Fub25pY2FsX3NoYTI1NiI6IjY3ZTQ3Zjg2NzVkYzRkYzg3MjBmNTJiZTQ1MGViNDEwOWUzMjVkZTg0ZTIzZWYyZjIxNWQxMmZmZWM3MWZiNGEiLCJpbmxpbmVfc2hhMjU2IjoiMWUwMmVkMmIxMzVhZmVhMGNiZmM1ZDNiZDUzOWIwN2ExMzhhNjczMjJlZGUwNjFiYjRkNDVkMWE2ZTEyZWQ0ZiIsIm5hbWUiOiJkLm1kIn0sImRvY3VtZW50X21hbGZvcm1lZCI6bnVsbCwiZG9jdW1lbnRfdmVyZGljdCI6IlNXT1JOLUhFTEQiLCJmb3JtYXQiOiJzd29ybi8wLjEiLCJtYW5pZmVzdF9kaWdlc3QiOiI1ZTQ5M2FkZmJmMzdjYTBkOGYxNmExZmUzMTE0ZTQxYjRjMTMxMzZlZTFjNzdmYzRjNGExMTgwN2JlZjk4Nzk3IiwicHJvZmlsZSI6InJuLWlubGluZS92MC1kcmFmdCIsInJ1bmdzIjp7IkwyIjoyfSwic2NoZW1hIjoicmVjZWlwdC92MC1kcmFmdCIsInNwYW5zIjpbeyJhdCI6MCwiY2xhaW0iOiJuIGlzIDdcdWQ4MDAiLCJjbGFpbV9zaGEyNTYiOiIyMjBjYzYzZGE5ZmYxNWNjNjY1MGY1OWZmOTljYzE1NWM1NGZiNGM3OWQ3OGM0ZDdiZjY3MjRmNGUxYjgwOWE1IiwiZGV0YWlsIjp7ImZyYWN0aW9uYWxfZGlnaXRzIjowLCJwcmludGVkIjoiNyIsInByaW50ZWRfdG9rZW4iOiI3IiwicmVjZWlwdCI6IjciLCJyZWNlaXB0X3JvdW5kZWQiOiI3Iiwicm91bmRpbmciOiJST1VORF9IQUxGX0VWRU4ifSwiZW5kIjo2LCJraW5kIjoibnVtZXJpYyIsInByb3ZlbmFuY2UiOnsiZm9ybSI6InJuIiwiaGFybmVzcyI6Imhhcm5lc3MteCIsImtpbmRfb2Zfc291cmNlIjoidG9vbF9zdGRvdXQiLCJydW5nIjoiTDIifSwicmVhc29uIjpudWxsLCJyZWNlaXB0IjoicjEiLCJyZXNvbHZlZF9zaGEyNTYiOiI3OTAyNjk5YmU0MmM4YThlNDZmYmJiNDUwMTcyNjUxN2U4NmIyMmM1NmExODlmNzYyNWE2ZGE0OTA4MWIyNDUxIiwic3RhcnQiOjAsInZlcmRpY3QiOiJIRUxEIn0seyJhdCI6NDUsImNsYWltIjoiYHRoZSBxdWljayBicm93biBmb3hgIiwiY2xhaW1fc2hhMjU2IjoiOTAzYTJlZmUwNGI1NzZhMDc1Y2VkMmE2YzcyZDQ2MjFiOTg4NWJjODRmY2VjNjEyYmEzZWMyNjY0YzNlNmJlOSIsImRldGFpbCI6eyJoYXlzdGFja19ieXRlcyI6MjUsIm5lZWRsZV9ieXRlcyI6MTksIm9jY3VycmVuY2VzIjoxfSwiZW5kIjozMiwia2luZCI6InF1b3RlIiwicHJvdmVuYW5jZSI6eyJmb3JtIjoicm4iLCJoYXJuZXNzIjoiaGFybmVzcy14Iiwia2luZF9vZl9zb3VyY2UiOiJ0b29sX3N0ZG91dCIsInJ1bmciOiJMMiJ9LCJyZWFzb24iOm51bGwsInJlY2VpcHQiOiJyMiIsInJlc29sdmVkX3NoYTI1NiI6IjhlZjQyNzUxZTg4ZjkwNDBkMjRiYmIxYmViODljZmRjYjI0OTMyYjZhZDVlYzliMzk4NmFmMjYwYjdjNmMyNWEiLCJzdGFydCI6MTEsInZlcmRpY3QiOiJIRUxEIn1dLCJzd29ybl90b3RhbCI6MiwidW5yZXNvbHZlZCI6MH0sImRpZ2VzdCI6IjJlYTBjNDczOGY3ZDk2MzBiMjA4OWU0NmQ2N2EwZWE5ODNiZDQ2MzBkMjM0OTk4OWJmOWRhYWU1YTRhOGJkNDYifQ==",
     "document_b64": "PHN3b3JuIHI9InIxIiBrPSJudW1lcmljIj5uIGlzIDc8L3N3b3JuPiBhbmQgPHN3b3JuIHI9InIyIiBrPSJxdW90ZSI+YHRoZSBxdWljayBicm93biBmb3hgPC9zd29ybj4=",
@@ -62742,7 +67146,7 @@
    "rules": [
     "11.3"
    ],
-   "note": "the core holds an unpaired surrogate: its digest cannot be computed"
+   "note": "11.3: a core that matches the schema and has no canonical form is receipt_digest; this one holds an unpaired surrogate"
   },
   {
    "id": "42d735259dafb8376535c8c9d1661bc6c62091645f7467f9ec81bd5a8613c3f1",
@@ -62774,6 +67178,24 @@
    },
    "expect": {
     "refusal": "document_mismatch"
+   },
+   "rules": [
+    "11.3"
+   ],
+   "note": null
+  },
+  {
+   "id": "e171d1b89ddfba0815da97c5ede7b2f36b3db64145f728ae1034b4bd1df3d765",
+   "source": "recheck",
+   "op": "recheck",
+   "label": "order: attestations_not_empty before receipt_digest",
+   "inputs": {
+    "receipt_b64": "eyJhdHRlc3RhdGlvbnMiOlt7ImJ5IjoieCJ9XSwiY29yZSI6eyJjb21taXQiOm51bGwsImNvdW50cyI6eyJGQUlMRUQiOjAsIkhFTEQiOjIsIk1BTEZPUk1FRCI6MCwiVU5SRVNPTFZFRCI6MH0sImRvY3VtZW50Ijp7ImNhbm9uaWNhbF9zaGEyNTYiOiI2N2U0N2Y4Njc1ZGM0ZGM4NzIwZjUyYmU0NTBlYjQxMDllMzI1ZGU4NGUyM2VmMmYyMTVkMTJmZmVjNzFmYjRhIiwiaW5saW5lX3NoYTI1NiI6IjFlMDJlZDJiMTM1YWZlYTBjYmZjNWQzYmQ1MzliMDdhMTM4YTY3MzIyZWRlMDYxYmI0ZDQ1ZDFhNmUxMmVkNGYiLCJuYW1lIjoiZC5tZCJ9LCJkb2N1bWVudF9tYWxmb3JtZWQiOm51bGwsImRvY3VtZW50X3ZlcmRpY3QiOiJTV09STi1IRUxEIiwiZm9ybWF0Ijoic3dvcm4vMC4xIiwibWFuaWZlc3RfZGlnZXN0IjoiNWU0OTNhZGZiZjM3Y2EwZDhmMTZhMWZlMzExNGU0MWI0YzEzMTM2ZWUxYzc3ZmM0YzRhMTE4MDdiZWY5ODc5NyIsInByb2ZpbGUiOiJybi1pbmxpbmUvdjAtZHJhZnQiLCJydW5ncyI6eyJMMiI6Mn0sInNjaGVtYSI6InJlY2VpcHQvdjAtZHJhZnQiLCJzcGFucyI6W3siYXQiOjAsImNsYWltIjoibiBpcyA3IiwiY2xhaW1fc2hhMjU2IjoiMjIwY2M2M2RhOWZmMTVjYzY2NTBmNTlmZjk5Y2MxNTVjNTRmYjRjNzlkNzhjNGQ3YmY2NzI0ZjRlMWI4MDlhNSIsImRldGFpbCI6eyJmcmFjdGlvbmFsX2RpZ2l0cyI6MCwicHJpbnRlZCI6IjciLCJwcmludGVkX3Rva2VuIjoiNyIsInJlY2VpcHQiOiI3IiwicmVjZWlwdF9yb3VuZGVkIjoiNyIsInJvdW5kaW5nIjoiUk9VTkRfSEFMRl9FVkVOIn0sImVuZCI6Niwia2luZCI6Im51bWVyaWMiLCJwcm92ZW5hbmNlIjp7ImZvcm0iOiJybiIsImhhcm5lc3MiOiJoYXJuZXNzLXgiLCJraW5kX29mX3NvdXJjZSI6InRvb2xfc3Rkb3V0IiwicnVuZyI6IkwyIn0sInJlYXNvbiI6bnVsbCwicmVjZWlwdCI6InIxIiwicmVzb2x2ZWRfc2hhMjU2IjoiNzkwMjY5OWJlNDJjOGE4ZTQ2ZmJiYjQ1MDE3MjY1MTdlODZiMjJjNTZhMTg5Zjc2MjVhNmRhNDkwODFiMjQ1MSIsInN0YXJ0IjowLCJ2ZXJkaWN0IjoiSEVMRCJ9LHsiYXQiOjQ1LCJjbGFpbSI6ImB0aGUgcXVpY2sgYnJvd24gZm94YCIsImNsYWltX3NoYTI1NiI6IjkwM2EyZWZlMDRiNTc2YTA3NWNlZDJhNmM3MmQ0NjIxYjk4ODViYzg0ZmNlYzYxMmJhM2VjMjY2NGMzZTZiZTkiLCJkZXRhaWwiOnsiaGF5c3RhY2tfYnl0ZXMiOjI1LCJuZWVkbGVfYnl0ZXMiOjE5LCJvY2N1cnJlbmNlcyI6MX0sImVuZCI6MzIsImtpbmQiOiJxdW90ZSIsInByb3ZlbmFuY2UiOnsiZm9ybSI6InJuIiwiaGFybmVzcyI6Imhhcm5lc3MteCIsImtpbmRfb2Zfc291cmNlIjoidG9vbF9zdGRvdXQiLCJydW5nIjoiTDIifSwicmVhc29uIjpudWxsLCJyZWNlaXB0IjoicjIiLCJyZXNvbHZlZF9zaGEyNTYiOiI4ZWY0Mjc1MWU4OGY5MDQwZDI0YmJiMWJlYjg5Y2ZkY2IyNDkzMmI2YWQ1ZWM5YjM5ODZhZjI2MGI3YzZjMjVhIiwic3RhcnQiOjExLCJ2ZXJkaWN0IjoiSEVMRCJ9XSwic3dvcm5fdG90YWwiOjIsInVucmVzb2x2ZWQiOjB9LCJkaWdlc3QiOiIwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwIn0=",
+    "document_b64": "PHN3b3JuIHI9InIxIiBrPSJudW1lcmljIj5uIGlzIDc8L3N3b3JuPiBhbmQgPHN3b3JuIHI9InIyIiBrPSJxdW90ZSI+YHRoZSBxdWljayBicm93biBmb3hgPC9zd29ybj4=",
+    "manifest_b64": "eyJhdXRob3JlZF9zaGEyNTYiOiBbXSwgImRpZ2VzdCI6ICI1ZTQ5M2FkZmJmMzdjYTBkOGYxNmExZmUzMTE0ZTQxYjRjMTMxMzZlZTFjNzdmYzRjNGExMTgwN2JlZjk4Nzk3IiwgImhhcm5lc3MiOiAiaGFybmVzcy14IiwgIm1pbnRlZF9hdCI6ICIyMDI2LTAxLTAxVDAwOjAwOjAwWiIsICJyZWNlaXB0cyI6IHsicjEiOiB7ImJ5dGVzIjogIk53PT0iLCAiY2FwdHVyZWRfYXQiOiAiMjAyNi0wMS0wMVQwMDowMDowMFoiLCAiY29tcGxldGUiOiB0cnVlLCAiaWQiOiAicjEiLCAia2luZF9vZl9zb3VyY2UiOiAidG9vbF9zdGRvdXQiLCAic2hhMjU2IjogIjc5MDI2OTliZTQyYzhhOGU0NmZiYmI0NTAxNzI2NTE3ZTg2YjIyYzU2YTE4OWY3NjI1YTZkYTQ5MDgxYjI0NTEifSwgInIyIjogeyJieXRlcyI6ICJkR2hsSUhGMWFXTnJJR0p5YjNkdUlHWnZlQ0JxZFcxd2N3PT0iLCAiY2FwdHVyZWRfYXQiOiAiMjAyNi0wMS0wMVQwMDowMDowMFoiLCAiY29tcGxldGUiOiB0cnVlLCAiaWQiOiAicjIiLCAia2luZF9vZl9zb3VyY2UiOiAidG9vbF9zdGRvdXQiLCAic2hhMjU2IjogIjhlZjQyNzUxZTg4ZjkwNDBkMjRiYmIxYmViODljZmRjYjI0OTMyYjZhZDVlYzliMzk4NmFmMjYwYjdjNmMyNWEifX0sICJydW5nIjogIkwyIiwgInNwZWMiOiAic3dvcm4vbWFuaWZlc3QvMC4yIiwgInR1cm4iOiAidHVybi0xIn0="
+   },
+   "expect": {
+    "refusal": "attestations_not_empty"
    },
    "rules": [
     "11.3"
@@ -63023,6 +67445,78 @@
    },
    "expect": {
     "refusal": "float"
+   },
+   "rules": [
+    "3.1",
+    "3.2",
+    "3.3",
+    "6.13"
+   ],
+   "note": null
+  },
+  {
+   "id": "17322dfceaf2664af3d8a8da74f3fece3d2dad33fd406538247f5f6062c2fc83",
+   "source": "jcs",
+   "op": "jcs",
+   "inputs": {
+    "value_b64": "MUUy"
+   },
+   "expect": {
+    "refusal": "float"
+   },
+   "rules": [
+    "3.1",
+    "3.2",
+    "3.3",
+    "6.13"
+   ],
+   "note": null
+  },
+  {
+   "id": "c016606987b81d3aa8507f481547c981601b1f0c2695f72b621000a98a37619b",
+   "source": "jcs",
+   "op": "jcs",
+   "inputs": {
+    "value_b64": "LTBlMA=="
+   },
+   "expect": {
+    "refusal": "float"
+   },
+   "rules": [
+    "3.1",
+    "3.2",
+    "3.3",
+    "6.13"
+   ],
+   "note": null
+  },
+  {
+   "id": "6f7a1bc15cf44e8e19eca35c4c1d12cdd6f286d133ad6419a39ec80c036e9030",
+   "source": "jcs",
+   "op": "jcs",
+   "inputs": {
+    "value_b64": "eyJhIjogMSwgImEiOiAyfQ=="
+   },
+   "expect": {
+    "canonical": "{\"a\":2}"
+   },
+   "rules": [
+    "3.1",
+    "3.2",
+    "3.3",
+    "6.13"
+   ],
+   "note": null
+  },
+  {
+   "id": "1b0df72848d0a8ca5f878805a909b7a65195987780c0bf9744b44c44c7f8be6b",
+   "source": "jcs",
+   "op": "jcs",
+   "inputs": {
+    "value_b64": "eyJiIjogeyJ4IjogWzFdLCAieCI6IFsyLCAzXX0sICJhIjogMH0="
+   },
+   "expect": {
+    "canonical": "{\"a\":0,\"b\":{\"x\":[2,3]}}"
    },
    "rules": [
     "3.1",

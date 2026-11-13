@@ -1,7 +1,9 @@
 "use strict";
 /*
  * RECEIPT v0 (DRAFT, unsigned, nothing frozen): a checker written from receipt/v0/RECEIPT_v0.md,
- * in JavaScript. One file, no dependency; it runs unchanged in Node and in a browser.
+ * in JavaScript. One file, no dependency; it is meant to run unchanged in Node and in a browser.
+ * The committed tests run it in Node and once with no Node globals; a browser was tried by hand,
+ * outside the tests.
  *
  * LAB-WRITTEN, NOT INDEPENDENT. Fathom Lab wrote this file, with the text open and with the lab's
  * Python checker of the same text (receipt/v0/check_v0.py) open beside it; its sha256 and its
@@ -17,9 +19,11 @@
  * place where the text counts or orders code points does so by code point, and an unpaired
  * surrogate is found by code unit.
  *
- * The letter, number and digit classes of 7.2 come from the host's regular-expression engine
- * (\p{L}, \p{N}, \p{Nd}); the Unicode version they follow is the host's, which the text does not
- * pin (its open item 13.1).
+ * The letter, number and digit classes of 7.2 are pinned by the text to Unicode 15.0.0 and are
+ * carried in this file as data (UNICODE_15_0_0_LN, UNICODE_15_0_0_ND, the same ranges as
+ * check_v0.py's); the host's Unicode tables are never read, so no host's Unicode version decides a
+ * verdict. The source is pure ASCII: every other code point is written as an escape, so the file
+ * means the same under any document charset a browser decodes it with.
  *
  *   check(document, name, manifest = null, commit = null) -> verdict core   (sections 2 to 9, 11.1)
  *   receipt(core, verifier = null)                          -> the verdict receipt (9.4)
@@ -113,7 +117,8 @@
 
   function sha256(bytes) {
     const ml = bytes.length;
-    const total = (((ml + 9 + 63) / 64) | 0) * 64;
+    // the padded length in integer arithmetic: ml + 1 + 8 rounded up to a multiple of 64
+    const total = ml + 72 - ((ml + 8) % 64);
     const padded = new Uint8Array(total);
     padded.set(bytes);
     padded[ml] = 0x80;
@@ -521,6 +526,8 @@
     if (!(data instanceof Uint8Array)) throw new TypeError("bytes expected");
     const s = decodeStrict(data);
     if (s === null) throw new JSONError("not UTF-8");
+    // redundant with the parse (U+FEFF is neither JSON whitespace nor a value's first character);
+    // kept as stated intent, so a mutant of this line cannot be caught
     if (s.length && s.charCodeAt(0) === 0xfeff) throw new JSONError("byte order mark");
     return _parseText(s);
   }
@@ -666,7 +673,7 @@
       if (v < 0) return null;                  // outside the alphabet, or '=' inside
       vals[i] = v;
     }
-    if (pad && m % 4 === 0) return null;
+    if (pad && m % 4 === 0) return null;   // unreachable after the length test; kept as stated intent
     const full = (m / 4) | 0;
     const rem = m % 4;                          // 0, 2 or 3 (a length that is a multiple of 4)
     const out = new Uint8Array(full * 3 + (rem === 2 ? 1 : rem === 3 ? 2 : 0));
@@ -912,8 +919,8 @@
     return x < y;
   }
 
-  const _PATH_BANNED = new Set(["\\", "*", "?", "[", "]", "\u007f", "\u0085", " ", " ",
-    " ", " ", " ", " ", "　"]);
+  const _PATH_BANNED = new Set(["\\", "*", "?", "[", "]", "\u007f", "\u0085", "\u00a0", "\u1680",
+    "\u2028", "\u2029", "\u202f", "\u205f", "\u3000"]);
   for (let x = 0; x <= 0x20; x++) _PATH_BANNED.add(String.fromCharCode(x));
   for (let x = 0x2000; x <= 0x200a; x++) _PATH_BANNED.add(String.fromCharCode(x));
 
@@ -979,9 +986,11 @@
       m = parseJson(data);
     } catch (e) {
       if (!(e instanceof JSONError)) throw e;
-      // The text names no code for bytes that do not parse; they are not an object (11.1).
+      // 5.5: manifest bytes that do not parse under 6.13 are refused as manifest_spec.
       throw new Refusal("manifest_spec", "the manifest bytes are not JSON under 6.13");
     }
+    // 5.5: a key written twice anywhere refuses the manifest before any field is read.
+    if (hasDup(m)) throw new Refusal("manifest_form", "a key written twice");
     if (!(m instanceof JObj) || m.get("spec") !== MANIFEST_SPEC) throw new Refusal("manifest_spec");
     let receipts = m.get("receipts");
     if (receipts === null || receipts === undefined) receipts = new JObj();
@@ -994,7 +1003,6 @@
     for (const key of ["harness", "turn", "minted_at"]) {
       if (typeof m.get(key) !== "string") throw new Refusal("manifest_form", key + " missing or not a string");
     }
-    if (hasDup(m)) throw new Refusal("manifest_form", "a key written twice");
     const rebuilt = authored.map((a) => a.replace(/[A-F]/g, (u) => u.toLowerCase())).sort(cmpCodePoint);
     const rung = m.has("rung") ? m.get("rung") : null;
     const core = {
@@ -1015,16 +1023,152 @@
 
   /* ========================================================================== section 7: the kinds */
 
-  // 7.2: letters and numbers (\p{L}, \p{N} from the host's Unicode tables), the eight ASCII
-  // marks, U+2212, U+00B1 and the 26 dash code points
-  const TOKEN_RE = new RegExp("[\\p{L}\\p{N}_.,+\\-%/:\\u2212\\u00B1" +
-    "\\u00AD\\u058A\\u05BE\\u1400\\u1806\\u2010\\u2011\\u2012\\u2013\\u2014\\u2015\\u2E17\\u2E1A" +
-    "\\u2E3A\\u2E3B\\u2E40\\u2E5D\\u301C\\u3030\\u30A0\\uFE31\\uFE32\\uFE58\\uFE63\\uFF0D\\u{10EAD}]+", "gu");
-  const DIGIT_RE = /\p{Nd}/u;
+  // 7.2's classes, pinned to Unicode 15.0.0 and carried here as data: General_Category L* or N*
+  // (LN) and Nd (ND), as space-separated ranges of code points in upper-case hex (first-last, or
+  // one code point alone). The same text as check_v0.py's tables; the tests compare them.
+  const UNICODE_15_0_0_LN = [
+    "30-39 41-5A 61-7A AA B2-B3 B5 B9-BA BC-BE C0-D6 D8-F6 F8-2C1 2C6-2D1 2E0-2E4 2EC 2EE ",
+    "370-374 376-377 37A-37D 37F 386 388-38A 38C 38E-3A1 3A3-3F5 3F7-481 48A-52F 531-556 559 ",
+    "560-588 5D0-5EA 5EF-5F2 620-64A 660-669 66E-66F 671-6D3 6D5 6E5-6E6 6EE-6FC 6FF 710 ",
+    "712-72F 74D-7A5 7B1 7C0-7EA 7F4-7F5 7FA 800-815 81A 824 828 840-858 860-86A 870-887 ",
+    "889-88E 8A0-8C9 904-939 93D 950 958-961 966-96F 971-980 985-98C 98F-990 993-9A8 9AA-9B0 ",
+    "9B2 9B6-9B9 9BD 9CE 9DC-9DD 9DF-9E1 9E6-9F1 9F4-9F9 9FC A05-A0A A0F-A10 A13-A28 A2A-A30 ",
+    "A32-A33 A35-A36 A38-A39 A59-A5C A5E A66-A6F A72-A74 A85-A8D A8F-A91 A93-AA8 AAA-AB0 ",
+    "AB2-AB3 AB5-AB9 ABD AD0 AE0-AE1 AE6-AEF AF9 B05-B0C B0F-B10 B13-B28 B2A-B30 B32-B33 ",
+    "B35-B39 B3D B5C-B5D B5F-B61 B66-B6F B71-B77 B83 B85-B8A B8E-B90 B92-B95 B99-B9A B9C ",
+    "B9E-B9F BA3-BA4 BA8-BAA BAE-BB9 BD0 BE6-BF2 C05-C0C C0E-C10 C12-C28 C2A-C39 C3D C58-C5A ",
+    "C5D C60-C61 C66-C6F C78-C7E C80 C85-C8C C8E-C90 C92-CA8 CAA-CB3 CB5-CB9 CBD CDD-CDE ",
+    "CE0-CE1 CE6-CEF CF1-CF2 D04-D0C D0E-D10 D12-D3A D3D D4E D54-D56 D58-D61 D66-D78 D7A-D7F ",
+    "D85-D96 D9A-DB1 DB3-DBB DBD DC0-DC6 DE6-DEF E01-E30 E32-E33 E40-E46 E50-E59 E81-E82 E84 ",
+    "E86-E8A E8C-EA3 EA5 EA7-EB0 EB2-EB3 EBD EC0-EC4 EC6 ED0-ED9 EDC-EDF F00 F20-F33 F40-F47 ",
+    "F49-F6C F88-F8C 1000-102A 103F-1049 1050-1055 105A-105D 1061 1065-1066 106E-1070 ",
+    "1075-1081 108E 1090-1099 10A0-10C5 10C7 10CD 10D0-10FA 10FC-1248 124A-124D 1250-1256 ",
+    "1258 125A-125D 1260-1288 128A-128D 1290-12B0 12B2-12B5 12B8-12BE 12C0 12C2-12C5 ",
+    "12C8-12D6 12D8-1310 1312-1315 1318-135A 1369-137C 1380-138F 13A0-13F5 13F8-13FD ",
+    "1401-166C 166F-167F 1681-169A 16A0-16EA 16EE-16F8 1700-1711 171F-1731 1740-1751 ",
+    "1760-176C 176E-1770 1780-17B3 17D7 17DC 17E0-17E9 17F0-17F9 1810-1819 1820-1878 ",
+    "1880-1884 1887-18A8 18AA 18B0-18F5 1900-191E 1946-196D 1970-1974 1980-19AB 19B0-19C9 ",
+    "19D0-19DA 1A00-1A16 1A20-1A54 1A80-1A89 1A90-1A99 1AA7 1B05-1B33 1B45-1B4C 1B50-1B59 ",
+    "1B83-1BA0 1BAE-1BE5 1C00-1C23 1C40-1C49 1C4D-1C7D 1C80-1C88 1C90-1CBA 1CBD-1CBF ",
+    "1CE9-1CEC 1CEE-1CF3 1CF5-1CF6 1CFA 1D00-1DBF 1E00-1F15 1F18-1F1D 1F20-1F45 1F48-1F4D ",
+    "1F50-1F57 1F59 1F5B 1F5D 1F5F-1F7D 1F80-1FB4 1FB6-1FBC 1FBE 1FC2-1FC4 1FC6-1FCC ",
+    "1FD0-1FD3 1FD6-1FDB 1FE0-1FEC 1FF2-1FF4 1FF6-1FFC 2070-2071 2074-2079 207F-2089 ",
+    "2090-209C 2102 2107 210A-2113 2115 2119-211D 2124 2126 2128 212A-212D 212F-2139 ",
+    "213C-213F 2145-2149 214E 2150-2189 2460-249B 24EA-24FF 2776-2793 2C00-2CE4 2CEB-2CEE ",
+    "2CF2-2CF3 2CFD 2D00-2D25 2D27 2D2D 2D30-2D67 2D6F 2D80-2D96 2DA0-2DA6 2DA8-2DAE ",
+    "2DB0-2DB6 2DB8-2DBE 2DC0-2DC6 2DC8-2DCE 2DD0-2DD6 2DD8-2DDE 2E2F 3005-3007 3021-3029 ",
+    "3031-3035 3038-303C 3041-3096 309D-309F 30A1-30FA 30FC-30FF 3105-312F 3131-318E ",
+    "3192-3195 31A0-31BF 31F0-31FF 3220-3229 3248-324F 3251-325F 3280-3289 32B1-32BF ",
+    "3400-4DBF 4E00-A48C A4D0-A4FD A500-A60C A610-A62B A640-A66E A67F-A69D A6A0-A6EF ",
+    "A717-A71F A722-A788 A78B-A7CA A7D0-A7D1 A7D3 A7D5-A7D9 A7F2-A801 A803-A805 A807-A80A ",
+    "A80C-A822 A830-A835 A840-A873 A882-A8B3 A8D0-A8D9 A8F2-A8F7 A8FB A8FD-A8FE A900-A925 ",
+    "A930-A946 A960-A97C A984-A9B2 A9CF-A9D9 A9E0-A9E4 A9E6-A9FE AA00-AA28 AA40-AA42 ",
+    "AA44-AA4B AA50-AA59 AA60-AA76 AA7A AA7E-AAAF AAB1 AAB5-AAB6 AAB9-AABD AAC0 AAC2 ",
+    "AADB-AADD AAE0-AAEA AAF2-AAF4 AB01-AB06 AB09-AB0E AB11-AB16 AB20-AB26 AB28-AB2E ",
+    "AB30-AB5A AB5C-AB69 AB70-ABE2 ABF0-ABF9 AC00-D7A3 D7B0-D7C6 D7CB-D7FB F900-FA6D ",
+    "FA70-FAD9 FB00-FB06 FB13-FB17 FB1D FB1F-FB28 FB2A-FB36 FB38-FB3C FB3E FB40-FB41 ",
+    "FB43-FB44 FB46-FBB1 FBD3-FD3D FD50-FD8F FD92-FDC7 FDF0-FDFB FE70-FE74 FE76-FEFC ",
+    "FF10-FF19 FF21-FF3A FF41-FF5A FF66-FFBE FFC2-FFC7 FFCA-FFCF FFD2-FFD7 FFDA-FFDC ",
+    "10000-1000B 1000D-10026 10028-1003A 1003C-1003D 1003F-1004D 10050-1005D 10080-100FA ",
+    "10107-10133 10140-10178 1018A-1018B 10280-1029C 102A0-102D0 102E1-102FB 10300-10323 ",
+    "1032D-1034A 10350-10375 10380-1039D 103A0-103C3 103C8-103CF 103D1-103D5 10400-1049D ",
+    "104A0-104A9 104B0-104D3 104D8-104FB 10500-10527 10530-10563 10570-1057A 1057C-1058A ",
+    "1058C-10592 10594-10595 10597-105A1 105A3-105B1 105B3-105B9 105BB-105BC 10600-10736 ",
+    "10740-10755 10760-10767 10780-10785 10787-107B0 107B2-107BA 10800-10805 10808 ",
+    "1080A-10835 10837-10838 1083C 1083F-10855 10858-10876 10879-1089E 108A7-108AF ",
+    "108E0-108F2 108F4-108F5 108FB-1091B 10920-10939 10980-109B7 109BC-109CF 109D2-10A00 ",
+    "10A10-10A13 10A15-10A17 10A19-10A35 10A40-10A48 10A60-10A7E 10A80-10A9F 10AC0-10AC7 ",
+    "10AC9-10AE4 10AEB-10AEF 10B00-10B35 10B40-10B55 10B58-10B72 10B78-10B91 10BA9-10BAF ",
+    "10C00-10C48 10C80-10CB2 10CC0-10CF2 10CFA-10D23 10D30-10D39 10E60-10E7E 10E80-10EA9 ",
+    "10EB0-10EB1 10F00-10F27 10F30-10F45 10F51-10F54 10F70-10F81 10FB0-10FCB 10FE0-10FF6 ",
+    "11003-11037 11052-1106F 11071-11072 11075 11083-110AF 110D0-110E8 110F0-110F9 ",
+    "11103-11126 11136-1113F 11144 11147 11150-11172 11176 11183-111B2 111C1-111C4 ",
+    "111D0-111DA 111DC 111E1-111F4 11200-11211 11213-1122B 1123F-11240 11280-11286 11288 ",
+    "1128A-1128D 1128F-1129D 1129F-112A8 112B0-112DE 112F0-112F9 11305-1130C 1130F-11310 ",
+    "11313-11328 1132A-11330 11332-11333 11335-11339 1133D 11350 1135D-11361 11400-11434 ",
+    "11447-1144A 11450-11459 1145F-11461 11480-114AF 114C4-114C5 114C7 114D0-114D9 ",
+    "11580-115AE 115D8-115DB 11600-1162F 11644 11650-11659 11680-116AA 116B8 116C0-116C9 ",
+    "11700-1171A 11730-1173B 11740-11746 11800-1182B 118A0-118F2 118FF-11906 11909 ",
+    "1190C-11913 11915-11916 11918-1192F 1193F 11941 11950-11959 119A0-119A7 119AA-119D0 ",
+    "119E1 119E3 11A00 11A0B-11A32 11A3A 11A50 11A5C-11A89 11A9D 11AB0-11AF8 11C00-11C08 ",
+    "11C0A-11C2E 11C40 11C50-11C6C 11C72-11C8F 11D00-11D06 11D08-11D09 11D0B-11D30 11D46 ",
+    "11D50-11D59 11D60-11D65 11D67-11D68 11D6A-11D89 11D98 11DA0-11DA9 11EE0-11EF2 11F02 ",
+    "11F04-11F10 11F12-11F33 11F50-11F59 11FB0 11FC0-11FD4 12000-12399 12400-1246E ",
+    "12480-12543 12F90-12FF0 13000-1342F 13441-13446 14400-14646 16800-16A38 16A40-16A5E ",
+    "16A60-16A69 16A70-16ABE 16AC0-16AC9 16AD0-16AED 16B00-16B2F 16B40-16B43 16B50-16B59 ",
+    "16B5B-16B61 16B63-16B77 16B7D-16B8F 16E40-16E96 16F00-16F4A 16F50 16F93-16F9F ",
+    "16FE0-16FE1 16FE3 17000-187F7 18800-18CD5 18D00-18D08 1AFF0-1AFF3 1AFF5-1AFFB ",
+    "1AFFD-1AFFE 1B000-1B122 1B132 1B150-1B152 1B155 1B164-1B167 1B170-1B2FB 1BC00-1BC6A ",
+    "1BC70-1BC7C 1BC80-1BC88 1BC90-1BC99 1D2C0-1D2D3 1D2E0-1D2F3 1D360-1D378 1D400-1D454 ",
+    "1D456-1D49C 1D49E-1D49F 1D4A2 1D4A5-1D4A6 1D4A9-1D4AC 1D4AE-1D4B9 1D4BB 1D4BD-1D4C3 ",
+    "1D4C5-1D505 1D507-1D50A 1D50D-1D514 1D516-1D51C 1D51E-1D539 1D53B-1D53E 1D540-1D544 ",
+    "1D546 1D54A-1D550 1D552-1D6A5 1D6A8-1D6C0 1D6C2-1D6DA 1D6DC-1D6FA 1D6FC-1D714 ",
+    "1D716-1D734 1D736-1D74E 1D750-1D76E 1D770-1D788 1D78A-1D7A8 1D7AA-1D7C2 1D7C4-1D7CB ",
+    "1D7CE-1D7FF 1DF00-1DF1E 1DF25-1DF2A 1E030-1E06D 1E100-1E12C 1E137-1E13D 1E140-1E149 ",
+    "1E14E 1E290-1E2AD 1E2C0-1E2EB 1E2F0-1E2F9 1E4D0-1E4EB 1E4F0-1E4F9 1E7E0-1E7E6 ",
+    "1E7E8-1E7EB 1E7ED-1E7EE 1E7F0-1E7FE 1E800-1E8C4 1E8C7-1E8CF 1E900-1E943 1E94B ",
+    "1E950-1E959 1EC71-1ECAB 1ECAD-1ECAF 1ECB1-1ECB4 1ED01-1ED2D 1ED2F-1ED3D 1EE00-1EE03 ",
+    "1EE05-1EE1F 1EE21-1EE22 1EE24 1EE27 1EE29-1EE32 1EE34-1EE37 1EE39 1EE3B 1EE42 1EE47 ",
+    "1EE49 1EE4B 1EE4D-1EE4F 1EE51-1EE52 1EE54 1EE57 1EE59 1EE5B 1EE5D 1EE5F 1EE61-1EE62 ",
+    "1EE64 1EE67-1EE6A 1EE6C-1EE72 1EE74-1EE77 1EE79-1EE7C 1EE7E 1EE80-1EE89 1EE8B-1EE9B ",
+    "1EEA1-1EEA3 1EEA5-1EEA9 1EEAB-1EEBB 1F100-1F10C 1FBF0-1FBF9 20000-2A6DF 2A700-2B739 ",
+    "2B740-2B81D 2B820-2CEA1 2CEB0-2EBE0 2F800-2FA1D 30000-3134A 31350-323AF"
+  ].join("");
+
+  const UNICODE_15_0_0_ND = [
+    "30-39 660-669 6F0-6F9 7C0-7C9 966-96F 9E6-9EF A66-A6F AE6-AEF B66-B6F BE6-BEF C66-C6F ",
+    "CE6-CEF D66-D6F DE6-DEF E50-E59 ED0-ED9 F20-F29 1040-1049 1090-1099 17E0-17E9 1810-1819 ",
+    "1946-194F 19D0-19D9 1A80-1A89 1A90-1A99 1B50-1B59 1BB0-1BB9 1C40-1C49 1C50-1C59 ",
+    "A620-A629 A8D0-A8D9 A900-A909 A9D0-A9D9 A9F0-A9F9 AA50-AA59 ABF0-ABF9 FF10-FF19 ",
+    "104A0-104A9 10D30-10D39 11066-1106F 110F0-110F9 11136-1113F 111D0-111D9 112F0-112F9 ",
+    "11450-11459 114D0-114D9 11650-11659 116C0-116C9 11730-11739 118E0-118E9 11950-11959 ",
+    "11C50-11C59 11D50-11D59 11DA0-11DA9 11F50-11F59 16A60-16A69 16AC0-16AC9 16B50-16B59 ",
+    "1D7CE-1D7FF 1E140-1E149 1E2F0-1E2F9 1E4F0-1E4F9 1E950-1E959 1FBF0-1FBF9"
+  ].join("");
+
+  function parseRanges(text) {
+    const starts = [], ends = [];
+    for (const item of text.split(" ")) {
+      const dash = item.indexOf("-");
+      starts.push(parseInt(dash < 0 ? item : item.slice(0, dash), 16));
+      ends.push(parseInt(dash < 0 ? item : item.slice(dash + 1), 16));
+    }
+    return [starts, ends];
+  }
+  const [LN_STARTS, LN_ENDS] = parseRanges(UNICODE_15_0_0_LN);
+  const [ND_STARTS, ND_ENDS] = parseRanges(UNICODE_15_0_0_ND);
+
+  function inRanges(cp, starts, ends) {
+    let lo = 0, hi = starts.length;
+    while (lo < hi) {
+      const mid = (lo + hi) >>> 1;
+      if (starts[mid] <= cp) lo = mid + 1;
+      else hi = mid;
+    }
+    return lo > 0 && cp <= ends[lo - 1];
+  }
+
+  // the eight ASCII marks, U+2212, U+00B1 and the 26 dash code points
+  const TOKEN_EXTRA = new Set([0x5F, 0x2E, 0x2C, 0x2B, 0x2D, 0x25, 0x2F, 0x3A, 0x2212, 0x00B1,
+    0x00AD, 0x058A, 0x05BE, 0x1400, 0x1806, 0x2010, 0x2011, 0x2012, 0x2013, 0x2014, 0x2015,
+    0x2E17, 0x2E1A, 0x2E3A, 0x2E3B, 0x2E40, 0x2E5D, 0x301C, 0x3030, 0x30A0, 0xFE31, 0xFE32,
+    0xFE58, 0xFE63, 0xFF0D, 0x10EAD]);
 
   function numericTokens(text) {
+    const tokens = [];
+    let cur = "";
+    for (const ch of text) {
+      const cp = ch.codePointAt(0);
+      if (TOKEN_EXTRA.has(cp) || inRanges(cp, LN_STARTS, LN_ENDS)) cur += ch;
+      else if (cur) { tokens.push(cur); cur = ""; }
+    }
+    if (cur) tokens.push(cur);
     const out = [];
-    for (const m of text.matchAll(TOKEN_RE)) if (DIGIT_RE.test(m[0])) out.push(m[0]);
+    for (const t of tokens) {
+      for (const ch of t) {
+        if (inRanges(ch.codePointAt(0), ND_STARTS, ND_ENDS)) { out.push(t); break; }
+      }
+    }
     return out;
   }
 
@@ -1039,7 +1183,7 @@
     while (t.length && ".,:".indexOf(t[t.length - 1]) >= 0) t = t.slice(0, -1);
     const stripped = t;
     let neg = false;
-    if (t[0] === "-" || t[0] === "+" || t[0] === "−") {
+    if (t[0] === "-" || t[0] === "+" || t[0] === "\u2212") {
       neg = t[0] !== "+";
       t = t.slice(1);
     }
@@ -1365,7 +1509,7 @@
       return ["MALFORMED", "hash_over_partial", { receipt: d.receipt }, null];
     }
     for (const ch of text) {                                                         // 7.1g
-      if (ch === "‭" || ch === "‮") {
+      if (ch === "\u202d" || ch === "\u202e") {
         return ["MALFORMED", "directional_override", { code_point: codePointLabel(ch) }, null];
       }
     }
@@ -1749,7 +1893,8 @@
     Refusal, JSONError, JNum, JConst, JObj, REFUSALS, REASONS, LEGACY_REASONS, DOCUMENT_REASONS,
     SPAN_VERDICTS, DOCUMENT_VERDICTS, SCHEMA_V0, PROFILE_RN, PROFILE_LEGACY, FORMAT, MANIFEST_SPEC,
     REDERIVES, DOES_NOT_REDERIVE, VERIFIER,
-    _internal: { b64Strict, firstInvalidUtf8, numericTokens, decimalOf, sci, roundScaled, TOKEN_RE, DIGIT_RE },
+    _internal: { b64Strict, firstInvalidUtf8, numericTokens, decimalOf, sci, roundScaled },
+    UNICODE_TABLES: { version: "15.0.0", LN: UNICODE_15_0_0_LN, ND: UNICODE_15_0_0_ND },
   };
 });
 
