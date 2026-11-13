@@ -248,8 +248,9 @@ def _go_checker(tmp_path):
     if lowered:
         src = tmp_path / "cleanroom_go_copy"
         shutil.copytree(str(GO_SRC), str(src))
-        (src / "go.mod").write_text(mod_text.replace(go_line[0], "go %d.%d" % have),
-                                    encoding="utf-8", newline="\n")
+        # open(), not Path.write_text(newline=...): that keyword is new in Python 3.10
+        with open(str(src / "go.mod"), "w", encoding="utf-8", newline="\n") as f:
+            f.write(mod_text.replace(go_line[0], "go %d.%d" % have))
         sys.stderr.write("\n*** go %d.%d is older than the clean-room module names (%d.%d): building "
                          "a temporary copy whose go.mod names the running version ***\n"
                          % (have + want))
