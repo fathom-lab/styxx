@@ -12,7 +12,9 @@
     the counts its README states (2193 of 2193 on the main file, byte for byte its first run, and
     59 of 62 on the fold file, the three it fails being 3.3's order-of-faults vectors). When go is
     not on PATH the test says so loudly and skips: the Go build is evidence, not a supported
-    implementation.
+    implementation. When the Go on PATH is older than the module file names, the committed
+    folder is left alone and a temporary copy whose go.mod names the running version is built
+    from the same source files.
 
 All three checkers were written inside the lab, the Go one by an agent of the same model family as
 the lab's authors. Agreement among them is agreement inside one lab.
@@ -230,10 +232,50 @@ def _go_checker(tmp_path):
     env = dict(os.environ, GOTOOLCHAIN="local", GOPROXY="off", GOSUMDB="off", GOFLAGS="-mod=mod",
                CGO_ENABLED="0")
     exe = tmp_path / ("checker.exe" if os.name == "nt" else "checker")
-    out = subprocess.run([go, "build", "-o", str(exe), "."], cwd=str(GO_SRC), env=env,
+    src = GO_SRC
+    # The module file names the Go the clean-room build was written with. A toolchain older than
+    # that refuses the module outright (GOTOOLCHAIN=local, and nothing may be downloaded here). The
+    # committed folder is evidence and is never edited: for an older toolchain the same source
+    # files are copied to a temporary folder whose go.mod names the running version instead, and
+    # the copy is built. If the copy does not build, this run says nothing about the Go checker.
+    mod_text = (GO_SRC / "go.mod").read_text(encoding="utf-8")
+    go_line = [ln for ln in mod_text.split("\n") if ln.startswith("go ")]
+    want = _go_minor(go_line[0]) if len(go_line) == 1 else None
+    probe = subprocess.run([go, "env", "GOVERSION"], cwd=str(tmp_path), env=env,
+                           capture_output=True, timeout=120)
+    have = _go_minor(probe.stdout.decode("utf-8", "replace"))
+    lowered = want is not None and have is not None and have < want
+    if lowered:
+        src = tmp_path / "cleanroom_go_copy"
+        shutil.copytree(str(GO_SRC), str(src))
+        (src / "go.mod").write_text(mod_text.replace(go_line[0], "go %d.%d" % have),
+                                    encoding="utf-8", newline="\n")
+        sys.stderr.write("\n*** go %d.%d is older than the clean-room module names (%d.%d): building "
+                         "a temporary copy whose go.mod names the running version ***\n"
+                         % (have + want))
+    out = subprocess.run([go, "build", "-o", str(exe), "."], cwd=str(src), env=env,
                          capture_output=True, timeout=600)
+    if lowered and out.returncode != 0:
+        msg = ("GO %d.%d IS OLDER THAN THE CLEAN-ROOM MODULE NAMES (%d.%d) and the copy with the "
+               "version line lowered did not build, so this run says nothing about the Go checker: %s"
+               % (have + want + (out.stderr.decode("utf-8", "replace")[-600:],)))
+        warnings.warn(msg)
+        sys.stderr.write("\n*** %s ***\n" % msg)
+        pytest.skip(msg)
     assert out.returncode == 0, out.stderr.decode("utf-8", "replace")[-2000:]
     return exe
+
+
+def _go_minor(text):
+    """(major, minor) read from 'go1.24.13', 'go 1.25' or '1.25'; None when it does not read as one."""
+    t = text.strip()
+    if t.startswith("go"):
+        t = t[2:].strip()
+    parts = t.split(".")
+    try:
+        return int(parts[0]), int(parts[1])
+    except (IndexError, ValueError):
+        return None
 
 
 def test_the_clean_room_go_checker_over_both_vector_files(tmp_path):
