@@ -609,7 +609,7 @@ V("8.4 census: a wrong-case literal proves a zero; the census shows it (C06)", c
             census=[{"subject": {"field": "status"}, "distinct": 2, "absent": 0, "other": 0,
                      "values": [{"type": "string", "text": "PASS", "rows": 144}, {"type": "string", "text": "FAIL", "rows": 19}],
                      "literals_never_seen": ["FAILED"]}]),
-       surface_has=['literal "FAILED" occurs in no row', 'field "status": "PASS" 144, "FAIL" 19']))
+       surface_has=['literal "FAILED" occurs in no row', 'field "status" over all 163 rows: "PASS" 144, "FAIL" 19']))
 V("8.4 census: the honest literal is seen", claim({"n": cnt([{"field": "status", "eq": "FAIL"}])}, inner="19"), _runs,
   held(derived=fr(19), census=[{"literals_never_seen": []}]))
 _many = B([{"v": "v%02d" % k} for k in range(20) for _ in range(20 - k)])
@@ -650,7 +650,7 @@ V("8.3 without: dropping UNSURE lifts 0.23 to 0.29; without that test it is 0.23
             without=[{"selected": 100 - N_UNSURE_ARM, "matched": N_UP_ARM},
                      {"selected": 130 - N_UNSURE_ARM - 0 - sum(1 for k, v in ANS.items() if k > "E1-099" and v == "UNSURE")},
                      {"selected": 100, "matched": N_UP_ARM, "derived": fr(Fraction(N_UP_ARM, 100))}]),
-       surface_has=["without test 3: 100 rows selected, value %s" % ("%d/%d" % (Fraction(N_UP_ARM, 100).numerator, Fraction(N_UP_ARM, 100).denominator))]))
+       surface_has=['without test 3 (row value in ["SUPPORTED", "CONTRADICTED"]): 100 rows selected, value %s' % ("%d/%d" % (Fraction(N_UP_ARM, 100).numerator, Fraction(N_UP_ARM, 100).denominator))]))
 V("8.2 where_steps do not depend on test order (C12), order A", claim({"n": cnt(ARM + [{"row": "value", "in": ["SUPPORTED", "CONTRADICTED"]}])}, inner=str(100 - N_UNSURE_ARM)),
   ANS_B, held(where_steps=[{"passed": 130}, {"passed": 100}, {"passed": 130 - N_UNS_ALL}]))
 V("8.2 where_steps do not depend on test order (C12), order B", claim({"n": cnt([{"row": "value", "in": ["SUPPORTED", "CONTRADICTED"]}] + ARM)}, inner=str(100 - N_UNSURE_ARM)),
@@ -782,6 +782,104 @@ V("7.1 five exponent digits are out even when the value would be 1", claim({"n":
   b"[0." + b"0" * 9999 + b"1e10000]", mal("number_out_of_range", {"row": 0, "number": "0." + "0" * 78}, prov=True))
 V("7.1 four exponent digits and a long fraction reach 1", claim({"n": sm([], {"row": "value"})}, inner="1"),
   b"[0." + b"0" * 9998 + b"1e9999]", held(derived=fr(1)))
+
+
+# ------------------------------------------------ added by the fixer (2026-11-13): A.3 pinned to Unicode 15.0.0 (18.3)
+# Before the pin, derive.js (Node 24.13.0, Unicode 16.0) answered both of these MALFORMED and derive.py (Unicode 15.0.0)
+# answered HELD (differential notes r3/unicode_min_check.out). The text now names 15.0.0, so HELD is the answer.
+V("A.3 pinned to Unicode 15.0.0: U+1C89, a letter only from Unicode 16.0, is no token character",
+  claim({"n": cnt([])}, inner="5\u1c89"), B([0] * 5), held(derived=fr(5), printed_token="5"))
+V("A.3 pinned to Unicode 15.0.0: U+10D40, a digit only from Unicode 16.0, is no second token",
+  claim({"n": cnt([])}, inner="5 \U00010d40"), B([0] * 5), held(derived=fr(5), printed_token="5"))
+V("A.3 a Unicode 15.0.0 letter after the digit joins its token", claim({"n": cnt([])}, inner="5\u00e9"), B([0] * 5),
+  mal("number_grammar", {"digit_bearing_tokens": ["5\u00e9"]}))
+V("A.3 a Unicode 15.0.0 non-ASCII digit is digit-bearing and not ASCII", claim({"n": cnt([])}, inner="\u0665"), B([0] * 5),
+  mal("number_grammar", {"digit_bearing_tokens": ["\u0665"]}))
+
+# ------------------------------------------------ added by the fixer (2026-11-13): the census over the selected rows (8.4)
+_sel_x = [{"type": "number", "text": t, "rows": 1} for t in ("1", "2", "4")]
+V("8.4 census.selected: the tested fields over the k selected rows, beside the census over all N",
+  claim({"n": shr([{"field": "g", "eq": "a"}], [{"field": "x", "in": [1, 2]}])}, inner="0.5"), SIX,
+  dict(held(derived=fr(Fraction(1, 2)), rows={"selected": 4, "matched": 2, "total": 6},
+            census={"$eq": [
+                {"subject": {"field": "g"}, "distinct": 2, "absent": 0, "other": 0,
+                 "values": [{"type": "string", "text": "a", "rows": 4}, {"type": "string", "text": "b", "rows": 2}],
+                 "literals_never_seen": [],
+                 "selected": {"rows": 4, "distinct": 1, "absent": 0, "other": 0,
+                              "values": [{"type": "string", "text": "a", "rows": 4}]}},
+                {"subject": {"field": "x"}, "distinct": 5, "absent": 1, "other": 0,
+                 "values": [{"type": "null", "text": "null", "rows": 1}] + [{"type": "number", "text": t, "rows": 1} for t in ("1", "2", "3", "4")],
+                 "literals_never_seen": [],
+                 "selected": {"rows": 4, "distinct": 3, "absent": 1, "other": 0, "values": _sel_x}}]}),
+       surface_has=['field "g" over all 6 rows: "a" 4, "b" 2', 'field "g" over the 4 selected rows: "a" 4',
+                    'field "x" over the 4 selected rows: 1 1, 2 1, 4 1, absent 1',
+                    'without test 1 (field "g" = "a"): 6 rows selected, value 1/3']))
+_arm_vals = {}
+for _k in _arm:
+    _arm_vals[ANS[_k]] = _arm_vals.get(ANS[_k], 0) + 1
+_arm_sorted = sorted(_arm_vals.items(), key=lambda kv: (-kv[1], kv[0]))
+V("8.4 census.selected: how many of the 100 the UNSURE answers are, which the census over all 130 cannot say (specimen F1)",
+  claim({"n": shr(ARM, UP)}, inner="0.%02d" % N_UP_ARM), ANS_B,
+  dict(held(derived=fr(Fraction(N_UP_ARM, 100)),
+            census=[{"subject": {"row": "value"},
+                     "selected": {"$eq": {"rows": 100, "distinct": 3, "absent": 0, "other": 0,
+                                          "values": [{"type": "string", "text": t, "rows": c} for t, c in _arm_sorted]}}}]),
+       surface_has=["row value over the 100 selected rows: " + ", ".join('"%s" %d' % (t, c) for t, c in _arm_sorted),
+                    'without test 1 (row key >= "E1-000"): 100 rows selected, value %d/%d' % (
+                        Fraction(N_UP_ARM, 100).numerator, Fraction(N_UP_ARM, 100).denominator),
+                    'without test 2 (row key <= "E1-099"): 130 rows selected']))
+V("8.4 census.selected: nothing selected, no values", claim({"n": cnt([{"row": "value", "eq": "Q"}])}, inner="0"), ANS_B,
+  dict(held(derived=fr(0), census=[{"literals_never_seen": ["Q"],
+                                    "selected": {"$eq": {"rows": 0, "distinct": 0, "absent": 0, "other": 0, "values": []}}}]),
+       surface_has=["row value over the 0 selected rows: no values"]))
+V("8.4 census.selected: capped at 16, other counts the rest", claim({"n": shr([], [{"field": "v", "eq": "v00"}])}, inner="0.10"), _many,
+  held(derived=fr(Fraction(20, 210)),
+       census=[{"distinct": 20, "other": 10, "selected": {"rows": 210, "distinct": 20, "other": 10, "absent": 0,
+                                                       "values": [{"type": "string", "text": "v%02d" % k, "rows": 20 - k} for k in range(16)]}}]))
+V("8.4 literals_never_seen: a number literal equal to a long token's value is seen; an out-of-range token raises nothing there",
+  claim({"n": cnt([{"field": "x", "in": [5, 7]}])}, inner="1"), b'[{"x":5' + b"0" * 120 + b'e-120},{"y":1e400}]',
+  held(derived=fr(1), census=[{"literals_never_seen": [7], "absent": 1}]))
+
+
+# ------------------------------------------------ added by the fixer (2026-11-13): the differential attacker's nine candidate
+# vectors (notes differential/r3/candidate_vectors.jsonl), one per derive.py mutant the vectors above let through.
+# Bytes copied as found; each expectation restated from the rule it names.
+V('3.4 a decimal literal has no leading +: {"dec": "+1"} is derivation_form',
+  base64.b64decode('eyJiXHUwMDZjb2NrcyIgIDpbeyJsaW5lIjoxLCJjXHUwMDZmbnRlbnQiCToie1wiZFwiOnsgXCJcXFx1MDA3NTAwNzJvd3NcIiA6e1wiZm9cXHUwMDdcdTAwMzJtYVx1MDA3NFwiXHUwMDNhXCJqc29ubFwifSxcIm9wXCJcbjpcIm1lXFx1MDA2XHUwMDMxblwiLFwid2hlcmVcIjpcdTAwNWJ7XCJcdTAwNjZpZVx1MDA2Q2RcIjpcInNcIiwgIFwiZ2VcIjp7XHUwMDBBXCJkZWNcIlx0OlwiKzFcIn19XSxcIm9mXCI6e1x0XCJmXHUwMDY5ZWxkXCI6IFx1MDAyMFwieFwiXHUwMDBkXHUwMDBhfX0gIH0iCX1dLA0KInNwYW4iOnsicmVjZWlwdCI6InIxI2QiLCJpXHUwMDZFbmVyIjoiw6l0w6kgMi43NTAwMDAwMDAwMDAwMDAwMCIsIlx1MDA2ZnJkaW5hbCI6CTI1Nn0sInJlc29sdXRpb24iOnsgICJlbnRyeSI6eyJrXHUwMDY5bmRfb2Zfc291clx1MDA2M2UiOiI8Ylx1MDAzRSIsICAiaGFybmVzcyI6ImhcInEiLCJydW5nIjoiTDEiLCJjb21wbGV0ZSI6dHJ1ZX0sInZcdTAwNjVyZGljdCINCjoiUkVTXHUwMDRGTFZFRCJ9fQ=='),
+  base64.b64decode(''),
+  mal("derivation_form", prov=False), note='differential candidate for mutant M07 (corpus 1014978)')
+V('3.4 a string literal over 256 UTF-8 bytes is derivation_form, though it has fewer than 256 code points',
+  base64.b64decode('ewkgImJsb1x1MDA2M2tzIjpbeyJsaW5lIgk6OTk5LCJcdTAwNjNvbnRlbnQiOiJ7XCJkXCI6e1xuXCJyb3dzXCJcdTAwMDk6e1wiZm9ybWF0XCI6XCJqc29ubFwifSxcIm9wXCI6XCJjb3VudFwiLFwid1xcdTAwNjhlXFx1MDA3MmVcIjogW3tcIlx1MDA2NXFcIlx1MDAzYVwi8J+YgPCfmIDwn5iA8J+YgPCfmIBcdWQ4M2RcdURFMDDwn5iA8J+YgFx1ZDgzZFx1REUwMPCfmIDwn5iA8J+YgPCfmIDwn5iA8J+YgPCfmIDwn5iA8J+YgPCfmIDwn5iA8J+YgPCfmIBcXHVkODNkXFxcdTAwNzVERTAw8J+YgPCfmIDwn5iA8J+YgPCfmIDwn5iA8J+YgPCfmIDwn5iA8J+YgPCfmIDwn5iA8J+YgPCfmIDwn5iA8J+YgPCfmIDwn5iA8J+YgPCfmIDwn5iA8J+YgPCfmIDwn5iA8J+YgPCfmIDwn5iA8J+YgFx1ZDgzZFx1REUwMPCfmIBcdWQ4M2RcdURFMDDwn5iA8J+YgPCfmIDwn5iA8J+YgPCfmIDwn5iA8J+YgPCfmIBcdWQ4M2RcdURFMDDwn5iAXCIsXCJmaWVsXFx1MDA2NFwiXHUwMDNhXCJpZFwifV19fSJ9XSwic3BhbiIJOnsNCgkicmVjZWlwdCIKOiAicjEjZCIsICJpblx1MDA2RWVyIjoiXHUwMGU5dMOpXHUwMDIwMiIKfSwicmVzb2x1dGlvbiI6ew0KImVudHJ5IjogeyJraW5kX29mX1x1MDA3M291XHUwMDcyY2UiOg0KIjxcdTAwNjI+IiwiXHUwMDcydW5nIjoidW5kZWNsYXJlZCIsImNvbXBsZXRlIiAgOmZhbHNlLCJoXHUwMDYxcm5lXHUwMDczcyI6IiJ9LCJ2ZXJkaWN0IiA6ICJSRVNPTFZFRCJ9IH0='),
+  base64.b64decode(''),
+  mal("derivation_form", prov=False), note='differential candidate for mutant M11 (corpus 1017733)')
+V('5.1 an at-subject array token 01 has a leading zero: absent on every row, so field_never_present',
+  base64.b64decode('eyJibG9ja3MiOlt7ImxpbmUiOjEwLCJjb250ZW50Igo6IntcdFxuXCJkXCI6e1wid2hlcmVcIjpbXG57XCJhdFwiOlwiL1xcdTAwNkVcXFwvXHUwMDcwXFwvMDFcIixcImxlXCI6XCJ0cnVlXCJcbn1dLFwicm93c1wiICA6XHUwMDBBe1wiZm9ybWF0XCJcdTAwM0FcImpzb25sXCJ9LFwib3BcIlx1MDAwRFx1MDAwYTpcImNcXHUwMDZGdW5cXHUwMDc0XCJcdTAwN0R9In1dLCJzXHUwMDcwYW4iOnsicmVjZWlwdCI6ICAicjEjZCIsImlcdTAwNmVuZXIiOiI4LjI1IHJvd3MifSwicmVzb2x1dGlvbiI6eyJ2ZXJkaWN0IjoiUkVTT0xWRUQiLCJlbnRyeSI6ew0KImhhcm5lc3MiCjoiIiwNCiJjb21wbGV0ZSI6ZmFsc2UsImtpbmRfb2Zfc291cmNlIjoidGVzdF9yXHUwMDY1cG9ydCIsInJ1bmciOiJ1bmRlY2xhcmVkIg0KfQ0KfX0='),
+  base64.b64decode('eyJcdTAwNzMiOiLDhSIsImEiIDowLCJpZCI6InIxIiwieCIgIDo0LjIwLCJuIiA6eyAicCI6WzIsNV0sIlx1MDA3MX5cdTAwMmYiOjBlLTk5OTk5fX0KeyJzIjoi772eIiwiaWQiOiJyMiIsImEiOiA1LCJcdTAwNzgiOjVlLTEsCSJiIiA6dHJ1ZSwgICJuIjp7InAiOls1LDQsMl0sCSJxflx1MDAyRiI6LTAuNX19Cg=='),
+  mal("field_never_present", prov=True), note='differential candidate for mutant M23 (corpus 1020967)')
+V('12.2 spending exactly the budget is not over it: the span goes on to no_rows_used',
+  base64.b64decode('eyJibG9ja3MiOlsKeyJsaW5lIjoxMCwNCiJjb250ZW50Ijoie1wiZFwiOntcclx1MDAwYVwib3BcIjpcIm1lYW5cIixcIndoZXJlXCJcdTAwM0FbXSxcIm9mXCI6XHUwMDdiXCJhdFwiOlwiXHUwMDJGblxcXC9wLzFcIn0sXCJyb3dzXCJcbjp7XCJmb3JtYXRcIjpcImpzb25sXCJ9fVx1MDA3RCJ9XSwic3BhbiI6eyJyZWNlaXB0IjoicjEjZCIsImlubmVyIgo6IuKJiFx1MDAzMTEuMFx1MDAzMDAwMDAifSwKInJlc29sdXRpb24iIDp7InZlcmRpY3QiOiJSRVNPTFZFRCIsImVudHJ5IjoKeyJydW5nIjoiTDIiLCJoYXJuZXNcdTAwNzMiOiLDqSIsImtcdTAwNjluZF9cdTAwNkZmX3NvdXJjZSI6InjDqSIsImNvbXBsZXRlIjpmYWxzZX19LCJidWRnZXQiOnsJIlx1MDA3M1x1MDA3MFx1MDA2NW50X2JlZm9yZSI6NjcxMDg4NjQsImVudHJ5X3JcdTAwNjVhZF9iZWZvcmUiCjpmYWxzZX19'),
+  base64.b64decode(''),
+  mal("no_rows_used", prov=True), note='differential candidate for mutant M25 (corpus 1000406)')
+V('A.5 ~1 is replaced before ~0: the token ~01 names the member ~1',
+  base64.b64decode('eyJibG9ja3MiOiBbeyJsaW5lIjogMSwgImNvbnRlbnQiOiAie1wiZFwiOiB7XCJvcFwiOiBcImNvdW50XCIsIFwicm93c1wiOiB7XCJmb3JtYXRcIjogXCJqc29uXCIsIFwiYXRcIjogXCJcIn0sIFwid2hlcmVcIjogW3tcImF0XCI6IFwiL34wMVwiLCBcImVxXCI6IDV9XX19In1dLCAic3BhbiI6IHsicmVjZWlwdCI6ICJyMSNkIiwgImlubmVyIjogIjEifSwgInJlc29sdXRpb24iOiB7InZlcmRpY3QiOiAiUkVTT0xWRUQiLCAiZW50cnkiOiB7ImtpbmRfb2Zfc291cmNlIjogInRvb2xfc3Rkb3V0IiwgImNvbXBsZXRlIjogdHJ1ZSwgImhhcm5lc3MiOiAiaCIsICJydW5nIjogIkwxIn19fQ=='),
+  base64.b64decode('W3sifjEiOjUsIi8iOjd9XQ=='),
+  held(derived=fr(1)), note='differential candidate for mutant M26 (directed A26)')
+V('A.1 escapes take hex digits of either case: the claim reads, the 33-letter name is the block defect',
+  base64.b64decode('eyJibG9ja3MiOlt7ImxpbmUiICA6MTAsImNvbnRcdTAwNjVudCI6CiJ7XCJhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFcIjpcdTAwMjB7fX0ifV0sInNwYW4iDQo6eyAgInJlY2VpcHQiCjoNCiJyMSNkIiwiaW5uZXIiOiLiiYhcdTAwMzEifSwiclx1MDA2NXNvbHV0aW9uIjp7InJlYXNcdTAwNkZuIgo6Im1hbmlmZXN0XHUwMDVmYWJzZW50IiwgICJ2ZVx1MDA3Mlx1MDA2NGljdCIgIDoNCiJcdTAwNTVOUkVTT0xWRUQifX0='),
+  base64.b64decode('WyBd'),
+  mal("derive_block_malformed", prov=False), note='differential candidate for mutant M27 (corpus 1015359)')
+V('A.1 a high surrogate escape followed by the low surrogate escape \udfff is one code point',
+  base64.b64decode('eyJibG9ja3MiOiBbeyJsaW5lIjogMSwgImNvbnRlbnQiOiAie1wiZFwiOiB7XCJvcFwiOiBcImNvdW50XCIsIFwicm93c1wiOiB7XCJmb3JtYXRcIjogXCJqc29uXCIsIFwiYXRcIjogXCJcIn0sIFwid2hlcmVcIjogW3tcImZpZWxkXCI6IFwic1wiLCBcImVxXCI6IFwi8J+fv1wifV19fSJ9XSwgInNwYW4iOiB7InJlY2VpcHQiOiAicjEjZCIsICJpbm5lciI6ICIxIn0sICJyZXNvbHV0aW9uIjogeyJ2ZXJkaWN0IjogIlJFU09MVkVEIiwgImVudHJ5IjogeyJraW5kX29mX3NvdXJjZSI6ICJ0b29sX3N0ZG91dCIsICJjb21wbGV0ZSI6IHRydWUsICJoYXJuZXNzIjogImgiLCAicnVuZyI6ICJMMSJ9fX0='),
+  base64.b64decode('W3sicyI6Ilx1ZDgzZFx1ZGZmZiJ9XQ=='),
+  held(derived=fr(1)), note='differential candidate for mutant M28 (directed A28)')
+V('9e U+202D is a directional override as U+202E is',
+  base64.b64decode('eyJibG9ja3MiOlt7ImxpbmUiOjEsImNvbnRlbnQiOiJ7XG5cImRcIlx1MDAwOTpcdTAwN2JcIndoZXJlXCI6XHUwMDBBW3tcblwiZXFcIjowXHUwMDJjXCJmaWVsZFwiOlwienpcIn1dLFwiXHUwMDZmXHUwMDY2XCJcdTAwMERcbjpcdTAwN0JcImF0XCJcdTAwMjA6XCJcXC9cXHUwMDZlL3F+MH4xXCJ9XHUwMDJjXCJvcFwiOlwibVx1MDA2NWFuXCIsXCJyb3dzXCJcdTAwMGRcdTAwMEE6e1x1MDAwYVwiZm9ybWF0XCI6XHRcImpzb25cIixcImF0XCJcdDpcIlxcdTAwMmZydW5zXCJ9fSB9In1dLCJzcGFuIjp7InJlXHUwMDYzZWlwdCI6InIxI2QiLCJpbm5lciI6IjXigK0iCX0sInJlc29sdVx1MDA3NGlvbiI6ICB7ImVudHJcdTAwNzkiDQo6eyJjb21wbGV0ZSIJOnRydWUsImhcdTAwNjFybmVzcyI6IiIsCSJrXHUwMDY5blx1MDA2NF9vZl9zXHUwMDZmdXJjZSI6InjDqSIsInJ1bmciOiJ1bmRlY2xhcmVkIgl9LCJ2ZXJkaWN0IjoiUkVTT0xWXHUwMDQ1RCJ9fQ=='),
+  base64.b64decode('ewogICJydVx1MDA2RXMiOg0KeyAgInJcdTAwMzEiICA6ICB7ImlkIg0KOiJyXHUwMDMxIiwgInMiOiJcdTAwNkV1XHUwMDZDbCIsImEiOiA0LCJuIjp7DQoKInAiOgpbMSw1XSwicX5cLyI6MTB9LCJcdTAwNjIiCToJdHJ1ZSwieCIgIDo3fX0JfQ=='),
+  mal("directional_override", prov=False), note='differential candidate for mutant M39 (corpus 1004454)')
+V('7.1 an exponent written E+0004 is +4: 1E+0004 equals the literal 10000',
+  base64.b64decode('eyJibG9ja3MiOiBbeyJsaW5lIjogMSwgImNvbnRlbnQiOiAie1wiZFwiOiB7XCJvcFwiOiBcImNvdW50XCIsIFwicm93c1wiOiB7XCJmb3JtYXRcIjogXCJqc29uXCIsIFwiYXRcIjogXCJcIn0sIFwid2hlcmVcIjogW3tcInJvd1wiOiBcInZhbHVlXCIsIFwiZXFcIjogMTAwMDB9XX19In1dLCAic3BhbiI6IHsicmVjZWlwdCI6ICJyMSNkIiwgImlubmVyIjogIjEifSwgInJlc29sdXRpb24iOiB7InZlcmRpY3QiOiAiUkVTT0xWRUQiLCAiZW50cnkiOiB7ImtpbmRfb2Zfc291cmNlIjogInRvb2xfc3Rkb3V0IiwgImNvbXBsZXRlIjogdHJ1ZSwgImhhcm5lc3MiOiAiaCIsICJydW5nIjogIkwxIn19fQ=='),
+  base64.b64decode('WzFFKzAwMDRd'),
+  held(derived=fr(1)), note='differential candidate for mutant M46 (directed B07)')
 
 
 # ------------------------------------------------------------------ write

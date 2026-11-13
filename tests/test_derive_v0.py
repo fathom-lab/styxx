@@ -195,7 +195,8 @@ def test_python_and_js_are_byte_identical_on_every_vector():
 
 FORBIDDEN_PY_NAMES = {"eval", "exec", "compile", "__import__", "float", "input", "globals", "locals", "getattr",
                       "setattr", "delattr", "vars", "breakpoint", "memoryview"}
-ALLOWED_PY_IMPORTS = {"base64", "hashlib", "sys", "unicodedata"}
+# unicodedata is no longer allowed: A.3's classes come from the pinned table (18.3), never from the host
+ALLOWED_PY_IMPORTS = {"base64", "hashlib", "sys"}
 
 
 def test_purity_python():
@@ -230,7 +231,8 @@ def test_purity_python():
 
 FORBIDDEN_JS = ["eval(", "Function(", "new Function", "XMLHttpRequest", "fetch(", "WebSocket", "Date", "Math.random",
                 "performance", "setTimeout", "setInterval", "import(", "JSON.parse", "JSON.stringify", "parseFloat",
-                "toFixed", "localStorage", "sessionStorage", "indexedDB", "child_process", "Math."]
+                "toFixed", "localStorage", "sessionStorage", "indexedDB", "child_process", "Math.",
+                "\\p{", "\\P{"]   # engine Unicode property classes move with the engine's version (18.3)
 
 
 def test_purity_js():
@@ -277,7 +279,79 @@ def _hostile_cases():
         ("4,000-digit exponent and coefficient", _claim({"rows": root, "where": [], "of": {"row": "value"}, "op": "sum"}, "0"),
          b"[" + b"1" * 4000 + b"e" + b"9" * 4000 + b"]"),
         ("escapes all the way", _claim({"rows": root, "where": [], "op": "count"}, "1"), b'["' + b"\\n" * 8000000 + b'"]'),
+        # the differential attacker's slow census shape (12.3): before conversions were kept per token it took
+        # 40.68 s in derive.py and 17.39 s in derive.js (fixer notes slow_after.out has the times after)
+        ("100,000 long number tokens, 8 in tests", _claim(_long_tokens_derivation(), "0"), _long_tokens_receipt(100000)),
     ]
+
+
+def _long_tokens_receipt(n):
+    toks = []
+    for i in range(n):
+        k = 100 + (i % 20)
+        toks.append("%d" % (i // 20 + 100000) + "0" * k + "e-" + str(k))
+    return ("[" + ",".join('{"a":%s}' % t for t in toks) + "]").encode("ascii")
+
+
+def _long_tokens_derivation():
+    lits = list(range(-200, -72))
+    return {"rows": {"format": "json", "at": ""}, "where": [{"field": "a", "in": lits[j * 16:(j + 1) * 16]} for j in range(8)],
+            "op": "count"}
+
+
+def test_each_row_number_is_converted_a_bounded_number_of_times():
+    """12.3: a row's number token is scanned once when a test or `of` first converts it, and once more per census
+    subject with a number literal (literals_never_seen). Before the repair, every literal of every `in` test and
+    every literal of the census re-scanned it: 26,400,000 conversions for 100,000 rows (differential notes)."""
+    mod = _load_py()
+    calls = [0]
+    orig = mod.scaled
+
+    def counting(tok):
+        calls[0] += 1
+        return orig(tok)
+
+    mod.scaled = counting
+    n = 2000
+    out = json.loads(mod.result_text(_claim(_long_tokens_derivation(), "0"), _long_tokens_receipt(n)))
+    assert out["row"]["verdict"] == "HELD", out["row"]
+    assert out["row"]["detail"]["census"][0]["literals_never_seen"] == list(range(-200, -72))
+    assert calls[0] <= 2 * n, calls[0]
+
+
+UNI_TABLE = os.path.join(DDIR, "unicode_15_0_0.txt")
+
+
+def _ranges_text(s):
+    return " ".join(s.split())
+
+
+def test_unicode_table_is_pinned_and_the_same_in_both_checkers():
+    """18.3: A.3's classes are Unicode 15.0.0's, carried as one table. Both checkers must embed exactly the table
+    file, and the file's sha256 must be the one DERIVE_v0.md names. When this Python's unicodedata is 15.0.0, the
+    table is also regenerated and compared (tools/unicode_table.py --check)."""
+    import hashlib
+    import re
+    import unicodedata
+    with open(UNI_TABLE, "rb") as fh:
+        raw = fh.read()
+    digest = hashlib.sha256(raw).hexdigest()
+    with open(os.path.join(DDIR, "DERIVE_v0.md"), "r", encoding="utf-8") as fh:
+        assert digest in fh.read(), "DERIVE_v0.md does not name the table's sha256 %s" % digest
+    lines = dict(l.split(" ", 1) for l in raw.decode("ascii").splitlines() if l and not l.startswith("#"))
+    mod = _load_py()
+    assert _ranges_text(mod._UNI_LN) == lines["LN"] and _ranges_text(mod._UNI_ND) == lines["ND"]
+    with open(JS, "r", encoding="utf-8") as fh:
+        js = fh.read()
+    for name, key in (("UNI_LN", "LN"), ("UNI_ND", "ND")):
+        m = re.search(r"const " + name + r' = ""\n((?:  \+ "[^"]*"\n?)+);', js)
+        assert m, name
+        assert _ranges_text("".join(re.findall(r'"([^"]*)"', m.group(1)))) == lines[key], name
+    if unicodedata.unidata_version == "15.0.0":
+        r = subprocess.run([sys.executable, "-I", os.path.join(DDIR, "tools", "unicode_table.py"), "--check"], capture_output=True)
+        assert r.returncode == 0, r.stdout + r.stderr
+    else:
+        sys.stdout.write("\nunicodedata %s here: the table was not regenerated, only compared\n" % unicodedata.unidata_version)
 
 
 LIMIT_SECONDS = 120
