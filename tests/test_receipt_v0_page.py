@@ -12,8 +12,10 @@
     session, so on CI this test RUNS against full history; it skips only when that unshallow fails,
     when the tree is not the top of its own git checkout (a `git archive` export or an sdist
     unpacked inside another repository), or when git finds no commit for the file. A squash or rebase
-    merge of pull request 270 or of this branch gives the checker a new last commit; this test then
-    fails until the page is rebuilt with --origin naming that commit;
+    merge of pull request 270 would have given the checker a new last commit (it was merged with a
+    merge commit); the branch that adds this page does not change the checker, so how its own pull
+    request is merged does not matter here. Any later change to the checker makes this test fail
+    until the page is rebuilt with --origin naming that commit;
   - every refusal listed in build_page.py's docstring, each run on a copy of receipt/v0/page in a
     temporary folder (so no run writes into the tree); the --from-git refusals use a throwaway git
     repository made in the temporary folder and need the git program;
