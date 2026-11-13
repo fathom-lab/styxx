@@ -1,0 +1,242 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "$id": "urn:fathom-lab:receipt:v0-draft",
+ "title": "RECEIPT v0 (DRAFT, unsigned, nothing frozen)",
+ "description": "Shapes for RECEIPT_v0.md: the span row, the manifest core and the verdict core, and the receipt object that carries a core beside its digest. A schema checks shape only. The rules in the text decide every verdict; a document that passes this schema has not been checked. Keywords used: type, const, enum, pattern, minimum, maxLength, maxItems, required, properties, additionalProperties, items, anyOf, allOf, if, then, else, $ref.",
+ "$ref": "#/$defs/receipt",
+ "$defs": {
+  "hex64": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+  "count": {"type": "integer", "minimum": 0},
+  "spanVerdict": {"enum": ["HELD", "FAILED", "UNRESOLVED", "MALFORMED"]},
+  "documentVerdict": {"enum": ["SWORN-HELD", "SWORN-FAILED", "SWORN-UNCHECKED", "UNSWORN"]},
+  "reason": {
+   "enum": [
+    "tag_syntax", "nesting", "stray_closer", "unclosed", "empty_span", "length_cap",
+    "receipt_form", "kind_unknown", "kind_reserved", "number_count", "number_grammar",
+    "needle_count", "needle_empty", "digest_form", "absent_over_partial", "hash_over_partial",
+    "hidden_commitment", "short_needle", "directional_override",
+    "pointer_unresolvable", "pointer_ambiguous", "anchor_out_of_range", "leaf_not_scalar",
+    "leaf_not_numeric", "leaf_not_string", "receipt_not_json", "receipt_author_minted",
+    "kind_of_source_unknown",
+    "manifest_absent", "manifest_id_missing", "manifest_integrity", "manifest_bytes_absent",
+    "manifest_no_completeness", "rung_unknown", "no_repository",
+    "value_mismatch", "rounds_to_zero", "needle_missing", "needle_present", "digest_mismatch"
+   ]
+  },
+  "reasonLegacyOnly": {
+   "description": "Reasons only a checker holding a repository produces. Never emitted under the rn-inline profile.",
+   "enum": ["no_commit", "commit_absent", "path_absent", "not_a_blob", "receipt_too_large",
+            "git_unavailable", "prereg_not_in_tree"]
+  },
+  "kindOfSourceExternal": {
+   "enum": ["tool_stdout", "tool_stderr", "file_read", "http_fetch", "harness_note",
+            "test_report", "attestation"]
+  },
+  "kindOfSourceAuthor": {"enum": ["agent_output", "agent_file_write", "agent_message"]},
+  "detail": {
+   "type": "object",
+   "additionalProperties": false,
+   "properties": {
+    "raw": {"type": "string"},
+    "code_points": {"$ref": "#/$defs/count"},
+    "bytes": {"$ref": "#/$defs/count"},
+    "cap": {"const": 300},
+    "kind": {"type": "string"},
+    "receipt": {"type": "string"},
+    "complete": {"type": "boolean"},
+    "code_point": {"type": "string", "pattern": "^U\\+[0-9A-F]{4,6}$"},
+    "digit_bearing_tokens": {"type": "array", "items": {"type": "string"}},
+    "hex_runs": {"type": "array", "items": {"$ref": "#/$defs/count"}},
+    "printed_token": {"type": "string"},
+    "printed": {"type": "string"},
+    "receipt_rounded": {"type": "string"},
+    "fractional_digits": {"$ref": "#/$defs/count"},
+    "rounding": {"const": "ROUND_HALF_EVEN"},
+    "needle_bytes": {"$ref": "#/$defs/count"},
+    "minimum_bytes": {"const": 16},
+    "haystack_bytes": {"$ref": "#/$defs/count"},
+    "occurrences": {"$ref": "#/$defs/count"},
+    "leaf_type": {"enum": ["object", "array", "null"]},
+    "leaf": {"type": "string", "maxLength": 80},
+    "note": {"type": "string"},
+    "stated": {"$ref": "#/$defs/hex64"},
+    "receipt_sha256": {"$ref": "#/$defs/hex64"}
+   }
+  },
+  "provenanceRn": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": ["form", "harness", "rung", "kind_of_source"],
+   "properties": {
+    "form": {"const": "rn"},
+    "harness": {"type": "string"},
+    "rung": {"enum": ["L1", "L2", "undeclared"]},
+    "kind_of_source": {"$ref": "#/$defs/kindOfSourceExternal"}
+   }
+  },
+  "provenanceLegacy": {
+   "description": "A row a pre-v0 checker resolved through a repository. Legacy projections only.",
+   "type": "object",
+   "additionalProperties": false,
+   "required": ["form", "note"],
+   "properties": {
+    "form": {"enum": ["path", "prereg"]},
+    "note": {"type": "string"}
+   }
+  },
+  "spanRow": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": ["at", "start", "end", "receipt", "kind", "claim_sha256", "claim", "verdict",
+                "reason", "detail"],
+   "properties": {
+    "at": {"$ref": "#/$defs/count"},
+    "start": {"anyOf": [{"$ref": "#/$defs/count"}, {"type": "null"}]},
+    "end": {"anyOf": [{"$ref": "#/$defs/count"}, {"type": "null"}]},
+    "receipt": {"type": ["string", "null"]},
+    "kind": {"type": ["string", "null"]},
+    "claim_sha256": {"anyOf": [{"$ref": "#/$defs/hex64"}, {"type": "null"}]},
+    "claim": {"anyOf": [{"type": "string", "maxLength": 300}, {"type": "null"}]},
+    "verdict": {"$ref": "#/$defs/spanVerdict"},
+    "reason": {"anyOf": [{"$ref": "#/$defs/reason"}, {"$ref": "#/$defs/reasonLegacyOnly"},
+                         {"type": "null"}]},
+    "detail": {"$ref": "#/$defs/detail"},
+    "resolved_sha256": {"$ref": "#/$defs/hex64"},
+    "provenance": {"anyOf": [{"$ref": "#/$defs/provenanceRn"},
+                             {"$ref": "#/$defs/provenanceLegacy"}]}
+   },
+   "allOf": [
+    {"if": {"properties": {"verdict": {"const": "HELD"}}},
+     "then": {"properties": {"reason": {"type": "null"}},
+              "required": ["resolved_sha256", "provenance"]},
+     "else": {"properties": {"reason": {"type": "string"}}}},
+    {"if": {"properties": {"start": {"type": "null"}}},
+     "then": {"properties": {"end": {"type": "null"}, "claim_sha256": {"type": "null"},
+                             "claim": {"type": "null"}}},
+     "else": {"properties": {"end": {"type": "integer"}}}},
+    {"if": {"properties": {"claim_sha256": {"type": "null"}}},
+     "then": {"properties": {"claim": {"type": "null"}}}}
+   ]
+  },
+  "documentMalformed": {
+   "anyOf": [
+    {"type": "null"},
+    {"type": "object", "additionalProperties": false, "required": ["reason", "at"],
+     "properties": {"reason": {"const": "invalid_utf8"}, "at": {"$ref": "#/$defs/count"}}},
+    {"type": "object", "additionalProperties": false, "required": ["reason", "delimiter_lines"],
+     "properties": {"reason": {"const": "unbalanced_fences"},
+                    "delimiter_lines": {"type": "array", "items": {"type": "integer", "minimum": 1}}}}
+   ]
+  },
+  "verdictCore": {
+   "description": "The thirteen keys the digest covers. digest = sha256(utf8(JCS(verdictCore))).",
+   "type": "object",
+   "additionalProperties": false,
+   "required": ["schema", "profile", "format", "document", "commit", "manifest_digest", "spans",
+                "counts", "sworn_total", "unresolved", "document_verdict", "document_malformed",
+                "rungs"],
+   "properties": {
+    "schema": {"const": "receipt/v0-draft"},
+    "profile": {"enum": ["rn-inline/v0-draft", "legacy-projection/v0-draft"]},
+    "format": {"const": "sworn/0.1"},
+    "document": {
+     "type": "object",
+     "additionalProperties": false,
+     "required": ["name", "inline_sha256", "canonical_sha256"],
+     "properties": {
+      "name": {"type": "string"},
+      "inline_sha256": {"$ref": "#/$defs/hex64"},
+      "canonical_sha256": {"anyOf": [{"$ref": "#/$defs/hex64"}, {"type": "null"}]}
+     }
+    },
+    "commit": {"anyOf": [{"type": "null"},
+                         {"type": "string", "pattern": "^([0-9a-f]{40}|[0-9a-f]{64})$"}]},
+    "manifest_digest": {"anyOf": [{"$ref": "#/$defs/hex64"}, {"type": "null"}]},
+    "spans": {"type": "array", "items": {"$ref": "#/$defs/spanRow"}},
+    "counts": {
+     "type": "object",
+     "additionalProperties": false,
+     "required": ["HELD", "FAILED", "UNRESOLVED", "MALFORMED"],
+     "properties": {
+      "HELD": {"$ref": "#/$defs/count"}, "FAILED": {"$ref": "#/$defs/count"},
+      "UNRESOLVED": {"$ref": "#/$defs/count"}, "MALFORMED": {"$ref": "#/$defs/count"}
+     }
+    },
+    "sworn_total": {"$ref": "#/$defs/count"},
+    "unresolved": {"$ref": "#/$defs/count"},
+    "document_verdict": {"$ref": "#/$defs/documentVerdict"},
+    "document_malformed": {"$ref": "#/$defs/documentMalformed"},
+    "rungs": {"type": "object", "additionalProperties": {"$ref": "#/$defs/count"}}
+   },
+   "allOf": [
+    {"if": {"properties": {"profile": {"const": "rn-inline/v0-draft"}}},
+     "then": {"properties": {
+      "spans": {"items": {"properties": {
+       "reason": {"anyOf": [{"$ref": "#/$defs/reason"}, {"type": "null"}]},
+       "provenance": {"$ref": "#/$defs/provenanceRn"}}}},
+      "rungs": {"type": "object", "additionalProperties": false,
+                "properties": {"L1": {"$ref": "#/$defs/count"}, "L2": {"$ref": "#/$defs/count"},
+                               "undeclared": {"$ref": "#/$defs/count"},
+                               "unresolved": {"$ref": "#/$defs/count"}}}}}}
+   ]
+  },
+  "manifestEntry": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": ["id", "sha256", "kind_of_source", "captured_at", "complete"],
+   "properties": {
+    "id": {"type": "string", "pattern": "^r[1-9][0-9]*$"},
+    "sha256": {"$ref": "#/$defs/hex64"},
+    "kind_of_source": {"anyOf": [{"$ref": "#/$defs/kindOfSourceExternal"},
+                                 {"$ref": "#/$defs/kindOfSourceAuthor"}]},
+    "captured_at": {"type": "string"},
+    "complete": {"type": "boolean"},
+    "bytes": {"type": "string", "pattern": "^([A-Za-z0-9+/]{4})*([A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$"},
+    "harness_note": {"type": "string"}
+   }
+  },
+  "manifestCore": {
+   "description": "What a harness mints and what manifest digest covers: sha256(utf8(JCS(manifestCore))). authored_sha256 is sorted and lowercase. This is the shape an emitter writes; what a checker does with other shapes is in the text, section 5.",
+   "type": "object",
+   "additionalProperties": false,
+   "required": ["spec", "harness", "turn", "minted_at", "authored_sha256", "receipts", "rung"],
+   "properties": {
+    "spec": {"const": "sworn/manifest/0.2"},
+    "harness": {"type": "string"},
+    "turn": {"type": "string"},
+    "minted_at": {"type": "string"},
+    "authored_sha256": {"type": "array", "items": {"$ref": "#/$defs/hex64"}},
+    "receipts": {"type": "object", "additionalProperties": {"$ref": "#/$defs/manifestEntry"}},
+    "rung": {"enum": ["L1", "L2", null]}
+   }
+  },
+  "manifest": {
+   "description": "The manifest as a file: the core's seven keys plus the harness's own digest of the core.",
+   "type": "object",
+   "additionalProperties": false,
+   "required": ["spec", "harness", "turn", "minted_at", "authored_sha256", "receipts", "rung"],
+   "properties": {
+    "spec": {"const": "sworn/manifest/0.2"},
+    "harness": {"type": "string"},
+    "turn": {"type": "string"},
+    "minted_at": {"type": "string"},
+    "authored_sha256": {"type": "array", "items": {"$ref": "#/$defs/hex64"}},
+    "receipts": {"type": "object", "additionalProperties": {"$ref": "#/$defs/manifestEntry"}},
+    "rung": {"enum": ["L1", "L2", null]},
+    "digest": {"$ref": "#/$defs/hex64"}
+   }
+  },
+  "receipt": {
+   "description": "A core beside its digest. verifier and attestations are outside the digest. attestations is the one named slot v0 leaves empty: an array with no items.",
+   "type": "object",
+   "additionalProperties": false,
+   "required": ["core", "digest", "attestations"],
+   "properties": {
+    "core": {"$ref": "#/$defs/verdictCore"},
+    "digest": {"$ref": "#/$defs/hex64"},
+    "verifier": {"type": "object"},
+    "attestations": {"type": "array", "maxItems": 0}
+   }
+  }
+ }
+}
