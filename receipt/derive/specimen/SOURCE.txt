@@ -1,0 +1,9 @@
+rows: external1_answers.json in this folder
+read with: git -C C:/Users/heyzo/clawd/styxx cat-file blob origin/main:papers/closed-model-frontier/external1_answers.json
+origin/main commit: c99ec82f1832cfaf7bc6b7899ef63839f0071feb
+git blob id: 8b578a16a63d16a5a0e94253531dd9dc2dec5503
+sha256 of the bytes: d7b2bbb8a0fa14e75cbedab8a4e4f1813aaa27f5d1e771da5995791ff3f8a16d
+bytes: 3159
+the path's only commit on origin/main: 414db45a7914af2659c9b127a613d93b87aded84 (2026-08-31)
+derive.js embedded in specimen.html, sha256: f7523f3739e54d9db4d54a81ea93a9f98bc9685cea2d7032b66d00a9a1e9bbf4
+derive.py results: result_*.derive_py.json, printed by python -I ../derive.py claim_N.json external1_answers.json
