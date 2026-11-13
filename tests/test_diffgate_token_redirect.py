@@ -2,10 +2,11 @@
 """fetch_pr's token is sent to the API's origin and nowhere else, whatever a redirect names.
 
 Through 8.0.1 `fetch_pr` put ``Authorization: Bearer <token>`` in the request's ordinary headers and
-sent it through `urllib.request.urlopen`, which follows 301, 302, 303, 307 and 308 for a GET and copies
-those headers to whatever address the Location names (another host, another port, https to http). The
-token now travels as an unredirected header, which urllib never copies to a redirected request, and
-fetch_pr's own opener follows a redirect only within the API's origin, putting the token back there.
+sent it through `urllib.request.urlopen`, which follows 301, 302, 303 and 307 for a GET (and 308 from
+Python 3.11) and copies those headers to whatever address the Location names (another host, another
+port, https to http). The token now travels as an unredirected header, which urllib's own redirect
+handling never copies to a redirected request, and fetch_pr's own opener follows a redirect (308
+included, on every Python) only within the API's origin, putting the token back there.
 
 Everything here runs against real HTTP servers on 127.0.0.1, because a test that replaces the client
 cannot see redirect handling: `api` stands for the API and answers with redirects, `elsewhere` stands for
@@ -13,11 +14,16 @@ any other address and records every header it is sent. Two ways point fetch_pr a
 says which: a caller-supplied opener that rewrites the request's address to `api` before a stock urllib
 opener sends it (the request fetch_pr built, headers and all, is what goes), or the module constant
 `styxx.diffgate._API_BASE` monkeypatched to `api`'s address. The token is a made-up string.
+
+The `servers` fixture refuses, for the length of each test that uses it, any connection outside
+127.0.0.1 and ::1 and any name lookup other than those and `localhost`, so a regression that follows a
+redirect to some other name fails here with `OffLoopback` instead of asking a resolver, under any runner.
 """
 from __future__ import annotations
 
 import http.server
 import json
+import socket
 import threading
 import urllib.request
 
@@ -30,6 +36,16 @@ TOKEN = "made-up-token-0123456789abcdef"     # not a real token; checked for in 
 PR_URL = "https://github.com/o/r/pull/7"
 API_PATH = "/repos/o/r/pulls/7"
 CODES = (301, 302, 303, 307, 308)
+# urllib's own handler follows 308 only from Python 3.11; fetch_pr's opener follows it on every version.
+STOCK_FOLLOWS_308 = hasattr(urllib.request.HTTPRedirectHandler, "http_error_308")
+STOCK_CODES = [c if c != 308 else pytest.param(308, marks=pytest.mark.skipif(
+    not STOCK_FOLLOWS_308, reason="urllib before Python 3.11 does not follow 308")) for c in CODES]
+_LOOPBACK_ADDR = {"127.0.0.1", "::1"}
+_LOOPBACK_NAMES = _LOOPBACK_ADDR | {"localhost", None}
+
+
+class OffLoopback(OSError):
+    """Raised by the `servers` fixture's guard for a connection or a lookup that would leave loopback."""
 
 _DIFF = """\
 --- a/src/retry.py
@@ -91,8 +107,36 @@ class Server:
         self.httpd.server_close()
 
 
+def _guard_loopback(monkeypatch):
+    real_connect, real_connect_ex, real_gai = socket.socket.connect, socket.socket.connect_ex, socket.getaddrinfo
+
+    def host_of(address):
+        host = address[0] if isinstance(address, tuple) else address
+        return host.decode("ascii", "replace") if isinstance(host, bytes) else host
+
+    def connect(self, address):
+        if host_of(address) not in _LOOPBACK_ADDR:
+            raise OffLoopback(f"connect to {host_of(address)!r} refused by the test's loopback guard")
+        return real_connect(self, address)
+
+    def connect_ex(self, address):
+        if host_of(address) not in _LOOPBACK_ADDR:
+            raise OffLoopback(f"connect to {host_of(address)!r} refused by the test's loopback guard")
+        return real_connect_ex(self, address)
+
+    def getaddrinfo(host, *a, **k):
+        if host_of(host) not in _LOOPBACK_NAMES:
+            raise OffLoopback(f"lookup of {host_of(host)!r} refused by the test's loopback guard")
+        return real_gai(host, *a, **k)
+
+    monkeypatch.setattr(socket.socket, "connect", connect)
+    monkeypatch.setattr(socket.socket, "connect_ex", connect_ex)
+    monkeypatch.setattr(socket, "getaddrinfo", getaddrinfo)
+
+
 @pytest.fixture
 def servers(monkeypatch):
+    _guard_loopback(monkeypatch)
     for k in ("HTTP_PROXY", "HTTPS_PROXY", "ALL_PROXY", "http_proxy", "https_proxy", "all_proxy"):
         monkeypatch.delenv(k, raising=False)
     monkeypatch.setattr(dg, "_API_OPENER", None, raising=False)    # built afresh, with no proxy
@@ -129,7 +173,7 @@ def assert_no_token(*texts):
 
 # ── the baseline: no opener copies the token to a redirected request ───────────────────────────────
 
-@pytest.mark.parametrize("code", CODES)
+@pytest.mark.parametrize("code", STOCK_CODES)
 def test_a_caller_opener_follows_the_redirect_without_the_token(servers, code):
     api, elsewhere = servers
     api.routes[API_PATH] = (code, elsewhere.base + API_PATH)
@@ -192,6 +236,7 @@ def test_fetch_pr_does_not_use_an_installed_opener(servers, monkeypatch):
     finally:
         urllib.request.install_opener(None)
     assert used == [] and elsewhere.seen == []
+    assert api.auths() == [f"Bearer {TOKEN}"]
 
 
 # ── fetch_pr's own opener: refuses a redirect off the origin, keeps the token within it ────────────
@@ -249,6 +294,7 @@ def test_the_same_server_by_another_origin_is_refused(servers, monkeypatch, wher
     assert "not followed" in str(e.value)
     assert_no_token(str(e.value))
     assert [p for p, _ in api.seen] == [API_PATH]               # nothing reached /moved on any port
+    assert api.auths() == [f"Bearer {TOKEN}"]
     assert elsewhere.seen == []
 
 
@@ -267,9 +313,15 @@ def test_no_token_means_no_authorization_anywhere(servers, monkeypatch):
     ("https://api.github.com/repositories/1/pulls/7", True),
     ("https://API.GitHub.com/x", True),
     ("https://api.github.com:443/x", True),                     # the default port, written out
+    ("https://api.github.com:0443/x", True),                    # the same port, a leading zero
     ("http://api.github.com/x", False),
+    ("http://api.github.com:443/x", False),                     # the scheme alone differs
     ("https://api.github.com:8443/x", False),
     ("https://api.github.com.evil.example/x", False),
+    ("https://evilgithub.com/x", False),                        # a host sharing a suffix with the base
+    ("https://xapi.github.com/x", False),
+    ("https://github.com/x", False),
+    ("https://uploads.github.com/x", False),
     ("https://evil.example/api.github.com/x", False),
     ("https://user@api.github.com/x", False),
     ("https://user:pw@api.github.com/x", False),
@@ -279,6 +331,79 @@ def test_no_token_means_no_authorization_anywhere(servers, monkeypatch):
 def test_the_origin_rule_against_the_real_base(url, same):
     assert dg._API_BASE == "https://api.github.com"
     assert dg._same_api_origin(url) is same
+
+
+@pytest.mark.parametrize("base, url, same", [
+    ("https://127.0.0.1:8443", "https://127.0.0.1:8443/x", True),
+    ("https://127.0.0.1:8443", "http://127.0.0.1:8443/x", False),   # the scheme alone differs
+    ("http://localhost:8080", "http://localhost:8080/x", True),
+    ("http://localhost:8080", "http://xlocalhost:8080/x", False),   # a suffix of the host
+    ("http://localhost:8080", "http://localhost.:8080/x", False),
+])
+def test_the_origin_rule_against_other_bases(monkeypatch, base, url, same):
+    """The rule compares with `_API_BASE` whatever it is; pure, no request is made."""
+    monkeypatch.setattr(dg, "_API_BASE", base)
+    assert dg._same_api_origin(url) is same
+
+
+@pytest.mark.parametrize("code", CODES)
+def test_the_handler_puts_the_token_back_as_an_unredirected_header_within_the_origin(code):
+    """Called directly, no request is made: within the origin the new request carries the token as an
+    unredirected header (so no later urllib redirect copies it), for 308 too on every Python; off the
+    origin there is no new request."""
+    assert hasattr(dg._ApiRedirect, "http_error_308")
+    req = urllib.request.Request("https://api.github.com" + API_PATH, headers={"Accept": "a"})
+    req.add_unredirected_header("Authorization", f"Bearer {TOKEN}")
+    h = dg._ApiRedirect()
+    new = h.redirect_request(req, None, code, "", {}, "https://api.github.com/repositories/1/pulls/7")
+    assert new.full_url == "https://api.github.com/repositories/1/pulls/7"
+    assert new.unredirected_hdrs.get("Authorization") == f"Bearer {TOKEN}"
+    assert "Authorization" not in new.headers and new.headers.get("Accept") == "a"
+    assert h.redirect_request(req, None, code, "", {}, "https://evilgithub.com" + API_PATH) is None
+
+
+def test_a_redirect_loop_within_the_origin_is_named_as_one(servers, monkeypatch):
+    """urllib gives up on a loop with an HTTPError carrying the 3xx code; the sentence says the target
+    was within the origin and why it stopped, not that only such a redirect is followed."""
+    api, elsewhere = servers
+    point_api_at(monkeypatch, api)
+    api.routes[API_PATH] = (302, "/loop")
+    api.routes["/loop"] = (302, "/loop")
+    with pytest.raises(SystemExit) as e:
+        fetch_pr(PR_URL, token=TOKEN)
+    msg = str(e.value)
+    assert f"a redirect to '/loop', within {api.base}, which was not followed" in msg
+    assert "loop or are more than urllib follows" in msg and "only a redirect within" not in msg
+    assert_no_token(msg, repr(e.value))
+    assert all(a == f"Bearer {TOKEN}" for a in api.auths()) and len(api.seen) > 2
+    assert elsewhere.seen == []
+
+
+def test_a_caller_opener_that_does_not_follow_is_named_as_the_one_that_stopped(servers):
+    api, elsewhere = servers
+    api.routes[API_PATH] = (302, elsewhere.base + API_PATH)
+    stock = urllib.request.build_opener(dg._ApiRedirect)       # follows nothing off the real base
+    with pytest.raises(SystemExit) as e:
+        fetch_pr(PR_URL, token=TOKEN, _open=rewriting_opener(api, stock))
+    assert "which the opener passed as _open did not follow" in str(e.value)
+    assert_no_token(str(e.value))
+    assert api.auths() == [f"Bearer {TOKEN}"]
+    assert elsewhere.seen == []
+
+
+def test_the_fixture_refuses_to_leave_loopback(servers):
+    """The guard the `servers` fixture installs: a lookup of any other name and a connection to any other
+    address raise OffLoopback before anything is sent (192.0.2.1 is a documentation address)."""
+    with pytest.raises(OffLoopback):
+        socket.getaddrinfo("x@127.0.0.1", 80)
+    with pytest.raises(OffLoopback):
+        socket.getaddrinfo("example.invalid", 80)
+    s = socket.socket()
+    try:
+        with pytest.raises(OffLoopback):
+            s.connect(("192.0.2.1", 80))
+    finally:
+        s.close()
 
 
 # ── the command line: the token from the environment ───────────────────────────────────────────────
@@ -309,4 +434,5 @@ def test_cli_environment_token_is_not_sent_off_the_origin(servers, monkeypatch, 
     out = capsys.readouterr()
     assert "not followed" in str(e.value)
     assert_no_token(str(e.value), out.out, out.err)
+    assert api.auths() == [f"Bearer {TOKEN}"]
     assert elsewhere.seen == []

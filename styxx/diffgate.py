@@ -1895,7 +1895,7 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
 # data and calls what it is given; code that reaches around its argument by reflection (a class reached by type(), a
 # function's __globals__, a frame) is not covered (NOTE_path2a_eleventh_pass_2026_10_05). DECIDE's copy is built from
 # the block's own slotted classes, so nothing of main's is reachable from it as data.
-# Everything outside this block is main's reader (sha256 0d98354b..., LF: f457d2e4..., which is 4eb3d6f0..., 1cde8b82's
+# Everything outside this block is main's reader (sha256 62273430..., LF: f457d2e4..., which is 4eb3d6f0..., 1cde8b82's
 # 9b620e00... with the demo's CONTRADICTED label, fix/contradicted-not-lie, plus the record naming its instrument,
 # identity phase 2; then #205, fix/diffgate-205-206, moved reading paths: every piece of git output is cut at git's
 # line ends, and the `def` counts and the compatibility reading abstain over a line holding a character of _READ_APART;
@@ -3745,7 +3745,7 @@ _PR_URL = re.compile(
 
 _API_BASE = "https://api.github.com"    # the one origin fetch_pr asks, and the only one its token is sent to
 _REDIRECT_CODES = (301, 302, 303, 307, 308)
-_API_OPENER = None                      # built when fetch_pr first needs it: see _api_open
+_API_OPENER = None                      # built lazily by _api_open, once per process
 
 
 def _origin(url: str):
@@ -3770,13 +3770,17 @@ class _ApiRedirect(urllib.request.HTTPRedirectHandler):
     """Follows a redirect only to the origin of `_API_BASE` (GitHub answers a renamed or moved
     repository with one, to another path there), and puts the token back on that one only. A
     redirect anywhere else is not followed: urllib raises it as an HTTPError and fetch_pr says so.
-    The token travels as an unredirected header, which urllib never copies to a redirected request
-    whatever the opener; this handler is the one place it is copied, and only within the origin."""
+    The token travels as an unredirected header, which urllib's own redirect handling never copies
+    to a redirected request; this handler is the one place in the module it is copied, and only
+    within the origin. 308 is followed on every Python the package supports: urllib's handler
+    follows it only from Python 3.11, and for a GET a 308 asks exactly what a 307 asks."""
+
+    http_error_308 = urllib.request.HTTPRedirectHandler.http_error_302
 
     def redirect_request(self, req, fp, code, msg, headers, newurl):
         if not _same_api_origin(newurl):
             return None
-        new = super().redirect_request(req, fp, code, msg, headers, newurl)
+        new = super().redirect_request(req, fp, 307 if code == 308 else code, msg, headers, newurl)
         auth = req.unredirected_hdrs.get("Authorization")
         if new is not None and auth is not None:
             new.add_unredirected_header("Authorization", auth)
@@ -3803,9 +3807,12 @@ def fetch_pr(url: str, token: str | None = None, timeout: int = 60, _open=None) 
     module's own (an opener installed with `urllib.request.install_opener` is not used),
     which follows a redirect only within https://api.github.com and refuses any other.
 
-    The token is sent to https://api.github.com and nowhere else: it is attached as an
-    unredirected header, so no opener copies it to a redirected request, `_open` included;
-    only this module's opener puts it back, on a redirect within that origin.
+    The token is attached as an unredirected header. urllib's own redirect handling never
+    copies such a header to a redirected request, so an `_open` built on urllib does not
+    send it past a redirect either (a handler of the caller's own that copies
+    `req.header_items()` would). Only this module's opener puts it back, on a redirect
+    within https://api.github.com, so through that opener the token goes to that origin
+    and nowhere else.
     """
     m = _PR_URL.match(url.strip())
     if not m:
@@ -3827,10 +3834,18 @@ def fetch_pr(url: str, token: str | None = None, timeout: int = 60, _open=None) 
         except urllib.error.HTTPError as e:
             if e.code in _REDIRECT_CODES:
                 loc = (e.headers or {}).get("Location")
+                shown = repr(loc[:200]) if loc else "(none given)"
+                within = bool(loc) and _same_api_origin(urllib.parse.urljoin(e.filename or api, loc))
+                if _open is not None:
+                    why = "which the opener passed as _open did not follow"
+                elif within:
+                    why = (f"within {_API_BASE}, which was not followed: the redirects loop or "
+                           "are more than urllib follows")
+                else:
+                    why = (f"which was not followed: only a redirect within {_API_BASE} is, "
+                           "and the token is sent nowhere else")
                 raise SystemExit(f"{owner}/{repo}#{number}: GitHub answers {e.code}, a redirect to "
-                                 f"{repr(loc[:200]) if loc else '(none given)'}, which was not "
-                                 f"followed: only a redirect within {_API_BASE} is, and the "
-                                 "token is sent nowhere else.") from e
+                                 f"{shown}, {why}.") from e
             if e.code == 404:
                 raise SystemExit(f"{owner}/{repo}#{number}: GitHub answers 404 — the pull "
                                  "request does not exist or is private. For a private one, "

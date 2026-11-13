@@ -59,7 +59,7 @@ FIXTURE = ROOT / "tests" / "fixtures" / "path2a_repros.json"
 # changed the reader outside the block and outside any reading path: `fetch_pr` sends its token as an unredirected
 # header and follows a redirect only within the API's origin. main's port did not move, and no figure below was
 # measured again.
-MAIN_PY_SHA = "0d98354ba6f56f694881b69e53d0f1bc18fc9283feaafe5a2b73b0f839ae4688"
+MAIN_PY_SHA = "6227343086241ec022ef14c023657a6d0aeb144118cb12c80decdf2db422e4bb"
 MAIN_JS_SHA = "e32bb9ddb2e52118576c3512330e2f16bf76e7f8ae9a932adc07bc9df3bb60f3"
 FUZZ_SHA = "2e80cd1d5a42e867d2a2581619976580a1f492820cbfc6d446618cbb8202b91f"      # corpus_fuzz.json, never committed
 
