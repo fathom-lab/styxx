@@ -1,0 +1,181 @@
+{
+ "what": "answers of the command line checker on the page's three examples",
+ "status": "lab-written examples for RECEIPT v0, an unsigned draft; the checker is lab-written",
+ "written_at_utc": "2026-11-13T15:33:10Z",
+ "checker": {
+  "path": "src/checkers/check_v0.fd650bf0407b.js",
+  "sha256": "cbdae74e95cbfb0280d38b0d38380dcbf2f32caf12d12c860c483aa2ab9e70a3"
+ },
+ "node": "v24.13.0",
+ "manifest": {
+  "file": "examples/example-manifest.json",
+  "sha256": "cd55850d1b66b67aad5653cdfcbb5964424e8c11b45a9dae28bb2d9e6231212d"
+ },
+ "files_status": {
+  "example-manifest.json": "unchanged",
+  "example-1-held.md": "unchanged",
+  "example-2-failed.md": "unchanged",
+  "example-3-unresolved.md": "unchanged",
+  "examples/receipts_cbdae74e95cbfb02/example-1-held.md.receipt.json": "written",
+  "examples/receipts_cbdae74e95cbfb02/example-2-failed.md.receipt.json": "written",
+  "examples/receipts_cbdae74e95cbfb02/example-3-unresolved.md.receipt.json": "written"
+ },
+ "examples": [
+  {
+   "name": "example-1-held.md",
+   "document_file": "examples/example-1-held.md",
+   "document_sha256": "71cf7fcc6722051bee1d18f200744040e281f80fe9f491f037c0cdc3e2c55c7f",
+   "check": {
+    "argv": [
+     "C:\\Users\\heyzo\\clawd\\wt\\_receipt_v0_page_2026_11_13\\src\\checkers\\check_v0.fd650bf0407b.js",
+     "check",
+     "C:\\Users\\heyzo\\clawd\\wt\\_receipt_v0_page_2026_11_13\\examples\\example-1-held.md",
+     "--manifest",
+     "C:\\Users\\heyzo\\clawd\\wt\\_receipt_v0_page_2026_11_13\\examples\\example-manifest.json",
+     "--name",
+     "example-1-held.md"
+    ],
+    "exit": 0,
+    "stdout": "{\"attestations\":[],\"core\":{\"commit\":null,\"counts\":{\"FAILED\":0,\"HELD\":4,\"MALFORMED\":0,\"UNRESOLVED\":0},\"document\":{\"canonical_sha256\":\"af416d30bdab0649ef10a0ed2a9e61b3840f7179ddf01f9c2eb60859613f8ee7\",\"inline_sha256\":\"71cf7fcc6722051bee1d18f200744040e281f80fe9f491f037c0cdc3e2c55c7f\",\"name\":\"example-1-held.md\"},\"document_malformed\":null,\"document_verdict\":\"SWORN-HELD\",\"format\":\"sworn/0.1\",\"manifest_digest\":\"7990ad59a0bc62e3409c6c307976742afcad7d579da1f7e2b92f40cd575dc66a\",\"profile\":\"rn-inline/v0-draft\",\"rungs\":{\"L2\":4},\"schema\":\"receipt/v0-draft\",\"spans\":[{\"at\":54,\"claim\":\"`296 passed in 4.10s`\",\"claim_sha256\":\"0835622a45de3f46b23e3aeb6d3991b585301fb4632cd8f67ac5df03b97068ce\",\"detail\":{\"haystack_bytes\":40,\"needle_bytes\":19,\"occurrences\":1},\"end\":75,\"kind\":\"quote\",\"provenance\":{\"form\":\"rn\",\"harness\":\"example-harness\",\"kind_of_source\":\"tool_stdout\",\"rung\":\"L2\"},\"reason\":null,\"receipt\":\"r1\",\"resolved_sha256\":\"5a82243013640bf78a76e2620b24d3ca01daa8334354c763d7eaf091fcb76a31\",\"start\":54,\"verdict\":\"HELD\"},{\"at\":144,\"claim\":\"240 ms\",\"claim_sha256\":\"d5d6e22ddd4d8abb2f7ede81a8f8786e40545149bc3f477fa95934f71813f0d7\",\"detail\":{\"fractional_digits\":0,\"printed\":\"240\",\"printed_token\":\"240\",\"receipt\":\"240\",\"receipt_rounded\":\"240\",\"rounding\":\"ROUND_HALF_EVEN\"},\"end\":118,\"kind\":\"numeric\",\"provenance\":{\"form\":\"rn\",\"harness\":\"example-harness\",\"kind_of_source\":\"file_read\",\"rung\":\"L2\"},\"reason\":null,\"receipt\":\"r2#/p95_ms\",\"resolved_sha256\":\"46df6c4c3bf8c0756cfbf2a8dc3db286dae5aed81459d935d37f3dc5bd10e76a\",\"start\":112,\"verdict\":\"HELD\"},{\"at\":209,\"claim\":\"sha256 5a82243013640bf78a76e2620b24d3ca01daa8334354c763d7eaf091fcb76a31\",\"claim_sha256\":\"4bd3d5f926730b325fbe1822dacfe206dcc0a3c92d5c5a25c59e12b0398d0bdf\",\"detail\":{\"receipt_sha256\":\"5a82243013640bf78a76e2620b24d3ca01daa8334354c763d7eaf091fcb76a31\",\"stated\":\"5a82243013640bf78a76e2620b24d3ca01daa8334354c763d7eaf091fcb76a31\"},\"end\":206,\"kind\":\"hash\",\"provenance\":{\"form\":\"rn\",\"harness\":\"example-harness\",\"kind_of_source\":\"tool_stdout\",\"rung\":\"L2\"},\"reason\":null,\"receipt\":\"r1\",\"resolved_sha256\":\"5a82243013640bf78a76e2620b24d3ca01daa8334354c763d7eaf091fcb76a31\",\"start\":135,\"verdict\":\"HELD\"},{\"at\":332,\"claim\":\"`failed`\",\"claim_sha256\":\"57888c8e6cf702ed7d819f8d664ff928e4bccaf130d2e17266240fb9ca1decc2\",\"detail\":{\"complete\":true,\"haystack_bytes\":40,\"needle_bytes\":6},\"end\":235,\"kind\":\"absent\",\"provenance\":{\"form\":\"rn\",\"harness\":\"example-harness\",\"kind_of_source\":\"tool_stdout\",\"rung\":\"L2\"},\"reason\":null,\"receipt\":\"r1\",\"resolved_sha256\":\"5a82243013640bf78a76e2620b24d3ca01daa8334354c763d7eaf091fcb76a31\",\"start\":227,\"verdict\":\"HELD\"}],\"sworn_total\":4,\"unresolved\":0},\"digest\":\"84fe5d404347da8b1d32f3829b0b2dc9524149978a1e21d6be3399242844e5bc\",\"verifier\":{\"independent\":false,\"name\":\"receipt/v0/check_v0.js\",\"status\":\"draft\",\"written_by\":\"fathom-lab\"}}\n",
+    "stderr": ""
+   },
+   "check_stdout_sha256": "0f0b5c75efa2e0c496bacca611eeba8a9f7653acbba01e10759f0d8b58ff6432",
+   "receipt_file": "examples/receipts_cbdae74e95cbfb02/example-1-held.md.receipt.json",
+   "digest": "84fe5d404347da8b1d32f3829b0b2dc9524149978a1e21d6be3399242844e5bc",
+   "document_verdict": "SWORN-HELD",
+   "rows": [
+    {
+     "verdict": "HELD",
+     "reason": null,
+     "kind": "quote",
+     "receipt": "r1"
+    },
+    {
+     "verdict": "HELD",
+     "reason": null,
+     "kind": "numeric",
+     "receipt": "r2#/p95_ms"
+    },
+    {
+     "verdict": "HELD",
+     "reason": null,
+     "kind": "hash",
+     "receipt": "r1"
+    },
+    {
+     "verdict": "HELD",
+     "reason": null,
+     "kind": "absent",
+     "receipt": "r1"
+    }
+   ],
+   "recheck": {
+    "argv": [
+     "C:\\Users\\heyzo\\clawd\\wt\\_receipt_v0_page_2026_11_13\\src\\checkers\\check_v0.fd650bf0407b.js",
+     "recheck",
+     "C:\\Users\\heyzo\\clawd\\wt\\_receipt_v0_page_2026_11_13\\examples/receipts_cbdae74e95cbfb02/example-1-held.md.receipt.json",
+     "C:\\Users\\heyzo\\clawd\\wt\\_receipt_v0_page_2026_11_13\\examples\\example-1-held.md",
+     "--manifest",
+     "C:\\Users\\heyzo\\clawd\\wt\\_receipt_v0_page_2026_11_13\\examples\\example-manifest.json"
+    ],
+    "exit": 0,
+    "stdout": "REDERIVES\n",
+    "stderr": ""
+   }
+  },
+  {
+   "name": "example-2-failed.md",
+   "document_file": "examples/example-2-failed.md",
+   "document_sha256": "941387a830f6bc572f77a3a939e1885073f57635391c3047c70cdedf1f782ad4",
+   "check": {
+    "argv": [
+     "C:\\Users\\heyzo\\clawd\\wt\\_receipt_v0_page_2026_11_13\\src\\checkers\\check_v0.fd650bf0407b.js",
+     "check",
+     "C:\\Users\\heyzo\\clawd\\wt\\_receipt_v0_page_2026_11_13\\examples\\example-2-failed.md",
+     "--manifest",
+     "C:\\Users\\heyzo\\clawd\\wt\\_receipt_v0_page_2026_11_13\\examples\\example-manifest.json",
+     "--name",
+     "example-2-failed.md"
+    ],
+    "exit": 0,
+    "stdout": "{\"attestations\":[],\"core\":{\"commit\":null,\"counts\":{\"FAILED\":1,\"HELD\":1,\"MALFORMED\":0,\"UNRESOLVED\":0},\"document\":{\"canonical_sha256\":\"2145add1effd2088f066bb0457170e14943093e4c50aeccee46b2b3c0b8872ab\",\"inline_sha256\":\"941387a830f6bc572f77a3a939e1885073f57635391c3047c70cdedf1f782ad4\",\"name\":\"example-2-failed.md\"},\"document_malformed\":null,\"document_verdict\":\"SWORN-FAILED\",\"format\":\"sworn/0.1\",\"manifest_digest\":\"7990ad59a0bc62e3409c6c307976742afcad7d579da1f7e2b92f40cd575dc66a\",\"profile\":\"rn-inline/v0-draft\",\"rungs\":{\"L2\":2},\"schema\":\"receipt/v0-draft\",\"spans\":[{\"at\":54,\"claim\":\"`296 passed in 4.10s`\",\"claim_sha256\":\"0835622a45de3f46b23e3aeb6d3991b585301fb4632cd8f67ac5df03b97068ce\",\"detail\":{\"haystack_bytes\":40,\"needle_bytes\":19,\"occurrences\":1},\"end\":75,\"kind\":\"quote\",\"provenance\":{\"form\":\"rn\",\"harness\":\"example-harness\",\"kind_of_source\":\"tool_stdout\",\"rung\":\"L2\"},\"reason\":null,\"receipt\":\"r1\",\"resolved_sha256\":\"5a82243013640bf78a76e2620b24d3ca01daa8334354c763d7eaf091fcb76a31\",\"start\":54,\"verdict\":\"HELD\"},{\"at\":144,\"claim\":\"250 ms\",\"claim_sha256\":\"dc6d8be0822b517b7ef36f5d2da16fc81db73fe4397f1fab82dcae82f41f219d\",\"detail\":{\"fractional_digits\":0,\"printed\":\"250\",\"printed_token\":\"250\",\"receipt\":\"240\",\"receipt_rounded\":\"240\",\"rounding\":\"ROUND_HALF_EVEN\"},\"end\":118,\"kind\":\"numeric\",\"provenance\":{\"form\":\"rn\",\"harness\":\"example-harness\",\"kind_of_source\":\"file_read\",\"rung\":\"L2\"},\"reason\":\"value_mismatch\",\"receipt\":\"r2#/p95_ms\",\"resolved_sha256\":\"46df6c4c3bf8c0756cfbf2a8dc3db286dae5aed81459d935d37f3dc5bd10e76a\",\"start\":112,\"verdict\":\"FAILED\"}],\"sworn_total\":2,\"unresolved\":0},\"digest\":\"ee3a9aa7e55e516b38b3065526d4e30afd5238c04c6171a467e0c24f54510a36\",\"verifier\":{\"independent\":false,\"name\":\"receipt/v0/check_v0.js\",\"status\":\"draft\",\"written_by\":\"fathom-lab\"}}\n",
+    "stderr": ""
+   },
+   "check_stdout_sha256": "a3ec72e72fff99b194e0e753e9182a0af445cae3221581922a637687f06f743f",
+   "receipt_file": "examples/receipts_cbdae74e95cbfb02/example-2-failed.md.receipt.json",
+   "digest": "ee3a9aa7e55e516b38b3065526d4e30afd5238c04c6171a467e0c24f54510a36",
+   "document_verdict": "SWORN-FAILED",
+   "rows": [
+    {
+     "verdict": "HELD",
+     "reason": null,
+     "kind": "quote",
+     "receipt": "r1"
+    },
+    {
+     "verdict": "FAILED",
+     "reason": "value_mismatch",
+     "kind": "numeric",
+     "receipt": "r2#/p95_ms"
+    }
+   ],
+   "recheck": {
+    "argv": [
+     "C:\\Users\\heyzo\\clawd\\wt\\_receipt_v0_page_2026_11_13\\src\\checkers\\check_v0.fd650bf0407b.js",
+     "recheck",
+     "C:\\Users\\heyzo\\clawd\\wt\\_receipt_v0_page_2026_11_13\\examples/receipts_cbdae74e95cbfb02/example-2-failed.md.receipt.json",
+     "C:\\Users\\heyzo\\clawd\\wt\\_receipt_v0_page_2026_11_13\\examples\\example-2-failed.md",
+     "--manifest",
+     "C:\\Users\\heyzo\\clawd\\wt\\_receipt_v0_page_2026_11_13\\examples\\example-manifest.json"
+    ],
+    "exit": 0,
+    "stdout": "REDERIVES\n",
+    "stderr": ""
+   }
+  },
+  {
+   "name": "example-3-unresolved.md",
+   "document_file": "examples/example-3-unresolved.md",
+   "document_sha256": "edd7ca570518b92dfb36644063fd38e56ffa6926ab57a8e81dc29e822a030541",
+   "check": {
+    "argv": [
+     "C:\\Users\\heyzo\\clawd\\wt\\_receipt_v0_page_2026_11_13\\src\\checkers\\check_v0.fd650bf0407b.js",
+     "check",
+     "C:\\Users\\heyzo\\clawd\\wt\\_receipt_v0_page_2026_11_13\\examples\\example-3-unresolved.md",
+     "--manifest",
+     "C:\\Users\\heyzo\\clawd\\wt\\_receipt_v0_page_2026_11_13\\examples\\example-manifest.json",
+     "--name",
+     "example-3-unresolved.md"
+    ],
+    "exit": 0,
+    "stdout": "{\"attestations\":[],\"core\":{\"commit\":null,\"counts\":{\"FAILED\":0,\"HELD\":0,\"MALFORMED\":0,\"UNRESOLVED\":1},\"document\":{\"canonical_sha256\":\"b161792cef69b32821f84335d3c3b180be491d5951f9b634b00ab86dd2cb26aa\",\"inline_sha256\":\"edd7ca570518b92dfb36644063fd38e56ffa6926ab57a8e81dc29e822a030541\",\"name\":\"example-3-unresolved.md\"},\"document_malformed\":null,\"document_verdict\":\"SWORN-UNCHECKED\",\"format\":\"sworn/0.1\",\"manifest_digest\":\"7990ad59a0bc62e3409c6c307976742afcad7d579da1f7e2b92f40cd575dc66a\",\"profile\":\"rn-inline/v0-draft\",\"rungs\":{\"unresolved\":1},\"schema\":\"receipt/v0-draft\",\"spans\":[{\"at\":71,\"claim\":\"12 s\",\"claim_sha256\":\"0538b301a72987fe1bebb9e3153d5dd5000f5efa3fe7d07fc6bf652355a89b8e\",\"detail\":{},\"end\":75,\"kind\":\"numeric\",\"reason\":\"manifest_id_missing\",\"receipt\":\"r3\",\"start\":71,\"verdict\":\"UNRESOLVED\"}],\"sworn_total\":1,\"unresolved\":1},\"digest\":\"58659d803818698267b59dbafac2be908296b76eb76b308da40cf18f32b33450\",\"verifier\":{\"independent\":false,\"name\":\"receipt/v0/check_v0.js\",\"status\":\"draft\",\"written_by\":\"fathom-lab\"}}\n",
+    "stderr": ""
+   },
+   "check_stdout_sha256": "ee0dc367e5598fa98f9420b64abd1237d96801e02b201909f9888aa15cc8ffde",
+   "receipt_file": "examples/receipts_cbdae74e95cbfb02/example-3-unresolved.md.receipt.json",
+   "digest": "58659d803818698267b59dbafac2be908296b76eb76b308da40cf18f32b33450",
+   "document_verdict": "SWORN-UNCHECKED",
+   "rows": [
+    {
+     "verdict": "UNRESOLVED",
+     "reason": "manifest_id_missing",
+     "kind": "numeric",
+     "receipt": "r3"
+    }
+   ],
+   "recheck": {
+    "argv": [
+     "C:\\Users\\heyzo\\clawd\\wt\\_receipt_v0_page_2026_11_13\\src\\checkers\\check_v0.fd650bf0407b.js",
+     "recheck",
+     "C:\\Users\\heyzo\\clawd\\wt\\_receipt_v0_page_2026_11_13\\examples/receipts_cbdae74e95cbfb02/example-3-unresolved.md.receipt.json",
+     "C:\\Users\\heyzo\\clawd\\wt\\_receipt_v0_page_2026_11_13\\examples\\example-3-unresolved.md",
+     "--manifest",
+     "C:\\Users\\heyzo\\clawd\\wt\\_receipt_v0_page_2026_11_13\\examples\\example-manifest.json"
+    ],
+    "exit": 0,
+    "stdout": "REDERIVES\n",
+    "stderr": ""
+   }
+  }
+ ]
+}

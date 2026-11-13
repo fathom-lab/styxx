@@ -1,0 +1,27 @@
+{
+ "spec": "sworn/manifest/0.2",
+ "harness": "example-harness",
+ "turn": "example-turn-1",
+ "minted_at": "example value: the harness's clock, a statement nothing checks",
+ "authored_sha256": [],
+ "receipts": {
+  "r1": {
+   "id": "r1",
+   "sha256": "5a82243013640bf78a76e2620b24d3ca01daa8334354c763d7eaf091fcb76a31",
+   "kind_of_source": "tool_stdout",
+   "captured_at": "example value: the harness's clock, a statement nothing checks",
+   "complete": true,
+   "bytes": "Y29sbGVjdGVkIDI5NiBpdGVtcwoyOTYgcGFzc2VkIGluIDQuMTBzCg=="
+  },
+  "r2": {
+   "id": "r2",
+   "sha256": "46df6c4c3bf8c0756cfbf2a8dc3db286dae5aed81459d935d37f3dc5bd10e76a",
+   "kind_of_source": "file_read",
+   "captured_at": "example value: the harness's clock, a statement nothing checks",
+   "complete": true,
+   "bytes": "eyJwOTVfbXMiOiAyNDAsICJyZXF1ZXN0cyI6IDEyMDB9Cg=="
+  }
+ },
+ "rung": "L2",
+ "digest": "7990ad59a0bc62e3409c6c307976742afcad7d579da1f7e2b92f40cd575dc66a"
+}
