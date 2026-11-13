@@ -1105,3 +1105,22 @@ def test_F14_receipts_embedded_in_committed_capsules_change_no_verdict():
         changed += sum((a["verdict"], a["reason"]) != (b["verdict"], b["reason"])
                        for a, b in zip(rec["spans"], core["spans"]))
     assert census["verdicts changed in them"] == str(changed)
+
+
+def test_the_provenance_audit_does_not_take_the_schema_for_a_receipt():
+    """The repository's provenance guard walks every tracked JSON file. The schema names `spans` and
+    `document_verdict` as properties; on CI's first run of this branch the guard took that object for a
+    receipt and stopped (7 tests of tests/test_receipt_provenance_audit.py). A description of a receipt
+    is not a receipt: nothing in the schema file may be yielded, and a real receipt still is."""
+    import importlib, json, sys
+    from pathlib import Path
+    root = Path(__file__).resolve().parents[1]
+    audit_dir = str(root / "papers" / "sworn")
+    if audit_dir not in sys.path:
+        sys.path.insert(0, audit_dir)
+    audit = importlib.import_module("receipt_provenance_audit")
+    schema = json.loads((root / "receipt" / "v0" / "receipt-v0.schema.json").read_text(encoding="utf-8"))
+    assert list(audit._receipts_in(schema)) == []
+    real = {"spans": [{"provenance": {"form": "path"}}, {"provenance": None}, "not a row"], "document_verdict": "SWORN-HELD"}
+    assert [w for w, _ in audit._receipts_in({"x": real})] == ["$.x"]
+    assert audit._tree_claim(real) == 1

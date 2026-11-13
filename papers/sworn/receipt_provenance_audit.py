@@ -89,7 +89,11 @@ def _tracked_json() -> list:
 
 
 def _is_receipt(obj) -> bool:
-    return isinstance(obj, dict) and "spans" in obj and "document_verdict" in obj
+    # `spans` must be a list: a JSON Schema that names `spans` and `document_verdict` as properties
+    # (receipt/v0/receipt-v0.schema.json) is a description of a receipt, not one, and its `spans`
+    # is an object. Before 2026-11-13 this took it for a receipt and stopped with an AttributeError.
+    return (isinstance(obj, dict) and isinstance(obj.get("spans"), list)
+            and "document_verdict" in obj)
 
 
 def _receipts_in(obj, where="$"):
@@ -115,7 +119,7 @@ def _receipts_in(obj, where="$"):
 def _tree_claim(obj: dict) -> int:
     """How many spans in this receipt were resolved through the tree channel."""
     return sum(1 for s in obj.get("spans", [])
-               if ((s.get("provenance") or {}).get("form")) in TREE_FORMS)
+               if isinstance(s, dict) and ((s.get("provenance") or {}).get("form")) in TREE_FORMS)
 
 
 def _commit_exists(sha) -> bool:
