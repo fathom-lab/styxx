@@ -487,7 +487,7 @@ Every number below is copied as measured from the file named; "differential note
 - The Unicode sweep on the repaired checkers: 10,008 cases, no disagreement, all HELD (`unicode_sweep_after.out`).
 - The slow census case (12.3): 40.68 s and 17.39 s before; 4.70 s and 1.29 s after, same verdict and same spent units, 13,650,001 (`slow_after.out`).
 
-21.5 **The specimen page** (`specimen/specimen.html`). See `specimen/SOURCE.txt` and the specimen notes for how it was run. Before this repair it was run only by executing its inline scripts in Node 24 against a hand-written fake DOM (specimen maker notes `verify.out`): no real browser.
+21.5 **The specimen page** (`specimen/specimen.html`). Rebuilt in the second repair with the repaired `derive.js` inline; each card now shows the provenance, the census over all rows and over the selected rows, and every test's leave-one-out value. It has been run only by executing its inline scripts in Node 24 against a hand-written fake DOM (fixer notes `specimen_run/verify.out`, by a copy of the specimen maker's tools): the page says HELD; its three results equal `derive.py`'s result files byte for byte; the inline `derive.js`, rows and claims equal the files on disk; the page holds no `http:` or `https:` and no tag or call that loads a resource; each of three copies with one row changed says NOT HELD, one through two FAILED spans and two only through the rows' pinned sha256. **No real browser has rendered it**: the desktop app's browser pane cannot open `file://` pages or a server this agent starts, and nothing was installed. Layout, `TextDecoder` and the missing-`crypto.subtle` path in a browser are unchecked.
 
 ## 22. Second repair, finding by finding
 
