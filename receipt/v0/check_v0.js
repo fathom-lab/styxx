@@ -378,16 +378,21 @@
     const parts = [];
     const n = s.length;
     for (;;) {
-      const q = s.indexOf('"', i);
-      if (q < 0) throw new JSONError("unterminated string");
-      let bs = s.indexOf("\\", i);
-      if (bs > q) bs = -1;
-      const stop = bs < 0 ? q : bs;
+      // one pass to the first '"' or '\' from i, so a string token costs its own length (fold
+      // round, 2026-11-13: an indexOf of '\' alone scanned past the closing quote to the next
+      // backslash or the end of the text, which made parsing quadratic in the number of strings)
+      let stop = i;
+      while (stop < n) {
+        const c = s.charCodeAt(stop);
+        if (c === 0x22 || c === 0x5c) break;
+        stop++;
+      }
+      if (stop >= n) throw new JSONError("unterminated string");
       const chunk = s.slice(i, stop);
       if (/[\u0000-\u001f]/.test(chunk)) throw new JSONError("control character in a string");
       parts.push(chunk);
-      if (bs < 0) return [parts.join(""), q + 1];
-      i = bs + 1;
+      if (s.charCodeAt(stop) === 0x22) return [parts.join(""), stop + 1];
+      i = stop + 1;
       if (i >= n) throw new JSONError("unterminated escape");
       const e = s[i];
       if (Object.prototype.hasOwnProperty.call(_ESC, e)) {
