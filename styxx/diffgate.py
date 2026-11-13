@@ -159,6 +159,7 @@ import re
 import subprocess
 import sys
 import urllib.error
+import urllib.parse
 import urllib.request
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -1894,7 +1895,7 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
 # data and calls what it is given; code that reaches around its argument by reflection (a class reached by type(), a
 # function's __globals__, a frame) is not covered (NOTE_path2a_eleventh_pass_2026_10_05). DECIDE's copy is built from
 # the block's own slotted classes, so nothing of main's is reachable from it as data.
-# Everything outside this block is main's reader (sha256 6944190c..., LF: f457d2e4..., which is 4eb3d6f0..., 1cde8b82's
+# Everything outside this block is main's reader (sha256 0d98354b..., LF: f457d2e4..., which is 4eb3d6f0..., 1cde8b82's
 # 9b620e00... with the demo's CONTRADICTED label, fix/contradicted-not-lie, plus the record naming its instrument,
 # identity phase 2; then #205, fix/diffgate-205-206, moved reading paths: every piece of git output is cut at git's
 # line ends, and the `def` counts and the compatibility reading abstain over a line holding a character of _READ_APART;
@@ -1906,7 +1907,8 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
 # `async`, 91d45e3a...; then the tests count's abstention narrowed to a claim at or below the larger count, the
 # one-sided #178, 969abb0d...; then #174 and #175, fix/diffgate-174-175, moved reading paths: `only_touches` reads a
 # rename's old path and abstains where only it lies outside the prefixes, and resolves a prefix's `.` and `..` segments
-# as git resolves a pathspec), unchanged; the two doors call
+# as git resolves a pathspec, 6944190c...; then fetch_pr's token sent as an unredirected header and its redirects kept
+# to the API's origin, fix/diffgate-token-redirect, outside any reading path), unchanged; the two doors call
 # `_p2a_abstain` on the gate main's `_gate` returns. The overlay reads each DECIDED claim once more and turns it
 # UNCHECKABLE, with a reason that names the verdict it withholds, the defect and main's own reason verbatim, only
 # where #97, #121 or #101 can have made it wrong:
@@ -3741,6 +3743,53 @@ _PR_URL = re.compile(
     r"^(?:https?://)?(?:www\.)?github\.com/(?P<owner>[\w.-]+)/(?P<repo>[\w.-]+)/pull/"
     r"(?P<number>\d+)(?:[/?#].*)?$")
 
+_API_BASE = "https://api.github.com"    # the one origin fetch_pr asks, and the only one its token is sent to
+_REDIRECT_CODES = (301, 302, 303, 307, 308)
+_API_OPENER = None                      # built when fetch_pr first needs it: see _api_open
+
+
+def _origin(url: str):
+    """(scheme, host, port) of an address, the port filled in from the scheme; None for an address
+    with a user part or one that cannot be read."""
+    try:
+        p = urllib.parse.urlsplit(url)
+        port = p.port
+    except ValueError:
+        return None
+    if "@" in p.netloc or not p.hostname:
+        return None
+    scheme = p.scheme.lower()
+    return (scheme, p.hostname.lower(), port if port is not None else {"https": 443, "http": 80}.get(scheme))
+
+
+def _same_api_origin(url: str) -> bool:
+    return _origin(url) is not None and _origin(url) == _origin(_API_BASE)
+
+
+class _ApiRedirect(urllib.request.HTTPRedirectHandler):
+    """Follows a redirect only to the origin of `_API_BASE` (GitHub answers a renamed or moved
+    repository with one, to another path there), and puts the token back on that one only. A
+    redirect anywhere else is not followed: urllib raises it as an HTTPError and fetch_pr says so.
+    The token travels as an unredirected header, which urllib never copies to a redirected request
+    whatever the opener; this handler is the one place it is copied, and only within the origin."""
+
+    def redirect_request(self, req, fp, code, msg, headers, newurl):
+        if not _same_api_origin(newurl):
+            return None
+        new = super().redirect_request(req, fp, code, msg, headers, newurl)
+        auth = req.unredirected_hdrs.get("Authorization")
+        if new is not None and auth is not None:
+            new.add_unredirected_header("Authorization", auth)
+        return new
+
+
+def _api_open(req, timeout):
+    global _API_OPENER
+    opener = _API_OPENER
+    if opener is None:
+        opener = _API_OPENER = urllib.request.build_opener(_ApiRedirect)
+    return opener.open(req, timeout=timeout)
+
 
 def fetch_pr(url: str, token: str | None = None, timeout: int = 60, _open=None) -> dict:
     """The description and the diff of a public GitHub pull request, from the API.
@@ -3750,25 +3799,38 @@ def fetch_pr(url: str, token: str | None = None, timeout: int = 60, _open=None) 
     exactly those. A token (``GITHUB_TOKEN`` / ``GH_TOKEN``) is used only for the rate
     limit; without one GitHub allows 60 requests an hour per address. Nothing from the
     response is executed and nothing but these two documents is read. `_open` exists so
-    tests can hand in a fake opener; it is `urllib.request.urlopen` otherwise.
+    tests can hand in a fake opener; otherwise the request goes through an opener of this
+    module's own (an opener installed with `urllib.request.install_opener` is not used),
+    which follows a redirect only within https://api.github.com and refuses any other.
+
+    The token is sent to https://api.github.com and nowhere else: it is attached as an
+    unredirected header, so no opener copies it to a redirected request, `_open` included;
+    only this module's opener puts it back, on a redirect within that origin.
     """
     m = _PR_URL.match(url.strip())
     if not m:
         raise ValueError(f"not a GitHub pull request URL: {url!r} "
                          "(expected github.com/OWNER/REPO/pull/N)")
     owner, repo, number = m.group("owner"), m.group("repo"), int(m.group("number"))
-    api = f"https://api.github.com/repos/{owner}/{repo}/pulls/{number}"
-    opener = _open or urllib.request.urlopen
+    api = f"{_API_BASE}/repos/{owner}/{repo}/pulls/{number}"
+    opener = _open or _api_open
 
     def get(accept: str) -> bytes:
         headers = {"Accept": accept, "User-Agent": "styxx-diffgate",
                    "X-GitHub-Api-Version": "2022-11-28"}
+        req = urllib.request.Request(api, headers=headers)
         if token:
-            headers["Authorization"] = f"Bearer {token}"
+            req.add_unredirected_header("Authorization", f"Bearer {token}")
         try:
-            with opener(urllib.request.Request(api, headers=headers), timeout=timeout) as r:
+            with opener(req, timeout=timeout) as r:
                 return r.read()
         except urllib.error.HTTPError as e:
+            if e.code in _REDIRECT_CODES:
+                loc = (e.headers or {}).get("Location")
+                raise SystemExit(f"{owner}/{repo}#{number}: GitHub answers {e.code}, a redirect to "
+                                 f"{repr(loc[:200]) if loc else '(none given)'}, which was not "
+                                 f"followed: only a redirect within {_API_BASE} is, and the "
+                                 "token is sent nowhere else.") from e
             if e.code == 404:
                 raise SystemExit(f"{owner}/{repo}#{number}: GitHub answers 404 — the pull "
                                  "request does not exist or is private. For a private one, "
