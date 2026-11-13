@@ -7,9 +7,13 @@ file receipt/v0/vectors/receipt_v0_vectors.json.
     schema;
   - a purity test over check_v0's source: standard library imports only, no clock, network,
     process, file or float in the checking code, no regular expression at all;
-  - bounded time on large and deeply nested inputs.
+  - bounded time on large and deeply nested inputs;
+  - the JavaScript checker receipt/v0/check_v0.js: every vector through it with node (the test
+    FAILS, it does not skip, when node is missing), byte-identical canonical receipts between the
+    two checkers on every vector that emits a core, the same answers on the large inputs, its
+    purity by the source, its command line, and a run with no Node globals at all.
 
-check_v0 is lab-written and not independent of the lab's checker (its docstring says so). These
+check_v0 and check_v0.js are lab-written and not independent of the lab's checker (its docstring says so). These
 tests show that it answers its own vectors; they do not show that any other party agrees.
 """
 import ast
@@ -18,6 +22,7 @@ import hashlib
 import importlib.util
 import json
 import os
+import shutil
 import subprocess
 import sys
 import time
@@ -354,3 +359,187 @@ def test_the_command_line(tmp_path):
     assert (bad.returncode, bad.stdout.strip()) == (1, b"DOES-NOT-REDERIVE")
     ref = subprocess.run(exe + ["check", str(doc), "--commit", "XYZ"], capture_output=True)
     assert (ref.returncode, ref.stdout.strip()) == (2, b"REFUSED commit_form")
+
+
+# ---------------------------------------------------------------------------------------------
+# the JavaScript checker, check_v0.js
+# ---------------------------------------------------------------------------------------------
+
+JS = V0 / "check_v0.js"
+JS_RUNNER = V0 / "vectors" / "run_check_v0_js.js"
+
+
+def _node():
+    exe = shutil.which("node")
+    assert exe, "node is not on PATH: the JavaScript checker's tests fail here, they do not skip"
+    return exe
+
+
+def _node_run(args):
+    return subprocess.run([_node()] + [str(a) for a in args], capture_output=True, timeout=600)
+
+
+def _js_lines(vectors_path):
+    out = _node_run([JS_RUNNER, vectors_path, JS])
+    assert out.returncode == 0, out.stderr.decode("utf-8", "replace")[-2000:]
+    # split on LF only: str.splitlines would also split on U+2028, U+0085 and others that
+    # JSON.stringify leaves raw inside strings
+    return [json.loads(line) for line in out.stdout.decode("utf-8").split("\n") if line]
+
+
+def test_every_vector_through_check_v0_js_and_receipts_are_byte_identical():
+    """Each vector: check_v0.js answers what the vector expects, answers what check_v0.py answers,
+    and on every check that emits a core the canonical text of receipt(core) (no verifier: that
+    names the checker and is outside the digest, 9.4) is the same bytes from both checkers."""
+    js = _js_lines(VECTORS)
+    assert len(js) == len(ALL)
+    wrong, receipts = [], 0
+    for v, j in zip(ALL, js):
+        assert j["id"] == v["id"]
+        py_got, core = _run(v)
+        if j["got"] != v["expect"] or j["got"] != py_got:
+            wrong.append((v["id"][:16], v.get("label"), v["expect"], py_got, j["got"]))
+            continue
+        if core is None:
+            assert "receipt_b64" not in j, v["id"]
+            continue
+        py_rec = C.jcs(C.receipt(core)).encode("utf-8")
+        js_rec = base64.b64decode(j["receipt_b64"])
+        if py_rec != js_rec:
+            wrong.append((v["id"][:16], v.get("label"), "receipt bytes differ"))
+        receipts += 1
+    assert not wrong, "%d of %d vectors differ, first: %r" % (len(wrong), len(ALL), wrong[:3])
+    expected = sum(1 for v in ALL if "core_digest" in v["expect"])
+    assert receipts == expected and receipts > 1900
+
+
+def test_check_v0_js_agrees_on_the_large_inputs(tmp_path):
+    """The bounded-time inputs above, through check_v0.js: the same core digest as check_v0.py,
+    all of them inside the sum of their limits."""
+    vecs = []
+    for label, doc, man, limit, _ in _BIG:
+        vecs.append({"id": label, "op": "check", "inputs": {
+            "document_b64": base64.b64encode(doc).decode("ascii"), "name": "big.md",
+            "manifest_b64": None if man is None else base64.b64encode(man).decode("ascii"),
+            "commit": None}})
+    path = tmp_path / "big.json"
+    path.write_text(json.dumps({"vectors": vecs}), encoding="utf-8")
+    t0 = time.perf_counter()
+    js = _js_lines(path)
+    assert time.perf_counter() - t0 < sum(b[3] for b in _BIG)
+    assert len(js) == len(_BIG)
+    for (label, doc, man, _, _), j in zip(_BIG, js):
+        assert j["got"] == {"core_digest": C.digest(C.check(doc, "big.md", man))}, label
+
+
+_JS_SRC = JS.read_text(encoding="utf-8")
+_JS_MARK = "/* ============================================================================ command line"
+_JS_CORE = _JS_SRC.split(_JS_MARK, 1)[0]
+
+
+def test_check_v0_js_is_one_file_and_names_nothing_impure():
+    assert _JS_MARK in _JS_SRC
+    raw = JS.read_bytes()
+    assert b"\r" not in raw and not raw.startswith(b"\xef\xbb\xbf")
+    import re
+    code = re.sub(r"/\*.*?\*/", " ", _JS_CORE, flags=re.S)      # block comments
+    code = re.sub(r"(?m)^\s*//.*$|\s//\s.*$", " ", code)          # line comments
+    banned = ["require", "import", "process", "Buffer", "Date", "performance", "fetch",
+              "XMLHttpRequest", "WebSocket", "random", "crypto", "parseFloat", "eval", "Function",
+              "setTimeout", "setInterval", "localStorage", "navigator",
+              "Float64Array", "Float32Array"]
+    hits = [b for b in banned if re.search(r"(?<![\w$.])" + b + r"(?![\w$])", code)]
+    hits += [b for b in ("JSON.parse", "JSON.stringify", "Math.random", "document.", "window.",
+                         ".toFixed(", ".toPrecision(", ".toExponential(")
+             if b in code]
+    assert not hits, hits
+    assert "check" in code and "ReceiptV0" in code
+
+
+def test_check_v0_js_runs_with_no_node_globals():
+    """The file evaluated as a browser would: no module, no require, no process, no Buffer; only
+    the standard TextEncoder and TextDecoder. It defines ReceiptV0 and checks a document."""
+    script = r"""
+const fs = require("fs"), vm = require("vm");
+const src = fs.readFileSync(process.argv[1], "utf8");
+const g = { TextEncoder, TextDecoder };
+g.globalThis = g;
+vm.createContext(g);
+vm.runInContext(src, g);
+const R = g.ReceiptV0;
+const doc = new g.TextEncoder().encode('n is <sworn r="r1" k="numeric">7</sworn>');
+const core = R.check(vm.runInContext("Uint8Array", g).from(doc), "d.md");
+process.stdout.write(JSON.stringify([typeof g.module, typeof g.require, typeof g.process,
+  typeof g.Buffer, core.document_verdict, core.spans[0].reason, R.digest(core)]));
+"""
+    out = _node_run(["-e", script, JS])
+    assert out.returncode == 0, out.stderr.decode("utf-8", "replace")[-2000:]
+    got = json.loads(out.stdout)
+    want = C.check(b'n is <sworn r="r1" k="numeric">7</sworn>', "d.md")
+    assert got == ["undefined", "undefined", "undefined", "undefined", "SWORN-UNCHECKED",
+                   "manifest_absent", C.digest(want)]
+
+
+def test_check_v0_js_command_line(tmp_path):
+    doc = tmp_path / "d.md"
+    doc.write_bytes(b'n is <sworn r="r1" k="numeric">7</sworn>')
+    man = tmp_path / "m.json"
+    man.write_bytes(_man(b"7"))
+    out = _node_run([JS, "check", doc, "--manifest", man, "--name", "d.md"])
+    assert out.returncode == 0, out.stderr
+    rec = json.loads(out.stdout)
+    assert rec["core"]["document_verdict"] == "SWORN-HELD"
+    assert rec["verifier"]["independent"] is False
+    assert rec["verifier"]["name"] == "receipt/v0/check_v0.js"
+    assert out.stdout.rstrip(b"\n") == C.jcs(rec).encode("utf-8")
+    assert rec["digest"] == C.digest(C.check(doc.read_bytes(), "d.md", man.read_bytes()))
+    rp = tmp_path / "r.json"
+    rp.write_bytes(out.stdout)
+    ok = _node_run([JS, "recheck", rp, doc, "--manifest", man])
+    assert (ok.returncode, ok.stdout.strip()) == (0, b"REDERIVES")
+    assert C.recheck(rp.read_bytes(), doc.read_bytes(), man.read_bytes()) == "REDERIVES"
+    bad = _node_run([JS, "recheck", rp, doc])
+    assert (bad.returncode, bad.stdout.strip()) == (1, b"DOES-NOT-REDERIVE")
+    ref = _node_run([JS, "check", doc, "--commit", "XYZ"])
+    assert (ref.returncode, ref.stdout.strip()) == (2, b"REFUSED commit_form")
+
+
+def test_check_v0_js_lists_are_the_python_lists():
+    script = r"""
+const R = require(process.argv[1]);
+process.stdout.write(JSON.stringify([R.REASONS, R.REFUSALS, R.LEGACY_REASONS, R.DOCUMENT_REASONS,
+  R.SPAN_VERDICTS, R.DOCUMENT_VERDICTS, R.SCHEMA_V0, R.PROFILE_RN, R.PROFILE_LEGACY, R.FORMAT,
+  R.MANIFEST_SPEC]));
+"""
+    out = _node_run(["-e", script, JS])
+    assert out.returncode == 0, out.stderr
+    assert json.loads(out.stdout) == [
+        list(C.REASONS), list(C.REFUSALS), list(C.LEGACY_REASONS), list(C.DOCUMENT_REASONS),
+        list(C.SPAN_VERDICTS), list(C.DOCUMENT_VERDICTS), C.SCHEMA_V0, C.PROFILE_RN,
+        C.PROFILE_LEGACY, C.FORMAT, C.MANIFEST_SPEC]
+
+
+JS_PROBES = V0 / "vectors" / "check_v0_js_probes.json"
+
+
+def test_check_v0_js_and_check_v0_py_agree_on_the_javascript_pitfall_probes():
+    """check_v0_js_probes.json: inputs aimed at what JavaScript gets wrong by default. No expected
+    answer is stored; the two checkers must give the same answer and byte-identical canonical
+    receipts on every probe, except those marked unicode_gap (13.1: the text pins no Unicode
+    version, and Node's and Python's tables differ), which are run and not compared."""
+    probes = json.loads(JS_PROBES.read_text(encoding="utf-8"))["vectors"]
+    js = _js_lines(JS_PROBES)
+    assert len(js) == len(probes) > 80
+    wrong, gap = [], 0
+    for v, j in zip(probes, js):
+        assert j["id"] == v["id"]
+        py_got, core = _run(v)
+        if v["unicode_gap"]:
+            gap += 1
+            continue
+        if j["got"] != py_got:
+            wrong.append((v["id"], v["label"], py_got, j["got"]))
+        elif core is not None and base64.b64decode(j["receipt_b64"]) != C.jcs(C.receipt(core)).encode("utf-8"):
+            wrong.append((v["id"], v["label"], "receipt bytes differ"))
+    assert gap == 3
+    assert not wrong, wrong[:3]
