@@ -16,11 +16,11 @@
  },
  "counts": {
   "conformance": 1718,
-  "hand": 414,
+  "hand": 416,
   "hand_merged_into_conformance": 6,
   "recheck": 32,
   "jcs": 27,
-  "total": 2191
+  "total": 2193
  },
  "codes_produced_by_hand_vectors": [
   "absent_over_partial",
@@ -66467,6 +66467,76 @@
     "2.3",
     "2.5",
     "7.2",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "494780ea808a38428faa193bf59d6f25f53ccdd8064bad14b08a4aeebfd0fdbd",
+   "source": "hand",
+   "op": "check",
+   "label": "4.3 a range end written 'LL3' is not L and a positive integer: receipt_form",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InIxI0wxLUxMMyIgaz0ibnVtZXJpYyI+Nzwvc3dvcm4+",
+    "name": "d.md",
+    "manifest_b64": "eyJzcGVjIjogInN3b3JuL21hbmlmZXN0LzAuMiIsICJoYXJuZXNzIjogImgiLCAidHVybiI6ICJ0IiwgIm1pbnRlZF9hdCI6ICIyMDI2LTAxLTAxVDAwOjAwOjAwWiIsICJhdXRob3JlZF9zaGEyNTYiOiBbXSwgInJlY2VpcHRzIjogeyJyMSI6IHsic2hhMjU2IjogIjg4OWZhMjMzNWM4ZTZiMmRmMzY3NTJmNTk1NThkZTk3YTc1YTcwYmNhZjgxMTQ0MmNhYjMwMDhjMmFkMzY5NmYiLCAiYnl0ZXMiOiAiTndvNENqa0siLCAiaWQiOiAicjEiLCAia2luZF9vZl9zb3VyY2UiOiAidG9vbF9zdGRvdXQiLCAiY2FwdHVyZWRfYXQiOiAiMjAyNi0wMS0wMVQwMDowMDowMFoiLCAiY29tcGxldGUiOiB0cnVlfX0sICJydW5nIjogIkwyIn0=",
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group killers",
+   "expect": {
+    "core_digest": "b1d25133cc916e1b45eb191c1c3abc66f8489b72cd7440f3fc9deec671960728"
+   },
+   "expect_rows": [
+    [
+     "MALFORMED",
+     "receipt_form"
+    ]
+   ],
+   "expect_document_verdict": "SWORN-FAILED",
+   "rules": [
+    "2.3",
+    "2.5",
+    "4",
+    "5.4",
+    "5.5",
+    "7.1e",
+    "8",
+    "9.1",
+    "9.2",
+    "9.3"
+   ]
+  },
+  {
+   "id": "0df2a50d4ec4248a15732f650f903626ea3a4fc0ff4b3a795f2e8f573d8286ae",
+   "source": "hand",
+   "op": "check",
+   "label": "6.5 swapped ids: the key r1 names the entry whose own id is r2",
+   "inputs": {
+    "document_b64": "PHN3b3JuIHI9InIxIiBrPSJudW1lcmljIj43PC9zd29ybj4=",
+    "name": "d.md",
+    "manifest_b64": "eyJzcGVjIjogInN3b3JuL21hbmlmZXN0LzAuMiIsICJoYXJuZXNzIjogImgiLCAidHVybiI6ICJ0IiwgIm1pbnRlZF9hdCI6ICIyMDI2LTAxLTAxVDAwOjAwOjAwWiIsICJhdXRob3JlZF9zaGEyNTYiOiBbXSwgInJlY2VpcHRzIjogeyJyMSI6IHsiaWQiOiAicjIiLCAic2hhMjU2IjogIjc5MDI2OTliZTQyYzhhOGU0NmZiYmI0NTAxNzI2NTE3ZTg2YjIyYzU2YTE4OWY3NjI1YTZkYTQ5MDgxYjI0NTEiLCAiYnl0ZXMiOiAiTnc9PSIsICJraW5kX29mX3NvdXJjZSI6ICJ0b29sX3N0ZG91dCIsICJjYXB0dXJlZF9hdCI6ICIyMDI2LTAxLTAxVDAwOjAwOjAwWiIsICJjb21wbGV0ZSI6IHRydWV9LCAicjIiOiB7ImlkIjogInIxIiwgInNoYTI1NiI6ICIyYzYyNDIzMmNkZDIyMTc3MTI5NGRmYmIzMTBhY2EwMDBhMGRmNmFjOGI2NmI2OTZkOTBlZjA2ZmRlZmI2NGEzIiwgImJ5dGVzIjogIk9BPT0iLCAia2luZF9vZl9zb3VyY2UiOiAidG9vbF9zdGRvdXQiLCAiY2FwdHVyZWRfYXQiOiAiMjAyNi0wMS0wMVQwMDowMDowMFoiLCAiY29tcGxldGUiOiB0cnVlfX0sICJydW5nIjogIkwyIn0=",
+    "commit": null
+   },
+   "note": "hand_vectors_more.py, group killers",
+   "expect": {
+    "core_digest": "4e88367c256ec8f67b6290d9236b212dd519dafdc864e8d8739f365118cc5ba4"
+   },
+   "expect_rows": [
+    [
+     "HELD",
+     null
+    ]
+   ],
+   "expect_document_verdict": "SWORN-HELD",
+   "rules": [
+    "2.3",
+    "2.5",
+    "5.4",
+    "5.5",
+    "6.9",
+    "7.3",
     "8",
     "9.1",
     "9.2",

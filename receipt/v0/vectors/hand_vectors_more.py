@@ -10,7 +10,8 @@ from the rows by 9.2. Three groups:
              swallowed into the tag_syntax raw, so it gives tag_syntax then stray_closer);
   killers    one vector per mutant that the differential attacker's generator, vectors and probes
              let through (PM14, PM31, PM34, PM41, PM43, PM47, JM06, JM10, JM14, JM19 in its
-             catalogue; JM06 is a canonical-form vector in the builder itself);
+             catalogue; JM06 is a canonical-form vector in the builder itself), and one each for
+             two mutants of the coverage attacker's run that it took for equivalent (4.3, 6.5);
   pins       the rules the fixer's round added to the text: 7.2's Unicode version, 5.5's
              duplicate-key refusal before any field is read.
 
@@ -190,6 +191,14 @@ p("7.2 the detail lists the digit-bearing tokens as found, trailing marks kept: 
 p("7.2 the detail lists the digit-bearing tokens as found, trailing marks kept: number_count",
   doc("r1", "numeric", "1. and 2:"), [["MALFORMED", "number_count"]],
   details={0: {"digit_bearing_tokens": ["1.", "2:"]}}, group="killers")
+
+# two mutants of the coverage attacker's run that it listed as equivalent and that are not (fixer,
+# third start): a range end read by stripping every leading 'L', and an entry looked up by its id
+p("4.3 a range end written 'LL3' is not L and a positive integer: receipt_form",
+  doc("r1#L1-LL3", "numeric", "7"), RF, man({"r1": {"raw": b"7\n8\n9\n"}}), group="killers")
+p("6.5 swapped ids: the key r1 names the entry whose own id is r2",
+  doc("r1", "numeric", "7"), [["HELD", None]],
+  man({"r1": {"raw": b"7", "id": "r2"}, "r2": {"raw": b"8", "id": "r1"}}), group="killers")
 
 # --- pins: rules the text now states
 SEVEN = man({"r1": {"raw": b"7"}})

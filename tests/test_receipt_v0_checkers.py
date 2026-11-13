@@ -668,6 +668,22 @@ _LET_THROUGH = [
     ('JM19', 'js', '7.3 adjusted exponent of a huge negative exponent',
      '    if (d.expNeg) return [true, strAddSmall(d.expText, d.nfrac - shift)];',
      '    if (d.expNeg) return [true, strAddSmall(d.expText, shift - d.nfrac)];'),
+    # two mutants of the coverage attacker's run (its mutants_py.json) that it listed as
+    # equivalent and that are not; ported to both checkers
+    ('CV43', 'py', '4.3 a range end is L and a positive integer',
+     '                if rest[:1] != "L" or not _pos_int(rest[1:]):',
+     '                if not _pos_int(rest.lstrip("L")):'),
+    ('CV43js', 'js', '4.3 a range end is L and a positive integer',
+     '          if (rest.slice(0, 1) !== "L" || !isPosInt(rest.slice(1))) return null;',
+     '          if (!isPosInt(rest.replace(/^L+/, ""))) return null;'),
+    ('CV65', 'py', '6.5 the key names the entry, never its own id',
+     '    entry = man.receipts[head]',
+     '    entry = man.receipts[head]\n    entry = next((e for e in man.receipts.values()'
+     ' if isinstance(e, dict) and e.get("id") == head), entry)'),
+    ('CV65js', 'js', '6.5 the key names the entry, never its own id',
+     '    const entry = man.receipts.get(ref.head);',
+     '    let entry = man.receipts.get(ref.head); for (const e of man.receipts.map.values())'
+     ' if (e instanceof JObj && e.get("id") === ref.head) { entry = e; break; }'),
 ]
 
 
