@@ -1,0 +1,356 @@
+# -*- coding: utf-8 -*-
+"""RECEIPT v0 (DRAFT, unsigned): the lab-written checker receipt/v0/check_v0.py against the vector
+file receipt/v0/vectors/receipt_v0_vectors.json.
+
+  - every vector through check_v0 (check, recheck and the canonical form);
+  - hand-written vectors also give the rows the text gives, and their cores and receipts pass the
+    schema;
+  - a purity test over check_v0's source: standard library imports only, no clock, network,
+    process, file or float in the checking code, no regular expression at all;
+  - bounded time on large and deeply nested inputs.
+
+check_v0 is lab-written and not independent of the lab's checker (its docstring says so). These
+tests show that it answers its own vectors; they do not show that any other party agrees.
+"""
+import ast
+import base64
+import hashlib
+import importlib.util
+import json
+import os
+import subprocess
+import sys
+import time
+from pathlib import Path
+
+import pytest
+
+ROOT = Path(__file__).resolve().parents[1]
+V0 = Path(os.environ.get("RECEIPT_V0_DIR", str(ROOT / "receipt" / "v0")))
+VECTORS = V0 / "vectors" / "receipt_v0_vectors.json"
+
+
+def _load(name, path):
+    spec = importlib.util.spec_from_file_location(name, str(path))
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
+
+
+C = _load("receipt_check_v0_under_test", V0 / "check_v0.py")
+DATA = json.loads(VECTORS.read_text(encoding="utf-8"))
+ALL = DATA["vectors"]
+
+
+def _b(x):
+    return None if x is None else base64.b64decode(x)
+
+
+def _run(v):
+    i = v["inputs"]
+    try:
+        if v["op"] == "check":
+            core = C.check(_b(i["document_b64"]), i["name"], _b(i["manifest_b64"]), i["commit"])
+            return {"core_digest": C.digest(core)}, core
+        if v["op"] == "recheck":
+            return {"answer": C.recheck(_b(i["receipt_b64"]), _b(i["document_b64"]),
+                                        _b(i["manifest_b64"]))}, None
+        if v["op"] == "jcs":
+            return {"canonical": C.jcs(C.parse_json(_b(i["value_b64"])))}, None
+    except C.Refusal as e:
+        return {"refusal": e.code}, None
+    raise AssertionError("unknown op %r" % v["op"])
+
+
+def _id_safe(x):
+    if isinstance(x, str):
+        try:
+            C.jcs(x)
+            return x
+        except C.Refusal:
+            return {"utf16be_hex": x.encode("utf-16-be", "surrogatepass").hex()}
+    if isinstance(x, dict):
+        return {k: _id_safe(y) for k, y in x.items()}
+    return x
+
+
+# ---------------------------------------------------------------------------------------------
+# the vectors
+# ---------------------------------------------------------------------------------------------
+
+def test_the_vector_file_is_what_it_says():
+    counts = DATA["counts"]
+    by = {}
+    for v in ALL:
+        by[v["source"]] = by.get(v["source"], 0) + 1
+    assert by == {k: counts[k] for k in ("conformance", "hand", "recheck", "jcs")}
+    assert counts["total"] == len(ALL)
+    assert counts["conformance"] == 1718
+    ids = [v["id"] for v in ALL]
+    assert len(set(ids)) == len(ids)
+    for v in ALL:
+        assert v["id"] == C.digest({"op": v["op"], "inputs": _id_safe(v["inputs"])}), v["id"]
+        assert v["rules"], v["id"]
+    raw = VECTORS.read_bytes()
+    assert b"\r" not in raw and not raw.startswith(b"\xef\xbb\xbf")
+
+
+@pytest.mark.parametrize("source", ["conformance", "hand", "recheck", "jcs"])
+def test_every_vector_through_check_v0(source):
+    wrong = []
+    n = 0
+    for v in ALL:
+        if v["source"] != source:
+            continue
+        n += 1
+        got, core = _run(v)
+        if got != v["expect"]:
+            wrong.append((v["id"][:16], v.get("label") or v.get("conformance"), v["expect"], got))
+            continue
+        if "expect_rows" in v:
+            rows = [[r["verdict"], r["reason"]] for r in core["spans"]]
+            if rows != v["expect_rows"] or core["document_verdict"] != v["expect_document_verdict"]:
+                wrong.append((v["id"][:16], v["label"], v["expect_rows"], rows))
+    assert n > 0
+    assert not wrong, "%d of %d vectors differ, first: %r" % (len(wrong), n, wrong[:3])
+
+
+def test_the_closed_lists_are_produced_or_named_as_not_produced():
+    """Every reason in section 10 that a v0 checker can give appears in a hand vector's rows; the
+    refusal codes reached by some vector are 11's list less `type`, which JSON cannot reach."""
+    assert set(DATA["codes_produced_by_hand_vectors"]) == set(C.REASONS)
+    assert set(DATA["refusal_codes_expected"]) == set(C.REFUSALS) - {"type"}
+    verdicts, dvs = set(), set()
+    for v in ALL:
+        for row in v.get("expect_rows", []):
+            verdicts.add(row[0])
+        if "expect_document_verdict" in v:
+            dvs.add(v["expect_document_verdict"])
+    assert verdicts == set(C.SPAN_VERDICTS) and dvs == set(C.DOCUMENT_VERDICTS)
+    answers = {v["expect"].get("answer") for v in ALL if v["op"] == "recheck"} - {None}
+    assert answers == {"REDERIVES", "DOES-NOT-REDERIVE"}
+
+
+def test_the_lists_in_check_v0_are_the_text_lists():
+    text = (V0 / "RECEIPT_v0.md").read_text(encoding="utf-8")
+    section = text.split("## 10. The closed lists", 1)[1].split("## 11.", 1)[0]
+    named = set()
+    for line in section.splitlines():
+        for part in line.split("`")[1::2]:
+            named.add(part)
+    ours = (set(C.REASONS) | set(C.REFUSALS) | set(C.LEGACY_REASONS) | set(C.DOCUMENT_REASONS)
+            | set(C.SPAN_VERDICTS) | set(C.DOCUMENT_VERDICTS))
+    assert ours == named, (sorted(ours - named), sorted(named - ours))
+
+
+def test_hand_cores_and_receipts_pass_the_schema():
+    t = _load("receipt_v0_step1_tests", ROOT / "tests" / "test_receipt_v0.py")
+    n = 0
+    for v in ALL:
+        if v["source"] != "hand" or "core_digest" not in v["expect"]:
+            continue
+        i = v["inputs"]
+        core = C.check(_b(i["document_b64"]), i["name"], _b(i["manifest_b64"]), i["commit"])
+        t.assert_valid(core, "verdictCore")
+        t.assert_valid(C.receipt(core, C.VERIFIER), "receipt")
+        n += 1
+    assert n > 200
+
+
+def test_a_receipt_check_rederives_every_hand_core():
+    n = 0
+    for v in ALL:
+        if v["source"] != "hand" or "core_digest" not in v["expect"]:
+            continue
+        i = v["inputs"]
+        doc, man = _b(i["document_b64"]), _b(i["manifest_b64"])
+        core = C.check(doc, i["name"], man, i["commit"])
+        rec = C.jcs(C.receipt(core)).encode("utf-8")
+        assert C.recheck(rec, doc, man) == "REDERIVES", v["label"]
+        n += 1
+    assert n > 200
+
+
+# ---------------------------------------------------------------------------------------------
+# the text's worked examples, stated once more as plain asserts
+# ---------------------------------------------------------------------------------------------
+
+def test_worked_examples():
+    core = C.check("\u00e9<sworn r=\"r1\" k=\"numeric\">n 7</sworn>".encode("utf-8"), "d.md")
+    row = core["spans"][0]
+    assert (row["at"], row["start"], row["end"]) == (2, 2, 5)
+    assert C.check(b"", "e")["document"]["canonical_sha256"] == (
+        "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855")
+    for text, code in (("9007199254740993", "int_range"), ("1.0", "float")):
+        with pytest.raises(C.Refusal) as e:
+            C.jcs(C.parse_json(text.encode()))
+        assert e.value.code == code
+    for enc, want in (("QQ==", b"A"), ("QR==", b"A"), ("", b""), ("QQ", None), ("QQ=", None),
+                      ("Q Q==", None), ("QQ==QQ==", None), ("QQ==\n", None)):
+        assert C._b64_strict(enc) == want, enc
+
+
+# ---------------------------------------------------------------------------------------------
+# purity, by the source
+# ---------------------------------------------------------------------------------------------
+
+_SOURCE = (V0 / "check_v0.py").read_text(encoding="utf-8")
+_TREE = ast.parse(_SOURCE)
+_IO_ONLY = {"_main"}          # the command line: the one function that reads the files it is handed
+
+
+def _pure_nodes():
+    """Every node outside _main and outside the `if __name__ == "__main__"` block."""
+    skip = set()
+    for node in _TREE.body:
+        if isinstance(node, ast.FunctionDef) and node.name in _IO_ONLY:
+            skip.add(id(node))
+        if isinstance(node, ast.If) and "__main__" in ast.dump(node.test):
+            skip.add(id(node))
+    out = []
+    for node in _TREE.body:
+        if id(node) not in skip:
+            out.extend(ast.walk(node))
+    return out
+
+
+def test_imports_are_standard_library_only():
+    names = set()
+    for node in ast.walk(_TREE):
+        if isinstance(node, ast.Import):
+            names |= {a.name.split(".")[0] for a in node.names}
+        elif isinstance(node, ast.ImportFrom):
+            assert node.level == 0
+            names.add(node.module.split(".")[0])
+    assert names <= set(sys.stdlib_module_names), names - set(sys.stdlib_module_names)
+    assert not any(n.startswith("styxx") for n in names)
+    pure_imports = set()
+    for node in _pure_nodes():
+        if isinstance(node, ast.Import):
+            pure_imports |= {a.name for a in node.names}
+        elif isinstance(node, ast.ImportFrom):
+            pure_imports.add(node.module)
+    assert pure_imports == {"hashlib", "unicodedata", "binascii"}, pure_imports
+
+
+def test_the_checking_code_names_nothing_impure():
+    banned = {"open", "exec", "eval", "compile", "__import__", "input", "print", "globals",
+              "locals", "vars", "setattr", "delattr", "float", "complex", "time", "datetime",
+              "os", "sys", "subprocess", "socket", "random", "secrets", "re", "pathlib",
+              "urllib", "http", "requests", "importlib", "io", "shutil", "tempfile", "Decimal",
+              "decimal", "fractions", "math", "argparse", "json"}
+    hits = []
+    for node in _pure_nodes():
+        if isinstance(node, ast.Name) and node.id in banned:
+            hits.append((node.lineno, node.id))
+        if isinstance(node, ast.Attribute) and node.attr in ("open", "system", "popen", "urlopen",
+                                                               "write", "time", "now"):
+            hits.append((node.lineno, node.attr))
+    assert not hits, hits
+
+
+def test_no_float_and_no_true_division_anywhere():
+    for node in ast.walk(_TREE):
+        assert not (isinstance(node, ast.Constant) and isinstance(node.value, float)), node.lineno
+        assert not isinstance(node, (ast.Div,)), getattr(node, "lineno", "?")
+
+
+# ---------------------------------------------------------------------------------------------
+# bounded time
+# ---------------------------------------------------------------------------------------------
+
+def _timed(fn, limit_s):
+    t0 = time.perf_counter()
+    out = fn()
+    dt = time.perf_counter() - t0
+    assert dt < limit_s, "took %.1f s (limit %d s)" % (dt, limit_s)
+    return out
+
+
+def _man(data):
+    m = {"spec": "sworn/manifest/0.2", "harness": "h", "turn": "t", "minted_at": "x",
+         "authored_sha256": [], "rung": "L2",
+         "receipts": {"r1": {"id": "r1", "sha256": hashlib.sha256(data).hexdigest(),
+                             "kind_of_source": "tool_stdout", "captured_at": "x",
+                             "complete": True,
+                             "bytes": base64.b64encode(data).decode("ascii")}}}
+    return json.dumps(m).encode("utf-8")
+
+
+SPAN = b'<sworn r="r1" k="numeric">n is 7</sworn> '
+
+
+_BIG = [
+    ("20,000 spans", SPAN * 20000, _man(b"7"), 60,
+     lambda c: c["counts"]["HELD"] == 20000),
+    ("20,000 nested openers", b'<sworn r="r1" k="numeric">' * 20000 + b"7" + b"</sworn>" * 20000,
+     None, 30, lambda c: c["counts"]["MALFORMED"] == 20000),
+    ("a 4 MB line of distinct backtick runs",
+     b" ".join(b"`" * k for k in range(1, 2000)) + b" " + SPAN, None, 30,
+     lambda c: c["sworn_total"] == 1),
+    ("200,000 candidates with no closing bracket, one per line", b"<sworn r\n" * 200000, None, 30,
+     lambda c: c["counts"]["MALFORMED"] == 200000),
+    ("200,000 comment openers", b"<!-- " * 200000 + SPAN, None, 30,
+     lambda c: c["spans"][0]["reason"] == "hidden_commitment"),
+    ("10,000 fenced regions", b"```\nx\n```\n" * 10000 + SPAN, None, 30,
+     lambda c: c["sworn_total"] == 1),
+    ("8 MB of narrative", b"plain text, no tags. " * 400000, None, 30,
+     lambda c: c["document_verdict"] == "UNSWORN"),
+    ("a receipt nested 200,000 deep", b'<sworn r="r1" k="numeric">7</sworn>',
+     _man(b"[" * 200000 + b"]" * 200000), 30,
+     lambda c: c["spans"][0]["reason"] == "leaf_not_scalar"),
+    ("a 4 MB receipt searched for a quote", b'<sworn r="r1" k="quote">`needle that is long enough`</sworn>',
+     _man(b"x" * 4000000 + b"needle that is long enough"), 30,
+     lambda c: c["spans"][0]["verdict"] == "HELD"),
+    ("a receipt number with 100,000 digits", b'<sworn r="r1" k="numeric">0.5</sworn>',
+     _man(b"0." + b"5" * 100000), 30, lambda c: c["spans"][0]["verdict"] == "FAILED"),
+]
+
+
+@pytest.mark.parametrize("label", [b[0] for b in _BIG])
+def test_bounded_time(label):
+    _, doc, man, limit, check = [b for b in _BIG if b[0] == label][0]
+    core = _timed(lambda: C.check(doc, "big.md", man), limit)
+    assert check(core), label
+    _timed(lambda: C.digest(core), limit)
+
+
+def test_bounded_time_receipt_check():
+    doc = SPAN * 5000
+    man = _man(b"7")
+    rec = C.jcs(C.receipt(C.check(doc, "d.md", man))).encode("utf-8")
+    assert _timed(lambda: C.recheck(rec, doc, man), 60) == "REDERIVES"
+
+
+def test_a_deeply_nested_receipt_object_is_refused_by_shape_not_by_a_crash():
+    deep = b'{"core":' + b"[" * 100000 + b"]" * 100000 + b',"digest":"' + b"0" * 64 + b'","attestations":[]}'
+    with pytest.raises(C.Refusal) as e:
+        _timed(lambda: C.recheck(deep, b"", None), 30)
+    assert e.value.code == "receipt_shape"
+
+
+# ---------------------------------------------------------------------------------------------
+# the command line
+# ---------------------------------------------------------------------------------------------
+
+def test_the_command_line(tmp_path):
+    doc = tmp_path / "d.md"
+    doc.write_bytes(b'n is <sworn r="r1" k="numeric">7</sworn>')
+    man = tmp_path / "m.json"
+    man.write_bytes(_man(b"7"))
+    exe = [sys.executable, str(V0 / "check_v0.py")]
+    out = subprocess.run(exe + ["check", str(doc), "--manifest", str(man), "--name", "d.md"],
+                         capture_output=True, check=True).stdout
+    rec = json.loads(out)
+    assert rec["core"]["document_verdict"] == "SWORN-HELD"
+    assert rec["verifier"]["independent"] is False
+    assert out.rstrip(b"\n") == C.jcs(rec).encode("utf-8")
+    rp = tmp_path / "r.json"
+    rp.write_bytes(out)
+    ok = subprocess.run(exe + ["recheck", str(rp), str(doc), "--manifest", str(man)],
+                        capture_output=True)
+    assert (ok.returncode, ok.stdout.strip()) == (0, b"REDERIVES")
+    bad = subprocess.run(exe + ["recheck", str(rp), str(doc)], capture_output=True)
+    assert (bad.returncode, bad.stdout.strip()) == (1, b"DOES-NOT-REDERIVE")
+    ref = subprocess.run(exe + ["check", str(doc), "--commit", "XYZ"], capture_output=True)
+    assert (ref.returncode, ref.stdout.strip()) == (2, b"REFUSED commit_form")
