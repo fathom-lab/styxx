@@ -3,7 +3,7 @@
 The instrument is `styxx/diffgate.py`. Two browser surfaces cannot import it: the paste-in
 preview page and the bookmarklet. They run `diffgate.js`, a JavaScript transliteration of one
 specific file — `styxx/diffgate.py` on this branch, sha256
-`5134175b45553015888e0930ee9e031699cb982f14634158af7d59fc0150feaa` (LF line endings; a wheel
+`80d0e79e2639eb8c1602c60594cfea91b48fcdcb9b66900299f3b83b5e018362` (LF line endings; a wheel
 built on Windows carries CRLF and hashes differently, so `py_side.py` normalises before it
 compares) — and this directory is the receipt for that port: the differential test that holds
 it to the Python's output, and the build that turns it into the bookmarklet people drag into
@@ -33,7 +33,9 @@ abstention narrowed to a claim at or below the larger count, the one-sided #178,
 `969abb0df7eada6ff4e2c6b8fceb5af3056f19447e152bb1b48695712eedec62`; and then one change on reading paths, #174 and #175:
 `only_touches` reads a rename's old path beside the status keys and abstains where only it lies outside the claimed
 prefixes, and resolves a prefix's `.` and `..` segments as git resolves a pathspec, abstaining where it cannot, sha256
-`6944190cd9c52f81d04dbd3628a14ac11dbb2ed4d2b5eb2a1a9f348f224c3305`) — plus the PATH-2a block (an
+`6944190cd9c52f81d04dbd3628a14ac11dbb2ed4d2b5eb2a1a9f348f224c3305`; and then one change outside any reading path:
+`fetch_pr` sends its token as an unredirected header and follows a redirect only within https://api.github.com, sha256
+`6227343086241ec022ef14c023657a6d0aeb144118cb12c80decdf2db422e4bb`) — plus the PATH-2a block (an
 overlay that only abstains, not yet released; see *PATH-2a* below), and a committed test cuts the
 block out and gets that reader back byte for byte, in both languages. The port's record carries the
 eleven content keys and no identity: the differential compares named fields, so a Python record of
@@ -116,7 +118,7 @@ reason, or reads one sentence more or less, is a disagreement.
     cd web/gate/differential             # on a checkout whose styxx/diffgate.py is the file named above
     python build_corpus.py               # 176 real pairs, pinned to shas (below)
     python fuzz_corpus.py                # 3,000 synthetic pairs, seeded
-    python py_side.py                    # refuses to run unless styxx/diffgate.py hashes to 5134175b…
+    python py_side.py                    # refuses to run unless styxx/diffgate.py hashes to 80d0e79e…
     node js_side.js
     python differential.py
     node check_pairs.js                  # the 190 pinned pairs against their expect blocks (+ path2a_moves.json, issue205_moves.json, issue174_moves.json)
