@@ -167,7 +167,18 @@
     "document_verdict": {"$ref": "#/$defs/documentVerdict"},
     "document_malformed": {"$ref": "#/$defs/documentMalformed"},
     "rungs": {"type": "object", "additionalProperties": {"$ref": "#/$defs/count"}}
-   }
+   },
+   "allOf": [
+    {"if": {"properties": {"profile": {"const": "rn-inline/v0-draft"}}},
+     "then": {"properties": {
+      "spans": {"items": {"properties": {
+       "reason": {"anyOf": [{"$ref": "#/$defs/reason"}, {"type": "null"}]},
+       "provenance": {"$ref": "#/$defs/provenanceRn"}}}},
+      "rungs": {"type": "object", "additionalProperties": false,
+                "properties": {"L1": {"$ref": "#/$defs/count"}, "L2": {"$ref": "#/$defs/count"},
+                               "undeclared": {"$ref": "#/$defs/count"},
+                               "unresolved": {"$ref": "#/$defs/count"}}}}}}
+   ]
   },
   "manifestEntry": {
    "type": "object",

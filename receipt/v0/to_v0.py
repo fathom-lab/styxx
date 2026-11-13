@@ -49,6 +49,14 @@ REASONS_UNRESOLVED = (
 REASONS_FAILED = ("value_mismatch", "rounds_to_zero", "needle_missing", "needle_present",
                   "digest_mismatch")
 REASONS_V0 = REASONS_MALFORMED + REASONS_UNRESOLVED + REASONS_FAILED
+# MALFORMED reasons decided on the document's bytes alone (RECEIPT_v0.md 7.1a-h, section 10): the
+# only MALFORMED a v0 checker can give a path: or prereg: span, which it never resolves (4.4).
+REASONS_DOCUMENT_ONLY = (
+    "tag_syntax", "nesting", "stray_closer", "unclosed", "empty_span", "hidden_commitment",
+    "length_cap", "kind_unknown", "kind_reserved", "receipt_form", "absent_over_partial",
+    "hash_over_partial", "directional_override", "number_count", "number_grammar",
+    "needle_count", "needle_empty", "digest_form",
+)
 # Reasons only a checker holding a repository can produce. Outside v0; a row carrying one can
 # only come from a receipt issued before v0, and marks the projection as legacy.
 REASONS_LEGACY_ONLY = ("no_commit", "commit_absent", "path_absent", "not_a_blob",
@@ -61,13 +69,17 @@ REFUSALS = (
     # the projector's own
     "not_a_core", "schema_out_of_scope", "format_unknown", "row_shape", "verdict_out_of_scope",
     "reason_unknown", "counts_mismatch", "document_mismatch", "claim_unlocatable",
+    "name_form", "manifest_not_canonical", "source_digest",
 )
 
-_INT_MAX = 2 ** 53
+# |n| <= 2^53 - 1 (RECEIPT_v0.md 3.1): every integer a binary double rounds onto lies outside it, so a
+# reader that parses numbers as doubles refuses the same values this one does.
+_INT_MAX = 2 ** 53 - 1
 _DEPTH_MAX = 32
 _LEAF_TYPES = {"_Obj": "object", "dict": "object", "list": "array", "NoneType": "null",
                "object": "object", "array": "array", "null": "null"}
 _HEX = "0123456789abcdef"
+_SOURCE_OUTSIDE_DIGEST = ("digest", "timestamp", "coverage", "coverage_sha256")
 _SHORT = {0x08: "\\b", 0x09: "\\t", 0x0A: "\\n", 0x0C: "\\f", 0x0D: "\\r", 0x22: '\\"',
           0x5C: "\\\\"}
 
@@ -182,6 +194,25 @@ def _is_hex64(x):
     return isinstance(x, str) and len(x) == 64 and all(c in _HEX for c in x)
 
 
+def _is_hex40(x):
+    return isinstance(x, str) and len(x) == 40 and all(c in _HEX for c in x)
+
+
+def _ref_form(ref):
+    """'rn', 'path', 'prereg' or None, from the head of a REF (RECEIPT_v0.md 4.2, 4.4)."""
+    if not isinstance(ref, str):
+        return None
+    head = ref.split("#", 1)[0]
+    if head.startswith("path:"):
+        return "path"
+    if head.startswith("prereg:"):
+        return "prereg"
+    if (len(head) >= 2 and head[0] == "r" and head[1] in "123456789"
+            and all(c in "0123456789" for c in head[2:])):
+        return "rn"
+    return None
+
+
 def _is_int(x):
     return isinstance(x, int) and not isinstance(x, bool)
 
@@ -233,6 +264,9 @@ def _row_v0(row, document):
             raise Refusal("row_shape", "a HELD row carries a reason")
     elif reason not in REASONS_V0 and reason not in REASONS_LEGACY_ONLY:
         raise Refusal("reason_unknown", "%r" % (reason,))
+    if verdict in ("HELD", "FAILED") and not (
+            isinstance(row.get("provenance"), dict) and _is_hex64(row.get("resolved_sha256"))):
+        raise Refusal("row_shape", "a %s row without provenance and resolved_sha256" % verdict)
     detail = _detail_v0(reason, row.get("detail") if row.get("detail") is not None else {})
     # D2 (draft): a numeric comparison that held only because a non-zero receipt rounds to zero
     # at the printed precision does not hold.
@@ -269,6 +303,9 @@ def _document_verdict(document_malformed, counts, total):
 
 
 def _is_legacy(rows):
+    """True when a v0 checker could not give these rows: a row resolved through a repository, a
+    legacy-only reason, a path: or prereg: span answered by anything but what 4.4 allows, or
+    offsets without a bound claim."""
     for r in rows:
         prov = r.get("provenance")
         if isinstance(prov, dict) and prov.get("form") in ("path", "prereg"):
@@ -277,6 +314,43 @@ def _is_legacy(rows):
             return True
         if r["start"] is not None and r["claim_sha256"] is None:
             return True
+        if _ref_form(r["receipt"]) in ("path", "prereg") and not (
+                (r["verdict"], r["reason"]) == ("UNRESOLVED", "no_repository")
+                or (r["verdict"] == "MALFORMED" and r["reason"] in REASONS_DOCUMENT_ONLY
+                    and "provenance" not in r)):
+            return True
+    return False
+
+
+def _rungs(rows):
+    """RECEIPT_v0.md 9.1: only the keys that occur. A row without provenance (UNRESOLVED, and
+    MALFORMED before 6.9) counts as 'unresolved'; legacy rows resolved through a repository as
+    'committed'."""
+    out = {}
+    for r in rows:
+        prov = r.get("provenance") or {}
+        key = prov.get("rung") if prov.get("form") == "rn" else (
+            "committed" if prov.get("form") in ("path", "prereg") else "unresolved")
+        out[key] = out.get(key, 0) + 1
+    return out
+
+
+def _manifest_seen_without_digest(rows, manifest_digest):
+    """True when a manifest was handed over (some rN row got past 6.1) but the core records no
+    manifest digest: today's code reads such a manifest when it carries no digest key, and a v0
+    checker answers every rN row past 6.1 with UNRESOLVED manifest_integrity (5.6, 6.2)."""
+    if manifest_digest is not None:
+        return False
+    for r in rows:
+        if _ref_form(r["receipt"]) != "rn":
+            continue
+        if (r["verdict"] == "MALFORMED" and r["reason"] in REASONS_DOCUMENT_ONLY
+                and "provenance" not in r):
+            continue
+        if (r["verdict"], r["reason"]) in (("UNRESOLVED", "manifest_absent"),
+                                           ("UNRESOLVED", "manifest_integrity")):
+            continue
+        return True
     return False
 
 
@@ -290,6 +364,14 @@ def to_v0(core, document=None):
 
     Left out of the result, by design: `verifier`, `coverage`, `coverage_sha256`, `certifies`,
     `digest`, `timestamp`. The caller keeps `verifier` beside the core with receipt_v0().
+
+    Checked before anything is rewritten: a committed receipt's own digest re-derives
+    (source_digest); counts and rungs agree with the rows (counts_mismatch); commit and
+    manifest_digest have their shapes (not_a_core); HELD and FAILED rows carry provenance
+    (row_shape); the document name is Unicode text (name_form); rN rows read from a manifest whose
+    digest is null are refused (manifest_not_canonical), because a v0 checker answers them
+    UNRESOLVED manifest_integrity. Nothing else is re-derived: a projected core is what today's
+    checker said, rewritten; only a v0 checker's own run re-derives one.
     """
     if not isinstance(core, dict):
         raise Refusal("not_a_core", "not an object")
@@ -297,11 +379,28 @@ def to_v0(core, document=None):
         raise Refusal("schema_out_of_scope", "%r" % (core.get("schema"),))
     if core.get("format") != FORMAT:
         raise Refusal("format_unknown", "%r" % (core.get("format"),))
+    if "digest" in core:
+        # a committed /v1 or /v2 receipt: its own digest must re-derive before its rows are trusted
+        body = {k: v for k, v in core.items() if k not in _SOURCE_OUTSIDE_DIGEST}
+        try:
+            again = _sha256(jcs(body).encode("utf-8"))
+        except Refusal as e:
+            raise Refusal("source_digest", "the receipt has no canonical form (%s)" % e.code)
+        if again != core["digest"]:
+            raise Refusal("source_digest", "the receipt's own digest does not re-derive")
     doc = core.get("document")
     if not (isinstance(doc, dict) and isinstance(doc.get("name"), str)
             and _is_hex64(doc.get("inline_sha256"))
             and (doc.get("canonical_sha256") is None or _is_hex64(doc.get("canonical_sha256")))):
         raise Refusal("not_a_core", "document block")
+    if any(0xD800 <= ord(c) <= 0xDFFF for c in doc["name"]):
+        raise Refusal("name_form", "the document name holds an unpaired surrogate")
+    commit = core.get("commit")
+    if not (commit is None or _is_hex64(commit) or _is_hex40(commit)):
+        raise Refusal("not_a_core", "commit is neither null nor 40 or 64 lowercase hex digits")
+    manifest_digest = core.get("manifest_digest")
+    if not (manifest_digest is None or _is_hex64(manifest_digest)):
+        raise Refusal("not_a_core", "manifest_digest is neither null nor 64 lowercase hex digits")
     if document is not None:
         if not isinstance(document, (bytes, bytearray)):
             raise Refusal("type", "document must be bytes")
@@ -325,6 +424,13 @@ def to_v0(core, document=None):
     counts = {w: 0 for w in SPAN_VERDICTS}
     for r in rows:
         counts[r["verdict"]] += 1
+    if _manifest_seen_without_digest(rows, manifest_digest):
+        raise Refusal("manifest_not_canonical", "rows were read from a manifest whose digest is null")
+    rungs = _rungs(rows)
+    if core.get("rungs") is not None:
+        jcs(core["rungs"])                    # a float or an odd key is refused, never compared
+        if core["rungs"] != rungs:
+            raise Refusal("counts_mismatch", "rungs %r, rows give %r" % (core["rungs"], rungs))
     document_malformed = core.get("document_malformed")
     if document_malformed is not None and not (
             isinstance(document_malformed, dict)
@@ -336,15 +442,15 @@ def to_v0(core, document=None):
         "format": FORMAT,
         "document": {"name": doc["name"], "inline_sha256": doc["inline_sha256"],
                      "canonical_sha256": doc.get("canonical_sha256")},
-        "commit": core.get("commit"),
-        "manifest_digest": core.get("manifest_digest"),
+        "commit": commit,
+        "manifest_digest": manifest_digest,
         "spans": rows,
         "counts": counts,
         "sworn_total": len(rows),
         "unresolved": counts["UNRESOLVED"],
         "document_verdict": _document_verdict(document_malformed, counts, len(rows)),
         "document_malformed": document_malformed,
-        "rungs": core.get("rungs") if core.get("rungs") is not None else {},
+        "rungs": rungs,
     }
     jcs(out)                 # a core that has no canonical form is refused here, not later
     return out

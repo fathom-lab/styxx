@@ -31,7 +31,9 @@ from pathlib import Path
 import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
-V0 = ROOT / "receipt" / "v0"
+# RECEIPT_V0_DIR points the tests at another copy of receipt/v0 (an earlier commit, a mutant);
+# the committed receipts, the conformance set and the live checker are always this tree's.
+V0 = Path(os.environ.get("RECEIPT_V0_DIR", str(ROOT / "receipt" / "v0")))
 OTHER_BUILD = Path(os.environ.get("RECEIPT_V0_OTHER_BUILD",
                                   "C:/Users/heyzo/clawd/wt/_dd_8_0_0_lead/base_7_50_0"))
 
@@ -291,6 +293,9 @@ def test_A_committed_receipts_change_only_as_the_decisions_file_lists():
         "listed_but_does_not_happen": sorted(set(listed) - set(changes))}
     assert sorted(unbound) == sorted(_ledger("claims-unbound"))
     census = dict(ln.split(" = ") for ln in _ledger("census"))
+    # the two lines about receipts inside capsules are kept exact by test_F14_*
+    for key in ("receipts embedded in committed capsules", "verdicts changed in them"):
+        census.pop(key)
     assert census == {
         "committed verdict receipts": str(len(COMMITTED)),
         "at /v1": str(by_schema.get("styxx.sworn.verdict-receipt/v1", 0)),
@@ -370,7 +375,11 @@ def _in_scope_items():
                 if (v["mode"] == "inline" and set(v["requires"]) <= {"manifest"}
                         and v["expect"]["outcome"] == "core"):
                     i = v["inputs"]
-                    items.append({"id": v["id"], "set": set_dir.name, "family": v["family"],
+                    spec = None
+                    if i["manifest"]:
+                        man = json.loads(base64.b64decode(blobs[i["manifest"]]).decode("utf-8"))
+                        spec = man.get("spec") if isinstance(man, dict) else None
+                    items.append({"manifest_spec": spec, "id": v["id"], "set": set_dir.name, "family": v["family"],
                                   "name": i["name"], "commit": i["commit"],
                                   "document_b64": blobs[i["document"]],
                                   "manifest_b64": blobs[i["manifest"]] if i["manifest"] else None,
@@ -446,8 +455,12 @@ def test_B_the_decisions_move_only_what_the_decisions_file_says_in_the_conforman
                 assert (old["document_verdict"], new["document_verdict"]) == ("SWORN-HELD", "SWORN-UNCHECKED")
                 assert old["counts"]["HELD"] == 0 and old["counts"]["UNRESOLVED"] == old["sworn_total"]
                 d1 += 1
+    # a v0 checker refuses a manifest that is not at sworn/manifest/0.2 (RECEIPT_v0.md 5.5); the
+    # projector cannot see the manifest, so these are counted from the vector's own inputs
+    refused = sum(1 for it in items if it["manifest_spec"] not in (None, "sworn/manifest/0.2"))
     census = dict(ln.split(" = ") for ln in _ledger("conformance-census"))
     assert census == {"in-scope conformance documents": str(len(items)),
+                      "refused by a v0 checker (manifest not at sworn/manifest/0.2)": str(refused),
                       "document verdicts changed by D1": str(d1),
                       "span verdicts changed by D2": str(d2_rows),
                       "document verdicts changed by D2": str(d2_docs)}
@@ -592,14 +605,14 @@ def test_the_core_leaves_out_the_build_the_sentence_and_the_observer(sworn):
 def test_jcs_known_answers():
     assert P.jcs({"b": [1, True, None, "x"], "a": {"z": -3, "y": ""}}) == '{"a":{"y":"","z":-3},"b":[1,true,null,"x"]}'
     assert P.jcs('"\\\b\f\n\r\t\x00\x1f\x7f\u00e9\u2028\U0001F600') == '"\\"\\\\\\b\\f\\n\\r\\t\\u0000\\u001f\x7f\u00e9\u2028\U0001F600"'
-    assert P.jcs(2 ** 53) == "9007199254740992" and P.jcs(-(2 ** 53)) == "-9007199254740992"
+    assert P.jcs(2 ** 53 - 1) == "9007199254740991" and P.jcs(-(2 ** 53 - 1)) == "-9007199254740991"
     assert P.jcs({"B": 1, "a": 2, "_": 3, "A": 4}) == '{"A":4,"B":1,"_":3,"a":2}'
     assert P.digest_v0({}) == _sha(b"{}")
 
 
 @pytest.mark.parametrize("value,code", [
     (1.5, "float"), (1.0, "float"), ({"a": [float("nan")]}, "float"),
-    (2 ** 53 + 1, "int_range"), (-(2 ** 53) - 1, "int_range"),
+    (2 ** 53, "int_range"), (-(2 ** 53), "int_range"), (2 ** 53 + 1, "int_range"),
     ({"\u00e9": 1}, "non_ascii_key"), ({"\x7f": 1}, "non_ascii_key"), ({1: 1}, "type"),
     ("\ud800", "lone_surrogate"), (b"bytes", "type"), ({1, 2}, "type"),
 ])
@@ -703,3 +716,392 @@ def test_to_v0_is_pure_by_its_source():
                  "random", "write(", "environ"):
         assert word not in code_only, word
     assert "styxx" not in imported and not re.search(r"^\s*(from|import)\s+styxx", src, re.M)
+
+
+
+# ---------------------------------------------------------------------------------------------
+# the fixer's round: findings of attackers A and B, each pinned (ids F*, B* as the findings name them)
+# ---------------------------------------------------------------------------------------------
+
+def _man_dict(sworn, receipts, rung="L2"):
+    m = sworn.Manifest("h", "t", "2026-01-01T00:00:00Z", rung=rung)
+    for rid, body in receipts.items():
+        m.add(rid, body, "tool_stdout", captured_at="2026-01-01T00:00:00Z")
+    return m.to_dict()
+
+
+def _text():
+    return (V0 / "RECEIPT_v0.md").read_text(encoding="utf-8")
+
+
+def test_F1_a_path_span_answered_through_a_repository_projects_as_legacy(sworn):
+    """A row only a repository could give is not rn-inline, even when it carries no provenance."""
+    tree = sworn.MemoryTree({"data/x.json": b'{"a": 1}'}, commit="a" * 40)
+    doc = b'<sworn r="path:data/x.json#/b" k="numeric">n 1</sworn>'
+    old = sworn.verify(doc, name="d.md", manifest=None, tree=tree)
+    assert (old["spans"][0]["verdict"], old["spans"][0]["reason"]) == ("MALFORMED", "pointer_unresolvable")
+    assert "provenance" not in old["spans"][0]
+    new = P.to_v0(old, doc)
+    check_core(new)
+    assert new["profile"] == P.PROFILE_LEGACY
+    # the same span with no repository is what a v0 checker gives, and stays in the profile
+    old = sworn.verify(doc, name="d.md", manifest=None, tree=None)
+    new = P.to_v0(old, doc)
+    check_core(new)
+    assert new["profile"] == P.PROFILE_RN and new["document_verdict"] == "SWORN-UNCHECKED"
+    assert (new["spans"][0]["verdict"], new["spans"][0]["reason"]) == ("UNRESOLVED", "no_repository")
+    # a path: span to bytes the manifest calls authored (A19)
+    tree = sworn.MemoryTree({"data/x.json": b"7"}, commit="a" * 40)
+    m = _man_dict(sworn, {})
+    m["authored_sha256"] = [_sha(b"7")]
+    m["digest"] = sworn.Manifest.from_dict(dict(m)).digest()
+    doc = b'<sworn r="path:data/x.json" k="numeric">n 7</sworn>'
+    old = sworn.verify(doc, name="d.md", manifest=sworn.Manifest.from_dict(m), tree=tree)
+    assert old["spans"][0]["reason"] == "receipt_author_minted" and "provenance" not in old["spans"][0]
+    new = P.to_v0(old, doc)
+    check_core(new)
+    assert new["profile"] == P.PROFILE_LEGACY
+    # a HELD path: row that lost its provenance key is refused, not projected (B07)
+    tree = sworn.MemoryTree({"x.json": b"7"}, commit="a" * 40)
+    doc = b'<sworn r="path:x.json" k="numeric">n is 7</sworn>'
+    held = sworn.verify(doc, name="d.md", manifest=None, tree=tree, commit="a" * 40)
+    assert held["spans"][0]["verdict"] == "HELD"
+    bare = dict(held, spans=[{k: v for k, v in held["spans"][0].items() if k != "provenance"}])
+    with pytest.raises(P.Refusal) as e:
+        P.to_v0(bare, doc)
+    assert e.value.code == "row_shape"
+    # repository provenance on any row marks the projection legacy, whatever the REF says
+    good = _good(sworn)
+    odd = dict(good, rungs={"committed": 1},
+               spans=[dict(good["spans"][0], provenance={"form": "path", "note": "committed object"})])
+    assert P.to_v0(odd, b'<sworn r="r1" k="numeric">n is 7</sworn>')["profile"] == P.PROFILE_LEGACY
+
+
+@pytest.mark.parametrize("poison", ["\ud800", float("nan")])
+def test_F2_rows_read_from_a_manifest_with_no_canonical_form_are_refused(sworn, poison):
+    """Today a manifest with no digest key is never digested, so one a v0 checker calls not intact
+    (5.6) is read and its rows HELD. The projector refuses rather than emit a false rn-inline core."""
+    m = _man_dict(sworn, {"r1": b"7"})
+    m["receipts"]["r1"]["harness_note"] = poison
+    del m["digest"]
+    doc = b'<sworn r="r1" k="numeric">n is 7</sworn>'
+    old = sworn.verify(doc, name="d.md", manifest=sworn.Manifest.from_dict(m), tree=None)
+    assert old["spans"][0]["verdict"] == "HELD" and old["manifest_digest"] is None
+    with pytest.raises(P.Refusal) as e:
+        P.to_v0(old, doc)
+    assert e.value.code == "manifest_not_canonical" and e.value.code in P.REFUSALS
+    # with a digest key the same manifest is not intact today too: UNRESOLVED, and that projects
+    m["digest"] = "0" * 64
+    old = sworn.verify(doc, name="d.md", manifest=sworn.Manifest.from_dict(m), tree=None)
+    new = P.to_v0(old, doc)
+    check_core(new)
+    assert (new["spans"][0]["reason"], new["document_verdict"]) == ("manifest_integrity", "SWORN-UNCHECKED")
+    assert "unpaired surrogate" in _text().split("## 13.")[1]
+
+
+def test_F3_a_null_manifest_digest_counts_as_absent_in_the_code_and_in_the_text(sworn):
+    m = _man_dict(sworn, {"r1": b"7"})
+    m["digest"] = None
+    doc = b'<sworn r="r1" k="numeric">n is 7</sworn>'
+    old = sworn.verify(doc, name="d.md", manifest=sworn.Manifest.from_dict(m), tree=None)
+    new = P.to_v0(old, doc)
+    check_core(new)
+    assert new["document_verdict"] == "SWORN-HELD" and new["manifest_digest"] is not None
+    assert "its `digest`, if present and not null, equals the recomputed digest" in _text()
+
+
+def test_F5_the_integer_bound_excludes_every_value_a_double_rounds_onto():
+    assert P.jcs(2 ** 53 - 1) == "9007199254740991"
+    for n in (2 ** 53, 2 ** 53 + 1, -(2 ** 53)):
+        with pytest.raises(P.Refusal) as e:
+            P.jcs(n)
+        assert e.value.code == "int_range"
+    assert "|n| <= 2^53 - 1" in _text()
+
+
+def _text_rule_receipt(token):
+    """RECEIPT_v0.md 7.3 as now written, from the JSON number token alone: (receipt string,
+    adjusted exponent). Independent of the code it is compared with."""
+    sign, t = ("-", token[1:]) if token.startswith("-") else ("", token)
+    mant, _, exp = t.lower().partition("e")
+    ip, _, fp = mant.partition(".")
+    digits = (ip + fp).lstrip("0") or "0"
+    e = (int(exp) if exp else 0) - len(fp)
+    adjusted = e + len(digits) - 1
+    if e <= 0 and adjusted >= -6:
+        if e == 0:
+            body = digits
+        else:
+            padded = digits.rjust(-e + 1, "0")
+            body = padded[:e] + "." + padded[e:]
+    else:
+        body = digits[0] + ("." + digits[1:] if len(digits) > 1 else "") + "E" + (
+            "+" if adjusted >= 0 else "-") + str(abs(adjusted))
+    return sign + body, adjusted
+
+
+@pytest.mark.parametrize("printed,token,verdict,reason", [
+    ("0", "0.000e323", "HELD", None),
+    ("1", "0.0001e324", "FAILED", "value_mismatch"),
+    ("1", "1e321", "MALFORMED", "leaf_not_numeric"),
+    ("0", "0.001e322", "FAILED", "value_mismatch"),
+    ("0", "0e400", "MALFORMED", "leaf_not_numeric"),
+    ("1", "0.0001e322", "FAILED", "value_mismatch"),
+    ("1.50", "1.50", "HELD", None),
+    ("1000", "100e1", "HELD", None),
+    ("0.0", "0E-7", "HELD", None),
+    ("0.42", "0.4211", "HELD", None),
+    ("0", "-0", "HELD", None),
+    ("0.0000001", "1E-7", "HELD", None),
+])
+def test_F7_B01_the_adjusted_exponent_drops_leading_zeros(sworn, printed, token, verdict, reason):
+    old, new = _check(sworn, '<sworn r="r1" k="numeric">n is %s</sworn>' % printed,
+                      {"r1": (token.encode("ascii"), {})})
+    row = new["spans"][0]
+    assert (row["verdict"], row["reason"]) == (verdict, reason)
+    want, adjusted = _text_rule_receipt(token)
+    assert (adjusted > 320) is (reason == "leaf_not_numeric")
+    got = row["detail"]["leaf"] if reason == "leaf_not_numeric" else row["detail"]["receipt"]
+    assert got == want
+    text = _text()
+    assert "leading zeros counted as written" not in text
+    assert "with leading zeros removed" in text
+
+
+def test_F9_the_claim_hash_is_over_the_inner_bytes_untrimmed(sworn):
+    inner = " \t n is 7 \t "
+    old, new = _check(sworn, '<sworn r="r1" k="numeric">%s</sworn>' % inner, {"r1": (b"7", {})})
+    row = new["spans"][0]
+    assert row["verdict"] == "HELD"
+    assert row["claim"] == inner and row["claim_sha256"] == _sha(inner.encode("utf-8"))
+
+
+def test_F9_the_claim_cap_counts_code_points_not_utf16_units(sworn):
+    for n, carried in ((300, True), (301, False)):
+        body = "\U0001F9EA" * (n - 2) + " 7"
+        old, new = _check(sworn, '<sworn r="r1" k="numeric">%s</sworn>' % body, {"r1": (b"7", {})})
+        row = new["spans"][0]
+        assert row["claim_sha256"] == _sha(body.encode("utf-8"))
+        assert (row["claim"] == body) is carried and (row["reason"] == "length_cap") is (not carried)
+
+
+@pytest.mark.parametrize("shift", [1, -1])
+def test_F9_a_row_whose_end_is_off_by_one_is_refused(sworn, shift):
+    old = _good(sworn)
+    moved = dict(old, spans=[dict(old["spans"][0], end=old["spans"][0]["end"] + shift)])
+    with pytest.raises(P.Refusal) as e:
+        P.to_v0(moved, b'<sworn r="r1" k="numeric">n is 7</sworn>')
+    assert e.value.code == "claim_unlocatable"
+
+
+@pytest.mark.parametrize("edit,code", [
+    (lambda c: dict(c, rungs={"L1": 7}), "counts_mismatch"),
+    (lambda c: dict(c, rungs={"L2": 1, "L1": 0}), "counts_mismatch"),
+    (lambda c: dict(c, manifest_digest="not a digest"), "not_a_core"),
+    (lambda c: dict(c, manifest_digest="A" * 64), "not_a_core"),
+    (lambda c: dict(c, commit="HEAD"), "not_a_core"),
+    (lambda c: dict(c, commit="a" * 39), "not_a_core"),
+    (lambda c: dict(c, document=dict(c["document"], name="d\udcff.md")), "name_form"),
+    (lambda c: dict(c, spans=[{k: v for k, v in c["spans"][0].items() if k != "resolved_sha256"}]), "row_shape"),
+])
+def test_F10_F13_the_projector_checks_what_it_used_to_copy(sworn, edit, code):
+    with pytest.raises(P.Refusal) as e:
+        P.to_v0(edit(_good(sworn)))
+    assert e.value.code == code and code in P.REFUSALS
+
+
+def test_F10_rungs_are_computed_from_the_rows(sworn):
+    old = _good(sworn)
+    bare = {k: v for k, v in old.items() if k != "rungs"}
+    assert P.to_v0(bare)["rungs"] == {"L2": 1} == P.to_v0(old)["rungs"]
+    assert "`name_form`" in _text()
+
+
+def test_F11_an_edited_committed_receipt_is_refused():
+    p = ROOT / "papers" / "sworn" / "sworn_action_sample.FAILED.sworn-receipt.json"
+    rec = json.loads(p.read_text(encoding="utf-8"))
+    assert P.to_v0(rec)["document_verdict"] == "SWORN-FAILED"
+    edited = json.loads(json.dumps(rec))
+    for s in edited["spans"]:
+        if s["verdict"] == "FAILED":
+            s["verdict"], s["reason"] = "HELD", None
+            edited["counts"]["FAILED"] -= 1
+            edited["counts"]["HELD"] += 1
+    edited["document_verdict"] = "SWORN-HELD"
+    with pytest.raises(P.Refusal) as e:
+        P.to_v0(edited)
+    assert e.value.code == "source_digest"
+    with pytest.raises(P.Refusal) as e:
+        P.to_v0(dict(rec, extra=0.5))
+    assert e.value.code == "source_digest"
+    # what is outside the source digest may change without a refusal
+    assert P.to_v0(dict(rec, timestamp="2000-01-01T00:00:00Z")) == P.to_v0(rec)
+
+
+def test_F12_the_schema_ties_the_rn_profile_to_its_closed_lists(sworn):
+    import copy
+    v = P.to_v0(_good(sworn), b'<sworn r="r1" k="numeric">n is 7</sworn>')
+    assert_valid(v, "verdictCore")
+    legacy_reason = copy.deepcopy(v)
+    legacy_reason["spans"][0].update(verdict="UNRESOLVED", reason="path_absent", detail={})
+    del legacy_reason["spans"][0]["resolved_sha256"], legacy_reason["spans"][0]["provenance"]
+    legacy_reason.update(counts={"HELD": 0, "FAILED": 0, "UNRESOLVED": 1, "MALFORMED": 0},
+                         unresolved=1, document_verdict="SWORN-UNCHECKED", rungs={"unresolved": 1})
+    assert_invalid(legacy_reason, "verdictCore")
+    assert_valid(dict(legacy_reason, profile=P.PROFILE_LEGACY), "verdictCore")
+    path_prov = copy.deepcopy(v)
+    path_prov["spans"][0]["provenance"] = {"form": "path", "note": "committed object at x"}
+    path_prov["rungs"] = {"committed": 1}
+    assert_invalid(path_prov, "verdictCore")
+    assert_valid(dict(path_prov, profile=P.PROFILE_LEGACY), "verdictCore")
+    assert_invalid(dict(v, rungs={"L2": 1, "committed": 0}), "verdictCore")
+
+
+def test_B05_the_leaf_text_replaces_an_unpaired_surrogate_with_a_question_mark(sworn):
+    old, new = _check(sworn, '<sworn r="r1#/a" k="numeric">n 7</sworn>', {"r1": (b'{"a": "\\ud800x"}', {})})
+    assert (new["spans"][0]["reason"], new["spans"][0]["detail"]) == ("leaf_not_numeric", {"leaf": "?x"})
+    old, new = _check(sworn, '<sworn r="r1#/a" k="quote">`x`</sworn>', {"r1": (b'{"a": "\\ud800"}', {})})
+    assert (new["spans"][0]["reason"], new["spans"][0]["detail"]) == (
+        "leaf_not_string", {"note": "leaf is not encodable as UTF-8"})
+    seven = _text().split("## 7.")[1].split("## 8.")[0]
+    assert "replaced by U+003F" in seven and "leaf is not encodable as UTF-8" in seven
+
+
+@pytest.mark.parametrize("bytes_value,verdict,reason", [
+    ("QR==", "HELD", None),            # pad bits not zero: ignored (6.10)
+    (None, "UNRESOLVED", "manifest_integrity"),
+    (65, "UNRESOLVED", "manifest_integrity"),
+    ("QQ", "UNRESOLVED", "manifest_integrity"),
+    ("Q Q==", "UNRESOLVED", "manifest_integrity"),
+])
+def test_F6_B02_B03_the_bytes_key_as_the_text_now_pins_it(sworn, bytes_value, verdict, reason):
+    m = _man_dict(sworn, {"r1": b"A"})
+    m["receipts"]["r1"]["bytes"] = bytes_value
+    m["digest"] = sworn.Manifest.from_dict(dict(m)).digest()
+    doc = '<sworn r="r1" k="hash">%s</sworn>' % _sha(b"A")
+    old = sworn.verify(doc.encode("utf-8"), name="d.md", manifest=sworn.Manifest.from_dict(m), tree=None)
+    new = P.to_v0(old, doc.encode("utf-8"))
+    check_core(new)
+    assert (new["spans"][0]["verdict"], new["spans"][0]["reason"]) == (verdict, reason)
+    del m["receipts"]["r1"]["bytes"]
+    m["digest"] = sworn.Manifest.from_dict(dict(m)).digest()
+    old = sworn.verify(doc.encode("utf-8"), name="d.md", manifest=sworn.Manifest.from_dict(m), tree=None)
+    assert old["spans"][0]["verdict"] == "HELD"     # only an entry without the key has no bytes
+
+
+def test_B04_B07_B10_B14_B15_B16_worked_examples_of_the_text(sworn):
+    old, new = _check(sworn, " ".join('<sworn r="r1" k="numeric">n %s</sworn>' % t
+                                      for t in ("42.", "+42", ".5", "42%", "−3", "1,234.5")),
+                      {"r1": (b"42", {})})
+    got = [(r["detail"]["printed_token"], r["detail"]["printed"]) for r in new["spans"]]
+    assert got == [("42", "42"), ("+42", "42"), (".5", "0.5"), ("42%", "42"), ("−3", "-3"),
+                   ("1,234.5", "1234.5")]
+    # B16: a line fragment's slice is parsed as JSON; a line `p95: 240` is not a JSON value
+    old, new = _check(sworn, '<sworn r="r1#L1" k="numeric">latency is 240</sworn>', {"r1": (b"p95: 240\n", {})})
+    assert (new["spans"][0]["reason"], "provenance" in new["spans"][0]) == ("receipt_not_json", True)
+    # B15: a hex run glued to a word character is not a run
+    old, new = _check(sworn, '<sworn r="r1" k="hash">sha256 %s and %s</sworn>' % (_sha(b"x"), "ab" * 16),
+                      {"r1": (b"x", {})})
+    assert (new["spans"][0]["reason"], new["spans"][0]["detail"]) == ("digest_form", {"hex_runs": [64, 32]})
+    old, new = _check(sworn, '<sworn r="r1" k="hash">sha256 %s</sworn>' % _sha(b"x"), {"r1": (b"x", {})})
+    assert new["spans"][0]["verdict"] == "HELD"
+    # B14: an empty byte string is a document, and it is UNSWORN
+    new = P.to_v0(sworn.verify(b"", name="d.md", manifest=None, tree=None), b"")
+    assert (new["document_verdict"], new["document"]["canonical_sha256"]) == ("UNSWORN", _sha(b""))
+    # B10: an entry's own id is not read; the key names it
+    m = _man_dict(sworn, {"r1": b"7"})
+    m["receipts"]["r1"]["id"] = "r2"
+    m["digest"] = sworn.Manifest.from_dict(dict(m)).digest()
+    doc = b'<sworn r="r1" k="numeric">n is 7</sworn>'
+    old = sworn.verify(doc, name="d.md", manifest=sworn.Manifest.from_dict(m), tree=None)
+    assert P.to_v0(old, doc)["document_verdict"] == "SWORN-HELD"
+    # B07: document_malformed means no canonical text
+    for raw in (b"```\nopen", b"\xff <sworn"):
+        new = P.to_v0(sworn.verify(raw, name="d.md", manifest=None, tree=None), raw)
+        assert new["document_malformed"] is not None and new["document"]["canonical_sha256"] is None
+    # B08: offsets are bytes (the example of 2.5)
+    raw = 'é<sworn r="r1" k="numeric">n 7</sworn>'.encode("utf-8")
+    row = P.to_v0(sworn.verify(raw, name="d.md", manifest=None, tree=None), raw)["spans"][0]
+    assert (row["at"], row["start"], row["end"]) == (2, 2, 5)
+    # B13: rungs hold only the keys that occur; a MALFORMED row without provenance is 'unresolved'
+    old, new = _check(sworn, '<sworn r="r1" k="numeric">n is 7</sworn> <sworn>', {"r1": (b"7", {})})
+    assert [r["verdict"] for r in new["spans"]] == ["HELD", "MALFORMED"]
+    assert new["rungs"] == {"L2": 1, "unresolved": 1}
+
+
+# B21: three documents attacker B worked by hand from the text alone; the v0 digests are the ones
+# the hand-written cores give (the attacker's notes hold the cores). Seed vectors, not a vector file.
+_SEED_MANIFEST = {
+    "authored_sha256": [], "digest": "1b67b2d695adb46b629fa84f77073e3b9f4950c63bb89a794fcdd44a5aba263d",
+    "harness": "adopter-harness", "minted_at": "2026-11-13T00:00:00Z", "rung": "L2",
+    "spec": "sworn/manifest/0.2", "turn": "t1", "receipts": {
+        "r1": {"bytes": "eyJwOTUiOiAyMzkuOTYsICJuIjogMTJ9Cg==", "captured_at": "2026-11-13T00:00:00Z",
+               "complete": True, "id": "r1", "kind_of_source": "tool_stdout",
+               "sha256": "da7daa420aee53daf71c4fb25b60efa172e19dadc6f3aad2f3e88dba1d8f15f0"},
+        "r2": {"bytes": "YnVpbGQgb2sKYWxsIDQyIHRlc3RzIHBhc3NlZCBpbiAzLjFzCg==", "captured_at": "2026-11-13T00:00:00Z",
+               "complete": True, "id": "r2", "kind_of_source": "test_report",
+               "sha256": "7870d087e33ce6c904851090b758646c34ae26c14e9e64f6fc4698f31f662458"},
+        "r3": {"bytes": "d2FybmluZzogbm9uZQplcnJvcnM6IDAK", "captured_at": "2026-11-13T00:00:00Z",
+               "complete": True, "id": "r3", "kind_of_source": "tool_stderr",
+               "sha256": "fa0dd731f54af395d6b24da4ec89614e8b9c0d025a3eebe28d75f26728024533"}}}
+_SEEDS = [
+    ("doc1.md", b'p95 \xc3\xa9 <sworn r="r1#/p95" k="numeric">240.0 ms</sworn>, n <sworn r="r7" k="numeric">12</sworn>.\n',
+     "SWORN-HELD", "920ffb52380ec015d415a4edca08384cb9d71dd91b6ddac9af098e4e24dbd1cc"),
+    ("doc2.md", b'Tests: <sworn r="r2#L2" k="quote">`42 tests passed`</sworn> and <sworn r="r2" k="quote">`build ok`</sworn>.\n',
+     "SWORN-FAILED", "eee121f40fc89819c7b964c221cb4c8c83eaa63e89ac25cf2998733610145b8b"),
+    ("doc3.md", b'Clean: <sworn r="r3" k="absent">`error:`</sworn>; log <sworn r="r3" k="hash">sha256 '
+                b'fa0dd731f54af395d6b24da4ec89614e8b9c0d025a3eebe28d75f26728024533</sworn>.\n',
+     "SWORN-HELD", "4738637cd57c90205090b27c442522ff70d214b50b95b7df25f7922ef82dcf0b"),
+]
+
+
+@pytest.mark.parametrize("name,raw,verdict,digest", _SEEDS)
+def test_B21_documents_worked_by_hand_from_the_text_give_the_same_digest(sworn, name, raw, verdict, digest):
+    man = sworn.Manifest.from_dict(json.loads(json.dumps(_SEED_MANIFEST)))
+    assert man.intact() and man.digest() == _SEED_MANIFEST["digest"] == P.digest_v0(man.core())
+    new = P.to_v0(sworn.verify(raw, name=name, manifest=man, tree=None), raw)
+    check_core(new)
+    assert (new["profile"], new["document_verdict"]) == (P.PROFILE_RN, verdict)
+    assert P.digest_v0(new) == digest
+
+
+def _embedded_receipts():
+    """Verdict receipts inside the JSON script blocks of committed HTML files (capsules)."""
+    out = subprocess.run(["git", "-C", str(ROOT), "ls-files", "-z", "--", "*.html"],
+                         capture_output=True, check=True).stdout.decode("utf-8")
+    found = []
+
+    def walk(o, where):
+        if isinstance(o, dict):
+            if (str(o.get("schema", "")).startswith("styxx.sworn.verdict-receipt/")
+                    and isinstance(o.get("spans"), list)):
+                found.append((where, o))
+            for k, v in o.items():
+                walk(v, where + "." + str(k))
+        elif isinstance(o, list):
+            for i, v in enumerate(o):
+                walk(v, "%s[%d]" % (where, i))
+    for rel in sorted(x for x in out.split("\0") if x and not x.startswith("conformance/")):
+        text = (ROOT / rel).read_text(encoding="utf-8", errors="replace")
+        if "styxx.sworn.verdict-receipt/" not in text:
+            continue
+        for m in re.finditer(r'<script[^>]*type="application/json"[^>]*>(.*?)</script>', text, re.S):
+            try:
+                walk(json.loads(m.group(1)), rel)
+            except ValueError:
+                continue
+    return found
+
+
+def test_F14_receipts_embedded_in_committed_capsules_change_no_verdict():
+    found = _embedded_receipts()
+    census = dict(ln.split(" = ") for ln in _ledger("census"))
+    assert census["receipts embedded in committed capsules"] == str(len(found))
+    changed = 0
+    for where, rec in found:
+        core = P.to_v0(rec)
+        check_core(core)
+        changed += core["document_verdict"] != rec["document_verdict"]
+        changed += sum((a["verdict"], a["reason"]) != (b["verdict"], b["reason"])
+                       for a, b in zip(rec["spans"], core["spans"]))
+    assert census["verdicts changed in them"] == str(changed)
