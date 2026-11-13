@@ -4,61 +4,7 @@
  "count": 5,
  "vectors": [
   {
-   "id": "2719bf7f57a72dfe1b112f43e90b4bc1569044c35ca67d3d443127645a6aabb8",
-   "family": "check_v1",
-   "sources": [
-    "tests/test_sworn_receipt_v2.py::TestReceiptV1UnderV2::test_a_v1_receipt_whose_certifies_was_edited_and_re_digested_fails"
-   ],
-   "rules": [],
-   "mode": "receipt_check",
-   "requires": [
-    "manifest"
-   ],
-   "inputs": {
-    "receipt": "0505a415aa1046baf08f8eff59053c9e2472f6f1b924865478e9da6213bca9b5",
-    "document": "913cb5d94e6ea43ab00705d33886fb07c02ccb75291ed69a02bf60a2926c8fc6",
-    "sidecar": null,
-    "manifest": "f2691bc34a7df7293db04f871cae25eccbc38d3d483b2916b2bc88503c376863",
-    "tree": null
-   },
-   "expect": {
-    "outcome": "check",
-    "check": {
-     "status": "FAILED",
-     "digest_match": true,
-     "verdict_reproduces": false
-    }
-   }
-  },
-  {
-   "id": "3fcc60649d1c62dfc4a5ee033efcfb124b64243970b8d89f05ee13d1a6a48f49",
-   "family": "check_v1",
-   "sources": [
-    "tests/test_sworn_receipt_v2.py::TestReceiptV1UnderV2::test_a_v1_receipt_with_no_certifies_fails"
-   ],
-   "rules": [],
-   "mode": "receipt_check",
-   "requires": [
-    "manifest"
-   ],
-   "inputs": {
-    "receipt": "0b74a63afde8d443d9e0c11b89545e6c01f08da42eabc5d7e666e16ddfc8b61e",
-    "document": "913cb5d94e6ea43ab00705d33886fb07c02ccb75291ed69a02bf60a2926c8fc6",
-    "sidecar": null,
-    "manifest": "f2691bc34a7df7293db04f871cae25eccbc38d3d483b2916b2bc88503c376863",
-    "tree": null
-   },
-   "expect": {
-    "outcome": "check",
-    "check": {
-     "status": "FAILED",
-     "digest_match": true,
-     "verdict_reproduces": false
-    }
-   }
-  },
-  {
-   "id": "43030783686314f53d160797c9ee35f41a9756ea33a2716357b1c7e7b7bbe51a",
+   "id": "22742ae71626a3fbfd398f4b97c53a9de5010d164889469b8010ab01852c38e2",
    "family": "check_v1",
    "sources": [
     "tests/test_sworn_receipt_v2.py::TestReceiptV1UnderV2::test_a_v1_receipt_re_derives_with_its_own_strings"
@@ -69,7 +15,7 @@
     "manifest"
    ],
    "inputs": {
-    "receipt": "684e5d0a17ed479ff0e89c6e50811e7f87e48c407644f5d5aef77ccbf494eba3",
+    "receipt": "ac1e8a22826ab6e52027e881c0ef6f128f40ec72a5faa221621e8afd7533a104",
     "document": "913cb5d94e6ea43ab00705d33886fb07c02ccb75291ed69a02bf60a2926c8fc6",
     "sidecar": null,
     "manifest": "f2691bc34a7df7293db04f871cae25eccbc38d3d483b2916b2bc88503c376863",
@@ -85,7 +31,7 @@
    }
   },
   {
-   "id": "6b33c1ff744cc87ba881fd57ba80a6b235ac442bbe700f2832127d461c5c0606",
+   "id": "2a3619ae20a39b9387ab1f1bd3e825fab79b806fb272d92c1361eb04e3b88fa8",
    "family": "check_v1",
    "sources": [
     "tests/test_sworn_receipt_v2.py::TestReceiptV1UnderV2::test_a_v1_receipt_carrying_the_v2_sentence_fails"
@@ -96,7 +42,7 @@
     "manifest"
    ],
    "inputs": {
-    "receipt": "921a57bef77b811eaf8c4730b84ff5e8a780a9d29f98a514fadc51454c21fc58",
+    "receipt": "fdc9ea40d5795952e6937a1adf7e468c69bc679d75496597c2533192f91afe29",
     "document": "913cb5d94e6ea43ab00705d33886fb07c02ccb75291ed69a02bf60a2926c8fc6",
     "sidecar": null,
     "manifest": "f2691bc34a7df7293db04f871cae25eccbc38d3d483b2916b2bc88503c376863",
@@ -112,7 +58,61 @@
    }
   },
   {
-   "id": "973fc022c9c19e106a1aa939620f155338cbe16eb8230261d62cd62eb121e030",
+   "id": "643cbf3496378a0fc9d2b0d85fd109f26cce6c9c1b8eac1a7fddd424e8e3bf16",
+   "family": "check_v1",
+   "sources": [
+    "tests/test_sworn_receipt_v2.py::TestReceiptV1UnderV2::test_a_v1_receipt_whose_certifies_was_edited_and_re_digested_fails"
+   ],
+   "rules": [],
+   "mode": "receipt_check",
+   "requires": [
+    "manifest"
+   ],
+   "inputs": {
+    "receipt": "32d53ff08e547fad1d4e9d40e6e5d54bccd9cf55bfd9d83a8c1a151d40b296d2",
+    "document": "913cb5d94e6ea43ab00705d33886fb07c02ccb75291ed69a02bf60a2926c8fc6",
+    "sidecar": null,
+    "manifest": "f2691bc34a7df7293db04f871cae25eccbc38d3d483b2916b2bc88503c376863",
+    "tree": null
+   },
+   "expect": {
+    "outcome": "check",
+    "check": {
+     "status": "FAILED",
+     "digest_match": true,
+     "verdict_reproduces": false
+    }
+   }
+  },
+  {
+   "id": "81f8dcf73d123390d7f7d231d1835f715c1c8fa9b753d2da0c9b8d3c6de47b82",
+   "family": "check_v1",
+   "sources": [
+    "tests/test_sworn_receipt_v2.py::TestReceiptV1UnderV2::test_a_v1_receipt_with_no_certifies_fails"
+   ],
+   "rules": [],
+   "mode": "receipt_check",
+   "requires": [
+    "manifest"
+   ],
+   "inputs": {
+    "receipt": "fdd22162de14ef9ef53e0b77d0e67d6cfe944411afef94d3e6b51051b3b63463",
+    "document": "913cb5d94e6ea43ab00705d33886fb07c02ccb75291ed69a02bf60a2926c8fc6",
+    "sidecar": null,
+    "manifest": "f2691bc34a7df7293db04f871cae25eccbc38d3d483b2916b2bc88503c376863",
+    "tree": null
+   },
+   "expect": {
+    "outcome": "check",
+    "check": {
+     "status": "FAILED",
+     "digest_match": true,
+     "verdict_reproduces": false
+    }
+   }
+  },
+  {
+   "id": "d0fb72ce9cedd839dc9fb5cd4671b743252f36a04f13553fce9da87ba4139ba5",
    "family": "check_v1",
    "sources": [
     "tests/test_sworn_receipt_v2.py::TestReceiptV1UnderV2::test_a_v1_receipt_whose_coverage_moved_still_verifies_and_says_so"
@@ -123,7 +123,7 @@
     "manifest"
    ],
    "inputs": {
-    "receipt": "e90d5699dd5a0168e002de0b0c231c66625d816aefb1c2c2a62b5e0ac47362cf",
+    "receipt": "79e755ff0599d506f5c731af34d0fcb13d4282d7dd00e0f1d43327c022e094b7",
     "document": "913cb5d94e6ea43ab00705d33886fb07c02ccb75291ed69a02bf60a2926c8fc6",
     "sidecar": null,
     "manifest": "f2691bc34a7df7293db04f871cae25eccbc38d3d483b2916b2bc88503c376863",

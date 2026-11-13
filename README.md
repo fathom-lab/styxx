@@ -41,14 +41,14 @@ Numbers and detail for the EXTERNAL-1, V14 and `only_touches` items are in the V
 - [REPLICATIONS.md](https://github.com/fathom-lab/styxx/blob/main/REPLICATIONS.md) lists each target with its command and its bar. Its ledger has no entry from outside the lab. A rerun that does not match is recorded too.
 - With no lab code imported: [rerun_ungated.py](https://github.com/fathom-lab/styxx/blob/main/papers/real-convergence/artifact_2026_11_10/rerun_ungated.py) needs torch, transformers and numpy, downloads Qwen2.5-0.5B (about 1 GB), and prints your numbers beside the lab's. It checks the start-of-input finding on ungated models; it was written after the two sealed tests and is not part of them. The lab has run it on Windows alone.
 
-### install, status on 2026-11-11
+### install, status on 2026-11-13
 
 ```bash
-pip install styxx                                      # 8.0.1 from PyPI
+pip install styxx                                      # 8.0.2 from PyPI
 pip install git+https://github.com/fathom-lab/styxx    # the main branch
 ```
 
-`pip install styxx` gives 8.0.1, which repairs four defects an audit found in 8.0.0 after its release: `python -m styxx.capsule verify` failed intact OATH capsules issued by earlier releases; `styxx publish`, `compare-agents`, `claim` and the stream defaulted to hosts that are not lab servers today; a redirect was followed, and the stream key went with it; and a capsule could choose the repository the verifier's git commands read. On 8.0.0 and earlier, do not run `styxx publish` without `--endpoint`. 8.0.0 broke two things on purpose that worked in 7.50.0, and both stay broken: its `token` submodule is gone, and the guarded functions raise `Position0Error` on a one-token input with no start token unless called with `allow_position0=True`. `styxx.mind.geometry_citizenship` is unchanged and still gives the faulty number; version 2 is `styxx.mind_geometry`. Main can be ahead of the latest release; what changed since is under "Unreleased" in [CHANGELOG.md](https://github.com/fathom-lab/styxx/blob/main/CHANGELOG.md).
+`pip install styxx` gives 8.0.2, which repairs one defect that 8.0.1 and, by the release tags, the releases back to 7.48.0 carry: `python -m styxx.diffgate --pr` sent its GitHub token on to whatever address a redirect named, and now sends it to https://api.github.com and nowhere else. 8.0.1 repaired four defects an audit found in 8.0.0 after its release: `python -m styxx.capsule verify` failed intact OATH capsules issued by earlier releases; `styxx publish`, `compare-agents`, `claim` and the stream defaulted to hosts that are not lab servers today; a redirect was followed, and the stream key went with it; and a capsule could choose the repository the verifier's git commands read. On 8.0.0 and earlier, do not run `styxx publish` without `--endpoint`. 8.0.0 broke two things on purpose that worked in 7.50.0, and both stay broken: its `token` submodule is gone, and the guarded functions raise `Position0Error` on a one-token input with no start token unless called with `allow_position0=True`. `styxx.mind.geometry_citizenship` is unchanged and still gives the faulty number; version 2 is `styxx.mind_geometry`. Main can be ahead of the latest release; what changed since is under "Unreleased" in [CHANGELOG.md](https://github.com/fathom-lab/styxx/blob/main/CHANGELOG.md).
 
 ---
 
