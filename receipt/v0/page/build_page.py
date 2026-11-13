@@ -1,11 +1,16 @@
 """Builds the one-file RECEIPT v0 check page.
 
-From a checker file:
+In the repository (receipt/v0/page/), from the checker of the same tree; this is the command that
+made the committed receipt_check_v0.html (README.md gives it with the exact --origin text):
+    python receipt/v0/page/build_page.py receipt/v0/check_v0.js --repo github.com/fathom-lab/styxx         --origin "..." [--out PATH]
+
+From a checker file (the general form):
     python build_page.py CHECKER.js [--out PATH] [--origin LABEL] [--repo LABEL]
                          [--commit-published yes|no|unknown] [--expected FILE]
                          [--replace-different-checker]
 
-From a commit of a git checkout, in one command (reads only; never checks out or writes there):
+From a commit of a git checkout, in one command, for building outside a checkout of this tree
+(reads only; never checks out or writes there):
     python build_page.py --from-git REPO_DIR --commit COMMIT --utc "$(date -u +%Y-%m-%dT%H:%M:%SZ)"
                          [--replace-different-checker] [--out PATH]
   It takes receipt/v0/check_v0.js at COMMIT (git show), keeps it as src/checkers/check_v0.<commit12>.js,
@@ -14,9 +19,10 @@ From a commit of a git checkout, in one command (reads only; never checks out or
   knows holds the commit, writes the examples' command line answers for that checker with
   make_examples.py (a new examples/expected_cli_<utc>.json and receipts under
   examples/receipts_<checker sha16>/) unless one for that checker exists, and builds.
+  In the repository src/ is ignored by git: the tree already holds the checker and the vectors.
 
-Writes dist/receipt_check_v0.html (or --out). The checker's bytes go into the page unchanged, inside
-<script type="text/plain" id="checker-src">, and their sha256 is recorded in the page.
+Writes receipt_check_v0.html next to this script (or --out). The checker's bytes go into the page
+unchanged, inside <script type="text/plain" id="checker-src">, and their sha256 is recorded in the page.
 
 The build REFUSES (exit 2, or 3 for an existing page from another checker), and writes no page, when
 (with --from-git, the write-once copies under src/checkers/ and a new examples file may already be written):
@@ -55,7 +61,7 @@ import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 SRC = os.path.join(HERE, "page_src")
-DEFAULT_OUT = os.path.join(HERE, "dist", "receipt_check_v0.html")
+DEFAULT_OUT = os.path.join(HERE, "receipt_check_v0.html")
 META_RE = re.compile(rb'<meta name="receipt-v0-checker-sha256" content="([0-9a-f]{64})">')
 PLACEHOLDER = re.compile(r"@@([A-Z0-9_]+)@@")
 TIME_LIMIT_MS = 10000          # must equal TIME_LIMIT_MS in page_main.js; the page text says 10 seconds
