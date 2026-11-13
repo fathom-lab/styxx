@@ -1,0 +1,4 @@
+# Every file here is hashed or compared byte for byte (the built page, its sources, the examples
+# and their receipts): keep the bytes as committed, LF, on every platform. receipt/v0/.gitattributes
+# already says the same for the whole folder; this rule keeps it if the page folder moves.
+* -text
