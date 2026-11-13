@@ -26,7 +26,7 @@ The page also shows the sha256 of the checker inside it (`cbdae74e95cbfb0280d38b
 
 Save `receipt_check_v0.html` anywhere and open it in a browser (double-click it, or File, Open). Nothing needs installing and the page fetches nothing. The page has three example buttons; each loads a document, a manifest and the receipt the command line checker printed for them.
 
-Opening from disk has not been tried in any browser. If the browser will not start a worker from a file page, every run says "no verdict". Serving the folder from 127.0.0.1 is the setup the lead tried.
+Opening from disk has not been tried in any browser. If the browser will not start a worker from a file page, every run says "no verdict". Serving the folder from 127.0.0.1 is the setup the lead tried; the browser the lead used shows a file from disk as a still picture and could not run one.
 
 The page reads a file or a pasted text of at most 16,777,216 bytes (16 MiB); a larger input is "too large for this page" and is not read. The page's own list of limits does not state this one.
 
@@ -76,12 +76,12 @@ The page was written and attacked outside the repository on 2026-11-13, and the 
 
 Built with the lead build's labels, this folder's builder and sources give the lead-verified file byte for byte. No line of `page_src` was changed for the move.
 
-This file (`577bfeb1...`) has not been opened in a browser. The lead opened `a1e1a025...`, which differs from it only in the lines above, and on that build looked at the checker hash line, the origin, example 1 and a 375-pixel width. The probes of the policy (a fetch, an image, `innerHTML`, a worker from a data: address) and the document full of markup were run on an earlier build, `c631c9ee...`, made from the same `page_src` with an earlier checker (`006a71c7...`) and that checker's examples record.
+On 2026-11-13, after this file was built, the lead opened this file (`577bfeb1...`) in a real browser, served from 127.0.0.1. `BROWSER_CHECK_2026_11_13.md` in this folder says what was done and seen: the checker hash line, the three examples, a recheck, nine probes of the policy, a document full of markup, a document of 1,000 spans and a 375-pixel width. That file is a record of one check on one machine, not a test. Before that, the lead had opened `a1e1a025...`, which differs from this file only in the lines above, and on that build looked at the checker hash line, the origin, example 1 and a 375-pixel width. The probes of the policy (a fetch, an image, `innerHTML`, a worker from a data: address) and the document full of markup were run on an earlier build, `c631c9ee...`, made from the same `page_src` with an earlier checker (`006a71c7...`) and that checker's examples record.
 
 ## What the page does not prove
 
 - A HELD verdict says one comparison passed. It does not say a sentence is true, that the manifest is honest, or that the right sentences were bound. The page prints the nine items of RECEIPT_v0.md section 12 and the gist of section 14; read the text itself for the rest (section 12 also has a paragraph on a third, Go, checker that the page leaves out).
 - The checker is lab-written. Agreement between this page and the lab's command line, or with the lab's vectors, is agreement inside one lab. It does not show the checker is right.
 - The page is not signed. The digest above ties a file to this tree; it does not say who wrote the tree.
-- The CSP and Trusted Types protect only in browsers that enforce them. The lead's check saw Chrome refuse a fetch, an image, `innerHTML` and a data: worker, on build `c631c9ee...` (see above). It did not open the page from disk (`file://`), did not choose local files, and did not test Firefox, Safari or a phone. Nobody has checked from inside the worker that the worker inherits the page's policy.
-- The page's own text says the lab "has not yet watched the page run in a browser". For this exact file that is still so: the lead watched `a1e1a025...`, which differs from it in the lines listed above. The sentence was left as it was, because changing it changes the page the lead checked.
+- The CSP and Trusted Types protect only in browsers that enforce them. On this file the lead's check saw Chrome refuse a fetch, an image, a beacon, a WebSocket, `innerHTML`, an inline script, `eval`, a worker from a data: address and a second Trusted Types policy (`BROWSER_CHECK_2026_11_13.md`). It did not open the page from disk (`file://`), did not choose local files, and did not test Firefox, Safari or a phone. Nobody has checked from inside the worker that the worker inherits the page's policy.
+- The page's own text says the lab "has not yet watched the page run in a browser". For this exact file that stopped being so on 2026-11-13, when the lead watched it run (`BROWSER_CHECK_2026_11_13.md`). The sentence was left as it was, because changing it changes the file, and the changed file would be one nobody has watched.
