@@ -231,7 +231,10 @@ def test_imports_are_standard_library_only():
         elif isinstance(node, ast.ImportFrom):
             assert node.level == 0
             names.add(node.module.split(".")[0])
-    assert names <= set(sys.stdlib_module_names), names - set(sys.stdlib_module_names)
+    # pinned by name, so the check does not depend on the running Python (sys.stdlib_module_names is new in 3.10)
+    assert names == {"argparse", "binascii", "hashlib", "sys"}, names
+    if hasattr(sys, "stdlib_module_names"):
+        assert names <= set(sys.stdlib_module_names), names - set(sys.stdlib_module_names)
     assert not any(n.startswith("styxx") for n in names)
     pure_imports = set()
     for node in _pure_nodes():
