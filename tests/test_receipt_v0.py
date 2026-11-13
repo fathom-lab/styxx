@@ -702,7 +702,8 @@ def test_to_v0_is_pure_by_its_source():
             imported.add((node.module or "").split(".")[0])
             assert node.level == 0
     assert imported == {"hashlib"}, imported
-    assert imported <= set(sys.stdlib_module_names)
+    if hasattr(sys, "stdlib_module_names"):   # new in Python 3.10; the line above pins the set on every Python
+        assert imported <= set(sys.stdlib_module_names)
     banned_calls = {"open", "exec", "eval", "compile", "__import__", "input", "print", "globals",
                     "setattr", "delattr", "breakpoint"}
     for node in ast.walk(tree):
