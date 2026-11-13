@@ -111,9 +111,20 @@ def write_once(path, data):
     return "written"
 
 
+def shown(arg):
+    """An argument as the record keeps it: a path relative to this script's folder, never the
+    build machine's absolute path (which names its user and means nothing elsewhere)."""
+    if not os.path.isabs(arg):
+        return arg
+    try:
+        return os.path.relpath(arg, HERE).replace(os.sep, "/")
+    except ValueError:            # another drive on Windows
+        return os.path.basename(arg)
+
+
 def run(cmd):
     p = subprocess.run(cmd, capture_output=True, timeout=60)
-    return {"argv": cmd[1:], "exit": p.returncode, "stdout": p.stdout.decode("utf-8"),
+    return {"argv": [shown(x) for x in cmd[1:]], "exit": p.returncode, "stdout": p.stdout.decode("utf-8"),
             "stderr": p.stderr.decode("utf-8")}
 
 
@@ -138,7 +149,7 @@ def main():
         "what": "answers of the command line checker on the page's three examples",
         "status": "lab-written examples for RECEIPT v0, an unsigned draft; the checker is lab-written",
         "written_at_utc": a.utc,
-        "checker": {"path": os.path.relpath(checker, HERE).replace(os.sep, "/"), "sha256": checker_sha},
+        "checker": {"path": shown(checker), "sha256": checker_sha},
         "node": subprocess.run([a.node, "--version"], capture_output=True, timeout=30).stdout.decode().strip(),
         "manifest": {"file": "examples/" + MANIFEST_NAME, "sha256": sha(man)},
         "files_status": status,

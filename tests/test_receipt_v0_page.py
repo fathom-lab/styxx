@@ -8,7 +8,12 @@
     receipt/v0/check_v0.js byte for byte, and the page records its sha256;
   - the sha256 the README states for the page is the committed page's sha256;
   - the commit the page names as the last change to the checker is that commit, when git history
-    is present (skipped in a shallow clone, which is what CI checks out: one commit has no history);
+    is present. CI checks out one commit, but tests/conftest.py runs `git fetch --unshallow` once per
+    session, so on CI this test RUNS against full history; it skips only when that unshallow fails,
+    when the tree is not the top of its own git checkout (a `git archive` export or an sdist
+    unpacked inside another repository), or when git finds no commit for the file. A squash or rebase
+    merge of pull request 270 or of this branch gives the checker a new last commit; this test then
+    fails until the page is rebuilt with --origin naming that commit;
   - every refusal listed in build_page.py's docstring, each run on a copy of receipt/v0/page in a
     temporary folder (so no run writes into the tree); the --from-git refusals use a throwaway git
     repository made in the temporary folder and need the git program;
@@ -120,18 +125,26 @@ def test_the_page_names_the_commit_that_last_changed_the_checker():
     git = shutil.which("git")
     if git is None:
         pytest.skip("git is not on PATH; the commit the page names cannot be checked here")
+    p = subprocess.run([git, "-C", str(ROOT), "rev-parse", "--show-toplevel"], capture_output=True, timeout=60)
+    top = p.stdout.decode("utf-8", "replace").strip()
+    if p.returncode != 0 or not top or os.path.normcase(str(Path(top).resolve())) != os.path.normcase(str(ROOT)):
+        pytest.skip("this tree is not the top of its own git checkout (git answered %r); a git archive export or "
+                    "an sdist unpacked inside another repository has no history of its own to check" % top)
     p = subprocess.run([git, "-C", str(ROOT), "rev-parse", "--is-shallow-repository"], capture_output=True, timeout=60)
     if p.returncode != 0:
-        pytest.skip("not a git checkout; the commit the page names cannot be checked here")
+        pytest.skip("git cannot say whether this checkout is shallow; the commit the page names was not checked")
     if p.stdout.strip() == b"true":
-        pytest.skip("shallow clone (CI checks out one commit): no history to find the last change to "
-                    "receipt/v0/check_v0.js; the byte tests above still bind the page to the checker's sha256")
+        pytest.skip("shallow checkout, and tests/conftest.py could not unshallow it: no history to find the last "
+                    "change to receipt/v0/check_v0.js; the byte tests above still bind the page to the checker's sha256")
     p = subprocess.run([git, "-C", str(ROOT), "log", "-1", "--format=%H", "--", "receipt/v0/check_v0.js"],
                        capture_output=True, timeout=60)
     assert p.returncode == 0, p.stderr
     last = p.stdout.decode("ascii").strip()
+    if not last:
+        pytest.skip("git log names no commit for receipt/v0/check_v0.js in this checkout; the commit the page "
+                    "names was not checked")
     assert last == CHECKER_LAST_CHANGED, (
-        "the page says receipt/v0/check_v0.js last changed at %s, but history says %s (a squash merge "
+        "the page says receipt/v0/check_v0.js last changed at %s, but history says %s (a squash or rebase merge "
         "also does this); rebuild the page with --origin naming %s" % (CHECKER_LAST_CHANGED, last, last))
 
 
@@ -226,6 +239,86 @@ def test_refuses_examples_that_differ_from_their_records(copy, what, change, wor
     refused(p, out, words)
 
 
+def _set_exit(which, code):
+    def edit(e):
+        e["examples"][2][which]["exit"] = code
+    return edit
+
+
+def _set_document_verdict(e):
+    e["examples"][0]["document_verdict"] = "SWORN-FAILED" if e["examples"][0]["document_verdict"] != "SWORN-FAILED" \
+        else "SWORN-HELD"
+
+
+@pytest.mark.parametrize("edit, words", [
+    (_set_exit("check", 1), "receipt file and recorded command line output differ"),
+    (_set_exit("recheck", 1), "receipt file and recorded command line output differ"),
+    (_set_document_verdict, "the recorded verdicts differ from the receipt"),
+])
+def test_refuses_recorded_exit_codes_and_document_verdicts_that_differ(copy, edit, words):
+    _edit_expected(copy, edit)
+    p, out = build_copy(copy)
+    refused(p, out, words)
+
+
+RECEIPT_1 = Path("examples") / "receipts_cbdae74e95cbfb02" / "example-1-held.md.receipt.json"
+
+
+def _crlf_document(c):
+    doc = c / "examples" / "example-1-held.md"
+    doc.write_bytes(doc.read_bytes().replace(b"\n", b"\r\n", 1))
+    _edit_expected(c, lambda e: e["examples"][0].__setitem__("document_sha256", sha(doc.read_bytes())))
+
+
+def _crlf_manifest(c):
+    man = c / "examples" / "example-manifest.json"
+    man.write_bytes(man.read_bytes().replace(b"\n", b"\r\n", 1))
+    _edit_expected(c, lambda e: e["manifest"].__setitem__("sha256", sha(man.read_bytes())))
+
+
+def _crlf_receipt(c):
+    rec = c / RECEIPT_1
+    rec.write_bytes(rec.read_bytes() + b"\r\n")
+    _edit_expected(c, lambda e: e["examples"][0]["check"].__setitem__("stdout", rec.read_bytes().decode("ascii")))
+
+
+def _non_ascii_document(c):
+    doc = c / "examples" / "example-1-held.md"
+    doc.write_bytes(doc.read_bytes() + b"\xc3\xa9\n")
+    _edit_expected(c, lambda e: e["examples"][0].__setitem__("document_sha256", sha(doc.read_bytes())))
+
+
+@pytest.mark.parametrize("change", [_crlf_document, _crlf_manifest, _crlf_receipt, _non_ascii_document])
+def test_refuses_examples_that_are_not_ascii_with_lf_line_ends(copy, change):
+    # each record is updated to match, so only the ASCII and line-end check stands in the way
+    change(copy)
+    p, out = build_copy(copy)
+    refused(p, out, "is not ASCII with LF line ends")
+
+
+def test_without_expected_the_build_uses_the_last_examples_file_by_name(copy):
+    later = copy / "examples" / "expected_cli_2099-01-01T000000Z.json"
+    shutil.copyfile(str(copy / "examples" / EXPECTED.name), str(later))
+    exp = json.loads(later.read_bytes())
+    _set_recheck(exp)
+    later.write_bytes((json.dumps(exp, indent=1) + "\n").encode("utf-8"))
+    p, out = build_copy(copy)
+    refused(p, out, "the recorded RECHECK of its own receipt is not REDERIVES")
+    p, out = build_copy(copy, extra=["--expected", copy / "examples" / EXPECTED.name])
+    assert p.returncode == 0, text(p)
+    assert out.read_bytes() == PAGE.read_bytes()
+
+
+def test_the_examples_literal_escapes_what_could_end_or_alter_a_script():
+    import importlib.util
+    spec = importlib.util.spec_from_file_location("receipt_v0_build_page_under_test", str(BUILDER))
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    lit = mod.js_literal({"x": "</script><!-- & > <"})
+    assert "<" not in lit and ">" not in lit and "&" not in lit
+    assert json.loads(lit) == {"x": "</script><!-- & > <"}
+
+
 def _replace_once(path, old, new, count=1):
     s = path.read_bytes()
     assert s.count(old) >= count, (path, old)
@@ -298,6 +391,22 @@ def test_refuses_page_sources_that_cannot_be_filled_safely(copy, fname, old, new
     refused(p, out, words)
 
 
+@pytest.mark.parametrize("fname", ["page.html", "page.css", "page_main.js"])
+@pytest.mark.parametrize("change, words", [
+    (lambda b: b.replace(b"\n", b"\r\n"), "holds a CR or a NUL"),
+    (lambda b: b.replace(b"\n", b"\r\n", 1), "holds a CR or a NUL"),
+    (lambda b: b + b"\x00", "holds a CR or a NUL"),
+    (lambda b: b + b"/* \xc3\xa9 */\n", "is not ASCII"),
+])
+def test_refuses_page_sources_that_the_html_parser_or_a_csp_hash_would_see_differently(copy, fname, change, words):
+    # an HTML parser turns CRLF into LF before a browser hashes an inline style or script, so a hash
+    # the build took over CR bytes would not match and the browser would refuse the block
+    path = copy / "page_src" / fname
+    path.write_bytes(change(path.read_bytes()))
+    p, out = build_copy(copy)
+    refused(p, out, "page_src/" + fname + " " + words)
+
+
 # ---------------------------------------------------------------- an existing page is never lost
 
 
@@ -314,6 +423,21 @@ def test_refuses_to_overwrite_a_page_from_another_checker(copy):
     p, _ = build_copy(copy, extra=["--replace-different-checker"], out=out)
     assert p.returncode == 0, text(p)
     assert (copy.parent / "old" / ("out.checker-" + "0" * 64 + ".html")).read_bytes() == old
+    assert out.read_bytes() == PAGE.read_bytes()
+
+
+def test_keeps_an_other_checker_page_under_a_longer_name_when_the_kept_name_holds_other_bytes(copy):
+    out = copy.parent / "out.html"
+    old = b'<meta name="receipt-v0-checker-sha256" content="' + b"0" * 64 + b'">\n'
+    out.write_bytes(old)
+    first = copy.parent / "old" / ("out.checker-" + "0" * 64 + ".html")
+    first.parent.mkdir()
+    first.write_bytes(b"an earlier page kept under that name\n")
+    p, _ = build_copy(copy, extra=["--replace-different-checker"], out=out)
+    assert p.returncode == 0, text(p)
+    second = copy.parent / "old" / ("out.checker-%s.page-%s.html" % ("0" * 64, sha(old)[:16]))
+    assert second.read_bytes() == old
+    assert first.read_bytes() == b"an earlier page kept under that name\n"
     assert out.read_bytes() == PAGE.read_bytes()
 
 
@@ -348,8 +472,8 @@ def test_refuses_when_the_place_to_keep_the_old_page_holds_other_bytes(copy):
 
 @pytest.fixture
 def repo(tmp_path):
-    """A throwaway git repository: c0 without the checker, c1 with this tree's checker, c2 with another
-    checker. Its git sees no system or user configuration."""
+    """A throwaway git repository: c0 without the checker, c1 with this tree's checker and vectors, c2
+    with another checker. Its git sees no system or user configuration."""
     git = shutil.which("git")
     if git is None:
         pytest.skip("git is not on PATH; the --from-git refusals need it")
@@ -373,7 +497,9 @@ def repo(tmp_path):
     c0 = g("rev-parse", "HEAD")
     (r / "receipt" / "v0").mkdir(parents=True)
     (r / "receipt" / "v0" / "check_v0.js").write_bytes(CHECKER.read_bytes())
-    g("add", "receipt/v0/check_v0.js")
+    (r / "receipt" / "v0" / "vectors").mkdir()
+    (r / "receipt" / "v0" / "vectors" / "receipt_v0_vectors.json").write_bytes(VECTORS.read_bytes())
+    g("add", "receipt/v0/check_v0.js", "receipt/v0/vectors/receipt_v0_vectors.json")
     g("commit", "-q", "-m", "c1")
     c1 = g("rev-parse", "HEAD")
     (r / "receipt" / "v0" / "check_v0.js").write_bytes(CHECKER.read_bytes() + b"// another checker\n")
@@ -398,9 +524,22 @@ def test_from_git_builds_and_names_the_commit(copy, repo):
     page = out.read_bytes()
     assert raw_script(page, CHECKER_TAG) == CHECKER.read_bytes()
     assert ("receipt/v0/check_v0.js at commit %s (Fathom Lab)" % repo["c1"]).encode("ascii") in page
-    assert b"github.com/owner/name" in page
+    # the whole label, with the scheme and the ".git" suffix gone
+    assert page.count(b'<code class="value mono">github.com/owner/name</code>') == 1
+    assert b"name.git" not in page
     assert b"not known to be" in page
     assert (copy / "src" / "checkers" / ("check_v0.%s.js" % repo["c1"][:12])).read_bytes() == CHECKER.read_bytes()
+    assert (copy / "src" / "checkers" / ("receipt_v0_vectors.%s.json" % repo["c1"][:12])).read_bytes() == \
+        VECTORS.read_bytes()
+
+
+def test_from_git_refuses_a_kept_vectors_copy_with_other_bytes(copy, repo):
+    kept = copy / "src" / "checkers" / ("receipt_v0_vectors.%s.json" % repo["c1"][:12])
+    kept.parent.mkdir(parents=True)
+    kept.write_bytes(b"{}\n")
+    p, out = from_git(copy, repo, ["--commit", repo["c1"], "--repo", REPO])
+    refused(p, out, "the kept vectors copy exists with other bytes")
+    assert kept.read_bytes() == b"{}\n"
 
 
 def test_from_git_refuses_a_commit_that_does_not_resolve(copy, repo):
@@ -444,6 +583,9 @@ def test_from_git_refuses_to_make_examples_without_a_utc_time(copy, repo, utc):
 def test_from_git_refuses_mixed_arguments(copy, repo, args, words):
     p, out = from_git(copy, repo, args)
     refused(p, out, words)
+    # refused before anything is read or written: no write-once copy, no new examples file
+    assert not (copy / "src").exists()
+    assert sorted(x.name for x in (copy / "examples").glob("expected_cli_*.json")) == [EXPECTED.name]
 
 
 # ---------------------------------------------------------------- every vector through the page's code
@@ -494,3 +636,28 @@ def test_every_vector_through_the_pages_own_code(tmp_path):
         assert e["page_rows"] == e["cli_rows"], e
         assert e["page_recheck"] == e["cli_recheck"] == "REDERIVES", e
         assert e["render_ok"] is True, e
+
+
+def test_make_examples_records_no_absolute_path_of_the_build_machine(copy):
+    """make_examples.py runs the command line checker under Node, so this needs Node 18 or newer too
+    (skipped with the reason otherwise). It writes into the copy only. The committed examples file
+    of 2026-11-13 was written before this rule and still holds the build machine's paths; it is
+    pinned history and stays as it is."""
+    node = _node_or_skip()
+    env = dict(os.environ, PYTHONDONTWRITEBYTECODE="1")
+    p = subprocess.run([sys.executable, "-B", str(copy / "make_examples.py"), "--checker", str(copy.parent / "check_v0.js"),
+                        "--utc", "2099-01-01T00:00:00Z", "--node", node, "--receipts-dir", "examples/receipts_test"],
+                       cwd=str(copy.parent), capture_output=True, timeout=300, env=env)
+    assert p.returncode == 0, text(p)
+    rec = json.loads((copy / "examples" / "expected_cli_2099-01-01T000000Z.json").read_bytes())
+    shown = [rec["checker"]["path"]] + [x for e in rec["examples"] for x in e["check"]["argv"] + e["recheck"]["argv"]]
+    assert len(shown) > 3
+    for x in shown:
+        assert not os.path.isabs(x) and ":" not in x and not x.startswith("/") and "\\" not in x, x
+    assert rec["checker"]["path"] == "../check_v0.js"
+    assert rec["checker"]["sha256"] == sha(CHECKER.read_bytes())
+    for e in rec["examples"]:
+        committed = PAGE_DIR / "examples" / "receipts_cbdae74e95cbfb02" / (e["name"] + ".receipt.json")
+        assert e["check"]["stdout"].encode("utf-8") == committed.read_bytes()
+        assert e["check"]["exit"] == 0 and e["recheck"]["exit"] == 0
+        assert e["recheck"]["stdout"].strip() == "REDERIVES"

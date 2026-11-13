@@ -3,9 +3,10 @@
  * Proves, in Node, that the checker embedded in the BUILT page is the checker, and that the page's
  * own code gives every vector's expected answer.
  *
- *   node tests/prove_page.js --page dist/receipt_check_v0.html --checker src/check_v0.js
- *        --vectors src/receipt_v0_vectors.json.ref --expected examples/expected_cli_X.json
- *        --utc STAMP [--lab-runner runs/lab_runner_X.jsonl] [--concurrency 8]
+ *   (from receipt/v0/page/ of the repository)
+ *   node tests/prove_page2.js --page receipt_check_v0.html --checker ../check_v0.js
+ *        --vectors ../vectors/receipt_v0_vectors.json --expected examples/expected_cli_X.json
+ *        --utc STAMP [--out-dir DIR] [--lab-runner runs/lab_runner_X.jsonl] [--concurrency 8]
  *
  * Every vector runs through the page's own runJob (hash check, worker source from the page's
  * buildWorkerSource, one fresh worker per run, the page's time limit, the page's acceptResult),

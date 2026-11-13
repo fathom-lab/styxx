@@ -1,8 +1,9 @@
 """Builds the one-file RECEIPT v0 check page.
 
-In the repository (receipt/v0/page/), from the checker of the same tree; this is the command that
-made the committed receipt_check_v0.html (README.md gives it with the exact --origin text):
-    python receipt/v0/page/build_page.py receipt/v0/check_v0.js --repo github.com/fathom-lab/styxx         --origin "..." [--out PATH]
+In the repository (receipt/v0/page/), from the checker of the same tree. README.md gives the exact
+command that made the committed receipt_check_v0.html, with its full --origin text; its form is:
+    python receipt/v0/page/build_page.py receipt/v0/check_v0.js --repo github.com/fathom-lab/styxx
+                         --origin "<the --origin text in README.md>" [--out PATH]
 
 From a checker file (the general form):
     python build_page.py CHECKER.js [--out PATH] [--origin LABEL] [--repo LABEL]
@@ -27,15 +28,20 @@ unchanged, inside <script type="text/plain" id="checker-src">, and their sha256 
 The build REFUSES (exit 2, or 3 for an existing page from another checker), and writes no page, when
 (with --from-git, the write-once copies under src/checkers/ and a new examples file may already be written):
   - the checker holds anything but ASCII, a CR, a NUL, "<script" or "</script" in any case;
+  - a page source (page_src/page.html, page.css or page_main.js) holds anything but ASCII, a CR or a
+    NUL (an HTML parser turns CRLF into LF, so a CSP hash taken over CR bytes would not match);
   - the examples file was made with another checker (its recorded checker sha256 differs), its example
-    bytes differ from its records, an example's receipt differs from the recorded stdout, an example's
-    recorded span verdicts differ from the receipt, or a recorded RECHECK is not REDERIVES;
+    bytes differ from its records, an example's receipt differs from the recorded stdout, a recorded
+    check or recheck exit code is not 0, an example's recorded span verdicts or document verdict
+    differ from the receipt, a recorded RECHECK is not REDERIVES, or an example document, the
+    manifest or a receipt is not ASCII with LF line ends;
   - the page script's limits differ from the build's (10 s, 2,000,000 receipt characters, 200 rows,
     200,000 drawn characters) or from the numbers the page text states;
   - --origin, --repo hold anything outside their plain character sets (no scheme, no quotes);
   - the page, once filled, holds http:, https:, <a , <img, <link, <iframe, <form, <object, <embed,
     <base or srcset, or a script that would not come back out of the HTML parser unchanged;
-  - with --from-git: the commit does not resolve, the file is not at that commit, a kept copy under
+  - with --from-git: --origin or --expected is given too (refused before anything is read or written),
+    the commit does not resolve, the file is not at that commit, a kept copy under
     src/checkers/ exists with other bytes, the origin remote cannot be named without --repo, or no
     --utc is given when the examples must be made;
   - the output exists and was built from another checker, unless --replace-different-checker.
@@ -115,6 +121,17 @@ def raw_text_ok(b, what, allow_comment_open):
         die("%s holds <script or </script; it cannot sit inside a script element unchanged" % what)
     if not allow_comment_open and b"<!--" in b:
         die("%s holds <!--" % what)
+
+
+def read_source(name):
+    """A page source as text; refuses anything the HTML parser or a CSP hash would see differently."""
+    with open(os.path.join(SRC, name), "rb") as f:
+        b = f.read()
+    if any(x >= 0x80 for x in b):
+        die("page_src/%s is not ASCII; refusing" % name)
+    if b"\r" in b or b"\x00" in b:
+        die("page_src/%s holds a CR or a NUL; the HTML parser would change it and its CSP hash would not match" % name)
+    return b.decode("ascii")
 
 
 def load_examples(expected_path, checker_sha):
@@ -290,11 +307,11 @@ def main():
     if a.from_git:
         if a.checker:
             die("give a checker file or --from-git, not both")
-        checker_path, origin, repo_label, published, expected = from_git(a)
         if a.origin is not None:
             die("--origin is set by --from-git")
         if a.expected is not None:
             die("--expected is chosen by --from-git")
+        checker_path, origin, repo_label, published, expected = from_git(a)
     else:
         if not a.checker:
             die("give a checker file, or --from-git REPO --commit COMMIT")
@@ -315,12 +332,9 @@ def main():
             die("no examples/expected_cli_*.json made with checker %s; run make_examples.py with it first" % checker_sha)
     examples, expected_rel, expected_sha = load_examples(expected, checker_sha)
 
-    with open(os.path.join(SRC, "page_main.js"), "r", encoding="ascii", newline="") as f:
-        main_tpl = f.read()
-    with open(os.path.join(SRC, "page.css"), "r", encoding="ascii", newline="") as f:
-        css = f.read()
-    with open(os.path.join(SRC, "page.html"), "r", encoding="ascii", newline="") as f:
-        page_tpl = f.read()
+    main_tpl = read_source("page_main.js")
+    css = read_source("page.css")
+    page_tpl = read_source("page.html")
     if "const TIME_LIMIT_MS = %d;" % TIME_LIMIT_MS not in main_tpl:
         die("page_main.js TIME_LIMIT_MS differs from the build's (the page text says 10 seconds)")
     if main_tpl.count("const MAX_RECEIPT_CHARS = %d;" % MAX_RECEIPT_CHARS) != 2 or main_tpl.count("const MAX_RECEIPT_CHARS") != 2:
