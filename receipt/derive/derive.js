@@ -1,0 +1,1525 @@
+// derive.js: the checker layer of DERIVE v0 (DRAFT, unsigned), in one dependency-free file that runs
+// in Node and in a browser. See DERIVE_v0.md beside this file; derive.py is the same rules in Python.
+//
+// Pure: every function above the CLI block is a function of its arguments. No floating point in any
+// value: row numbers, literals and results are BigInt; Numbers are used only for counts and indices,
+// all below 2^53. The host's JSON reader is never used: JSON is read by readJson below, which keeps
+// every number as its written token, so 9007199254740993 never passes through a Number. Objects
+// read from JSON are Maps of their pairs, never plain objects, so no member name reaches a
+// prototype. No evaluation of text, no clock, no network, no storage. Only the CLI block at the end
+// touches a file, and only the files named on its command line.
+"use strict";
+
+const PROFILE = "derive/v0-draft";
+const CAP_RECEIPT_BYTES = 16777216;
+const CAP_ROWS = 100000;
+const CAP_VALUES = 1000000;
+const CAP_DEPTH = 32;
+const CAP_BLOCKS = 16;
+const CAP_BLOCK_BYTES = 65536;
+const CAP_DERIVATIONS = 256;
+const CAP_SPANS = 256;
+const CAP_DERIVATION_BYTES = 4096;
+const CAP_TESTS = 8;
+const CAP_IN = 16;
+const CAP_STRING_BYTES = 256;
+const CAP_POINTER_BYTES = 1024;
+const CAP_POINTER_TOKENS = 16;
+const CAP_PLACES = 18;
+const CAP_INT_DIGITS = 37;
+const CAP_INNER_CP = 300;
+const CAP_CENSUS = 16;
+const CAP_SIBLINGS = 16;
+const CAP_SHOW_CP = 64;
+const CAP_CLAIM_BYTES = 8388608;
+const CAP_BATCH_BYTES = 33554432;
+const BUDGET = 67108864;
+const SCALE = 18;
+const TEN18 = 1000000000000000000n;
+const INT_MAX = 9007199254740991;
+
+const OPS = ["count", "share", "percent", "sum", "mean"];
+const UNRESOLVED_REASONS = ["manifest_absent", "manifest_integrity", "rung_unknown",
+  "manifest_id_missing", "manifest_bytes_absent"];
+const RESOLUTION_MALFORMED = ["kind_of_source_unknown", "receipt_author_minted"];
+const RUNGS = ["L1", "L2", "undeclared"];
+
+function M(pairs) { return new Map(pairs); }
+
+class Mal { constructor(reason, detail) { this.reason = reason; this.detail = detail === undefined ? M([]) : detail; } }
+class Refusal { constructor(code) { this.code = code; } }
+class Unresolved { constructor(reason) { this.reason = reason; } }
+class NotJson { }
+class TooManyValues { }
+
+// ------------------------------------------------------------------ strict JSON (appendix A.1)
+// value forms: null, true, false, string, {t:"n",tok}, {t:"nf",tok}, {t:"a",items,spans},
+// {t:"o",pairs,last:Map,repeated:Set,spans}
+function newArr() { return { t: "a", items: [], spans: [] }; }
+function newObj() { return { t: "o", pairs: [], last: new Map(), repeated: new Set(), spans: [] }; }
+function addTo(node, key, v, s, e) {
+  if (node.t === "a") { node.items.push(v); node.spans.push([s, e]); return; }
+  node.pairs.push([key, v]); node.spans.push([s, e]);
+  if (node.last.has(key)) node.repeated.add(key);
+  node.last.set(key, v);
+}
+function isNum(v) { return v !== null && typeof v === "object" && v.t === "n"; }
+function isNF(v) { return v !== null && typeof v === "object" && v.t === "nf"; }
+function isArr(v) { return v !== null && typeof v === "object" && v.t === "a"; }
+function isObj(v) { return v !== null && typeof v === "object" && v.t === "o"; }
+
+function isWs(c) { return c === " " || c === "\t" || c === "\n" || c === "\r"; }
+function ws(t, i, n) { while (i < n && isWs(t[i])) i++; return i; }
+function isDigit(c) { return c >= "0" && c <= "9" && c.length === 1; }
+const HEX = "0123456789abcdefABCDEF";
+const ESC = new Map([["\"", "\""], ["\\", "\\"], ["/", "/"], ["b", "\b"], ["f", "\f"], ["n", "\n"], ["r", "\r"], ["t", "\t"]]);
+
+function hex4(t, k, n) {
+  if (k + 4 > n) throw new NotJson();
+  let v = 0;
+  for (let j = 0; j < 4; j++) {
+    const d = HEX.indexOf(t[k + j]);
+    if (d < 0) throw new NotJson();
+    v = v * 16 + (d < 16 ? d : d - 6);
+  }
+  return v;
+}
+
+function readString(t, i, n) {
+  let j = i + 1;
+  const parts = [];
+  for (;;) {
+    // one forward scan to the next quote or backslash; a control character ends the read
+    let end = j;
+    for (;;) {
+      if (end >= n) throw new NotJson();
+      const cc = t.charCodeAt(end);
+      if (cc === 34 || cc === 92) break;
+      if (cc < 32) throw new NotJson();
+      end++;
+    }
+    parts.push(t.slice(j, end));
+    if (t.charCodeAt(end) === 34) return [parts.join(""), end + 1];
+    const b = end;
+    if (b + 1 >= n) throw new NotJson();
+    const e = t[b + 1];
+    if (e === "u") {
+      const cu = hex4(t, b + 2, n);
+      j = b + 6;
+      parts.push(String.fromCharCode(cu));
+    } else if (ESC.has(e)) {
+      parts.push(ESC.get(e)); j = b + 2;
+    } else throw new NotJson();
+  }
+}
+
+function readNumber(t, i, n) {
+  const s = i;
+  if (t[i] === "-") i++;
+  if (i >= n) throw new NotJson();
+  if (t[i] === "0") i++;
+  else if (t[i] >= "1" && t[i] <= "9") { while (i < n && isDigit(t[i])) i++; }
+  else throw new NotJson();
+  if (i < n && t[i] === ".") {
+    i++; const k = i;
+    while (i < n && isDigit(t[i])) i++;
+    if (i === k) throw new NotJson();
+  }
+  if (i < n && (t[i] === "e" || t[i] === "E")) {
+    i++;
+    if (i < n && (t[i] === "+" || t[i] === "-")) i++;
+    const k = i;
+    while (i < n && isDigit(t[i])) i++;
+    if (i === k) throw new NotJson();
+  }
+  return [t.slice(s, i), i];
+}
+
+function readKey(t, i, n) {
+  if (i >= n || t[i] !== "\"") throw new NotJson();
+  const r = readString(t, i, n);
+  i = ws(t, r[1], n);
+  if (i >= n || t[i] !== ":") throw new NotJson();
+  return [r[0], ws(t, i + 1, n)];
+}
+
+function readJson(t, ctr) {
+  const n = t.length;
+  let i = ws(t, 0, n);
+  const stack = [];
+  for (;;) {
+    if (i >= n) throw new NotJson();
+    ctr.n += 1;
+    if (ctr.n > CAP_VALUES) throw new TooManyValues();
+    const c = t[i];
+    let val;
+    let opened = false;
+    if (c === "[" || c === "{") {
+      if (stack.length >= CAP_DEPTH) throw new NotJson();
+      const node = c === "[" ? newArr() : newObj();
+      const close = c === "[" ? "]" : "}";
+      i = ws(t, i + 1, n);
+      if (i < n && t[i] === close) { i += 1; val = node; }
+      else {
+        const frame = [node, c === "{", null, 0];
+        if (c === "{") { const r = readKey(t, i, n); frame[2] = r[0]; i = r[1]; }
+        frame[3] = i;
+        stack.push(frame);
+        opened = true;
+      }
+    } else if (c === "\"") { const r = readString(t, i, n); val = r[0]; i = r[1]; }
+    else if (t.startsWith("-Infinity", i)) { val = { t: "nf", tok: "-Infinity" }; i += 9; }
+    else if (c === "-" || isDigit(c)) { const r = readNumber(t, i, n); val = { t: "n", tok: r[0], sv: undefined }; i = r[1]; }
+    else if (t.startsWith("true", i)) { val = true; i += 4; }
+    else if (t.startsWith("false", i)) { val = false; i += 5; }
+    else if (t.startsWith("null", i)) { val = null; i += 4; }
+    else if (t.startsWith("NaN", i)) { val = { t: "nf", tok: "NaN" }; i += 3; }
+    else if (t.startsWith("Infinity", i)) { val = { t: "nf", tok: "Infinity" }; i += 8; }
+    else throw new NotJson();
+    if (opened) continue;
+    for (;;) {
+      if (stack.length === 0) {
+        i = ws(t, i, n);
+        if (i !== n) throw new NotJson();
+        return val;
+      }
+      const fr = stack[stack.length - 1];
+      addTo(fr[0], fr[2], val, fr[3], i);
+      i = ws(t, i, n);
+      if (i < n && t[i] === ",") {
+        i = ws(t, i + 1, n);
+        if (fr[1]) { const r = readKey(t, i, n); fr[2] = r[0]; i = r[1]; }
+        fr[3] = i;
+        break;
+      }
+      if (i < n && t[i] === (fr[1] ? "}" : "]")) { i += 1; stack.pop(); val = fr[0]; continue; }
+      throw new NotJson();
+    }
+  }
+}
+
+function utf8Bad(data) {
+  const n = data.length;
+  let i = 0;
+  while (i < n) {
+    const b = data[i];
+    if (b < 0x80) { i++; continue; }
+    let need, lo, hi;
+    if (b >= 0xC2 && b <= 0xDF) { need = 1; lo = 0x80; hi = 0xBF; }
+    else if (b === 0xE0) { need = 2; lo = 0xA0; hi = 0xBF; }
+    else if ((b >= 0xE1 && b <= 0xEC) || (b >= 0xEE && b <= 0xEF)) { need = 2; lo = 0x80; hi = 0xBF; }
+    else if (b === 0xED) { need = 2; lo = 0x80; hi = 0x9F; }
+    else if (b === 0xF0) { need = 3; lo = 0x90; hi = 0xBF; }
+    else if (b >= 0xF1 && b <= 0xF3) { need = 3; lo = 0x80; hi = 0xBF; }
+    else if (b === 0xF4) { need = 3; lo = 0x80; hi = 0x8F; }
+    else return i;
+    if (i + need >= n) return i;
+    if (!(data[i + 1] >= lo && data[i + 1] <= hi)) return i;
+    for (let k = 2; k <= need; k++) if (!(data[i + k] >= 0x80 && data[i + k] <= 0xBF)) return i;
+    i += need + 1;
+  }
+  return -1;
+}
+
+function decodeUtf8(data) {
+  return new TextDecoder("utf-8", { fatal: true, ignoreBOM: true }).decode(data);
+}
+
+function jtype(v) {
+  if (v === null) return "null";
+  if (v === true || v === false) return "boolean";
+  if (typeof v === "string") return "string";
+  if (isNum(v)) return "number";
+  if (isNF(v)) return "non_finite";
+  if (isArr(v)) return "array";
+  return "object";
+}
+
+// ------------------------------------------------------------------ code points
+function codePoints(s) { const out = []; for (const ch of s) out.push(ch.codePointAt(0)); return out; }
+function cpLen(s) { let k = 0; for (const _ of s) k++; return k; }
+function cmpCP(a, b) {
+  let i = 0, j = 0;
+  for (;;) {
+    if (i >= a.length) return j >= b.length ? 0 : -1;
+    if (j >= b.length) return 1;
+    const x = a.codePointAt(i), y = b.codePointAt(j);
+    if (x !== y) return x < y ? -1 : 1;
+    i += x > 0xFFFF ? 2 : 1; j += y > 0xFFFF ? 2 : 1;
+  }
+}
+function hasLone(s) { for (const ch of s) { const c = ch.codePointAt(0); if (c >= 0xD800 && c <= 0xDFFF) return true; } return false; }
+function utf8Len(s) {
+  let n = 0;
+  for (const ch of s) { const o = ch.codePointAt(0); n += o < 0x80 ? 1 : o < 0x800 ? 2 : o < 0x10000 ? 3 : 4; }
+  return n;
+}
+function show(s) {
+  let out = "", k = 0;
+  for (const ch of s) {
+    if (k >= CAP_SHOW_CP) break;
+    const c = ch.codePointAt(0);
+    out += (c >= 0xD800 && c <= 0xDFFF) ? "?" : ch;
+    k++;
+  }
+  return out;
+}
+
+// ------------------------------------------------------------------ canonical form (appendix A.2)
+function cstr(s) {
+  let out = "\"";
+  for (const ch of s) {
+    const o = ch.codePointAt(0);
+    if (ch === "\"") out += "\\\"";
+    else if (ch === "\\") out += "\\\\";
+    else if (o === 8) out += "\\b";
+    else if (o === 9) out += "\\t";
+    else if (o === 10) out += "\\n";
+    else if (o === 12) out += "\\f";
+    else if (o === 13) out += "\\r";
+    else if (o < 0x20) out += "\\u00" + (o < 16 ? "0" : "") + o.toString(16);
+    else if (o >= 0xD800 && o <= 0xDFFF) throw new Error("lone_surrogate");
+    else out += ch;
+  }
+  return out + "\"";
+}
+
+function canon(v) {
+  if (v === null) return "null";
+  if (v === true) return "true";
+  if (v === false) return "false";
+  if (typeof v === "number") {
+    if (!Number.isSafeInteger(v)) throw new Error("int_range");
+    return String(v);
+  }
+  if (typeof v === "string") return cstr(v);
+  if (Array.isArray(v)) return "[" + v.map(canon).join(",") + "]";
+  if (v instanceof Map) {
+    const ks = Array.from(v.keys()).sort(cmpCP);
+    for (const k of ks) for (const ch of k) if (ch.codePointAt(0) > 0x7E) throw new Error("non_ascii_key");
+    return "{" + ks.map((k) => cstr(k) + ":" + canon(v.get(k))).join(",") + "}";
+  }
+  throw new Error("type");
+}
+
+// ------------------------------------------------------------------ sha256 (FIPS 180-4)
+const K256 = [
+  0x428a2f98, 0x71374491, 0xb5c0fbcf, 0xe9b5dba5, 0x3956c25b, 0x59f111f1, 0x923f82a4, 0xab1c5ed5,
+  0xd807aa98, 0x12835b01, 0x243185be, 0x550c7dc3, 0x72be5d74, 0x80deb1fe, 0x9bdc06a7, 0xc19bf174,
+  0xe49b69c1, 0xefbe4786, 0x0fc19dc6, 0x240ca1cc, 0x2de92c6f, 0x4a7484aa, 0x5cb0a9dc, 0x76f988da,
+  0x983e5152, 0xa831c66d, 0xb00327c8, 0xbf597fc7, 0xc6e00bf3, 0xd5a79147, 0x06ca6351, 0x14292967,
+  0x27b70a85, 0x2e1b2138, 0x4d2c6dfc, 0x53380d13, 0x650a7354, 0x766a0abb, 0x81c2c92e, 0x92722c85,
+  0xa2bfe8a1, 0xa81a664b, 0xc24b8b70, 0xc76c51a3, 0xd192e819, 0xd6990624, 0xf40e3585, 0x106aa070,
+  0x19a4c116, 0x1e376c08, 0x2748774c, 0x34b0bcb5, 0x391c0cb3, 0x4ed8aa4a, 0x5b9cca4f, 0x682e6ff3,
+  0x748f82ee, 0x78a5636f, 0x84c87814, 0x8cc70208, 0x90befffa, 0xa4506ceb, 0xbef9a3f7, 0xc67178f2];
+
+function sha256Hex(bytes) {
+  const len = bytes.length;
+  const total = ((len + 9 + 63) >>> 6) << 6;
+  const m = new Uint8Array(total);
+  m.set(bytes);
+  m[len] = 0x80;
+  const bits = BigInt(len) * 8n;
+  const bitsHi = Number(bits >> 32n);
+  const bitsLo = Number(bits & 0xffffffffn);
+  m[total - 8] = (bitsHi >>> 24) & 255; m[total - 7] = (bitsHi >>> 16) & 255;
+  m[total - 6] = (bitsHi >>> 8) & 255; m[total - 5] = bitsHi & 255;
+  m[total - 4] = (bitsLo >>> 24) & 255; m[total - 3] = (bitsLo >>> 16) & 255;
+  m[total - 2] = (bitsLo >>> 8) & 255; m[total - 1] = bitsLo & 255;
+  const H = [0x6a09e667, 0xbb67ae85, 0x3c6ef372, 0xa54ff53a, 0x510e527f, 0x9b05688c, 0x1f83d9ab, 0x5be0cd19];
+  const w = new Array(64);
+  for (let off = 0; off < total; off += 64) {
+    for (let j = 0; j < 16; j++) {
+      const p = off + j * 4;
+      w[j] = ((m[p] << 24) | (m[p + 1] << 16) | (m[p + 2] << 8) | m[p + 3]) >>> 0;
+    }
+    for (let j = 16; j < 64; j++) {
+      const a = w[j - 15], b = w[j - 2];
+      const s0 = ((a >>> 7) | (a << 25)) ^ ((a >>> 18) | (a << 14)) ^ (a >>> 3);
+      const s1 = ((b >>> 17) | (b << 15)) ^ ((b >>> 19) | (b << 13)) ^ (b >>> 10);
+      w[j] = (w[j - 16] + s0 + w[j - 7] + s1) >>> 0;
+    }
+    let [a, b, c, d, e, f, g, h] = H;
+    for (let j = 0; j < 64; j++) {
+      const S1 = ((e >>> 6) | (e << 26)) ^ ((e >>> 11) | (e << 21)) ^ ((e >>> 25) | (e << 7));
+      const ch = (e & f) ^ (~e & g);
+      const t1 = (h + S1 + ch + K256[j] + w[j]) >>> 0;
+      const S0 = ((a >>> 2) | (a << 30)) ^ ((a >>> 13) | (a << 19)) ^ ((a >>> 22) | (a << 10));
+      const mj = (a & b) ^ (a & c) ^ (b & c);
+      const t2 = (S0 + mj) >>> 0;
+      h = g; g = f; f = e; e = (d + t1) >>> 0; d = c; c = b; b = a; a = (t1 + t2) >>> 0;
+    }
+    H[0] = (H[0] + a) >>> 0; H[1] = (H[1] + b) >>> 0; H[2] = (H[2] + c) >>> 0; H[3] = (H[3] + d) >>> 0;
+    H[4] = (H[4] + e) >>> 0; H[5] = (H[5] + f) >>> 0; H[6] = (H[6] + g) >>> 0; H[7] = (H[7] + h) >>> 0;
+  }
+  return H.map((x) => x.toString(16).padStart(8, "0")).join("");
+}
+
+function utf8Encode(s) { return new TextEncoder().encode(s); }
+
+// ------------------------------------------------------------------ plain values with a canonical form
+// returns [value] or null
+function plainCanonical(v, depth) {
+  if (v === null || v === true || v === false) return [v];
+  if (typeof v === "string") return hasLone(v) ? null : [v];
+  if (isNum(v)) {
+    const t = v.tok;
+    const neg = t.startsWith("-");
+    const d = neg ? t.slice(1) : t;
+    if (d.length === 0) return null;
+    for (const ch of d) if (!isDigit(ch)) return null;
+    if (d === "0") return neg ? null : [0];
+    if (d[0] === "0" || d.length > 16) return null;
+    if (BigInt(d) > BigInt(INT_MAX)) return null;
+    const x = Number(d);
+    return [neg ? -x : x];
+  }
+  if (isNF(v)) return null;
+  if (depth >= CAP_DEPTH) return null;
+  if (isArr(v)) {
+    const out = [];
+    for (const x of v.items) { const p = plainCanonical(x, depth + 1); if (p === null) return null; out.push(p[0]); }
+    return [out];
+  }
+  if (v.repeated.size > 0) return null;
+  const out = new Map();
+  for (const [k, x] of v.pairs) {
+    for (const ch of k) if (ch.codePointAt(0) > 0x7E) return null;
+    const p = plainCanonical(x, depth + 1);
+    if (p === null) return null;
+    out.set(k, p[0]);
+  }
+  return [out];
+}
+
+// ------------------------------------------------------------------ section 3: the derivation
+function isName(s) {
+  if (typeof s !== "string" || s.length < 1 || s.length > 32) return false;
+  if (!(s[0] >= "a" && s[0] <= "z")) return false;
+  for (let i = 1; i < s.length; i++) {
+    const c = s[i];
+    if (!((c >= "a" && c <= "z") || isDigit(c) || c === "_")) return false;
+  }
+  return true;
+}
+
+function pointerTokens(p) {
+  if (p === "") return [];
+  if (p[0] !== "/" || utf8Len(p) > CAP_POINTER_BYTES) return null;
+  const raw = p.split("/").slice(1);
+  if (raw.length > CAP_POINTER_TOKENS) return null;
+  const out = [];
+  for (const tok of raw) {
+    let k = 0;
+    for (;;) {
+      k = tok.indexOf("~", k);
+      if (k < 0) break;
+      if (k + 1 >= tok.length || (tok[k + 1] !== "0" && tok[k + 1] !== "1")) return null;
+      k += 2;
+    }
+    out.push(tok.split("~1").join("/").split("~0").join("~"));
+  }
+  return out;
+}
+
+function allDigits(s) { if (s.length === 0) return false; for (const ch of s) if (!isDigit(ch)) return false; return true; }
+
+function decScaled(s) {
+  if (typeof s !== "string") return null;
+  const neg = s.startsWith("-");
+  const t = neg ? s.slice(1) : s;
+  const dot = t.indexOf(".");
+  const whole = dot < 0 ? t : t.slice(0, dot);
+  const frac = dot < 0 ? "" : t.slice(dot + 1);
+  if (!allDigits(whole)) return null;
+  if (whole.length > 1 && whole[0] === "0") return null;
+  if (whole.length > 18) return null;
+  if (dot >= 0 && (!allDigits(frac) || frac.length > 18)) return null;
+  const v = BigInt(whole + frac + "0".repeat(SCALE - frac.length));
+  return neg ? -v : v;
+}
+
+function isPlainInt(x) { return typeof x === "number"; }
+function isMap(x) { return x instanceof Map; }
+
+function litOk(x, ordered) {
+  if (x === true || x === false) return !ordered;
+  if (isPlainInt(x)) return true;
+  if (typeof x === "string") return utf8Len(x) <= CAP_STRING_BYTES;
+  if (isMap(x)) return x.size === 1 && x.has("dec") && decScaled(x.get("dec")) !== null;
+  return false;
+}
+
+const SUBJECT_KEYS = ["field", "at", "row"];
+const RELATIONS = ["eq", "in", "ge", "le", "present"];
+
+function subjectOk(t, jsonl, forOf) {
+  const keys = Array.from(t.keys()).filter((k) => SUBJECT_KEYS.includes(k));
+  if (keys.length !== 1) return false;
+  const k = keys[0];
+  const x = t.get(k);
+  if (k === "field") return typeof x === "string" && utf8Len(x) <= CAP_STRING_BYTES;
+  if (k === "at") {
+    if (typeof x !== "string" || x === "") return false;
+    return pointerTokens(x) !== null;
+  }
+  if (x === "value") return true;
+  if (x === "key") return !jsonl && !forOf;
+  return false;
+}
+
+function testOk(t, jsonl) {
+  if (!isMap(t) || t.size !== 2 || !subjectOk(t, jsonl, false)) return false;
+  const rel = Array.from(t.keys()).filter((k) => !SUBJECT_KEYS.includes(k));
+  if (rel.length !== 1) return false;
+  const r = rel[0];
+  const x = t.get(r);
+  if (r === "eq") return litOk(x, false);
+  if (r === "ge" || r === "le") return litOk(x, true);
+  if (r === "in") {
+    if (!Array.isArray(x) || x.length < 1 || x.length > CAP_IN) return false;
+    for (const y of x) if (!litOk(y, false)) return false;
+    return new Set(x.map(canon)).size === x.length;
+  }
+  if (r === "present") return (x === true || x === false) && !t.has("row");
+  return false;
+}
+
+function sameKeys(have, want) {
+  if (have.length !== want.length) return false;
+  for (let i = 0; i < have.length; i++) if (have[i] !== want[i]) return false;
+  return true;
+}
+
+function checkDerivation(raw) {
+  if (!isObj(raw)) throw new Mal("derivation_form");
+  const p = plainCanonical(raw, 1);
+  if (p === null) throw new Mal("derivation_form");
+  const d = p[0];
+  if (utf8Len(canon(d)) > CAP_DERIVATION_BYTES) throw new Mal("derivation_form");
+  const op = d.get("op");
+  if (typeof op !== "string") throw new Mal("derivation_form");
+  if (!OPS.includes(op)) throw new Mal("op_unknown", M([["op", op]]));
+  const WANT = {
+    count: ["op", "rows", "where"], share: ["match", "op", "rows", "where"],
+    percent: ["match", "op", "rows", "where"], sum: ["of", "op", "rows", "where"],
+    mean: ["of", "op", "rows", "where"]};
+  const want = op === "count" ? WANT.count : op === "share" ? WANT.share : op === "percent" ? WANT.percent
+    : op === "sum" ? WANT.sum : WANT.mean;
+  const have = Array.from(d.keys()).filter((k) => k !== "within").sort(cmpCP);
+  if (!sameKeys(have, want)) throw new Mal("derivation_form");
+  if (d.has("within") && !isName(d.get("within"))) throw new Mal("derivation_form");
+  const rows = d.get("rows");
+  if (!isMap(rows) || (rows.get("format") !== "json" && rows.get("format") !== "jsonl")) throw new Mal("derivation_form");
+  const jsonl = rows.get("format") === "jsonl";
+  if (jsonl) {
+    if (rows.size !== 1) throw new Mal("derivation_form");
+  } else {
+    if (rows.size !== 2 || !rows.has("at") || typeof rows.get("at") !== "string") throw new Mal("derivation_form");
+    if (pointerTokens(rows.get("at")) === null) throw new Mal("derivation_form");
+  }
+  const w = d.get("where");
+  const m = d.has("match") ? d.get("match") : [];
+  if (!Array.isArray(w) || !Array.isArray(m)) throw new Mal("derivation_form");
+  if (d.has("match") && m.length === 0) throw new Mal("derivation_form");
+  if (w.length + m.length > CAP_TESTS) throw new Mal("derivation_form");
+  for (const t of w.concat(m)) if (!testOk(t, jsonl)) throw new Mal("derivation_form");
+  if (d.has("of")) {
+    const of = d.get("of");
+    if (!isMap(of) || of.size !== 1 || !subjectOk(of, jsonl, true)) throw new Mal("derivation_form");
+  }
+  return d;
+}
+
+// ------------------------------------------------------------------ v0 7.2: the printed number
+const PUNCT = new Set(["_", ".", ",", "+", "-", "%", "/", ":", "−", "±"].concat([
+  0xAD, 0x58A, 0x5BE, 0x1400, 0x1806, 0x2010, 0x2011, 0x2012, 0x2013, 0x2014, 0x2015, 0x2E17,
+  0x2E1A, 0x2E3A, 0x2E3B, 0x2E40, 0x2E5D, 0x301C, 0x3030, 0x30A0, 0xFE31, 0xFE32, 0xFE58,
+  0xFE63, 0xFF0D, 0x10EAD].map((c) => String.fromCodePoint(c))));
+// A.3's classes are pinned to Unicode 15.0.0 (section 18.3): read from this table, never from the
+// engine's Unicode property escapes in regular expressions, which follow the engine's own Unicode version.
+// BEGIN UNICODE 15.0.0 TABLE (written by tools/unicode_table.py; do not edit by hand)
+const UNI_LN = ""
+  + "0030-0039 0041-005A 0061-007A 00AA 00B2-00B3 00B5 00B9-00BA 00BC-00BE 00C0-00D6 00D8-00F6 00F8-02C1 02C6-02D1 "
+  + "02E0-02E4 02EC 02EE 0370-0374 0376-0377 037A-037D 037F 0386 0388-038A 038C 038E-03A1 03A3-03F5 "
+  + "03F7-0481 048A-052F 0531-0556 0559 0560-0588 05D0-05EA 05EF-05F2 0620-064A 0660-0669 066E-066F 0671-06D3 06D5 "
+  + "06E5-06E6 06EE-06FC 06FF 0710 0712-072F 074D-07A5 07B1 07C0-07EA 07F4-07F5 07FA 0800-0815 081A "
+  + "0824 0828 0840-0858 0860-086A 0870-0887 0889-088E 08A0-08C9 0904-0939 093D 0950 0958-0961 0966-096F "
+  + "0971-0980 0985-098C 098F-0990 0993-09A8 09AA-09B0 09B2 09B6-09B9 09BD 09CE 09DC-09DD 09DF-09E1 09E6-09F1 "
+  + "09F4-09F9 09FC 0A05-0A0A 0A0F-0A10 0A13-0A28 0A2A-0A30 0A32-0A33 0A35-0A36 0A38-0A39 0A59-0A5C 0A5E 0A66-0A6F "
+  + "0A72-0A74 0A85-0A8D 0A8F-0A91 0A93-0AA8 0AAA-0AB0 0AB2-0AB3 0AB5-0AB9 0ABD 0AD0 0AE0-0AE1 0AE6-0AEF 0AF9 "
+  + "0B05-0B0C 0B0F-0B10 0B13-0B28 0B2A-0B30 0B32-0B33 0B35-0B39 0B3D 0B5C-0B5D 0B5F-0B61 0B66-0B6F 0B71-0B77 0B83 "
+  + "0B85-0B8A 0B8E-0B90 0B92-0B95 0B99-0B9A 0B9C 0B9E-0B9F 0BA3-0BA4 0BA8-0BAA 0BAE-0BB9 0BD0 0BE6-0BF2 0C05-0C0C "
+  + "0C0E-0C10 0C12-0C28 0C2A-0C39 0C3D 0C58-0C5A 0C5D 0C60-0C61 0C66-0C6F 0C78-0C7E 0C80 0C85-0C8C 0C8E-0C90 "
+  + "0C92-0CA8 0CAA-0CB3 0CB5-0CB9 0CBD 0CDD-0CDE 0CE0-0CE1 0CE6-0CEF 0CF1-0CF2 0D04-0D0C 0D0E-0D10 0D12-0D3A 0D3D "
+  + "0D4E 0D54-0D56 0D58-0D61 0D66-0D78 0D7A-0D7F 0D85-0D96 0D9A-0DB1 0DB3-0DBB 0DBD 0DC0-0DC6 0DE6-0DEF 0E01-0E30 "
+  + "0E32-0E33 0E40-0E46 0E50-0E59 0E81-0E82 0E84 0E86-0E8A 0E8C-0EA3 0EA5 0EA7-0EB0 0EB2-0EB3 0EBD 0EC0-0EC4 "
+  + "0EC6 0ED0-0ED9 0EDC-0EDF 0F00 0F20-0F33 0F40-0F47 0F49-0F6C 0F88-0F8C 1000-102A 103F-1049 1050-1055 105A-105D "
+  + "1061 1065-1066 106E-1070 1075-1081 108E 1090-1099 10A0-10C5 10C7 10CD 10D0-10FA 10FC-1248 124A-124D "
+  + "1250-1256 1258 125A-125D 1260-1288 128A-128D 1290-12B0 12B2-12B5 12B8-12BE 12C0 12C2-12C5 12C8-12D6 12D8-1310 "
+  + "1312-1315 1318-135A 1369-137C 1380-138F 13A0-13F5 13F8-13FD 1401-166C 166F-167F 1681-169A 16A0-16EA 16EE-16F8 1700-1711 "
+  + "171F-1731 1740-1751 1760-176C 176E-1770 1780-17B3 17D7 17DC 17E0-17E9 17F0-17F9 1810-1819 1820-1878 1880-1884 "
+  + "1887-18A8 18AA 18B0-18F5 1900-191E 1946-196D 1970-1974 1980-19AB 19B0-19C9 19D0-19DA 1A00-1A16 1A20-1A54 1A80-1A89 "
+  + "1A90-1A99 1AA7 1B05-1B33 1B45-1B4C 1B50-1B59 1B83-1BA0 1BAE-1BE5 1C00-1C23 1C40-1C49 1C4D-1C7D 1C80-1C88 1C90-1CBA "
+  + "1CBD-1CBF 1CE9-1CEC 1CEE-1CF3 1CF5-1CF6 1CFA 1D00-1DBF 1E00-1F15 1F18-1F1D 1F20-1F45 1F48-1F4D 1F50-1F57 1F59 "
+  + "1F5B 1F5D 1F5F-1F7D 1F80-1FB4 1FB6-1FBC 1FBE 1FC2-1FC4 1FC6-1FCC 1FD0-1FD3 1FD6-1FDB 1FE0-1FEC 1FF2-1FF4 "
+  + "1FF6-1FFC 2070-2071 2074-2079 207F-2089 2090-209C 2102 2107 210A-2113 2115 2119-211D 2124 2126 "
+  + "2128 212A-212D 212F-2139 213C-213F 2145-2149 214E 2150-2189 2460-249B 24EA-24FF 2776-2793 2C00-2CE4 2CEB-2CEE "
+  + "2CF2-2CF3 2CFD 2D00-2D25 2D27 2D2D 2D30-2D67 2D6F 2D80-2D96 2DA0-2DA6 2DA8-2DAE 2DB0-2DB6 2DB8-2DBE "
+  + "2DC0-2DC6 2DC8-2DCE 2DD0-2DD6 2DD8-2DDE 2E2F 3005-3007 3021-3029 3031-3035 3038-303C 3041-3096 309D-309F 30A1-30FA "
+  + "30FC-30FF 3105-312F 3131-318E 3192-3195 31A0-31BF 31F0-31FF 3220-3229 3248-324F 3251-325F 3280-3289 32B1-32BF 3400-4DBF "
+  + "4E00-A48C A4D0-A4FD A500-A60C A610-A62B A640-A66E A67F-A69D A6A0-A6EF A717-A71F A722-A788 A78B-A7CA A7D0-A7D1 A7D3 "
+  + "A7D5-A7D9 A7F2-A801 A803-A805 A807-A80A A80C-A822 A830-A835 A840-A873 A882-A8B3 A8D0-A8D9 A8F2-A8F7 A8FB A8FD-A8FE "
+  + "A900-A925 A930-A946 A960-A97C A984-A9B2 A9CF-A9D9 A9E0-A9E4 A9E6-A9FE AA00-AA28 AA40-AA42 AA44-AA4B AA50-AA59 AA60-AA76 "
+  + "AA7A AA7E-AAAF AAB1 AAB5-AAB6 AAB9-AABD AAC0 AAC2 AADB-AADD AAE0-AAEA AAF2-AAF4 AB01-AB06 AB09-AB0E "
+  + "AB11-AB16 AB20-AB26 AB28-AB2E AB30-AB5A AB5C-AB69 AB70-ABE2 ABF0-ABF9 AC00-D7A3 D7B0-D7C6 D7CB-D7FB F900-FA6D FA70-FAD9 "
+  + "FB00-FB06 FB13-FB17 FB1D FB1F-FB28 FB2A-FB36 FB38-FB3C FB3E FB40-FB41 FB43-FB44 FB46-FBB1 FBD3-FD3D FD50-FD8F "
+  + "FD92-FDC7 FDF0-FDFB FE70-FE74 FE76-FEFC FF10-FF19 FF21-FF3A FF41-FF5A FF66-FFBE FFC2-FFC7 FFCA-FFCF FFD2-FFD7 FFDA-FFDC "
+  + "10000-1000B 1000D-10026 10028-1003A 1003C-1003D 1003F-1004D 10050-1005D 10080-100FA 10107-10133 10140-10178 1018A-1018B 10280-1029C 102A0-102D0 "
+  + "102E1-102FB 10300-10323 1032D-1034A 10350-10375 10380-1039D 103A0-103C3 103C8-103CF 103D1-103D5 10400-1049D 104A0-104A9 104B0-104D3 104D8-104FB "
+  + "10500-10527 10530-10563 10570-1057A 1057C-1058A 1058C-10592 10594-10595 10597-105A1 105A3-105B1 105B3-105B9 105BB-105BC 10600-10736 10740-10755 "
+  + "10760-10767 10780-10785 10787-107B0 107B2-107BA 10800-10805 10808 1080A-10835 10837-10838 1083C 1083F-10855 10858-10876 10879-1089E "
+  + "108A7-108AF 108E0-108F2 108F4-108F5 108FB-1091B 10920-10939 10980-109B7 109BC-109CF 109D2-10A00 10A10-10A13 10A15-10A17 10A19-10A35 10A40-10A48 "
+  + "10A60-10A7E 10A80-10A9F 10AC0-10AC7 10AC9-10AE4 10AEB-10AEF 10B00-10B35 10B40-10B55 10B58-10B72 10B78-10B91 10BA9-10BAF 10C00-10C48 10C80-10CB2 "
+  + "10CC0-10CF2 10CFA-10D23 10D30-10D39 10E60-10E7E 10E80-10EA9 10EB0-10EB1 10F00-10F27 10F30-10F45 10F51-10F54 10F70-10F81 10FB0-10FCB 10FE0-10FF6 "
+  + "11003-11037 11052-1106F 11071-11072 11075 11083-110AF 110D0-110E8 110F0-110F9 11103-11126 11136-1113F 11144 11147 11150-11172 "
+  + "11176 11183-111B2 111C1-111C4 111D0-111DA 111DC 111E1-111F4 11200-11211 11213-1122B 1123F-11240 11280-11286 11288 1128A-1128D "
+  + "1128F-1129D 1129F-112A8 112B0-112DE 112F0-112F9 11305-1130C 1130F-11310 11313-11328 1132A-11330 11332-11333 11335-11339 1133D 11350 "
+  + "1135D-11361 11400-11434 11447-1144A 11450-11459 1145F-11461 11480-114AF 114C4-114C5 114C7 114D0-114D9 11580-115AE 115D8-115DB 11600-1162F "
+  + "11644 11650-11659 11680-116AA 116B8 116C0-116C9 11700-1171A 11730-1173B 11740-11746 11800-1182B 118A0-118F2 118FF-11906 11909 "
+  + "1190C-11913 11915-11916 11918-1192F 1193F 11941 11950-11959 119A0-119A7 119AA-119D0 119E1 119E3 11A00 11A0B-11A32 "
+  + "11A3A 11A50 11A5C-11A89 11A9D 11AB0-11AF8 11C00-11C08 11C0A-11C2E 11C40 11C50-11C6C 11C72-11C8F 11D00-11D06 11D08-11D09 "
+  + "11D0B-11D30 11D46 11D50-11D59 11D60-11D65 11D67-11D68 11D6A-11D89 11D98 11DA0-11DA9 11EE0-11EF2 11F02 11F04-11F10 11F12-11F33 "
+  + "11F50-11F59 11FB0 11FC0-11FD4 12000-12399 12400-1246E 12480-12543 12F90-12FF0 13000-1342F 13441-13446 14400-14646 16800-16A38 16A40-16A5E "
+  + "16A60-16A69 16A70-16ABE 16AC0-16AC9 16AD0-16AED 16B00-16B2F 16B40-16B43 16B50-16B59 16B5B-16B61 16B63-16B77 16B7D-16B8F 16E40-16E96 16F00-16F4A "
+  + "16F50 16F93-16F9F 16FE0-16FE1 16FE3 17000-187F7 18800-18CD5 18D00-18D08 1AFF0-1AFF3 1AFF5-1AFFB 1AFFD-1AFFE 1B000-1B122 1B132 "
+  + "1B150-1B152 1B155 1B164-1B167 1B170-1B2FB 1BC00-1BC6A 1BC70-1BC7C 1BC80-1BC88 1BC90-1BC99 1D2C0-1D2D3 1D2E0-1D2F3 1D360-1D378 1D400-1D454 "
+  + "1D456-1D49C 1D49E-1D49F 1D4A2 1D4A5-1D4A6 1D4A9-1D4AC 1D4AE-1D4B9 1D4BB 1D4BD-1D4C3 1D4C5-1D505 1D507-1D50A 1D50D-1D514 1D516-1D51C "
+  + "1D51E-1D539 1D53B-1D53E 1D540-1D544 1D546 1D54A-1D550 1D552-1D6A5 1D6A8-1D6C0 1D6C2-1D6DA 1D6DC-1D6FA 1D6FC-1D714 1D716-1D734 1D736-1D74E "
+  + "1D750-1D76E 1D770-1D788 1D78A-1D7A8 1D7AA-1D7C2 1D7C4-1D7CB 1D7CE-1D7FF 1DF00-1DF1E 1DF25-1DF2A 1E030-1E06D 1E100-1E12C 1E137-1E13D 1E140-1E149 "
+  + "1E14E 1E290-1E2AD 1E2C0-1E2EB 1E2F0-1E2F9 1E4D0-1E4EB 1E4F0-1E4F9 1E7E0-1E7E6 1E7E8-1E7EB 1E7ED-1E7EE 1E7F0-1E7FE 1E800-1E8C4 1E8C7-1E8CF "
+  + "1E900-1E943 1E94B 1E950-1E959 1EC71-1ECAB 1ECAD-1ECAF 1ECB1-1ECB4 1ED01-1ED2D 1ED2F-1ED3D 1EE00-1EE03 1EE05-1EE1F 1EE21-1EE22 1EE24 "
+  + "1EE27 1EE29-1EE32 1EE34-1EE37 1EE39 1EE3B 1EE42 1EE47 1EE49 1EE4B 1EE4D-1EE4F 1EE51-1EE52 1EE54 "
+  + "1EE57 1EE59 1EE5B 1EE5D 1EE5F 1EE61-1EE62 1EE64 1EE67-1EE6A 1EE6C-1EE72 1EE74-1EE77 1EE79-1EE7C 1EE7E "
+  + "1EE80-1EE89 1EE8B-1EE9B 1EEA1-1EEA3 1EEA5-1EEA9 1EEAB-1EEBB 1F100-1F10C 1FBF0-1FBF9 20000-2A6DF 2A700-2B739 2B740-2B81D 2B820-2CEA1 2CEB0-2EBE0 "
+  + "2F800-2FA1D 30000-3134A 31350-323AF ";
+const UNI_ND = ""
+  + "0030-0039 0660-0669 06F0-06F9 07C0-07C9 0966-096F 09E6-09EF 0A66-0A6F 0AE6-0AEF 0B66-0B6F 0BE6-0BEF 0C66-0C6F 0CE6-0CEF "
+  + "0D66-0D6F 0DE6-0DEF 0E50-0E59 0ED0-0ED9 0F20-0F29 1040-1049 1090-1099 17E0-17E9 1810-1819 1946-194F 19D0-19D9 1A80-1A89 "
+  + "1A90-1A99 1B50-1B59 1BB0-1BB9 1C40-1C49 1C50-1C59 A620-A629 A8D0-A8D9 A900-A909 A9D0-A9D9 A9F0-A9F9 AA50-AA59 ABF0-ABF9 "
+  + "FF10-FF19 104A0-104A9 10D30-10D39 11066-1106F 110F0-110F9 11136-1113F 111D0-111D9 112F0-112F9 11450-11459 114D0-114D9 11650-11659 116C0-116C9 "
+  + "11730-11739 118E0-118E9 11950-11959 11C50-11C59 11D50-11D59 11DA0-11DA9 11F50-11F59 16A60-16A69 16AC0-16AC9 16B50-16B59 1D7CE-1D7FF 1E140-1E149 "
+  + "1E2F0-1E2F9 1E4F0-1E4F9 1E950-1E959 1FBF0-1FBF9 ";
+// END UNICODE TABLE
+function uniTable(s) {
+  const los = [], his = [];
+  for (const it of s.split(" ")) {
+    if (it === "") continue;
+    const dash = it.indexOf("-");
+    const lo = Number.parseInt(dash < 0 ? it : it.slice(0, dash), 16);
+    los.push(lo);
+    his.push(dash < 0 ? lo : Number.parseInt(it.slice(dash + 1), 16));
+  }
+  return [los, his];
+}
+const TAB_LN = uniTable(UNI_LN);
+const TAB_ND = uniTable(UNI_ND);
+function inTable(ch, tab) {
+  const los = tab[0], his = tab[1];
+  const cp = ch.codePointAt(0);
+  let lo = 0, hi = los.length;
+  while (lo < hi) {
+    const mid = (lo + hi) >>> 1;
+    if (los[mid] <= cp) lo = mid + 1; else hi = mid;
+  }
+  return lo > 0 && cp <= his[lo - 1];
+}
+
+function tokChar(ch) { return PUNCT.has(ch) || inTable(ch, TAB_LN); }
+
+function rstripChars(s, chars) { let e = s.length; while (e > 0 && chars.includes(s[e - 1])) e--; return s.slice(0, e); }
+
+function printedNumber(inner) {
+  const toks = [];
+  let cur = "";
+  for (const ch of inner) {
+    if (tokChar(ch)) cur += ch;
+    else { if (cur) toks.push(cur); cur = ""; }
+  }
+  if (cur) toks.push(cur);
+  const bearing = toks.filter((t) => { for (const c of t) if (inTable(c, TAB_ND)) return true; return false; });
+  if (bearing.length !== 1) throw new Mal("number_count", M([["digit_bearing_tokens", bearing]]));
+  const tok = rstripChars(bearing[0], ".,:");
+  const bad = () => new Mal("number_grammar", M([["digit_bearing_tokens", bearing]]));
+  let i = 0;
+  const n = tok.length;
+  let neg = false;
+  if (i < n && (tok[i] === "-" || tok[i] === "+" || tok[i] === "−")) { neg = tok[i] !== "+"; i++; }
+  const pct = n > i && tok[n - 1] === "%";
+  const body = pct ? tok.slice(i, n - 1) : tok.slice(i);
+  const dotAt = body.indexOf(".");
+  let whole = dotAt < 0 ? body : body.slice(0, dotAt);
+  const frac = dotAt < 0 ? "" : body.slice(dotAt + 1);
+  if (dotAt >= 0 && !allDigits(frac)) throw bad();
+  if (whole === "") {
+    if (dotAt < 0) throw bad();
+  } else if (whole.includes(",")) {
+    const groups = whole.split(",");
+    if (!(groups[0].length >= 1 && groups[0].length <= 3 && allDigits(groups[0]))) throw bad();
+    for (const g of groups.slice(1)) if (g.length !== 3 || !allDigits(g)) throw bad();
+    whole = groups.join("");
+  } else if (!allDigits(whole)) throw bad();
+  const f = frac.length;
+  if (f > CAP_PLACES) throw new Mal("places_cap", M([["fractional_digits", f], ["cap", CAP_PLACES]]));
+  if (whole.length > CAP_INT_DIGITS) throw new Mal("printed_too_long", M([["integer_digits", whole.length], ["cap", CAP_INT_DIGITS]]));
+  const p = BigInt((whole || "0") + frac);
+  return [tok, neg ? -p : p, f, pct];
+}
+
+// ------------------------------------------------------------------ section 7: numbers
+function lstripZeros(s) { let i = 0; while (i < s.length && s[i] === "0") i++; return s.slice(i); }
+function rstripZeros(s) { let e = s.length; while (e > 0 && s[e - 1] === "0") e--; return s.slice(0, e); }
+
+function scaled(tok) {
+  const neg = tok.startsWith("-");
+  const t = neg ? tok.slice(1) : tok;
+  let e = t.indexOf("e");
+  if (e < 0) e = t.indexOf("E");
+  const mant = e >= 0 ? t.slice(0, e) : t;
+  let exp = e >= 0 ? t.slice(e + 1) : "";
+  let esign = 1;
+  if (exp && (exp[0] === "+" || exp[0] === "-")) { esign = exp[0] === "-" ? -1 : 1; exp = exp.slice(1); }
+  const dot = mant.indexOf(".");
+  const whole = dot < 0 ? mant : mant.slice(0, dot);
+  const frac = dot < 0 ? "" : mant.slice(dot + 1);
+  let c = lstripZeros(whole + frac);
+  if (!c) return 0n;
+  const ed = lstripZeros(exp) || "0";
+  if (ed.length > 4) return null;
+  let q = esign * Number(ed) - frac.length;
+  const st = rstripZeros(c);
+  q += c.length - st.length;
+  c = st;
+  if (q < -SCALE || c.length + q > SCALE) return null;
+  const v = BigInt(c) * (10n ** BigInt(q + SCALE));
+  return neg ? -v : v;
+}
+
+function babs(x) { return x < 0n ? -x : x; }
+function bgcd(a, b) { while (b) { const r = a % b; a = b; b = r; } return a; }
+function fracObj(p, q) {
+  let g = bgcd(babs(p), q);
+  if (g === 0n) g = 1n;
+  return M([["num", (p / g).toString()], ["den", (q / g).toString()]]);
+}
+
+function roundHalfEven(p, q, f) {
+  const n = babs(p) * (10n ** BigInt(f));
+  let w = n / q;
+  const r = n % q;
+  const tie = 2n * r === q;
+  if (2n * r > q || (tie && w % 2n === 1n)) w += 1n;
+  let s = w.toString();
+  if (s.length < f + 1) s = "0".repeat(f + 1 - s.length) + s;
+  let text = f ? s.slice(0, s.length - f) + "." + s.slice(s.length - f) : s;
+  if (p < 0n && w !== 0n) text = "-" + text;
+  return [text, tie, w];
+}
+
+// ------------------------------------------------------------------ section 2: the block table
+function blockTable(blocks) {
+  const table = new Map();
+  for (let bi = 0; bi < blocks.length; bi++) {
+    const blk = blocks[bi];
+    const line = blk.line;
+    if (bi >= CAP_BLOCKS) return [null, line];
+    if (utf8Len(blk.content) > CAP_BLOCK_BYTES) return [null, line];
+    let v;
+    try { v = readJson(blk.content, { n: 0 }); } catch (e) {
+      if (e instanceof NotJson || e instanceof TooManyValues) return [null, line];
+      throw e;
+    }
+    if (!isObj(v)) return [null, line];
+    for (const [k, d] of v.pairs) {
+      if (!isName(k) || table.has(k) || table.size >= CAP_DERIVATIONS) return [null, line];
+      table.set(k, d);
+    }
+  }
+  return [table, null];
+}
+
+// ------------------------------------------------------------------ section 4: the row source
+function stripWsCR(s) {
+  let a = 0, e = s.length;
+  const isw = (c) => c === " " || c === "\t" || c === "\r";
+  while (a < e && isw(s[a])) a++;
+  while (e > a && isw(s[e - 1])) e--;
+  return s.slice(a, e);
+}
+
+function loadRows(data, rows) {
+  const ctr = { n: 0 };
+  if (rows.get("format") === "jsonl") {
+    let lf = 0;
+    for (let k = 0; k < data.length; k++) if (data[k] === 10) lf++;
+    const nlines = lf + (data.length > 0 && data[data.length - 1] !== 10 ? 1 : 0);
+    if (nlines > CAP_ROWS) throw new Mal("rows_too_many", M([["rows", nlines], ["cap", CAP_ROWS]]));
+    const bad = utf8Bad(data);
+    if (bad >= 0) {
+      let line = 1;
+      for (let k = 0; k < bad; k++) if (data[k] === 10) line++;
+      throw new Mal("receipt_not_jsonl", M([["line", line]]));
+    }
+    const text = decodeUtf8(data);
+    const lines = text.split("\n");
+    if (text.endsWith("\n") || text === "") lines.pop();
+    const out = [];
+    for (let ln = 1; ln <= lines.length; ln++) {
+      const line = lines[ln - 1];
+      const body = stripWsCR(line);
+      if (body === "") throw new Mal("receipt_not_jsonl", M([["line", ln]]));
+      let v;
+      try { v = readJson(line, ctr); } catch (e) {
+        if (e instanceof NotJson) throw new Mal("receipt_not_jsonl", M([["line", ln]]));
+        if (e instanceof TooManyValues) throw new Mal("receipt_too_many_values", M([["cap", CAP_VALUES]]));
+        throw e;
+      }
+      out.push([null, v, body]);
+    }
+    return { rows: out, keyed: false, pointerTokens: 0, parent: null, token: null };
+  }
+  if (utf8Bad(data) >= 0) throw new Mal("receipt_not_json");
+  const text = decodeUtf8(data);
+  let v;
+  try { v = readJson(text, ctr); } catch (e) {
+    if (e instanceof NotJson) throw new Mal("receipt_not_json");
+    if (e instanceof TooManyValues) throw new Mal("receipt_too_many_values", M([["cap", CAP_VALUES]]));
+    throw e;
+  }
+  const at = rows.get("at");
+  const toks = pointerTokens(at);
+  let parent = null, ptok = null;
+  for (const tok of toks) {
+    if (isObj(v)) {
+      if (!v.last.has(tok)) throw new Mal("pointer_unresolvable", M([["at", at]]));
+      if (v.repeated.has(tok)) throw new Mal("pointer_ambiguous", M([["at", at]]));
+      parent = v; ptok = tok;
+      v = v.last.get(tok);
+    } else if (isArr(v)) {
+      if (!arrayIndexOk(tok, v.items.length)) throw new Mal("pointer_unresolvable", M([["at", at]]));
+      parent = v; ptok = Number(tok);
+      v = v.items[Number(tok)];
+    } else throw new Mal("pointer_unresolvable", M([["at", at]]));
+  }
+  let nrows;
+  if (isArr(v)) nrows = v.items.length;
+  else if (isObj(v)) nrows = v.pairs.length;
+  else throw new Mal("rows_not_container", M([["type", jtype(v)]]));
+  if (nrows > CAP_ROWS) throw new Mal("rows_too_many", M([["rows", nrows], ["cap", CAP_ROWS]]));
+  let out, keyed;
+  if (isObj(v)) {
+    if (v.repeated.size > 0) throw new Mal("rows_ambiguous");
+    out = v.pairs.map(([k, x]) => [k, x, null]);
+    keyed = true;
+  } else {
+    out = v.items.map((x, j) => [null, x, text.slice(v.spans[j][0], v.spans[j][1])]);
+    keyed = false;
+  }
+  return { rows: out, keyed: keyed, pointerTokens: toks.length, parent: parent, token: ptok };
+}
+
+function arrayIndexOk(tok, len) {
+  if (!allDigits(tok) || (tok.length > 1 && tok[0] === "0") || tok.length > 9) return false;
+  return Number(tok) < len;
+}
+
+function sizeOf(v) { return isArr(v) ? v.items.length : v.pairs.length; }
+
+function sourceInfo(src, data, rowsSpec, complete) {
+  const parent = src.parent, ptok = src.token;
+  const sib = [];
+  let nsib = 0, members = null;
+  if (parent !== null) {
+    let seq;
+    if (isObj(parent)) {
+      members = parent.pairs.length;
+      seq = parent.pairs.filter(([k]) => k !== ptok);
+    } else {
+      members = parent.items.length;
+      seq = [];
+      parent.items.forEach((x, j) => { if (j !== ptok) seq.push([String(j), x]); });
+    }
+    for (const [k, x] of seq) {
+      if (isArr(x) || isObj(x)) {
+        nsib++;
+        if (sib.length < CAP_SIBLINGS) sib.push(M([["at", show(k)], ["type", jtype(x)], ["size", sizeOf(x)]]));
+      }
+    }
+  }
+  return M([["format", rowsSpec.get("format")], ["receipt_bytes", data.length], ["pointer_tokens", src.pointerTokens],
+    ["parent_members", members], ["siblings", sib], ["sibling_containers", nsib], ["complete", complete]]);
+}
+
+// ------------------------------------------------------------------ sections 5, 6, 8: the visit
+const ABSENT = { absent: true };
+
+function compileSubject(t) {
+  if (t.has("field")) return [M([["field", t.get("field")]]), "field", t.get("field")];
+  if (t.has("at")) return [M([["at", t.get("at")]]), "at", pointerTokens(t.get("at"))];
+  return [M([["row", t.get("row")]]), t.get("row"), null];
+}
+
+function litValue(x) {
+  if (x === true || x === false) return ["b", x];
+  if (isPlainInt(x)) return ["n", BigInt(x) * TEN18];
+  if (typeof x === "string") return ["s", x];
+  return ["n", decScaled(x.get("dec"))];
+}
+
+function compileTest(t) {
+  const [subj, skind, sarg] = compileSubject(t);
+  const rel = Array.from(t.keys()).filter((k) => !SUBJECT_KEYS.includes(k))[0];
+  const x = t.get(rel);
+  let lits;
+  if (rel === "in") lits = x.map(litValue);
+  else if (rel === "present") lits = x;
+  else lits = [litValue(x)];
+  return { obj: t, subj: subj, skind: skind, sarg: sarg, rel: rel, lits: lits, ck: canon(subj) };
+}
+
+function subjectValue(skind, sarg, subj, key, row, i) {
+  if (skind === "field") {
+    if (!isObj(row) || !row.last.has(sarg)) return ABSENT;
+    if (row.repeated.has(sarg)) throw new Mal("field_ambiguous", M([["row", i], ["subject", subj]]));
+    return row.last.get(sarg);
+  }
+  if (skind === "at") {
+    let v = row;
+    for (const tok of sarg) {
+      if (isObj(v)) {
+        if (!v.last.has(tok)) return ABSENT;
+        if (v.repeated.has(tok)) throw new Mal("field_ambiguous", M([["row", i], ["subject", subj]]));
+        v = v.last.get(tok);
+      } else if (isArr(v)) {
+        if (!arrayIndexOk(tok, v.items.length)) return ABSENT;
+        v = v.items[Number(tok)];
+      } else return ABSENT;
+    }
+    return v;
+  }
+  if (skind === "key") return key;
+  return row;
+}
+
+function conv(v, i) {
+  // the token's value under 7.1, computed at most once per parsed token (12.3)
+  if (v.sv === undefined) v.sv = scaled(v.tok);
+  const s = v.sv;
+  if (s === null) throw new Mal("number_out_of_range", M([["row", i], ["number", v.tok.slice(0, 80)]]));
+  return s;
+}
+
+function eqLit(v, lit, i) {
+  const [kind, x] = lit;
+  if (kind === "s") return typeof v === "string" && v === x;
+  if (kind === "b") return v === x;
+  return isNum(v) && conv(v, i) === x;
+}
+
+function applyTest(c, v, i) {
+  if (c.rel === "present") return [(v !== ABSENT) === c.lits, false];
+  if (v === ABSENT || v === null) return [false, true];
+  if (c.rel === "eq") return [eqLit(v, c.lits[0], i), false];
+  if (c.rel === "in") {
+    if (isNum(v) && c.lits.some((l) => l[0] === "n")) conv(v, i);
+    for (const lit of c.lits) if (eqLit(v, lit, i)) return [true, false];
+    return [false, false];
+  }
+  const [kind, x] = c.lits[0];
+  let truth;
+  if (kind === "s") {
+    if (typeof v !== "string") throw new Mal("where_type_mismatch", M([["row", i], ["type", jtype(v)], ["literal_type", "string"]]));
+    const cmp = cmpCP(v, x);
+    truth = c.rel === "ge" ? cmp >= 0 : cmp <= 0;
+  } else {
+    if (!isNum(v)) throw new Mal("where_type_mismatch", M([["row", i], ["type", jtype(v)], ["literal_type", "number"]]));
+    const a = conv(v, i);
+    truth = c.rel === "ge" ? a >= x : a <= x;
+  }
+  return [truth, false];
+}
+
+function censusKey(v) {
+  if (v === null) return ["null", "null"];
+  if (v === true) return ["boolean", "true"];
+  if (v === false) return ["boolean", "false"];
+  if (typeof v === "string") return ["string", v];
+  if (isNum(v)) return ["number", v.tok];
+  if (isNF(v)) return ["non_finite", v.tok];
+  return [jtype(v), ""];
+}
+
+// the values of the distinct number tokens a census saw, each token converted once (12.3); a token
+// outside 7.1's domain is left out: it equals no literal and raises nothing here (8.4)
+function numberValues(hist) {
+  const out = new Set();
+  for (const ent of hist.values()) {
+    if (ent[0] !== "number") continue;
+    const s = scaled(ent[1]);
+    if (s !== null) out.add(s);
+  }
+  return out;
+}
+
+function litSeen(lit, hist, nums) {
+  const [kind, x] = lit;
+  if (kind === "s") return hist.has("string:" + x);
+  if (kind === "b") return hist.has("boolean:" + (x ? "true" : "false"));
+  return nums.has(x);
+}
+
+function censusValues(h) {
+  const items = Array.from(h.values());
+  items.sort((a, b) => {
+    if (a[2] !== b[2]) return a[2] > b[2] ? -1 : 1;
+    const t = cmpCP(a[0], b[0]);
+    if (t !== 0) return t;
+    return cmpCP(a[1], b[1]);
+  });
+  const top = items.slice(0, CAP_CENSUS);
+  let shown = 0;
+  for (const it of top) shown += it[2];
+  return [top.map((it) => M([["type", it[0]], ["text", show(it[1])], ["rows", it[2]]])), shown];
+}
+
+function tally(h, v) {
+  const ck = censusKey(v);
+  const hk = ck[0] + ":" + ck[1];
+  if (h.has(hk)) h.get(hk)[2]++;
+  else h.set(hk, [ck[0], ck[1], 1]);
+}
+
+function valueOf(op, k, m, used, total) {
+  if (op === "count") return [BigInt(k), 1n];
+  if (op === "share" || op === "percent") {
+    if (k === 0) return null;
+    return [BigInt(m) * (op === "percent" ? 100n : 1n), BigInt(k)];
+  }
+  if (used === 0) return null;
+  return op === "sum" ? [total, TEN18] : [total, BigInt(used) * TEN18];
+}
+
+function visit(src, d, wd) {
+  const op = d.get("op");
+  const rows = src.rows;
+  const W = d.get("where").map(compileTest);
+  const Mt = (d.has("match") ? d.get("match") : []).map(compileTest);
+  const X = (wd !== null ? wd.get("where") : []).map(compileTest);
+  const of = d.has("of") ? compileSubject(d.get("of")) : null;
+  const subs = new Map();
+  const order = [];
+  const allSubj = W.concat(Mt).map((c) => c.subj).concat(of ? [of[0]] : []).concat(X.map((c) => c.subj));
+  for (const s of allSubj) {
+    const k = canon(s);
+    if (!subs.has(k)) { subs.set(k, compileSubject(s)); order.push(k); }
+  }
+  const ofk = of ? canon(of[0]) : null;
+  const guardKeys = order.filter((k) => subs.get(k)[1] === "field" || subs.get(k)[1] === "at");
+  const seenGuard = new Set();
+  const cenOrder = [];
+  const cenLits = new Map();
+  for (const c of W.concat(Mt)) {
+    if (c.rel === "eq" || c.rel === "in") {
+      if (!cenLits.has(c.ck)) { cenOrder.push(c.ck); cenLits.set(c.ck, []); }
+      const raw = c.obj.get(c.rel);
+      const list = c.rel === "in" ? raw : [raw];
+      const have = cenLits.get(c.ck);
+      for (const y of list) if (!have.map(canon).includes(canon(y))) have.push(y);
+    }
+  }
+  const hist = new Map(cenOrder.map((k) => [k, new Map()]));
+  const absent = new Map(cenOrder.map((k) => [k, 0]));
+  const histSel = new Map(cenOrder.map((k) => [k, new Map()]));
+  const absentSel = new Map(cenOrder.map((k) => [k, 0]));
+  const nW = W.length;
+  const wsteps = W.map(() => [0, 0]);
+  const msteps = Mt.map(() => [0, 0]);
+  const woSel = new Array(nW).fill(0), woMatch = new Array(nW).fill(0), woUsed = new Array(nW).fill(0);
+  const woTotal = new Array(nW).fill(0n);
+  let selected = 0, matched = 0, used = 0, noValue = 0, total = 0n;
+  let withinSel = 0, outside = 0;
+  let firstRow = null, lastRow = null, firstKey = null, lastKey = null;
+  let dup = 0;
+  const seenText = new Set();
+  const sumLike = op === "sum" || op === "mean";
+  const shareLike = op === "share" || op === "percent";
+  for (let i = 0; i < rows.length; i++) {
+    const [key, row, text] = rows[i];
+    const vals = new Map();
+    for (const k of order) { const sk = subs.get(k); vals.set(k, subjectValue(sk[1], sk[2], sk[0], key, row, i)); }
+    const wres = [];
+    for (let j = 0; j < nW; j++) {
+      const [ok, nv] = applyTest(W[j], vals.get(W[j].ck), i);
+      wres.push(ok);
+      if (ok) wsteps[j][0]++;
+      if (nv) wsteps[j][1]++;
+    }
+    const mres = Mt.map((c) => applyTest(c, vals.get(c.ck), i));
+    let ofnum = null;
+    if (of !== null) {
+      const ofv = vals.get(ofk);
+      if (ofv !== ABSENT && ofv !== null) {
+        if (isNum(ofv)) ofnum = conv(ofv, i);
+        else throw new Mal("field_not_numeric", M([["row", i], ["type", jtype(ofv)]]));
+      }
+    }
+    let xres = true;
+    for (const c of X) { const [ok] = applyTest(c, vals.get(c.ck), i); xres = xres && ok; }
+    for (const k of guardKeys) if (vals.get(k) !== ABSENT) seenGuard.add(k);
+    for (const k of cenOrder) {
+      const v = vals.get(k);
+      if (v === ABSENT) absent.set(k, absent.get(k) + 1);
+      else {
+        const ck = censusKey(v);
+        const hk = ck[0] + ":" + ck[1];
+        const h = hist.get(k);
+        if (h.has(hk)) h.get(hk)[2]++;
+        else h.set(hk, [ck[0], ck[1], 1]);
+      }
+    }
+    if (text !== null) {
+      if (seenText.has(text)) dup++;
+      else seenText.add(text);
+    }
+    const mall = mres.every(([ok]) => ok);
+    const fails = [];
+    for (let j = 0; j < nW; j++) if (!wres[j]) fails.push(j);
+    const sel = fails.length === 0;
+    if (wd !== null) {
+      if (xres) withinSel++;
+      if (sel && !xres) outside++;
+    }
+    if (sel) {
+      selected++;
+      if (firstRow === null) { firstRow = i; firstKey = key; }
+      lastRow = i; lastKey = key;
+      mres.forEach(([ok, nv], j) => { if (ok) msteps[j][0]++; if (nv) msteps[j][1]++; });
+      if (mall) matched++;
+      for (const k of cenOrder) {
+        const v = vals.get(k);
+        if (v === ABSENT) absentSel.set(k, absentSel.get(k) + 1);
+        else tally(histSel.get(k), v);
+      }
+      if (sumLike) {
+        if (ofnum === null) noValue++;
+        else { used++; total += ofnum; }
+      }
+    }
+    let targets = [];
+    if (sel) { for (let j = 0; j < nW; j++) targets.push(j); }
+    else if (fails.length === 1) targets = fails;
+    for (const j of targets) {
+      woSel[j]++;
+      if (mall) woMatch[j]++;
+      if (sumLike && ofnum !== null) { woUsed[j]++; woTotal[j] += ofnum; }
+    }
+  }
+  const N = rows.length;
+  if (N > 0) {
+    for (const k of guardKeys) {
+      if (!seenGuard.has(k)) throw new Mal("field_never_present", M([["subject", subs.get(k)[0]], ["rows_total", N]]));
+    }
+  }
+  const counts = M([["total", N], ["selected", selected], ["duplicate_rows", src.keyed ? null : dup]]);
+  if (shareLike) { counts.set("used", selected); counts.set("matched", matched); }
+  else if (sumLike) { counts.set("used", used); counts.set("no_value", noValue); }
+  else counts.set("used", selected);
+  if (wd !== null) { counts.set("within", withinSel); counts.set("outside_within", outside); }
+  const without = [];
+  for (let j = 0; j < nW; j++) {
+    const e = M([["selected", woSel[j]]]);
+    const pq = valueOf(op, woSel[j], woMatch[j], woUsed[j], woTotal[j]);
+    if (shareLike) e.set("matched", woMatch[j]);
+    if (sumLike) e.set("used", woUsed[j]);
+    e.set("derived", pq === null ? null : fracObj(pq[0], pq[1]));
+    without.push(e);
+  }
+  const census = [];
+  for (const k of cenOrder) {
+    const h = hist.get(k);
+    const [values, shown] = censusValues(h);
+    const nums = cenLits.get(k).some((y) => litValue(y)[0] === "n") ? numberValues(h) : new Set();
+    const hs = histSel.get(k);
+    const [svalues, sshown] = censusValues(hs);
+    census.push(M([["subject", subs.get(k)[0]], ["distinct", h.size], ["absent", absent.get(k)],
+      ["values", values],
+      ["other", N - absent.get(k) - shown],
+      ["literals_never_seen", cenLits.get(k).filter((y) => !litSeen(litValue(y), h, nums))],
+      ["selected", M([["rows", selected], ["distinct", hs.size], ["absent", absentSel.get(k)],
+        ["values", svalues], ["other", selected - absentSel.get(k) - sshown]])]]));
+  }
+  const span = M([["first_row", firstRow], ["last_row", lastRow],
+    ["first_key", firstKey === null ? null : show(firstKey)], ["last_key", lastKey === null ? null : show(lastKey)]]);
+  return {
+    rows: counts, whereSteps: wsteps.map(([a, b]) => M([["passed", a], ["no_value", b]])),
+    matchSteps: msteps.map(([a, b]) => M([["passed", a], ["no_value", b]])),
+    without: without, census: census, selectedSpan: span,
+    pq: valueOf(op, selected, matched, used, total)};
+}
+
+// ------------------------------------------------------------------ the claim (section 13)
+function noLoneAnywhere(v) {
+  const stack = [v];
+  while (stack.length) {
+    const x = stack.pop();
+    if (typeof x === "string") { if (hasLone(x)) return false; }
+    else if (isArr(x)) { for (const y of x.items) stack.push(y); }
+    else if (isObj(x)) {
+      if (x.repeated.size > 0) return false;
+      for (const [k, y] of x.pairs) { if (hasLone(k)) return false; stack.push(y); }
+    }
+  }
+  return true;
+}
+
+function claimInt(v, minimum) {
+  if (!isNum(v)) throw new Refusal("claim_form");
+  const t = v.tok;
+  if (!allDigits(t) || (t.length > 1 && t[0] === "0") || t.length > 15) throw new Refusal("claim_form");
+  const x = Number(t);
+  if (x < minimum) throw new Refusal("claim_form");
+  return x;
+}
+
+function objKeys(o, required, optional) {
+  if (!isObj(o)) throw new Refusal("claim_form");
+  const opt = optional || [];
+  for (const k of required) if (!o.last.has(k)) throw new Refusal("claim_form");
+  for (const k of o.last.keys()) if (!required.includes(k) && !opt.includes(k)) throw new Refusal("claim_form");
+  return o.last;
+}
+
+function readClaim(data) {
+  if (data.length > CAP_CLAIM_BYTES) throw new Refusal("claim_too_large");
+  if (utf8Bad(data) >= 0) throw new Refusal("claim_form");
+  let v;
+  try { v = readJson(decodeUtf8(data), { n: 0 }); } catch (e) {
+    if (e instanceof NotJson || e instanceof TooManyValues) throw new Refusal("claim_form");
+    throw e;
+  }
+  if (!noLoneAnywhere(v)) throw new Refusal("claim_form");
+  const top = objKeys(v, ["blocks", "span", "resolution"], ["budget"]);
+  if (!isArr(top.get("blocks"))) throw new Refusal("claim_form");
+  const blocks = [];
+  for (const b of top.get("blocks").items) {
+    const bk = objKeys(b, ["line", "content"]);
+    if (typeof bk.get("content") !== "string") throw new Refusal("claim_form");
+    blocks.push({ line: claimInt(bk.get("line"), 1), content: bk.get("content") });
+  }
+  const sp = objKeys(top.get("span"), ["receipt", "inner"], ["ordinal"]);
+  if (typeof sp.get("receipt") !== "string" || typeof sp.get("inner") !== "string") throw new Refusal("claim_form");
+  const span = { receipt: sp.get("receipt"), inner: sp.get("inner"),
+    ordinal: sp.has("ordinal") ? claimInt(sp.get("ordinal"), 1) : 1 };
+  const rs = top.get("resolution");
+  if (!isObj(rs) || typeof rs.last.get("verdict") !== "string") throw new Refusal("claim_form");
+  const verdict = rs.last.get("verdict");
+  let res;
+  if (verdict === "RESOLVED") {
+    const r = objKeys(rs, ["verdict", "entry"]);
+    const e = objKeys(r.get("entry"), ["kind_of_source", "complete", "harness", "rung"]);
+    if (typeof e.get("kind_of_source") !== "string" || typeof e.get("harness") !== "string") throw new Refusal("claim_form");
+    const cpl = e.get("complete");
+    if (!(cpl === true || cpl === false || cpl === null) || !RUNGS.includes(e.get("rung"))) throw new Refusal("claim_form");
+    res = { verdict: "RESOLVED", entry: { kind_of_source: e.get("kind_of_source"), complete: cpl,
+      harness: e.get("harness"), rung: e.get("rung") } };
+  } else if (verdict === "UNRESOLVED" || verdict === "MALFORMED") {
+    const r = objKeys(rs, ["verdict", "reason"]);
+    const allowed = verdict === "UNRESOLVED" ? UNRESOLVED_REASONS : RESOLUTION_MALFORMED;
+    if (!allowed.includes(r.get("reason"))) throw new Refusal("claim_form");
+    res = { verdict: verdict, reason: r.get("reason") };
+  } else throw new Refusal("claim_form");
+  let budget = { spent_before: 0, entry_read_before: false };
+  if (top.has("budget")) {
+    const bg = objKeys(top.get("budget"), ["spent_before", "entry_read_before"]);
+    const erb = bg.get("entry_read_before");
+    if (!(erb === true || erb === false)) throw new Refusal("claim_form");
+    budget = { spent_before: claimInt(bg.get("spent_before"), 0), entry_read_before: erb };
+  }
+  return { blocks: blocks, span: span, resolution: res, budget: budget };
+}
+
+// ------------------------------------------------------------------ section 9: one derive span
+function refParts(ref) {
+  const h = ref.indexOf("#");
+  if (h < 0) return null;
+  const head = ref.slice(0, h), frag = ref.slice(h + 1);
+  if (head.length < 2 || head[0] !== "r" || head[1] === "0" || !allDigits(head.slice(1))) return null;
+  if (!isName(frag)) return null;
+  return [head, frag];
+}
+
+function deriveSpan(claim, data) {
+  const ref = claim.span.receipt;
+  const state = { spent: claim.budget.spent_before, visit: false, provenance: null };
+  let verdict, reason, detail;
+  try {
+    const r = derive(claim, data, state);
+    detail = r[0]; verdict = r[1]; reason = r[2];
+  } catch (e) {
+    if (e instanceof Mal) { verdict = "MALFORMED"; reason = e.reason; detail = e.detail; }
+    else if (e instanceof Unresolved) { verdict = "UNRESOLVED"; reason = e.reason; detail = M([]); }
+    else throw e;
+  }
+  const row = M([["kind", "derive"], ["receipt", ref], ["verdict", verdict], ["reason", reason], ["detail", detail]]);
+  if (state.visit) {
+    row.set("provenance", state.provenance);
+    row.set("resolved_sha256", sha256Hex(data));
+  }
+  return [row, state.spent];
+}
+
+function derive(claim, data, state) {
+  const ref = claim.span.receipt, inner = claim.span.inner;
+  let allWs = true;
+  for (const ch of inner) if (!(ch === " " || ch === "\t" || ch === "\n" || ch === "\x0b" || ch === "\x0c" || ch === "\r")) { allWs = false; break; }
+  if (allWs) throw new Mal("empty_span");
+  const ncp = cpLen(inner);
+  if (ncp > CAP_INNER_CP) throw new Mal("length_cap", M([["code_points", ncp], ["bytes", utf8Len(inner)], ["cap", CAP_INNER_CP]]));
+  if (claim.span.ordinal > CAP_SPANS) throw new Mal("derive_span_cap", M([["cap", CAP_SPANS]]));
+  const parts = refParts(ref);
+  if (parts === null) throw new Mal("receipt_form", M([["receipt", ref]]));
+  const name = parts[1];
+  for (const ch of inner) {
+    if (ch === "‭" || ch === "‮") {
+      throw new Mal("directional_override", M([["code_point", "U+" + ch.codePointAt(0).toString(16).toUpperCase().padStart(4, "0")]]));
+    }
+  }
+  const [tok, pp, f, pct] = printedNumber(inner);
+  const [table, badLine] = blockTable(claim.blocks);
+  if (table === null) throw new Mal("derive_block_malformed", M([["block_line", badLine]]));
+  if (!table.has(name)) throw new Mal("derivation_missing", M([["name", name]]));
+  const d = checkDerivation(table.get(name));
+  if (pct && d.get("op") !== "percent") throw new Mal("unit_mismatch", M([["printed_token", tok], ["op", d.get("op")]]));
+  let wd = null;
+  if (d.has("within")) {
+    const wn = d.get("within");
+    const bad = () => new Mal("within_form", M([["within", wn]]));
+    if (wn === name || !table.has(wn)) throw bad();
+    try { wd = checkDerivation(table.get(wn)); } catch (e) { if (e instanceof Mal) throw bad(); throw e; }
+    if (wd.has("within") || canon(wd.get("rows")) !== canon(d.get("rows"))) throw bad();
+  }
+  const res = claim.resolution;
+  if (res.verdict === "UNRESOLVED") throw new Unresolved(res.reason);
+  if (res.verdict === "MALFORMED") throw new Mal(res.reason);
+  const entry = res.entry;
+  if (data.length > CAP_RECEIPT_BYTES) throw new Mal("rows_too_large", M([["bytes", data.length], ["cap", CAP_RECEIPT_BYTES]]));
+  const spent0 = claim.budget.spent_before;
+  const costBytes = claim.budget.entry_read_before ? 0 : data.length;
+  if (spent0 + costBytes > BUDGET) throw new Mal("derive_budget", M([["budget", BUDGET], ["spent_before", spent0], ["cost", costBytes]]));
+  state.spent = spent0 + costBytes;
+  const src = loadRows(data, d.get("rows"));
+  if (!src.keyed) {
+    const subjects = d.get("where").concat(d.has("match") ? d.get("match") : []).concat(wd ? wd.get("where") : []);
+    if (subjects.some((t) => t.get("row") === "key")) throw new Mal("row_key_unavailable");
+  }
+  const ntests = d.get("where").length + (d.has("match") ? d.get("match").length : 0) + (d.has("of") ? 1 : 0)
+    + (wd ? wd.get("where").length : 0);
+  const costRows = src.rows.length * (ntests + 1);
+  if (spent0 + costBytes + costRows > BUDGET) {
+    throw new Mal("derive_budget", M([["budget", BUDGET], ["spent_before", spent0], ["cost", costBytes + costRows]]));
+  }
+  state.spent = spent0 + costBytes + costRows;
+  state.visit = true;
+  state.provenance = M([["form", "rn"], ["harness", entry.harness], ["rung", entry.rung], ["kind_of_source", entry.kind_of_source]]);
+  const r = visit(src, d, wd);
+  const op = d.get("op");
+  const base = M([["printed_token", tok], ["printed", roundHalfEven(pp, 10n ** BigInt(f), f)[0]], ["fractional_digits", f],
+    ["derivation", d], ["derivation_sha256", sha256Hex(utf8Encode(canon(d)))],
+    ["rows", r.rows], ["where_steps", r.whereSteps], ["without", r.without],
+    ["census", r.census], ["selected_span", r.selectedSpan],
+    ["source", sourceInfo(src, data, d.get("rows"), entry.complete)]]);
+  if (op === "share" || op === "percent") base.set("match_steps", r.matchSteps);
+  if (r.pq === null) throw new Mal(op === "share" || op === "percent" ? "division_by_zero" : "no_rows_used", base);
+  const [p, q] = r.pq;
+  const [rounded, tie, w] = roundHalfEven(p, q, f);
+  const pow = 10n ** BigInt(f);
+  const a = pp * q, b = p * pow;
+  base.set("rounding", "ROUND_HALF_EVEN");
+  base.set("derived", fracObj(p, q));
+  base.set("derived_rounded", rounded);
+  base.set("exact_tie", tie);
+  base.set("printed_vs_exact", a > b ? "above" : a < b ? "below" : "equal");
+  if (rounded !== base.get("printed")) return [base, "FAILED", "value_mismatch"];
+  if (p !== 0n && w === 0n) return [base, "FAILED", "rounds_to_zero"];
+  if (op === "share" || op === "percent") {
+    const mx = op === "percent" ? 100n : 1n;
+    if (p < mx * q && w === mx * pow) return [base, "FAILED", "rounds_to_whole"];
+  }
+  if (wd !== null && r.rows.get("outside_within") > 0) return [base, "FAILED", "not_within"];
+  return [base, "HELD", null];
+}
+
+// ------------------------------------------------------------------ section 8.4: the surface text
+function renderLit(x) { return isMap(x) ? x.get("dec") : canon(x); }
+function renderSubject(t) {
+  if (t.has("field")) return "field " + canon(t.get("field"));
+  if (t.has("at")) return "value at " + canon(t.get("at"));
+  return t.get("row") === "key" ? "row key" : "row value";
+}
+function renderTest(t) {
+  const s = renderSubject(t);
+  if (t.has("eq")) return s + " = " + renderLit(t.get("eq"));
+  if (t.has("in")) return s + " in [" + t.get("in").map(renderLit).join(", ") + "]";
+  if (t.has("ge")) return s + " >= " + renderLit(t.get("ge"));
+  if (t.has("le")) return s + " <= " + renderLit(t.get("le"));
+  return s + (t.get("present") ? " is present" : " is absent");
+}
+function renderWhere(tests) { return tests.length ? tests.map(renderTest).join(" and ") : ""; }
+
+function surface(row) {
+  const verdict = row.get("verdict");
+  if (verdict !== "HELD" && verdict !== "FAILED") return "";
+  const det = row.get("detail");
+  const d = det.get("derivation");
+  const op = d.get("op");
+  const w = renderWhere(d.get("where"));
+  const among = w ? "rows where " + w : "all rows";
+  let head;
+  if (op === "count") head = "count of " + among;
+  else if (op === "share" || op === "percent") head = op + " of rows where " + renderWhere(d.get("match")) + ", among " + among;
+  else head = op + " of " + renderSubject(d.get("of")) + " over " + among;
+  if (d.has("within")) head += ", within the selection of " + d.get("within");
+  const rc = det.get("rows");
+  let counts = rc.get("selected") + " of " + rc.get("total") + " rows selected";
+  if (op === "share" || op === "percent") counts += "; " + rc.get("matched") + " of " + rc.get("selected") + " matched";
+  if (op === "sum" || op === "mean") counts += "; " + rc.get("used") + " of " + rc.get("selected") + " used, " + rc.get("no_value") + " without a value";
+  if (rc.has("outside_within")) counts += "; " + rc.get("outside_within") + " selected rows outside " + d.get("within");
+  if (rc.get("duplicate_rows")) counts += "; " + rc.get("duplicate_rows") + " rows repeat an earlier row";
+  const pe = det.get("printed_vs_exact");
+  const dv = det.get("derived");
+  const value = "exact value " + dv.get("num") + "/" + dv.get("den") + "; printed " + det.get("printed") + " "
+    + (pe === "above" ? "rounds up" : pe === "below" ? "rounds down" : "is exact");
+  const pv = row.get("provenance");
+  const so = det.get("source");
+  const ref = row.get("receipt");
+  let prov = "rows of entry " + ref.slice(0, ref.indexOf("#") < 0 ? ref.length : ref.indexOf("#")) + ": kind_of_source "
+    + pv.get("kind_of_source") + ", rung " + pv.get("rung") + ", harness " + canon(pv.get("harness"))
+    + ", complete " + canon(so.get("complete")) + "; " + so.get("receipt_bytes") + " bytes";
+  if (so.get("sibling_containers")) {
+    prov += "; beside it: " + so.get("siblings").map((s) => canon(s.get("at")) + " (" + s.get("type") + " of " + s.get("size") + ")").join(", ");
+  }
+  const lines = [head, counts, value, prov];
+  for (const c of det.get("census")) {
+    let line = renderSubject(c.get("subject")) + " over all " + rc.get("total") + " rows: " + renderCounts(c);
+    for (const y of c.get("literals_never_seen")) line += "; literal " + renderLit(y) + " occurs in no row";
+    lines.push(line);
+    const cs = c.get("selected");
+    lines.push(renderSubject(c.get("subject")) + " over the " + cs.get("rows") + " selected rows: " + renderCounts(cs));
+  }
+  det.get("without").forEach((wo, j) => {
+    const dd = wo.get("derived");
+    lines.push("without test " + (j + 1) + " (" + renderTest(d.get("where")[j]) + "): " + wo.get("selected") + " rows selected, value "
+      + (dd === null ? "undefined" : dd.get("num") + "/" + dd.get("den")));
+  });
+  return lines.join("\n");
+}
+
+function renderCounts(c) {
+  const vals = c.get("values").map((v) => (v.get("type") === "string" ? canon(v.get("text")) : (v.get("text") || v.get("type"))) + " " + v.get("rows")).join(", ");
+  let line = vals ? vals : "no values";
+  if (c.get("other")) line += ", other " + c.get("other");
+  if (c.get("absent")) line += ", absent " + c.get("absent");
+  return line;
+}
+
+// ------------------------------------------------------------------ the result object
+function check(claimBytes, receiptBytes) {
+  let claim;
+  try { claim = readClaim(claimBytes); } catch (e) {
+    if (e instanceof Refusal) return M([["refusal", e.code]]);
+    throw e;
+  }
+  const [row, spent] = deriveSpan(claim, receiptBytes);
+  return M([["profile", PROFILE], ["row", row], ["spent", spent], ["surface", surface(row)]]);
+}
+
+function resultText(claimBytes, receiptBytes) { return canon(check(claimBytes, receiptBytes)); }
+
+const B64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+function b64decode(s) {
+  if (s.length % 4 !== 0) throw new Refusal("vector_form");
+  const out = [];
+  for (let i = 0; i < s.length; i += 4) {
+    const c = [0, 1, 2, 3].map((k) => s[i + k]);
+    const pad = (c[3] === "=" ? 1 : 0) + (c[2] === "=" ? 1 : 0);
+    if (pad && i + 4 !== s.length) throw new Refusal("vector_form");
+    const v = c.map((ch, k) => {
+      if (ch === "=" && k >= 4 - pad) return 0;
+      const x = B64.indexOf(ch);
+      if (x < 0) throw new Refusal("vector_form");
+      return x;
+    });
+    const n = (v[0] << 18) | (v[1] << 12) | (v[2] << 6) | v[3];
+    out.push((n >> 16) & 255);
+    if (pad < 2) out.push((n >> 8) & 255);
+    if (pad < 1) out.push(n & 255);
+  }
+  return Uint8Array.from(out);
+}
+
+function expandReceipt(rv) {
+  if (!isObj(rv) || !isArr(rv.last.get("parts"))) throw new Refusal("vector_form");
+  const chunks = [];
+  let size = 0;
+  for (const p of rv.last.get("parts").items) {
+    if (!isObj(p) || typeof p.last.get("b64") !== "string") throw new Refusal("vector_form");
+    const chunk = b64decode(p.last.get("b64"));
+    const rep = p.last.has("repeat") ? claimInt(p.last.get("repeat"), 0) : 1;
+    size += chunk.length * rep;
+    if (size > CAP_BATCH_BYTES) throw new Refusal("vector_form");
+    chunks.push([chunk, rep]);
+  }
+  const out = new Uint8Array(size);
+  let off = 0;
+  for (const [chunk, rep] of chunks) {
+    if (chunk.length === 1) { out.fill(chunk[0], off, off + rep); off += rep; continue; }
+    for (let r = 0; r < rep; r++) { out.set(chunk, off); off += chunk.length; }
+  }
+  return out;
+}
+
+function batchLines(vectorsBytes) {
+  const v = readJson(decodeUtf8(vectorsBytes), { n: 0 });
+  const cases = isObj(v) ? v.last.get("vectors").items : v.items;
+  const out = [];
+  for (const c of cases) {
+    const claim = c.last.has("claim_parts") ? expandReceipt(c.last.get("claim_parts")) : b64decode(c.last.get("claim_b64"));
+    const receipt = expandReceipt(c.last.get("receipt"));
+    out.push(canon(M([["id", c.last.get("id")], ["out", check(claim, receipt)]])));
+  }
+  return out;
+}
+
+const API = { check: check, resultText: resultText, canon: canon, readJson: readJson, sha256Hex: sha256Hex,
+  batchLines: batchLines, PROFILE: PROFILE };
+if (typeof module !== "undefined" && module.exports) module.exports = API;
+if (typeof globalThis !== "undefined") globalThis.DeriveV0 = API;
+
+// ------------------------------------------------------------------ CLI (Node only; the one block that reads files)
+// BEGIN CLI
+if (typeof require !== "undefined" && typeof module !== "undefined" && require.main === module) {
+  const fs = require("fs");
+  const argv = process.argv.slice(2);
+  if (argv.length === 2 && argv[0] === "--batch") {
+    const lines = batchLines(new Uint8Array(fs.readFileSync(argv[1])));
+    process.stdout.write(lines.join("\n") + "\n");
+  } else if (argv.length === 2) {
+    const res = check(new Uint8Array(fs.readFileSync(argv[0])), new Uint8Array(fs.readFileSync(argv[1])));
+    process.stdout.write(canon(res) + "\n");
+    process.exitCode = res.has("refusal") ? 2 : 0;
+  } else {
+    process.stderr.write("usage: derive.js CLAIM_FILE RECEIPT_FILE | derive.js --batch VECTOR_FILE\n");
+    process.exitCode = 64;
+  }
+}
+// END CLI

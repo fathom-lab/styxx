@@ -1,0 +1,26 @@
+{
+ "blocks": [
+  {
+   "line": 8,
+   "content": "{\n  \"arm\": {\n    \"rows\": {\"format\": \"json\", \"at\": \"\"},\n    \"where\": [{\"row\": \"key\", \"ge\": \"E1-000\"}, {\"row\": \"key\", \"le\": \"E1-099\"}],\n    \"op\": \"count\"\n  },\n  \"upheld\": {\n    \"rows\": {\"format\": \"json\", \"at\": \"\"},\n    \"where\": [{\"row\": \"key\", \"ge\": \"E1-000\"}, {\"row\": \"key\", \"le\": \"E1-099\"},\n              {\"row\": \"value\", \"eq\": \"CONTRADICTED\"}],\n    \"op\": \"count\",\n    \"within\": \"arm\"\n  },\n  \"precision\": {\n    \"rows\": {\"format\": \"json\", \"at\": \"\"},\n    \"where\": [{\"row\": \"key\", \"ge\": \"E1-000\"}, {\"row\": \"key\", \"le\": \"E1-099\"}],\n    \"match\": [{\"row\": \"value\", \"eq\": \"CONTRADICTED\"}],\n    \"op\": \"share\"\n  }\n}\n"
+  }
+ ],
+ "span": {
+  "receipt": "r1#upheld",
+  "inner": "23",
+  "ordinal": 1
+ },
+ "resolution": {
+  "verdict": "RESOLVED",
+  "entry": {
+   "kind_of_source": "file_read",
+   "complete": true,
+   "rung": "undeclared",
+   "harness": "specimen maker: git cat-file blob origin/main:papers/closed-model-frontier/external1_answers.json at c99ec82f1832cfaf7bc6b7899ef63839f0071feb"
+  }
+ },
+ "budget": {
+  "spent_before": 0,
+  "entry_read_before": false
+ }
+}
