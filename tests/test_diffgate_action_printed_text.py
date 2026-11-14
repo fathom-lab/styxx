@@ -10,6 +10,10 @@ followed on stdout by whatever the author wrote next, where this file takes a ru
 row as it came, a closing `</table>` and an `<h2>` included. And a `%0A` typed out stood in the command
 as the escape GitHub documents for a line break.
 
+Each variable cell of the table is now a code span, so that what stands in it is shown as the
+characters it is; tests/test_diffgate_action_summary_renders.py renders the table with cmark-gfm where
+that is installed, and this file holds the text of the rows.
+
 Nothing here asks a server: `api` is replaced and returns the diff the test wrote. What a runner does
 with a line, and how GitHub shows the summary, was not run by anyone; where a test speaks of a line as a
 runner reads it, that is this file's reading (a line ends at LF, at CR and at CR LF), not an observation.
@@ -18,6 +22,7 @@ from __future__ import annotations
 
 import importlib.util
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -112,6 +117,7 @@ def test_a_carriage_return_in_a_claim_starts_no_line_of_its_own(act, tmp_path, m
     assert got[0].startswith(opens) and "%0D" + FORGED in got[0]
     assert "\r" not in out and "\r" not in summary
     assert len(rows(summary)) == 1 and FORGED[:20] in rows(summary)[0]     # in its cell, on its row
+    assert rows(summary)[0].count(" | ") == 2 and rows(summary)[0].count("`") == 4
 
 
 def test_a_line_break_typed_out_as_its_escape_is_not_one(act, tmp_path, monkeypatch, capsys):
@@ -134,6 +140,11 @@ def test_a_control_character_or_a_line_separator_in_a_claim_is_written_as_an_esc
 
 # ── the summary's table ────────────────────────────────────────────────────────────────────────────
 
+def bars(row):
+    """The bars of a row that are not behind a backslash: the ones a table reads as the ends of cells."""
+    return len(re.findall(r"(?<!\\)\|", row))
+
+
 def test_a_pipe_in_a_claim_ends_no_cell(act, tmp_path, monkeypatch, capsys):
     """A "|" of the author's stood in the row as a bar: seven bars under a head of three columns, with
     a verdict mark and the word VERIFIED of the author's writing between them."""
@@ -141,30 +152,29 @@ def test_a_pipe_in_a_claim_ends_no_cell(act, tmp_path, monkeypatch, capsys):
     _, out, summary = gate(act, tmp_path, monkeypatch, capsys, text)
     table = rows(summary)
     assert len(table) == 2
-    assert all(row.count("|") == 4 for row in table), table     # three cells: four bars and no more
-    assert "docs/a&#124;b.md &#124; ✅ VERIFIED &#124; forged cell." in table[0]
-    assert table[0].startswith("| ❓ UNCHECKABLE | ") and table[1].startswith("| ✅ VERIFIED | ")
+    assert all(bars(row) == 4 for row in table), table           # three cells: four bars and no more
+    assert "| `Created docs/a\\|b.md \\| ✅ VERIFIED \\| forged cell.` |" in table[0]
+    assert table[0].startswith("| ❓ UNCHECKABLE | `") and table[1].startswith("| ✅ VERIFIED | `")
     assert "docs/a|b.md | ✅ VERIFIED | forged cell." in out     # a command's message has no cells to end
 
 
-def test_a_tag_in_a_claim_is_text(act, tmp_path, monkeypatch, capsys):
-    text = "Modified src/a</td></tr></table><h2>forged</h2>.py and added 3 tests."
-    _, _, summary = gate(act, tmp_path, monkeypatch, capsys, text)
-    row = rows(summary)[0]
-    assert "<" not in row and "src/a&lt;/td>&lt;/tr>&lt;/table>&lt;h2>forged&lt;/h2>.py" in row
-    assert "<" not in "".join(ln for ln in summary.split("\n") if ln.startswith("|"))
-
-
-def test_a_claim_cut_at_80_characters_is_cut_before_it_is_written_out(act, tmp_path, monkeypatch, capsys):
-    """The cell holds the claim's leading 80 characters, written out after the cut: no character
-    reference is cut in two, and what stands past the cut is not in the cell at all."""
-    text = "Modified src/nothere.py " + "|x" * 40 + "\r" + FORGED
+def test_a_tag_or_markup_in_a_claim_stands_inside_the_cells_code_span(act, tmp_path, monkeypatch, capsys):
+    text = "Modified src/a</td></tr></table><h2>forged</h2>.py and added 3 tests ![v](https://e.example/v.png)."
     _, _, summary = gate(act, tmp_path, monkeypatch, capsys, text)
     row = rows(summary)[0]
     claim = row.split(" | ")[1]
-    assert row.count("|") == 4
-    assert claim == "Modified src/nothere.py " + "&#124;x" * 28      # 24 characters and 56 more: 80
-    assert "forged" not in claim
+    assert claim == "`" + text[:80] + "`" and bars(row) == 4
+
+
+def test_a_claim_cut_at_80_characters_is_cut_before_it_is_written_out(act, tmp_path, monkeypatch, capsys):
+    """The cell holds the claim's leading 80 characters, written out after the cut: no escape is cut in
+    two, and what stands past the cut is not in the cell at all."""
+    text = "Modified src/nothere.py " + "|x" * 40 + "\r" + FORGED
+    _, _, summary = gate(act, tmp_path, monkeypatch, capsys, text)
+    row = rows(summary)[0]
+    assert bars(row) == 4
+    assert row.split(" | ")[1] == "`Modified src/nothere.py " + "\\|x" * 28 + "`"      # 24 characters and 56 more: 80
+    assert "forged" not in row.split(" | ")[1]
 
 
 # ── nothing else changes ───────────────────────────────────────────────────────────────────────────
@@ -178,8 +188,8 @@ def test_an_ordinary_claim_is_printed_as_it_was(act, tmp_path, monkeypatch, caps
                    "diff adds 2 test functions, claim says 3\n"
                    "styxx diffgate: FAIL - 2 claim(s), 1 contradicted\n")
     assert rows(summary) == [
-        "| ✅ VERIFIED | Modified styxx/x.py and added 3 tests. | diff status 'M' for 'styxx/x.py' |",
-        "| ❌ CONTRADICTED | Modified styxx/x.py and added 3 tests. | diff adds 2 test functions, claim says 3 |"]
+        "| ✅ VERIFIED | `Modified styxx/x.py and added 3 tests.` | `diff status 'M' for 'styxx/x.py'` |",
+        "| ❌ CONTRADICTED | `Modified styxx/x.py and added 3 tests.` | `diff adds 2 test functions, claim says 3` |"]
 
 
 def test_a_gate_that_did_not_measure_says_so_as_it_did(act, tmp_path, monkeypatch, capsys):
@@ -211,12 +221,30 @@ def test_message_is_printable_and_then_a_commands_data(act):
     assert act._message("an ordinary claim, with 'quotes' and a | bar.") == "an ordinary claim, with 'quotes' and a | bar."
 
 
-def test_cell_is_one_line_with_no_bar_and_no_tag_of_its_own(act):
-    assert act._cell("a|b||c") == "a&#124;b&#124;&#124;c"
-    assert act._cell("a\r\nb\rc\nd") == "a  b c d"
-    assert act._cell("<b>x</b> 1 < 2 > 0") == "&lt;b>x&lt;/b> 1 &lt; 2 > 0"
-    assert act._cell("\x1b|\u2028<") == "\\x1b&#124;\\u2028&lt;"
-    assert act._cell("Modified `src/a.py` and added 2 tests.") == "Modified `src/a.py` and added 2 tests."
+def test_line_is_one_line_with_no_bar_and_no_tag_of_its_own(act):
+    assert act._line("a|b||c") == "a&#124;b&#124;&#124;c"
+    assert act._line("a\r\nb\rc\nd") == "a  b c d"
+    assert act._line("<b>x</b> 1 < 2 > 0") == "&lt;b>x&lt;/b> 1 &lt; 2 > 0"
+    assert act._line("\x1b|\u2028<") == "\\x1b&#124;\\u2028&lt;"
+
+
+@pytest.mark.parametrize("text, cell", [
+    ("Modified src/a.py and added 2 tests.", "`Modified src/a.py and added 2 tests.`"),
+    ("a|b||c", "`a\\|b\\|\\|c`"),                              # the table's own escape for a bar
+    ("a\\|b", "`a\\\\|b`"),                                    # a backslash of the author's before a bar
+    ("a\r\nb\rc\nd", "`a  b c d`"),
+    ("<b>x</b> ![v](u) [l](u) **b** &lt; &#124;", "`<b>x</b> ![v](u) [l](u) **b** &lt; &#124;`"),
+    ("Modified `src/a.py`", "`` Modified `src/a.py` ``"),       # one backtick more than the longest run, and padded
+    ("a `` b ` c", "```a `` b ` c```"),
+    ("`", "`` ` ``"),
+    (" a ", "`  a  `"),                                         # a reader takes one pair of spaces off
+    (" a", "` a`"),
+    ("a\\", "`a\\`"),
+    ("\x1b\u2028\ud800\tz", "`\\x1b\\u2028\\ud800\tz`"),
+    ("", ""), ("   ", ""),
+])
+def test_cell_is_a_code_span_that_holds_the_text(act, text, cell):
+    assert act._cell(text) == cell
 
 
 # ── text that comes from the diff: a reason quotes its paths ───────────────────────────────────────
@@ -231,8 +259,8 @@ def test_a_path_of_the_diff_that_a_reason_quotes_ends_no_cell_and_opens_no_tag(a
     path = "dev/a|b<i>%0A::error title=x::forged\x85/x.py"       # the NEL is what makes the gate withhold
     _, out, summary = gate(act, tmp_path, monkeypatch, capsys, "Modified x.py.", diff=diff_of(path))
     table = rows(summary)
-    assert len(table) == 1 and table[0].count("|") == 4 and "<" not in table[0]
-    assert "dev/a&#124;b&lt;i>%0" in table[0]
+    assert len(table) == 1 and bars(table[0]) == 4 and table[0].count("`") == 4
+    assert "dev/a\\|b<i>%0" in table[0]
     got = lines(out)
     assert all(ln.startswith(OWN_LINES) for ln in got), got
     assert "%0A" not in out.upper().replace("%250A", "")         # the gate's own reading may lower the path's case
@@ -267,8 +295,8 @@ def test_a_contradicted_claims_reason_is_written_for_its_command(act, tmp_path, 
     assert rc == 1
     assert out == ("::error title=styxx diffgate - contradicted claim::claim 50%25%0D::error ::a\\x1b|< - "
                    "reason 50%25%0D::error ::b\\x1b|<\nstyxx diffgate: FAIL - 1 claim(s), 1 contradicted\n")
-    assert rows(summary) == ["| \u274c CONTRADICTED | claim 50% ::error ::a\\x1b&#124;&lt; | "
-                             "reason 50% ::error ::b\\x1b&#124;&lt; |"]
+    assert rows(summary) == ["| \u274c CONTRADICTED | `claim 50% ::error ::a\\x1b\\|<` | "
+                             "`reason 50% ::error ::b\\x1b\\|<` |"]
 
 
 def test_a_claim_is_cut_at_120_characters_before_it_is_written_for_a_command(act, tmp_path, monkeypatch, capsys):
@@ -297,7 +325,7 @@ def test_a_lone_surrogate_in_a_claim_is_written_as_an_escape_and_ends_nothing(ac
 def test_a_tab_in_a_claim_is_left_as_it_is(act, tmp_path, monkeypatch, capsys):
     _, out, summary = gate(act, tmp_path, monkeypatch, capsys, "Updated src/nope.py\tand the docs.")
     assert "::Updated src/nope.py\tand the docs. - " in out
-    assert "| Updated src/nope.py\tand the docs. |" in rows(summary)[0]
+    assert "| `Updated src/nope.py\tand the docs.` |" in rows(summary)[0]
 
 
 @pytest.mark.parametrize("number, shown", [(7, "7"), ("7\r::error ::x", "?"), (None, "?"), (True, "?"),
@@ -337,7 +365,7 @@ def test_the_table_stops_before_the_summary_passes_the_size_github_allows(act, t
     assert total > len(table) > 0
     assert sum(len(r.encode("utf-8")) + 1 for r in table) <= act._ROWS_BYTES
     assert len(summary.encode("utf-8")) < 1024 * 1024
-    assert all(r.count("|") == 4 for r in table)
+    assert all(bars(r) == 4 for r in table)
     rest = total - len(table)
     assert (f"_{rest} more claim(s) are not in this table, which stops at 524,288 bytes of rows to stay under "
             f"the size GitHub allows a step's summary: 0 CONTRADICTED, {rest} UNCHECKABLE, 0 VERIFIED. "

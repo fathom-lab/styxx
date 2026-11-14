@@ -291,16 +291,30 @@ def _message(text: str) -> str:
     return _command_data(_printable(text))
 
 
-def _cell(text: str) -> str:
-    """Text the pull request's author chose, as one cell of the summary's table or one line of the
-    summary: control characters as escapes, CR and LF as spaces, and "|" and "<" written as the
-    character references ``&#124;`` and ``&lt;``, so the text holds no bar to end a cell and no "<"
-    to open a tag. A Markdown reader is taken to show a reference as its character, except inside a
-    code span of the author's own and after a backslash of the author's, where it shows as written;
-    GitHub's page was not run. Other Markdown of the author's (emphasis, a link, an image) is
-    Markdown in the cell, as it was."""
+def _line(text: str) -> str:
+    """Text as one line of the summary's prose carries it: control characters as escapes, CR and LF
+    as spaces, and "|" and "<" written as the character references ``&#124;`` and ``&lt;``. Used for
+    the reason of a gate that did not measure, which is words of the gate's own and a count."""
     return (_printable(text).replace("\r", " ").replace("\n", " ")
             .replace("|", "&#124;").replace("<", "&lt;"))
+
+
+def _cell(text: str) -> str:
+    """Text the pull request's author chose, as one cell of the summary's table: a code span, so that
+    it is shown as the characters it is and nothing in it is read as Markdown or as a tag. Control
+    characters are written as escapes and CR and LF as spaces; a "|" is written ``\\|``, the table's
+    own escape, which is read before the span is; the span opens and closes with one backtick more
+    than the longest run of them in the text, and is padded with a space where the text begins or
+    ends with a backtick, or begins and ends with a space (a reader takes one such pair of spaces
+    off). Rendered with cmark-gfm, the parser GitHub publishes, a cell written so held its text and
+    no element but the span (CHANGELOG, "a claim is shown in its cell as the characters it is");
+    GitHub's own page was not run."""
+    text = _printable(text).replace("\r", " ").replace("\n", " ").replace("|", "\\|")
+    if not text.strip():
+        return ""
+    ticks = "`" * (max((len(run) for run in re.findall("`+", text)), default=0) + 1)
+    pad = " " if text[0] == "`" or text[-1] == "`" or (text[0] == " " and text[-1] == " ") else ""
+    return f"{ticks}{pad}{text}{pad}{ticks}"
 
 
 # GitHub documents 1 MiB as the most a step's summary may hold; past it the summary is not shown. The
@@ -400,7 +414,7 @@ def main() -> int:
         print(f"::warning title=styxx diffgate - UNMEASURED::"
               f"{_message(g.why_unmeasured)}. The gate did not run; this is not a pass.")
         _write_summary(["## styxx diffgate — UNMEASURED", "",
-                        f"**The gate did not run.** {_cell(g.why_unmeasured)}", "",
+                        f"**The gate did not run.** {_line(g.why_unmeasured)}", "",
                         f"Every claim in the {what} is reported UNCHECKABLE, not "
                         "verified. A PASS here would mean *nothing contradicted "
                         "the summary* — which is true of any summary when there "
@@ -432,8 +446,8 @@ def main() -> int:
             else:
                 why = c.why[:100]
             # A claim's text is the pull request author's, and a reason can quote it and the diff's paths, so
-            # a "|", a line break or a "<" of theirs cannot end the cell, start a row or open a tag. Other
-            # Markdown of theirs is Markdown there, as it was.
+            # each is written as a code span: a "|" or a line break of theirs cannot end the cell or start a
+            # row, and nothing of theirs is read as Markdown or as a tag.
             row = f"| {mark} {c.verdict} | {_cell(c.text[:80])} | {_cell(why)} |"
             used += len(row.encode("utf-8")) + 1
             if used > _ROWS_BYTES:
