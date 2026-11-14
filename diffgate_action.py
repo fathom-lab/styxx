@@ -251,16 +251,23 @@ def api(url: str, accept: str) -> str:
 
 
 def _printable(text: str) -> str:
-    """``text`` with every control character other than CR and LF written as an escape (ESC as
-    ``\\x1b``), and the two Unicode line separators with them (``\\u2028``). CR and LF are left for
-    the place the text is printed, which deals with them in its own way."""
-    return "".join(c if c in "\r\n" or " " <= c < "\x7f" or ("\x9f" < c and c not in "\u2028\u2029")
-                   else (f"\\x{ord(c):02x}" if c < "\u0100" else f"\\u{ord(c):04x}") for c in text)
+    """``text`` with every control character other than a tab, CR and LF written as an escape (ESC
+    as ``\\x1b``), and with them the two Unicode line separators (``\\u2028``) and a surrogate that
+    stands alone (``\\udc80``), which cannot be written as UTF-8 and which some settings of stdout
+    write as a raw byte. A tab ends no line and is left. CR and LF are left for the place the text is
+    printed, which deals with them in its own way."""
+    def written(c: str) -> str:
+        if c in "\t\r\n" or " " <= c < "\x7f" or ("\x9f" < c and c not in "\u2028\u2029"
+                                                and not "\ud800" <= c <= "\udfff"):
+            return c
+        return f"\\x{ord(c):02x}" if c < "\u0100" else f"\\u{ord(c):04x}"
+    return "".join(written(c) for c in text)
 
 
 def _failure_text(e) -> str:
-    """What a failed fetch says of itself, fit to print. Control characters are written as escapes
-    (``_printable``); then the token's value is replaced wherever the text holds it (an HTTP reason
+    """What a failed fetch says of itself, fit to print. Control characters other than a tab, CR and
+    LF, the two line separators and a lone surrogate are written as escapes (``_printable``); then
+    the token's value is replaced wherever the text holds it (an HTTP reason
     phrase can carry it back, and an escape can end in the character a token starts with, which is
     why the escapes are written before the token is looked for); then it is cut at 1,000 characters."""
     return _hide(_printable(str(e)), os.environ.get("GH_TOKEN"))[:1000]
@@ -287,10 +294,18 @@ def _message(text: str) -> str:
 def _cell(text: str) -> str:
     """Text the pull request's author chose, as one cell of the summary's table or one line of the
     summary: control characters as escapes, CR and LF as spaces, and "|" and "<" written as the
-    character references ``&#124;`` and ``&lt;``, which show as the character and can neither end a
-    cell nor open a tag. Inside a code span of the author's own a reference shows as it is written."""
+    character references ``&#124;`` and ``&lt;``, so the text holds no bar to end a cell and no "<"
+    to open a tag. A Markdown reader is taken to show a reference as its character, except inside a
+    code span of the author's own and after a backslash of the author's, where it shows as written;
+    GitHub's page was not run. Other Markdown of the author's (emphasis, a link, an image) is
+    Markdown in the cell, as it was."""
     return (_printable(text).replace("\r", " ").replace("\n", " ")
             .replace("|", "&#124;").replace("<", "&lt;"))
+
+
+# GitHub documents 1 MiB as the most a step's summary may hold; past it the summary is not shown. The
+# rows of the table are the one part whose size the pull request's author sets, so they stop here.
+_ROWS_BYTES = 512 * 1024
 
 
 def _write_summary(lines) -> None:
@@ -334,7 +349,9 @@ def main() -> int:
     if event_name == "pull_request":
         summary = (event.get("pull_request") or {}).get("body") or ""
         diff_url = (event.get("pull_request") or {}).get("url", "")
-        what = f"PR #{(event.get('pull_request') or {}).get('number', '?')} body"
+        number = (event.get("pull_request") or {}).get("number")
+        # GitHub documents the number as an integer; anything else in the event file is shown as "?"
+        what = f"PR #{number if type(number) is int else '?'} body"
     elif event_name == "push":
         summary = (event.get("head_commit") or {}).get("message") or ""
         diff_url = (event.get("compare", "")
@@ -396,6 +413,7 @@ def main() -> int:
              f"**{g.verdict}** · {len(g.claims)} claim(s) checked on the {what}", ""]
     if g.claims:
         lines += ["| verdict | claim | evidence |", "|---|---|---|"]
+        shown = used = 0
         for c in g.claims:
             mark = {"VERIFIED": "✅", "CONTRADICTED": "❌", "UNCHECKABLE": "❓"}[c.verdict]
             # PATH-2a (NOTE_path2a_second_pass_2026_09_30): a reason the overlay wrote is shown whole, since its
@@ -413,10 +431,22 @@ def main() -> int:
                 why = head + sep + mains[:100]
             else:
                 why = c.why[:100]
-            # A claim's text is the pull request author's, and the reason quotes it and the diff's paths, so
-            # each goes into its cell as text and nothing more: a "|", a line break or a "<" of theirs cannot
-            # end the cell, start a row or open a tag.
-            lines.append(f"| {mark} {c.verdict} | {_cell(c.text[:80])} | {_cell(why)} |")
+            # A claim's text is the pull request author's, and a reason can quote it and the diff's paths, so
+            # a "|", a line break or a "<" of theirs cannot end the cell, start a row or open a tag. Other
+            # Markdown of theirs is Markdown there, as it was.
+            row = f"| {mark} {c.verdict} | {_cell(c.text[:80])} | {_cell(why)} |"
+            used += len(row.encode("utf-8")) + 1
+            if used > _ROWS_BYTES:
+                break
+            lines.append(row)
+            shown += 1
+        if shown < len(g.claims):
+            rest = g.claims[shown:]
+            count = {v: sum(1 for c in rest if c.verdict == v) for v in ("CONTRADICTED", "UNCHECKABLE", "VERIFIED")}
+            lines += ["", f"_{len(rest)} more claim(s) are not in this table, which stops at {_ROWS_BYTES:,} bytes "
+                          "of rows to stay under the size GitHub allows a step's summary: "
+                          f"{count['CONTRADICTED']} CONTRADICTED, {count['UNCHECKABLE']} UNCHECKABLE, "
+                          f"{count['VERIFIED']} VERIFIED. The verdict above counts every claim._"]
     else:
         lines += ["_No diff-shaped claims found. The gate checks a closed template set "
                   "(touched/created/deleted paths, added functions/tests, file counts, "

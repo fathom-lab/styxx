@@ -1142,7 +1142,7 @@ def test_a_long_github_api_url_that_cannot_be_read_is_cut_at_200_characters(serv
 
 def test_whitespace_of_any_kind_around_github_api_url_is_stripped(monkeypatch, act):
     """A no-break space and an em space, which urlsplit does not drop on any Python."""
-    monkeypatch.setenv("GITHUB_API_URL", "  https://ghe.example/api/v3  ")
+    monkeypatch.setenv("GITHUB_API_URL", "\u00a0\u2003https://ghe.example/api/v3\u2003\u00a0")
     assert act._api_origin() == ("https", "ghe.example", 443)
 
 
@@ -1567,8 +1567,8 @@ def test_a_control_character_in_a_failed_fetchs_text_is_written_as_an_escape(act
     """ESC, a vertical tab, NEL and DEL are not taken to be line ends to a runner, and they are not
     printed raw either. CR and LF are left for the place the text is printed."""
     monkeypatch.delenv("GH_TOKEN", raising=False)
-    assert act._failure_text(ValueError("a\x1b[31mb\x0bc\x85d\x7fe\x00f\tg")) == \
-        "a\\x1b[31mb\\x0bc\\x85d\\x7fe\\x00f\\x09g"
+    assert act._failure_text(ValueError("a\x1b[31mb\x0bc\x85d\x7fe\x00f\tg\u2028h\udc80i")) == \
+        "a\\x1b[31mb\\x0bc\\x85d\\x7fe\\x00f\tg\\u2028h\\udc80i"       # a tab ends no line and is left
     assert act._failure_text(ValueError("a\r\nb é 中")) == "a\r\nb é 中"
 
 
