@@ -250,14 +250,20 @@ def api(url: str, accept: str) -> str:
                            "could not read as an address, so it was not followed") from e
 
 
+def _printable(text: str) -> str:
+    """``text`` with every control character other than CR and LF written as an escape (ESC as
+    ``\\x1b``), and the two Unicode line separators with them (``\\u2028``). CR and LF are left for
+    the place the text is printed, which deals with them in its own way."""
+    return "".join(c if c in "\r\n" or " " <= c < "\x7f" or ("\x9f" < c and c not in "\u2028\u2029")
+                   else (f"\\x{ord(c):02x}" if c < "\u0100" else f"\\u{ord(c):04x}") for c in text)
+
+
 def _failure_text(e) -> str:
-    """What a failed fetch says of itself, fit to print. Every control character other than CR and
-    LF, which each place it is printed deals with in its own way, is written as an escape (ESC as
-    ``\\x1b``); then the token's value is replaced wherever the text holds it (an HTTP reason phrase
-    can carry it back, and an escape can end in the character a token starts with, which is why the
-    escapes are written before the token is looked for); then it is cut at 1,000 characters."""
-    text = "".join(c if c in "\r\n" or " " <= c < "\x7f" or c > "\x9f" else f"\\x{ord(c):02x}" for c in str(e))
-    return _hide(text, os.environ.get("GH_TOKEN"))[:1000]
+    """What a failed fetch says of itself, fit to print. Control characters are written as escapes
+    (``_printable``); then the token's value is replaced wherever the text holds it (an HTTP reason
+    phrase can carry it back, and an escape can end in the character a token starts with, which is
+    why the escapes are written before the token is looked for); then it is cut at 1,000 characters."""
+    return _hide(_printable(str(e)), os.environ.get("GH_TOKEN"))[:1000]
 
 
 def _command_data(text: str) -> str:
@@ -270,6 +276,21 @@ def _code_span(text: str) -> str:
     """Text as the step summary shows it between two backticks: on one line, with no backtick of its
     own to close the span."""
     return text.replace("`", "'").replace("\r", " ").replace("\n", " ")
+
+
+def _message(text: str) -> str:
+    """Text the pull request's author or a server chose, as the message of a workflow command: control
+    characters as escapes, then "%", CR and LF escaped, so it stays the message of that one command."""
+    return _command_data(_printable(text))
+
+
+def _cell(text: str) -> str:
+    """Text the pull request's author chose, as one cell of the summary's table or one line of the
+    summary: control characters as escapes, CR and LF as spaces, and "|" and "<" written as the
+    character references ``&#124;`` and ``&lt;``, which show as the character and can neither end a
+    cell nor open a tag. Inside a code span of the author's own a reference shows as it is written."""
+    return (_printable(text).replace("\r", " ").replace("\n", " ")
+            .replace("|", "&#124;").replace("<", "&lt;"))
 
 
 def _write_summary(lines) -> None:
@@ -360,9 +381,9 @@ def main() -> int:
     # HTML interstitial. PASS/FAIL cannot carry "this gate did not run".
     if not g.measured:
         print(f"::warning title=styxx diffgate - UNMEASURED::"
-              f"{g.why_unmeasured}. The gate did not run; this is not a pass.")
+              f"{_message(g.why_unmeasured)}. The gate did not run; this is not a pass.")
         _write_summary(["## styxx diffgate — UNMEASURED", "",
-                        f"**The gate did not run.** {g.why_unmeasured}", "",
+                        f"**The gate did not run.** {_cell(g.why_unmeasured)}", "",
                         f"Every claim in the {what} is reported UNCHECKABLE, not "
                         "verified. A PASS here would mean *nothing contradicted "
                         "the summary* — which is true of any summary when there "
@@ -392,7 +413,10 @@ def main() -> int:
                 why = head + sep + mains[:100]
             else:
                 why = c.why[:100]
-            lines.append(f"| {mark} {c.verdict} | {c.text[:80]} | {why} |")
+            # A claim's text is the pull request author's, and the reason quotes it and the diff's paths, so
+            # each goes into its cell as text and nothing more: a "|", a line break or a "<" of theirs cannot
+            # end the cell, start a row or open a tag.
+            lines.append(f"| {mark} {c.verdict} | {_cell(c.text[:80])} | {_cell(why)} |")
     else:
         lines += ["_No diff-shaped claims found. The gate checks a closed template set "
                   "(touched/created/deleted paths, added functions/tests, file counts, "
@@ -438,12 +462,13 @@ def main() -> int:
     for c in g.claims:
         if c.verdict == "CONTRADICTED":
             failing = True
-            print(f"::error title=styxx diffgate - contradicted claim::{c.text[:120]} - {c.why}")
+            print(f"::error title=styxx diffgate - contradicted claim::{_message(c.text[:120])} - {_message(c.why)}")
         elif c.verdict == "UNCHECKABLE" and strict:
             failing = True
-            print(f"::error title=styxx diffgate - uncheckable under strict::{c.text[:120]} - {c.why}")
+            print(f"::error title=styxx diffgate - uncheckable under strict::{_message(c.text[:120])} - "
+                  f"{_message(c.why)}")
         elif c.verdict == "UNCHECKABLE":
-            print(f"::warning title=styxx diffgate - uncheckable::{c.text[:120]} - {c.why}")
+            print(f"::warning title=styxx diffgate - uncheckable::{_message(c.text[:120])} - {_message(c.why)}")
     print(f"styxx diffgate: {g.verdict} - {len(g.claims)} claim(s), "
           f"{sum(1 for c in g.claims if c.verdict == 'CONTRADICTED')} contradicted")
     if failing and not soft:
