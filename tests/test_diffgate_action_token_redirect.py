@@ -316,7 +316,11 @@ def test_an_address_off_the_origin_is_not_asked(servers, act, where):
     with pytest.raises(RuntimeError) as e:
         act.api(url, DIFF_ACCEPT)
     msg = str(e.value)
-    assert f"the diff's address {url!r} is not on {api.base}" in msg and "was not asked for" in msg
+    if where == "user part":                                    # not an address the script reads at all
+        assert f"the diff's address {url!r} is not one this script can read" in msg
+    else:
+        assert f"the diff's address {url!r} is not on {api.base}, the one origin" in msg
+    assert "was not asked for" in msg
     assert_no_token(msg, repr(e.value))
     assert api.seen == [] and elsewhere.seen == []
 
@@ -1018,7 +1022,10 @@ def test_api_asks_an_address_of_the_table_only_where_it_is_on_the_origin(monkeyp
     else:
         with pytest.raises(RuntimeError) as e:
             act.api(url, DIFF_ACCEPT)
-        assert "the diff's address" in str(e.value) and "is not on https://api.github.com, the one origin" in str(e.value)
+        if act._origin(url) is None:
+            assert "the diff's address" in str(e.value) and "is not one this script can read" in str(e.value)
+        else:
+            assert f"the diff's address {url!r} is not on https://api.github.com, the one origin" in str(e.value)
         assert "was not asked for" in str(e.value)
         assert asked == []
         assert_no_token(str(e.value))
@@ -1203,16 +1210,18 @@ def test_without_gh_token_nothing_is_asked(servers, act, monkeypatch):
     assert api.seen == [] and elsewhere.seen == []
 
 
-@pytest.mark.parametrize("tail", ["\n", "\r\n", "\nX-Injected: 1", "\x7f", "\tx", "\x1b[0m"])
-def test_a_token_with_a_control_character_is_sent_nowhere_and_not_quoted(servers, act, monkeypatch, tail):
-    """http.client refuses such a header value in a sentence that quotes it; the script refuses before
-    that, in one that does not."""
+@pytest.mark.parametrize("tail", ["\n", "\r\n", "\nX-Injected: 1", "\x7f", "\tx", "\x1b[0m",
+                                  "\u0085", "\u00e9", "\u20ac", "\u2028"])
+def test_a_token_a_header_cannot_carry_is_sent_nowhere_and_not_quoted(servers, act, monkeypatch, tail):
+    """http.client refuses a control character in a header value in a sentence that quotes the value,
+    and a character it cannot encode in one that names the character and its place; the script refuses
+    before either, in a sentence that names the variable and quotes nothing."""
     api, elsewhere = servers
     monkeypatch.setenv("GH_TOKEN", TOKEN + tail)
     with pytest.raises(RuntimeError) as e:
         act.api(api.base + API_PATH, DIFF_ACCEPT)
-    assert "GH_TOKEN holds a line break or another control character" in str(e.value)
-    assert_no_token(str(e.value), repr(e.value))
+    assert str(e.value) == ("GH_TOKEN holds a line break, another control character or a character past "
+                            "ASCII, so it was sent nowhere and the diff was not asked for")
     assert api.seen == [] and elsewhere.seen == []
 
 
@@ -1295,7 +1304,7 @@ def test_main_says_so_when_gh_token_is_not_set_or_cannot_be_sent(servers, act, t
     monkeypatch.setenv("GH_TOKEN", TOKEN + "\n")
     assert act.main() == 0
     out = capsys.readouterr()
-    assert "GH_TOKEN holds a line break or another control character" in out.out
+    assert "GH_TOKEN holds a line break, another control character or a character past ASCII" in out.out
     assert "The gate did not run; this is not a pass." in out.out
     assert_no_token(out.out, out.err, summary.read_text(encoding="utf-8"))
     monkeypatch.delenv("GH_TOKEN")
@@ -1317,3 +1326,257 @@ def test_the_text_of_a_failed_fetch_is_cut_at_1000_characters(act, monkeypatch):
 def test_the_two_escapes_as_pure_functions(act):
     assert act._command_data("50%\r\n::error::x\n") == "50%25%0D%0A::error::x%0A"
     assert act._code_span("a`b`\r\nc") == "a'b'  c"
+
+
+# ── the shape of an address, the written-out address and the hidden token, change by change ────────
+
+@pytest.mark.parametrize("ch", [chr(i) for i in range(0x21, 0x7f)])
+def test_the_shape_of_a_host_character_by_character(act, ch):
+    """A letter, a digit, ".", "-", "_" and "~" make a name; "/", "?" and "#" end the host; any other
+    printable ASCII character leaves no origin."""
+    got = act._origin(f"https://a{ch}b/x")
+    if ch.isalnum() or ch in "._~-":
+        assert got == ("https", f"a{ch}b".lower(), 443) == dg._origin(f"https://a{ch}b/x")
+    elif ch in "/?#":
+        assert got == ("https", "a", 443)
+    else:
+        assert got is None
+
+
+def test_an_empty_port_is_the_schemes_own(act):
+    assert act._origin("https://api.github.com:/x") == _API == dg._origin("https://api.github.com:/x")
+    assert act._origin("https://[::1]:/x") == ("https", "::1", 443)
+    assert act._on_origin("https://api.github.com:/x?q", _API) == "https://api.github.com/x?q"
+
+
+@pytest.mark.parametrize("netloc, fits", [
+    ("api.github.com", True), ("api.github.com:443", True), ("api.github.com:", True),
+    ("[::1]", True), ("[::1]:8443", True), ("[::1]:", True),
+    ("[::ffff:1.2.3.4]", True), ("[::FFFF:1.2.3.4]:8443", True), ("[FE80::1]", True),
+    ("[::1].evil.example", False), ("[::1]evil.example:8443", False), ("[::1]x", False),
+    ("evil.example.[::1]", False), ("evil.example.[::1]:8443", False), ("x[::1]", False),
+    ("api.github.com:٤٤٣", False), ("api.github.com:+443", False),
+    ("api.github.com:4_43", False), ("api.github.com:443:443", False),
+    ("user@api.github.com", False), ("api.github.com\\", False), ("api.github.com%2e", False),
+    ("[fe80::1%25eth0]", False), ("[v1.x]", False), ("[]", False),
+])
+def test_the_shape_of_host_and_port_held_apart_from_urlsplit(act, netloc, fits):
+    """`_origin` asks urlsplit before it asks the shape, and this Python's urlsplit may refuse an address before the shape
+    is asked (text beside a bracketed host; from 3.11 a port that is not ASCII digits). The shape is
+    what stands where urlsplit is lenient, so it is held here by itself."""
+    assert (act._NETLOC.fullmatch(netloc) is not None) is fits
+
+
+@pytest.mark.parametrize("url", ["https://[::FFFF:1.2.3.4]:8443/x", "https://[::ffff:1.2.3.4]:8443/x"])
+def test_an_ipv6_literal_with_capitals_or_a_dotted_tail_is_read(act, url):
+    assert act._origin(url) == ("https", "::ffff:1.2.3.4", 8443) == dg._origin(url)
+    assert act._on_origin(url, ("https", "::ffff:1.2.3.4", 8443)) == "https://[::ffff:1.2.3.4]:8443/x"
+
+
+@pytest.mark.parametrize("c", ["\x00", "\x01", "\x08", "\x0b", "\x0c", "\x1b", "\x1f", " ", "\x7f",
+                               "\x80", "\x85", "\x9f", "\xa0", "\xe4", "\u2028", "\u3000", "\u4e2d"])
+@pytest.mark.parametrize("where", ["{c}https://api.github.com/x", "https://api.github.com/a{c}b",
+                                   "https://api.github.com/x?a{c}b", "https://api.github.com/x#a{c}b",
+                                   "https://api.github.com/x{c}", "https://api.github.com{c}/x"])
+def test_anything_but_printable_ascii_anywhere_leaves_no_origin(act, c, where):
+    """NUL, ESC and DEL as well as the space, and every character past ASCII: urlsplit drops a leading
+    control character and keeps DEL in a path, and urllib drops a no-break space from the end of one."""
+    assert act._origin(where.format(c=c)) is None
+    assert act._on_origin(where.format(c=c), _API) is None
+
+
+def test_an_address_the_script_cannot_read_is_said_to_be_that_and_not_to_be_off_the_origin(servers, act):
+    """A space in a path, a character past ASCII, a line break at the end: the address names the API's
+    host and port, so "is not on" the origin would not be true of it."""
+    api, elsewhere = servers
+    for tail in ("/a b", "/\u00e4", API_PATH + "\n", API_PATH + "\u00a0"):
+        with pytest.raises(RuntimeError) as e:
+            act.api(api.base + tail, DIFF_ACCEPT)
+        msg = str(e.value)
+        assert "is not one this script can read" in msg and "the one origin" not in msg
+        assert "was not asked for" in msg and "\n" not in msg
+    assert api.seen == [] and elsewhere.seen == []
+
+
+def test_an_ipv6_literal_with_no_double_colon_goes_back_in_its_brackets(act):
+    origin = ("https", "1:2:3:4:5:6:7:8", 8443)
+    assert act._origin_text(origin) == "https://[1:2:3:4:5:6:7:8]:8443"
+    assert act._origin("https://[1:2:3:4:5:6:7:8]:8443/x") == origin
+    assert act._on_origin("https://[1:2:3:4:5:6:7:8]:08443/x", origin) == "https://[1:2:3:4:5:6:7:8]:8443/x"
+
+
+@pytest.mark.parametrize("rest", ["/a;b/c;d?e", "/a%2Fb/c%20d", "/a%25b?c=%26&d=%3D", "/~user/a+b,c:d@e!f$g'(h)*i"])
+def test_the_path_and_the_query_are_written_out_as_given(act, rest):
+    """A ;parameter stays in the path, and nothing is quoted again."""
+    assert act._on_origin("https://API.github.com:443" + rest, _API) == "https://api.github.com" + rest
+
+
+def test_of_a_location_and_a_uri_the_sentence_names_the_location_urllib_reads(raw, act):
+    api, elsewhere = raw
+    out = elsewhere.base + API_PATH
+    api.answers[API_PATH] = answer(b"HTTP/1.1 302 Found", b"URI: " + MOVED.encode("ascii"),
+                                   b"Location: " + out.encode("ascii"))
+    with pytest.raises(RuntimeError) as e:
+        act.api(api.base + API_PATH, DIFF_ACCEPT)
+    assert f"GitHub answers 302, a redirect to {out!r}, which was not followed: only a redirect within" in str(e.value)
+    assert api.targets() == [API_PATH] and elsewhere.seen == []
+
+
+@pytest.mark.parametrize("code", CODES)
+def test_the_sentence_for_a_location_urllib_cannot_read_names_the_code_that_was_answered(raw, act, code):
+    api, elsewhere = raw
+    api.answers[API_PATH] = answer(b"HTTP/1.1 %d Moved" % code, b"Location: http://[::1/x")
+    with pytest.raises(RuntimeError) as e:
+        act.api(api.base + API_PATH, DIFF_ACCEPT)
+    assert str(e.value) == (f"GitHub answers {code}, a redirect to 'http://[::1/x', which urllib could not "
+                            "read as an address, so it was not followed")
+    assert api.auths() == [f"Bearer {TOKEN}"] and elsewhere.seen == []
+
+
+def test_a_location_urllib_cannot_read_that_carries_the_token_back_is_shown_without_it(raw, act):
+    api, elsewhere = raw
+    api.answers[API_PATH] = answer(b"HTTP/1.1 302 Found",
+                                   b"Location: http://[::1/?t=" + TOKEN.encode("ascii") + b"&u=1")
+    with pytest.raises(RuntimeError) as e:
+        act.api(api.base + API_PATH, DIFF_ACCEPT)
+    assert "a redirect to 'http://[::1/?t=***&u=1', which urllib could not read as an address" in str(e.value)
+    assert_no_token(str(e.value), repr(e.value))
+    assert elsewhere.seen == []
+
+
+def test_a_value_error_after_a_redirect_was_followed_is_raised_as_it_is(servers, act, monkeypatch):
+    """Once the handler has agreed to a hop, a ValueError is not about reading that redirect's address."""
+    api, elsewhere = servers
+    api.routes[API_PATH] = (302, MOVED)
+    real = urllib.request.OpenerDirector.open
+    opened = []
+
+    def fails_on_the_followed_request(self, req, *a, **k):
+        opened.append(req.full_url)
+        if len(opened) == 2:
+            raise ValueError("not about a redirect")
+        return real(self, req, *a, **k)
+    monkeypatch.setattr(urllib.request.OpenerDirector, "open", fails_on_the_followed_request)
+    with pytest.raises(ValueError, match="not about a redirect"):
+        act.api(api.base + API_PATH, DIFF_ACCEPT)
+    assert opened == [api.base + API_PATH, api.base + MOVED]
+    assert api.paths() == [API_PATH] and elsewhere.seen == []
+
+
+def test_a_token_with_a_space_in_it_is_sent_as_it_is(servers, act, monkeypatch):
+    api, elsewhere = servers
+    monkeypatch.setenv("GH_TOKEN", "made up token")
+    assert act.api(api.base + API_PATH, DIFF_ACCEPT) == _DIFF
+    assert api.auths() == ["Bearer made up token"] and elsewhere.seen == []
+
+
+def test_an_empty_gh_token_is_not_an_unset_one(servers, act, monkeypatch):
+    """What the script does today with GH_TOKEN="": it asks, with an empty bearer. If that is not what
+    is wanted, `_token` is the place and this is the test to turn round."""
+    api, elsewhere = servers
+    monkeypatch.setenv("GH_TOKEN", "")
+    assert act.api(api.base + API_PATH, DIFF_ACCEPT) == _DIFF
+    assert [a.strip() for a in api.auths()] == ["Bearer"] and elsewhere.seen == []
+
+
+def test_an_address_off_the_origin_is_refused_before_the_token_is_read(servers, act, monkeypatch):
+    """Where two refusals apply: the origin's, then the address's, then the token's."""
+    api, elsewhere = servers
+    monkeypatch.delenv("GH_TOKEN")
+    with pytest.raises(RuntimeError) as e:
+        act.api(elsewhere.base + API_PATH, DIFF_ACCEPT)
+    assert "the diff's address" in str(e.value) and "GH_TOKEN" not in str(e.value)
+    with pytest.raises(RuntimeError) as e:
+        act.api("not an address", DIFF_ACCEPT)
+    assert "is not one this script can read" in str(e.value) and "GH_TOKEN" not in str(e.value)
+    monkeypatch.setenv("GITHUB_API_URL", "not an address")
+    with pytest.raises(RuntimeError) as e:
+        act.api(elsewhere.base + API_PATH, DIFF_ACCEPT)
+    assert "GITHUB_API_URL is 'not an address'" in str(e.value) and "GH_TOKEN" not in str(e.value)
+    assert api.seen == [] and elsewhere.seen == []
+
+
+def test_the_token_is_replaced_in_a_failed_fetchs_text_before_the_cut(act, monkeypatch):
+    monkeypatch.setenv("GH_TOKEN", TOKEN)
+    assert act._failure_text(ValueError("x" * 990 + TOKEN)) == "x" * 990 + "***"
+    assert act._failure_text(ValueError("x" * 990 + TOKEN + "y" * 20)) == ("x" * 990 + "***" + "y" * 20)[:1000]
+
+
+def test_a_token_with_spaces_round_it_is_replaced_whole_where_the_text_holds_it_whole(act, monkeypatch):
+    monkeypatch.setenv("GH_TOKEN", "  " + TOKEN + " ")
+    assert act._failure_text(ValueError("a" + "  " + TOKEN + " " + "b")) == "a***b"
+    assert act._failure_text(ValueError("a" + TOKEN + "b")) == "a***b"
+
+
+def test_a_token_carried_back_more_than_once_is_replaced_every_time(act, monkeypatch):
+    """Three copies: `_failure_text` replaces two spellings, which are one for a token with no spaces
+    round it, so two copies would not tell a single replacement from a full one."""
+    assert act._shown("a" + TOKEN + "b" + TOKEN + "c", TOKEN) == repr("a***b***c")
+    monkeypatch.setenv("GH_TOKEN", TOKEN)
+    assert act._failure_text(ValueError(TOKEN + " and " + TOKEN + " and " + TOKEN)) == "*** and *** and ***"
+
+
+def test_with_no_gh_token_a_failed_fetchs_text_is_left_as_it_is(act, monkeypatch):
+    text = "".join(chr(i) for i in range(0x20, 0x7f))
+    monkeypatch.delenv("GH_TOKEN", raising=False)
+    assert act._failure_text(ValueError(text)) == text
+    monkeypatch.setenv("GH_TOKEN", "")
+    assert act._failure_text(ValueError(text)) == text
+
+
+def test_the_two_escapes_replace_every_copy(act):
+    assert act._command_data("%0A%0D %\r\r\n\n") == "%250A%250D %25%0D%0D%0A%0A"
+    assert act._code_span("`a`\r\r\n\n`") == "'a'    '"
+
+
+def test_main_keeps_a_reason_phrase_with_two_carriage_returns_on_the_warnings_line(raw, act, tmp_path,
+                                                                                   monkeypatch, capsys):
+    api, elsewhere = raw
+    api.answers[API_PATH] = (b"HTTP/1.1 404 Not Found\r::error::one %0A\r::error::two %0A\r\n"
+                             b"Content-Length: 0\r\nConnection: close\r\n\r\n")
+    summary = _event(tmp_path, monkeypatch, "pull_request", _pr_event(api.base + API_PATH))
+    assert act.main() == 0
+    out = capsys.readouterr().out
+    lines = _lines(out)
+    assert len(lines) == 1 and "%0D::error::one %250A%0D::error::two %250A" in lines[0]
+    assert "%0A" not in out.replace("%250A", "")
+    text = summary.read_text(encoding="utf-8")
+    assert "\r" not in text and "::error::one %0A ::error::two %0A" in text
+    assert elsewhere.seen == []
+
+
+def test_a_token_with_spaces_round_it_is_hidden_in_an_address_as_a_server_would_send_it_back(act):
+    """A server reads the header's value without the spaces round it, and that is what it can echo."""
+    assert act._shown("x" + TOKEN + "y", "  " + TOKEN + " ") == repr("x***y")
+    assert act._shown("x  " + TOKEN + " y", "  " + TOKEN + " ") == repr("x***y")
+    assert act._hide("a b", None) == "a b" and act._hide("a b", "") == "a b" and act._hide("a b", "   ") == "a b"
+
+
+def test_a_control_character_in_a_failed_fetchs_text_is_written_as_an_escape(act, monkeypatch):
+    """ESC, a vertical tab, NEL and DEL are not line ends to a runner, and they are not printed raw
+    either. CR and LF are left for the place the text is printed."""
+    monkeypatch.delenv("GH_TOKEN", raising=False)
+    assert act._failure_text(ValueError("a\x1b[31mb\x0bc\x85d\x7fe\x00f\tg")) == \
+        "a\\x1b[31mb\\x0bc\\x85d\\x7fe\\x00f\\x09g"
+    assert act._failure_text(ValueError("a\r\nb é 中")) == "a\r\nb é 中"
+
+
+def test_main_prints_no_raw_control_character_from_a_reason_phrase(raw, act, tmp_path, monkeypatch, capsys):
+    api, elsewhere = raw
+    api.answers[API_PATH] = (b"HTTP/1.1 404 Not\x1b[2J Found\x0b::error::x\r\nContent-Length: 0\r\n"
+                             b"Connection: close\r\n\r\n")
+    summary = _event(tmp_path, monkeypatch, "pull_request", _pr_event(api.base + API_PATH))
+    assert act.main() == 0
+    out = capsys.readouterr().out
+    assert "\x1b" not in out and "\x0b" not in out and len(out.splitlines()) == 1
+    assert "HTTP Error 404: Not\\x1b[2J Found\\x0b::error::x" in out
+    text = summary.read_text(encoding="utf-8")
+    assert "\x1b" not in text and "\x0b" not in text
+    assert elsewhere.seen == []
+
+
+def test_api_installs_no_opener_for_the_rest_of_the_process(servers, act):
+    api, _ = servers
+    before = urllib.request._opener
+    assert act.api(api.base + API_PATH, DIFF_ACCEPT) == _DIFF
+    assert urllib.request._opener is before
