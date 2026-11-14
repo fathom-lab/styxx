@@ -25,8 +25,8 @@ https://api.github.com where the variable is unset or empty. ``api`` asks nothin
 that origin, follows a redirect only within it, and refuses any other; a refusal is a fetch that
 failed, so the gate reports that it did not run. Where the environment names a proxy, urllib hands
 it the request as it does any other, so a proxy in front of a plain-http origin reads the token.
-The CHANGELOG entry "the GitHub Action sends the workflow token to the API's origin and nowhere
-else" says what was sent where before.
+The CHANGELOG entry "the GitHub Action sends the workflow token in a request addressed to the API's
+origin and to no other" says what was sent where before.
 """
 from __future__ import annotations
 
@@ -100,9 +100,10 @@ def _origin_text(origin) -> str:
 
 def _on_origin(url, origin):
     """``url`` written out again on ``origin``: the scheme, host and port as ``_origin_text`` writes
-    them, then the path and the query as given. None where ``url`` is not on that origin. urllib, and
-    a proxy where the environment names one, are handed this text and never the text that was
-    checked, so no second reading of an oddly written host or port can part from the check."""
+    them, then the path and the query as given (a missing path is written "/"; a "?" with nothing
+    after it and a fragment are left out). None where ``url`` is not on that origin. urllib, and a
+    proxy where the environment names one, are handed this text and never the text that was checked,
+    so no second reading of an oddly written host or port can part from the check."""
     if origin is None or _origin(url) != origin:
         return None
     p = urllib.parse.urlsplit(url)
@@ -111,19 +112,25 @@ def _on_origin(url, origin):
 
 def _hide(text: str, token) -> str:
     """``text`` with the token's value replaced wherever it stands, as it was set and as a server
-    reads it from the header (without the spaces round it)."""
-    for value in (token or "", (token or "").strip()):
+    reads it from the header (without the spaces round it). A token that itself holds ``***`` is
+    outside what this can promise; no token GitHub issues holds an asterisk."""
+    token = token or ""
+    for value in dict.fromkeys((token, token.strip())):
         if value:
             text = text.replace(value, "***")
     return text
 
 
 def _shown(value, token: str = "") -> str:
-    """A value as a refusal names it: at most 200 characters, quoted with ``repr`` (which keeps a
-    line break out of it), and with the token's value replaced where the value carries it."""
+    """A value as a refusal names it: quoted with ``repr``, which keeps a line break out of it; cut
+    at 200 characters before the quoting and at 400 after it, since ``repr`` can write one character
+    as ten; and with the token's value replaced where the value carries it, before the cut and again
+    in what ``repr`` wrote, because an escape ``repr`` writes can end in the character a token
+    starts with."""
     if not isinstance(value, str):
         return repr(value)[:200]
-    return repr(_hide(value, token)[:200])
+    shown = _hide(repr(_hide(value, token)[:200]), token)
+    return shown if len(shown) <= 400 else shown[:399] + shown[0]
 
 
 class _ApiRedirect(urllib.request.HTTPRedirectHandler):
@@ -169,10 +176,11 @@ class _ApiRedirect(urllib.request.HTTPRedirectHandler):
 
 
 def _token() -> str:
-    """GH_TOKEN as it will be sent. A value that is unset, or that holds anything but printable ASCII
-    (a line break or another control character, which http.client would refuse in a sentence that
-    quotes it; a character past ASCII, which it cannot encode), is refused here in a sentence that
-    does not quote it."""
+    """GH_TOKEN as it will be sent. A value that is unset, or that holds anything but printable ASCII,
+    is refused here in a sentence that does not quote it. Of those, http.client would refuse a bare
+    line break in a sentence that quotes the value and a character past Latin-1 in one that names the
+    character and its place; any other control character (a tab round the token among them) and a
+    Latin-1 character it would send."""
     token = os.environ.get("GH_TOKEN")
     if token is None:
         raise RuntimeError("GH_TOKEN is not set, so the diff was not asked for")
@@ -200,11 +208,12 @@ def api(url: str, accept: str) -> str:
                            "not an http or https address this script can read, so the workflow token "
                            "is sent nowhere and the diff was not asked for")
     base = _origin_text(origin)
-    target = _on_origin(url, origin)
-    if target is None and _origin(url) is None:
+    read = _origin(url)
+    if read is None or read[0] not in _DEFAULT_PORT:    # no scheme, or another: the same sentence on every Python
         raise RuntimeError(f"the diff's address {_shown(url)} is not one this script can read (it "
                            "reads an http or https address in printable ASCII with a plain host and "
                            "port), so it was not asked for")
+    target = _on_origin(url, origin)
     if target is None:
         raise RuntimeError(f"the diff's address {_shown(url)} is not on {base}, the one origin the "
                            "workflow token is sent to, so it was not asked for")
@@ -231,8 +240,9 @@ def api(url: str, accept: str) -> str:
                    "token is sent nowhere else")
         raise RuntimeError(f"GitHub answers {e.code}, a redirect to {shown}, {why}") from e
     except ValueError as e:
-        # urllib reads the address a redirect names before it asks the handler, and raises a
-        # ValueError for one it cannot read (an unbalanced bracket, for one), in words that quote it whole.
+        # urllib reads the address a redirect names before it asks the handler, and raises a ValueError
+        # for one it cannot read, in words of its own: "Invalid IPv6 URL" for an unbalanced bracket, and
+        # for other bracketed text a sentence that quotes what stands in the brackets, uncut.
         if handler.answer is None or handler.verdict is not None:
             raise
         code, named = handler.answer
@@ -241,13 +251,13 @@ def api(url: str, accept: str) -> str:
 
 
 def _failure_text(e) -> str:
-    """What a failed fetch says of itself, fit to print. The token's value is replaced wherever the
-    text holds it (an HTTP reason phrase can carry it back); then every control character other than
-    CR and LF, which each place it is printed deals with in its own way, is written as an escape
-    (ESC as ``\\x1b``); then it is cut at 1,000 characters."""
-    text = _hide(str(e), os.environ.get("GH_TOKEN"))
-    text = "".join(c if c in "\r\n" or " " <= c < "\x7f" or c > "\x9f" else f"\\x{ord(c):02x}" for c in text)
-    return text[:1000]
+    """What a failed fetch says of itself, fit to print. Every control character other than CR and
+    LF, which each place it is printed deals with in its own way, is written as an escape (ESC as
+    ``\\x1b``); then the token's value is replaced wherever the text holds it (an HTTP reason phrase
+    can carry it back, and an escape can end in the character a token starts with, which is why the
+    escapes are written before the token is looked for); then it is cut at 1,000 characters."""
+    text = "".join(c if c in "\r\n" or " " <= c < "\x7f" or c > "\x9f" else f"\\x{ord(c):02x}" for c in str(e))
+    return _hide(text, os.environ.get("GH_TOKEN"))[:1000]
 
 
 def _command_data(text: str) -> str:
@@ -329,13 +339,15 @@ def main() -> int:
         # must not fake a verdict" — and 0 IS the passing verdict. A gate that
         # could not read the diff has not cleared anything, so under `strict` it
         # now fails rather than passing quietly.
-        # The text is urllib's or this script's and can quote what a server sent (an address, a reason
-        # phrase), so it is escaped for each place it goes: a workflow command, and a code span.
-        why = _failure_text(e)
+        # The text is urllib's, http.client's or this script's and can quote what a server sent (an
+        # address, a reason phrase, a whole status line), so it is escaped for each place it goes: a
+        # workflow command, and a code span. The token is looked for once more in each finished text,
+        # because "%25" and "%0D" can end in the characters a token starts with, as an escape can.
+        why, token = _failure_text(e), os.environ.get("GH_TOKEN")
         print(f"::warning title=styxx diffgate - could not fetch the diff::"
-              f"{_command_data(why)}. The gate did not run; this is not a pass.")
+              f"{_hide(_command_data(why), token)}. The gate did not run; this is not a pass.")
         _write_summary(["## styxx diffgate — DID NOT RUN", "",
-                        f"The diff could not be fetched: `{_code_span(why)}`.", "",
+                        f"The diff could not be fetched: `{_hide(_code_span(why), token)}`.", "",
                         "_This is not a clean result. A gate with no diff to read "
                         "cannot contradict anything, which is true of every "
                         "summary ever written._"])
