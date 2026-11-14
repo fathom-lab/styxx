@@ -1359,6 +1359,8 @@ def test_an_empty_port_is_the_schemes_own(act):
     ("api.github.com:4_43", False), ("api.github.com:443:443", False),
     ("user@api.github.com", False), ("api.github.com\\", False), ("api.github.com%2e", False),
     ("[fe80::1%25eth0]", False), ("[v1.x]", False), ("[]", False),
+    ("\u0430pi.github.com", False), ("api.github.com\u00e9", False),      # letters, and not ASCII ones
+    ("[::\u0661]", False), ("", False),
 ])
 def test_the_shape_of_host_and_port_held_apart_from_urlsplit(act, netloc, fits):
     """`_origin` asks urlsplit before it asks the shape, and this Python's urlsplit may refuse an address before the shape
