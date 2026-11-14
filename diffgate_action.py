@@ -18,13 +18,15 @@ catch (an unreadable event file, for one) still does.
 The reason the default reports, with its receipts, is in action.yml's description and the
 CHANGELOG entry "the GitHub Action reports by default".
 
-The workflow token (GH_TOKEN, which action.yml fills from github.token) is sent to one origin and
-to no other address: the origin of GITHUB_API_URL, which the runner sets (https://api.github.com on
-github.com; a GitHub Enterprise Server names its own), or that of https://api.github.com where the
-variable is unset or empty. ``api`` asks nothing of an address off that origin, follows a redirect
-only within it, and refuses any other; a refusal is a fetch that failed, so the gate reports that
-it did not run. The CHANGELOG entry "the GitHub Action sends the workflow token to the API's origin
-and nowhere else" says what was sent where before.
+The workflow token (GH_TOKEN, which action.yml fills from github.token) goes in a request addressed
+to one origin and to no other: the origin of GITHUB_API_URL, which the runner sets
+(https://api.github.com on github.com; a GitHub Enterprise Server names its own), or that of
+https://api.github.com where the variable is unset or empty. ``api`` asks nothing of an address off
+that origin, follows a redirect only within it, and refuses any other; a refusal is a fetch that
+failed, so the gate reports that it did not run. Where the environment names a proxy, urllib hands
+it the request as it does any other, so a proxy in front of a plain-http origin reads the token.
+The CHANGELOG entry "the GitHub Action sends the workflow token to the API's origin and nowhere
+else" says what was sent where before.
 """
 from __future__ import annotations
 
@@ -51,24 +53,32 @@ _OVERLAY_KINDS = frozenset({"file_created", "file_deleted", "file_touched", "fil
 
 _GITHUB_API = "https://api.github.com"      # the API on github.com: the origin where the runner names none
 _REDIRECT_CODES = (301, 302, 303, 307, 308)
+_DEFAULT_PORT = {"https": 443, "http": 80}
+# The only shape of host and port this script reads: a name of ASCII letters, digits, ".", "-", "_" and "~", or an
+# IPv6 literal in its brackets, then at most a colon and ASCII digits. No user part, no "%", and nothing beside
+# the brackets but the port, so what urlsplit calls the host is the whole of it on every Python.
+_NETLOC = re.compile(r"(?:\[[0-9A-Fa-f:.]+\]|[A-Za-z0-9._~-]+)(?::[0-9]*)?")
 
 
 def _origin(url):
-    """(scheme, host, port) of an address, the port filled in from the scheme; None for an address
-    with a user part, one that cannot be read, or a value that is not a string. The reading
-    ``styxx.diffgate._origin`` makes, written out here so the script leans on no private name of the
-    package beside it (tests/test_diffgate_action_token_redirect.py holds the two to the same answers)."""
-    if not isinstance(url, str):
+    """(scheme, host, port) of an address, the port filled in from the scheme. None for a value that
+    is not a string, for an address holding a space or a control character anywhere, and for one
+    whose host and port are not in the one shape ``_NETLOC`` allows (a user part, a "%", a port that
+    is not ASCII digits, text beside a bracketed host). ``styxx.diffgate._origin`` makes the same
+    reading of every address this one reads; this one reads fewer, so that the answer does not depend
+    on how lenient the running Python's urlsplit is
+    (tests/test_diffgate_action_token_redirect.py holds the two side by side)."""
+    if not isinstance(url, str) or any(c <= " " or c == "\x7f" for c in url):
         return None
     try:
         p = urllib.parse.urlsplit(url)
         port = p.port
     except ValueError:
         return None
-    if "@" in p.netloc or not p.hostname:
+    if not p.hostname or _NETLOC.fullmatch(p.netloc) is None:
         return None
     scheme = p.scheme.lower()
-    return (scheme, p.hostname.lower(), port if port is not None else {"https": 443, "http": 80}.get(scheme))
+    return (scheme, p.hostname.lower(), port if port is not None else _DEFAULT_PORT.get(scheme))
 
 
 def _api_origin():
@@ -77,14 +87,35 @@ def _api_origin():
     something that is not an http or https address this script can read; the token is then sent
     nowhere."""
     origin = _origin((os.environ.get("GITHUB_API_URL") or "").strip() or _GITHUB_API)
-    return origin if origin is not None and origin[0] in ("http", "https") else None
+    return origin if origin is not None and origin[0] in _DEFAULT_PORT else None
 
 
 def _origin_text(origin) -> str:
     scheme, host, port = origin
     if ":" in host:                         # an IPv6 literal goes back in its brackets
         host = f"[{host}]"
-    return f"{scheme}://{host}" if port == {"https": 443, "http": 80}[scheme] else f"{scheme}://{host}:{port}"
+    return f"{scheme}://{host}" if port == _DEFAULT_PORT[scheme] else f"{scheme}://{host}:{port}"
+
+
+def _on_origin(url, origin):
+    """``url`` written out again on ``origin``: the scheme, host and port as ``_origin_text`` writes
+    them, then the path and the query as given. None where ``url`` is not on that origin. urllib, and
+    a proxy where the environment names one, are handed this text and never the text that was
+    checked, so no second reading of an oddly written host or port can part from the check."""
+    if origin is None or _origin(url) != origin:
+        return None
+    p = urllib.parse.urlsplit(url)
+    return _origin_text(origin) + (p.path or "/") + (f"?{p.query}" if p.query else "")
+
+
+def _shown(value, token: str = "") -> str:
+    """A value as a refusal names it: at most 200 characters, quoted with ``repr`` (which keeps a
+    line break out of it), and with the token's value replaced where the value carries it."""
+    if not isinstance(value, str):
+        return repr(value)[:200]
+    if token:
+        value = value.replace(token, "***")
+    return repr(value[:200])
 
 
 class _ApiRedirect(urllib.request.HTTPRedirectHandler):
@@ -93,65 +124,129 @@ class _ApiRedirect(urllib.request.HTTPRedirectHandler):
     else is not followed: urllib raises it as an HTTPError and ``api`` says so. The token travels as
     an unredirected header, which urllib's own redirect handling never copies to a redirected
     request; this handler is the one place in the script it is copied, and only within the origin.
-    308 is followed on every Python: urllib's handler follows it only from Python 3.11, and for a
-    GET a 308 asks exactly what a 307 asks."""
+    The request it follows with is addressed in the script's own spelling (``_on_origin``). 308 is
+    followed on every Python: urllib's handler follows it only from Python 3.11, and for a GET a 308
+    asks exactly what a 307 asks.
 
-    http_error_308 = urllib.request.HTTPRedirectHandler.http_error_302
+    It also keeps, for ``api``'s sentence, what the last redirecting answer was and what became of
+    it: ``answer`` is (code, the address it named or None), read as urllib reads it (Location, else
+    URI; an empty value is a value); ``verdict`` is "refused" where this handler turned it down,
+    "followed" where it handed urllib a request, and None where urllib stopped before asking."""
 
     def __init__(self, origin):
         self._api_origin = origin
+        self.answer = None
+        self.verdict = None
+
+    def http_error_302(self, req, fp, code, msg, headers):
+        named = headers.get("Location")
+        if named is None:
+            named = headers.get("URI")
+        self.answer, self.verdict = (code, named), None
+        return super().http_error_302(req, fp, code, msg, headers)
+
+    http_error_301 = http_error_303 = http_error_307 = http_error_308 = http_error_302
 
     def redirect_request(self, req, fp, code, msg, headers, newurl):
-        target = _origin(newurl)
-        if target is None or target != self._api_origin:
+        target = _on_origin(newurl, self._api_origin)
+        if target is None:
+            self.verdict = "refused"
             return None
-        new = super().redirect_request(req, fp, 307 if code == 308 else code, msg, headers, newurl)
+        new = super().redirect_request(req, fp, 307 if code == 308 else code, msg, headers, target)
         auth = req.unredirected_hdrs.get("Authorization")
         if new is not None and auth is not None:
             new.add_unredirected_header("Authorization", auth)
+        self.verdict = "followed"
         return new
+
+
+def _token() -> str:
+    """GH_TOKEN as it will be sent. A value that is unset, or that holds a line break or another
+    control character (which http.client would refuse in a sentence that quotes it), is refused here
+    in a sentence that does not."""
+    token = os.environ.get("GH_TOKEN")
+    if token is None:
+        raise RuntimeError("GH_TOKEN is not set, so the diff was not asked for")
+    if any(c < " " or c == "\x7f" for c in token):
+        raise RuntimeError("GH_TOKEN holds a line break or another control character, so it was sent "
+                           "nowhere and the diff was not asked for")
+    return token
 
 
 def api(url: str, accept: str) -> str:
     """The body GitHub's API serves at ``url``, asked with the workflow token.
 
-    The token goes to the API's origin (``_api_origin``) and to no other address. An address off
-    that origin is not asked at all. The request goes through an opener of this script's own (one
-    installed with ``urllib.request.install_opener`` is not used), which follows a redirect only
-    within the origin and refuses any other. Each refusal is raised as a RuntimeError whose one
-    sentence names the address (cut at 200 characters, quoted with ``repr``) and holds no token."""
+    The request, token included, is addressed to the API's origin (``_api_origin``) and to no other;
+    where the environment names a proxy, urllib hands the request to it as it does any other, so for
+    a plain-http origin the proxy reads the token, and for an https origin it sees the host and port
+    and no more. An address off the origin is not asked at all. The request goes through an opener of
+    this script's own (one installed with ``urllib.request.install_opener`` is not used), which
+    follows a redirect only within the origin and refuses any other. Each refusal is raised as a
+    RuntimeError of one sentence, in which an address is cut at 200 characters and quoted with
+    ``repr``, and the token's value is replaced wherever an address carries it back."""
     origin = _api_origin()
     if origin is None:
-        shown = repr((os.environ.get("GITHUB_API_URL") or "")[:200])
-        raise RuntimeError(f"GITHUB_API_URL is {shown}, which is not an http or https address this "
-                           "script can read, so the workflow token is sent nowhere and the diff was "
-                           "not asked for")
+        raise RuntimeError(f"GITHUB_API_URL is {_shown(os.environ.get('GITHUB_API_URL') or '')}, which is "
+                           "not an http or https address this script can read, so the workflow token "
+                           "is sent nowhere and the diff was not asked for")
     base = _origin_text(origin)
-    if _origin(url) != origin:
-        shown = repr(url[:200]) if isinstance(url, str) else repr(url)
-        raise RuntimeError(f"the diff's address {shown} is not on {base}, the one origin the "
+    target = _on_origin(url, origin)
+    if target is None:
+        raise RuntimeError(f"the diff's address {_shown(url)} is not on {base}, the one origin the "
                            "workflow token is sent to, so it was not asked for")
-    req = urllib.request.Request(url, headers={
+    token = _token()
+    req = urllib.request.Request(target, headers={
         "Accept": accept, "User-Agent": "styxx-diffgate-action",
         "X-GitHub-Api-Version": "2022-11-28"})
-    req.add_unredirected_header("Authorization", f"Bearer {os.environ['GH_TOKEN']}")
-    opener = urllib.request.build_opener(_ApiRedirect(origin))
+    req.add_unredirected_header("Authorization", f"Bearer {token}")
+    handler = _ApiRedirect(origin)
+    opener = urllib.request.build_opener(handler)
     try:
         with opener.open(req, timeout=60) as r:
             return r.read().decode("utf-8", errors="replace")
     except urllib.error.HTTPError as e:
         if e.code not in _REDIRECT_CODES:
             raise
-        loc = (e.headers or {}).get("Location")
-        shown = repr(loc[:200]) if loc else "(none given)"
-        within = bool(loc) and _origin(urllib.parse.urljoin(e.filename or url, loc)) == origin
-        if within:
+        named = handler.answer[1] if handler.answer else None
+        shown = _shown(named, token) if named is not None else "(none given)"
+        if handler.verdict == "followed":   # urllib stops a loop after this handler has agreed to the hop
             why = (f"within {base}, which was not followed: the redirects loop or are more than "
                    "urllib follows")
         else:
             why = (f"which was not followed: only a redirect within {base} is, and the workflow "
                    "token is sent nowhere else")
         raise RuntimeError(f"GitHub answers {e.code}, a redirect to {shown}, {why}") from e
+    except ValueError as e:
+        # urllib reads the address a redirect names before it asks the handler, and raises a
+        # ValueError for one it cannot read (an unbalanced bracket, for one), in words that quote it whole.
+        if handler.answer is None or handler.verdict is not None:
+            raise
+        code, named = handler.answer
+        raise RuntimeError(f"GitHub answers {code}, a redirect to {_shown(named, token)}, which urllib "
+                           "could not read as an address, so it was not followed") from e
+
+
+def _failure_text(e) -> str:
+    """What a failed fetch says of itself, fit to print: at most 1,000 characters, and the token's
+    value replaced wherever the text holds it (an HTTP reason phrase can carry it back)."""
+    text = str(e)
+    token = os.environ.get("GH_TOKEN") or ""
+    for value in (token, token.strip()):
+        if value:
+            text = text.replace(value, "***")
+    return text[:1000]
+
+
+def _command_data(text: str) -> str:
+    """Text as a workflow command's message carries it: "%", CR and LF escaped, so text a server
+    chose cannot end the command's line and start another."""
+    return text.replace("%", "%25").replace("\r", "%0D").replace("\n", "%0A")
+
+
+def _code_span(text: str) -> str:
+    """Text as the step summary shows it between two backticks: on one line, with no backtick of its
+    own to close the span."""
+    return text.replace("`", "'").replace("\r", " ").replace("\n", " ")
 
 
 def _write_summary(lines) -> None:
@@ -221,10 +316,13 @@ def main() -> int:
         # must not fake a verdict" — and 0 IS the passing verdict. A gate that
         # could not read the diff has not cleared anything, so under `strict` it
         # now fails rather than passing quietly.
+        # The text is urllib's or this script's and can quote what a server sent (an address, a reason
+        # phrase), so it is escaped for each place it goes: a workflow command, and a code span.
+        why = _failure_text(e)
         print(f"::warning title=styxx diffgate - could not fetch the diff::"
-              f"{e}. The gate did not run; this is not a pass.")
+              f"{_command_data(why)}. The gate did not run; this is not a pass.")
         _write_summary(["## styxx diffgate — DID NOT RUN", "",
-                        f"The diff could not be fetched: `{e}`.", "",
+                        f"The diff could not be fetched: `{_code_span(why)}`.", "",
                         "_This is not a clean result. A gate with no diff to read "
                         "cannot contradict anything, which is true of every "
                         "summary ever written._"])
