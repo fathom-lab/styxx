@@ -17,6 +17,14 @@ recognise. In report mode the gate's verdicts never fail the job; an error the s
 catch (an unreadable event file, for one) still does.
 The reason the default reports, with its receipts, is in action.yml's description and the
 CHANGELOG entry "the GitHub Action reports by default".
+
+The workflow token (GH_TOKEN, which action.yml fills from github.token) is sent to one origin and
+to no other address: the origin of GITHUB_API_URL, which the runner sets (https://api.github.com on
+github.com; a GitHub Enterprise Server names its own), or that of https://api.github.com where the
+variable is unset or empty. ``api`` asks nothing of an address off that origin, follows a redirect
+only within it, and refuses any other; a refusal is a fetch that failed, so the gate reports that
+it did not run. The CHANGELOG entry "the GitHub Action sends the workflow token to the API's origin
+and nowhere else" says what was sent where before.
 """
 from __future__ import annotations
 
@@ -24,6 +32,8 @@ import json
 import os
 import re
 import sys
+import urllib.error
+import urllib.parse
 import urllib.request
 
 from styxx.diffgate import gate_diff_text
@@ -39,13 +49,109 @@ _OVERLAY_KINDS = frozenset({"file_created", "file_deleted", "file_touched", "fil
                             "tests_added", "symbol_added"})
 
 
+_GITHUB_API = "https://api.github.com"      # the API on github.com: the origin where the runner names none
+_REDIRECT_CODES = (301, 302, 303, 307, 308)
+
+
+def _origin(url):
+    """(scheme, host, port) of an address, the port filled in from the scheme; None for an address
+    with a user part, one that cannot be read, or a value that is not a string. The reading
+    ``styxx.diffgate._origin`` makes, written out here so the script leans on no private name of the
+    package beside it (tests/test_diffgate_action_token_redirect.py holds the two to the same answers)."""
+    if not isinstance(url, str):
+        return None
+    try:
+        p = urllib.parse.urlsplit(url)
+        port = p.port
+    except ValueError:
+        return None
+    if "@" in p.netloc or not p.hostname:
+        return None
+    scheme = p.scheme.lower()
+    return (scheme, p.hostname.lower(), port if port is not None else {"https": 443, "http": 80}.get(scheme))
+
+
+def _api_origin():
+    """The one origin the workflow token is sent to: the origin of GITHUB_API_URL, or that of
+    https://api.github.com where the variable is unset or empty. None where the variable holds
+    something that is not an http or https address this script can read; the token is then sent
+    nowhere."""
+    origin = _origin((os.environ.get("GITHUB_API_URL") or "").strip() or _GITHUB_API)
+    return origin if origin is not None and origin[0] in ("http", "https") else None
+
+
+def _origin_text(origin) -> str:
+    scheme, host, port = origin
+    if ":" in host:                         # an IPv6 literal goes back in its brackets
+        host = f"[{host}]"
+    return f"{scheme}://{host}" if port == {"https": 443, "http": 80}[scheme] else f"{scheme}://{host}:{port}"
+
+
+class _ApiRedirect(urllib.request.HTTPRedirectHandler):
+    """Follows a redirect only to the API's origin (GitHub answers a renamed or moved repository
+    with one, to another path there), and puts the token back on that one only. A redirect anywhere
+    else is not followed: urllib raises it as an HTTPError and ``api`` says so. The token travels as
+    an unredirected header, which urllib's own redirect handling never copies to a redirected
+    request; this handler is the one place in the script it is copied, and only within the origin.
+    308 is followed on every Python: urllib's handler follows it only from Python 3.11, and for a
+    GET a 308 asks exactly what a 307 asks."""
+
+    http_error_308 = urllib.request.HTTPRedirectHandler.http_error_302
+
+    def __init__(self, origin):
+        self._api_origin = origin
+
+    def redirect_request(self, req, fp, code, msg, headers, newurl):
+        target = _origin(newurl)
+        if target is None or target != self._api_origin:
+            return None
+        new = super().redirect_request(req, fp, 307 if code == 308 else code, msg, headers, newurl)
+        auth = req.unredirected_hdrs.get("Authorization")
+        if new is not None and auth is not None:
+            new.add_unredirected_header("Authorization", auth)
+        return new
+
+
 def api(url: str, accept: str) -> str:
+    """The body GitHub's API serves at ``url``, asked with the workflow token.
+
+    The token goes to the API's origin (``_api_origin``) and to no other address. An address off
+    that origin is not asked at all. The request goes through an opener of this script's own (one
+    installed with ``urllib.request.install_opener`` is not used), which follows a redirect only
+    within the origin and refuses any other. Each refusal is raised as a RuntimeError whose one
+    sentence names the address (cut at 200 characters, quoted with ``repr``) and holds no token."""
+    origin = _api_origin()
+    if origin is None:
+        shown = repr((os.environ.get("GITHUB_API_URL") or "")[:200])
+        raise RuntimeError(f"GITHUB_API_URL is {shown}, which is not an http or https address this "
+                           "script can read, so the workflow token is sent nowhere and the diff was "
+                           "not asked for")
+    base = _origin_text(origin)
+    if _origin(url) != origin:
+        shown = repr(url[:200]) if isinstance(url, str) else repr(url)
+        raise RuntimeError(f"the diff's address {shown} is not on {base}, the one origin the "
+                           "workflow token is sent to, so it was not asked for")
     req = urllib.request.Request(url, headers={
         "Accept": accept, "User-Agent": "styxx-diffgate-action",
-        "Authorization": f"Bearer {os.environ['GH_TOKEN']}",
         "X-GitHub-Api-Version": "2022-11-28"})
-    with urllib.request.urlopen(req, timeout=60) as r:
-        return r.read().decode("utf-8", errors="replace")
+    req.add_unredirected_header("Authorization", f"Bearer {os.environ['GH_TOKEN']}")
+    opener = urllib.request.build_opener(_ApiRedirect(origin))
+    try:
+        with opener.open(req, timeout=60) as r:
+            return r.read().decode("utf-8", errors="replace")
+    except urllib.error.HTTPError as e:
+        if e.code not in _REDIRECT_CODES:
+            raise
+        loc = (e.headers or {}).get("Location")
+        shown = repr(loc[:200]) if loc else "(none given)"
+        within = bool(loc) and _origin(urllib.parse.urljoin(e.filename or url, loc)) == origin
+        if within:
+            why = (f"within {base}, which was not followed: the redirects loop or are more than "
+                   "urllib follows")
+        else:
+            why = (f"which was not followed: only a redirect within {base} is, and the workflow "
+                   "token is sent nowhere else")
+        raise RuntimeError(f"GitHub answers {e.code}, a redirect to {shown}, {why}") from e
 
 
 def _write_summary(lines) -> None:
