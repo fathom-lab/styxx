@@ -250,17 +250,44 @@ def api(url: str, accept: str) -> str:
                            "could not read as an address, so it was not followed") from e
 
 
+# Characters that are written as escapes wherever this script prints text it did not write, beside the
+# control characters: they show nothing of their own, and some change the order the text round them
+# is shown in, so a reader of the summary or of an annotation would not see what the text holds. The
+# list is written out here and not asked of ``unicodedata``, whose answer moves with the Python that
+# runs the script. Left as they are, because the characters beside them are drawn by them: the two
+# joiners (U+200C, U+200D), the variation selectors, and the other marks that shape a neighbour.
+_UNSEEN = frozenset(chr(c) for low, high in (
+    (0x00AD, 0x00AD),        # soft hyphen
+    (0x061C, 0x061C),        # Arabic letter mark
+    (0x115F, 0x1160),        # Hangul fillers
+    (0x180E, 0x180E),        # Mongolian vowel separator
+    (0x200B, 0x200B),        # zero width space
+    (0x200E, 0x200F),        # left-to-right and right-to-left marks
+    (0x202A, 0x202E),        # directional embeddings and overrides, and the pop that ends them
+    (0x2060, 0x206F),        # word joiner, invisible operators, directional isolates, deprecated format characters
+    (0x3164, 0x3164),        # Hangul filler
+    (0xFEFF, 0xFEFF),        # zero width no-break space (a byte order mark)
+    (0xFFA0, 0xFFA0),        # halfwidth Hangul filler
+    (0xFFF9, 0xFFFB),        # interlinear annotation
+    (0x1BCA0, 0x1BCA3),      # shorthand format controls
+    (0x1D173, 0x1D17A),      # musical format controls
+    (0xE0000, 0xE007F),      # tag characters
+) for c in range(low, high + 1))
+
+
 def _printable(text: str) -> str:
     """``text`` with every control character other than a tab, CR and LF written as an escape (ESC
-    as ``\\x1b``), and with them the two Unicode line separators (``\\u2028``) and a surrogate that
+    as ``\\x1b``), and with them the two Unicode line separators (``\\u2028``), a surrogate that
     stands alone (``\\udc80``), which cannot be written as UTF-8 and which some settings of stdout
-    write as a raw byte. A tab ends no line and is left. CR and LF are left for the place the text is
+    write as a raw byte, and the characters of ``_UNSEEN``: the ones that change the order text is
+    shown in (``\\u202e``) and the ones that show nothing (``\\u200b``, a tag character as
+    ``\\U000e0041``). A tab ends no line and is left. CR and LF are left for the place the text is
     printed, which deals with them in its own way."""
     def written(c: str) -> str:
         if c in "\t\r\n" or " " <= c < "\x7f" or ("\x9f" < c and c not in "\u2028\u2029"
-                                                and not "\ud800" <= c <= "\udfff"):
+                                                and not "\ud800" <= c <= "\udfff" and c not in _UNSEEN):
             return c
-        return f"\\x{ord(c):02x}" if c < "\u0100" else f"\\u{ord(c):04x}"
+        return f"\\x{ord(c):02x}" if c < "\u0100" else f"\\u{ord(c):04x}" if c < "\U00010000" else f"\\U{ord(c):08x}"
     return "".join(written(c) for c in text)
 
 

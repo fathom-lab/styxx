@@ -205,8 +205,18 @@ def test_a_gate_that_did_not_measure_says_so_as_it_did(act, tmp_path, monkeypatc
 
 # ── the four functions by themselves ───────────────────────────────────────────────────────────────
 
+# The characters that show nothing or change the order text is shown in, written out here by hand and
+# not taken from the script: every code point `_printable` is to escape beside the control characters,
+# the two line separators and the surrogates.
+UNSEEN = [0x00AD, 0x061C, 0x115F, 0x1160, 0x180E, 0x200B, 0x200E, 0x200F, 0x202A, 0x202B, 0x202C, 0x202D, 0x202E,
+          0x3164, 0xFEFF, 0xFFA0, 0xFFF9, 0xFFFA, 0xFFFB, 0x1BCA0, 0x1BCA1, 0x1BCA2, 0x1BCA3] \
+    + list(range(0x2060, 0x2070)) + list(range(0x1D173, 0x1D17B)) + list(range(0xE0000, 0xE0080))
+
+
 def test_printable_writes_control_characters_and_line_separators_as_escapes_and_leaves_the_rest(act):
-    kept = "a b\tc\r\nd \u00e9 \u4e2d \u00a0 \u200b ~ \U0001f600"
+    # kept: a no-break space, the two joiners (an emoji of three people is one glyph by them), a variation selector
+    kept = ("a b\tc\r\nd \u00e9 \u4e2d \u00a0 ~ \U0001f600 \U0001f468\u200d\U0001f469\u200d\U0001f467 "
+            "\u0645\u06cc\u200c\u062e \u2764\ufe0f a\U000e0100")
     assert act._printable(kept) == kept
     assert act._printable("\x00\x01\x08\x0b\x1b\x1f\x7f\x80\x85\x9f") == \
         "\\x00\\x01\\x08\\x0b\\x1b\\x1f\\x7f\\x80\\x85\\x9f"
@@ -214,7 +224,38 @@ def test_printable_writes_control_characters_and_line_separators_as_escapes_and_
     assert act._printable("a\ud800b\udc80c\udfffd") == "a\\ud800b\\udc80c\\udfffd"
     escaped = {c for c in map(chr, range(0x110000)) if act._printable(c) != c}
     assert escaped == ({chr(i) for i in range(0x20)} - {"\t", "\r", "\n"}) | {chr(i) for i in range(0x7f, 0xa0)} \
-        | {"\u2028", "\u2029"} | {chr(i) for i in range(0xd800, 0xe000)}
+        | {"\u2028", "\u2029"} | {chr(i) for i in range(0xd800, 0xe000)} | {chr(i) for i in UNSEEN}
+    assert len(UNSEEN) == 175 and len(escaped) == 2287
+
+
+@pytest.mark.parametrize("text, written", [
+    ("Modified a.py \u202etxt.exe", "Modified a.py \\u202etxt.exe"),               # right-to-left override
+    ("a\u202ab\u202bc\u202cd\u202de", "a\\u202ab\\u202bc\\u202cd\\u202de"),        # embeddings, the pop, the other override
+    ("a\u2066b\u2067c\u2068d\u2069e", "a\\u2066b\\u2067c\\u2068d\\u2069e"),        # isolates and their pop
+    ("a\u200eb\u200fc\u061cd", "a\\u200eb\\u200fc\\u061cd"),                       # the three marks
+    ("src/a\u200bb.py", "src/a\\u200bb.py"),                                       # zero width space
+    ("\ufeff13 files", "\\ufeff13 files"),                                         # a byte order mark
+    ("co\u00adoperate", "co" + chr(92) + "xadoperate"),                            # soft hyphen, under U+0100
+    ("a\u2060b\u2061c\u2064d\u206ae\u206ff", "a\\u2060b\\u2061c\\u2064d\\u206ae\\u206ff"),
+    ("a\u115fb\u1160c\u3164d\uffa0e\u180ef", "a\\u115fb\\u1160c\\u3164d\\uffa0e\\u180ef"),   # fillers that show nothing
+    ("a\ufff9b\ufffac\ufffbd", "a\\ufff9b\\ufffac\\ufffbd"),
+    ("x\U000e0041\U000e0042\U000e007fy", "x\\U000e0041\\U000e0042\\U000e007fy"),             # tag characters: eight digits
+    ("x\U0001bca0y\U0001d173z\U000e0001", "x\\U0001bca0y\\U0001d173z\\U000e0001"),
+])
+def test_a_character_that_shows_nothing_or_reorders_text_is_written_as_an_escape(act, text, written):
+    """The expectation is written out here, character for character: a backslash, u and four digits, or
+    U and eight for a code point past U+FFFF, or x and two for one under U+0100."""
+    assert act._printable(text) == written
+    assert act._message(text) == written and act._line(text) == written
+    assert act._cell(text) == "`" + written + "`"
+
+
+def test_no_unseen_character_leaves_any_of_the_four_functions(act):
+    for code in UNSEEN:
+        c = chr(code)
+        for out in (act._printable(c), act._message("a" + c), act._line(c + "b"), act._cell("a" + c + "b")):
+            assert c not in out and chr(92) in out, (hex(code), out)
+        assert len(act._printable(c)) == (4 if code < 0x100 else 6 if code < 0x10000 else 10)
 
 
 def test_message_is_printable_and_then_a_commands_data(act):
@@ -557,3 +598,75 @@ def test_a_table_one_byte_past_its_budget_leaves_one_claim_out_and_says_so(act, 
     assert table == [row_bytes(claims[-1])[0]] + [row_bytes(c)[0] for c in claims[:-2]]
     assert "\n\n_1 more claim(s) are not in this table" in summary
     assert ": 0 CONTRADICTED, 1 UNCHECKABLE, 0 VERIFIED. Its rows are written with" in summary
+
+
+# ── characters that show nothing, or change the order text is shown in ─────────────────────────────
+
+def holds_no_unseen(text):
+    return not any(chr(code) in text for code in UNSEEN)
+
+
+@pytest.mark.parametrize("strict, soft, opens", [
+    ("false", None, "::warning title=styxx diffgate - uncheckable::"),
+    ("true", "false", "::error title=styxx diffgate - uncheckable under strict::"),
+])
+def test_an_override_a_tag_character_and_a_zero_width_space_in_a_claim_are_escapes_in_all_that_is_printed(
+        act, tmp_path, monkeypatch, capsys, strict, soft, opens):
+    """A right-to-left override shows what follows it backwards, a tag character shows nothing and can
+    carry text for a reader that is not a person, and a zero width space makes two different paths look
+    the same. Each stood in the command and in the row as it came."""
+    text = "Modified src/not\u200bhere.py \u202eDEIFIREV\u202c \U000e0049\U000e0047\U000e004e."
+    _, out, summary = gate(act, tmp_path, monkeypatch, capsys, text, strict=strict, soft=soft)
+    assert holds_no_unseen(out) and holds_no_unseen(summary)
+    shown = "Modified src/not\\u200bhere.py \\u202eDEIFIREV\\u202c \\U000e0049\\U000e0047\\U000e004e."
+    line = [ln for ln in lines(out) if ln.startswith(opens)]
+    assert len(line) == 1 and line[0].startswith(opens + shown + " - ")
+    row = rows(summary)[0]
+    assert row.split(" | ")[1] == "`" + shown + "`"               # the claim is 40 characters: whole in its cell
+    assert bars(row) == 4
+
+
+def test_a_claim_is_cut_before_an_unseen_character_is_written_out(act, tmp_path, monkeypatch, capsys):
+    """80 characters of the claim for its cell, each override among them written as six: no escape is
+    cut in two, and the cell is longer than 80 by five for each."""
+    text = "Modified src/nothere.py " + "\u202e" * 80
+    _, _, summary = gate(act, tmp_path, monkeypatch, capsys, text)
+    assert rows(summary)[0].split(" | ")[1] == "`Modified src/nothere.py " + "\\u202e" * 56 + "`"
+
+
+def test_an_unseen_character_in_a_path_of_the_diff_is_an_escape_in_the_reason(act, tmp_path, monkeypatch, capsys):
+    """The gate's reason quotes the path through `repr`, which writes such a character as an escape
+    whatever this script does: this holds that the row and the command carry it so, and passes on the
+    script as it was."""
+    path = "dev/a\u200bb\u202ec/x.py"
+    _, out, summary = gate(act, tmp_path, monkeypatch, capsys, "Modified x.py.", diff=diff_of(path), strict="true",
+                           soft="false")
+    assert holds_no_unseen(out) and holds_no_unseen(summary)
+    assert "dev/a\\u200bb\\u202ec/x.py" in rows(summary)[0]
+
+
+def test_an_unseen_character_in_the_text_of_a_failed_fetch_is_an_escape(act, tmp_path, monkeypatch, capsys):
+    """What a server sent can stand in the text of a failed fetch."""
+    def refused(url, accept):
+        raise RuntimeError("HTTP Error 502: Bad\u202eyawetaG\u200b\U000e0041")
+    ev, summary = tmp_path / "event.json", tmp_path / "summary.md"
+    ev.write_text(json.dumps({"pull_request": {"number": 7, "body": "Modified x.py.", "url": "https://api.github.test/pr/7"}}),
+                  encoding="utf-8")
+    for name, value in {"GITHUB_EVENT_PATH": str(ev), "GITHUB_EVENT_NAME": "pull_request", "GH_TOKEN": "x",
+                        "GITHUB_STEP_SUMMARY": str(summary), "STYXX_STRICT": "false"}.items():
+        monkeypatch.setenv(name, value)
+    monkeypatch.delenv("STYXX_SOFT_FAIL", raising=False)
+    monkeypatch.setattr(act, "api", refused)
+    assert act.main() == 0
+    out, written = capsys.readouterr().out, summary.read_text(encoding="utf-8")
+    assert holds_no_unseen(out) and holds_no_unseen(written)
+    assert "HTTP Error 502: Bad\\u202eyawetaG\\u200b\\U000e0041" in out
+    assert "HTTP Error 502: Bad\\u202eyawetaG\\u200b\\U000e0041" in written
+
+
+def test_the_joiners_a_variation_selector_and_a_no_break_space_in_a_claim_are_left(act, tmp_path, monkeypatch, capsys):
+    """Left as they are: the characters beside them are drawn by them. An emoji of three people is one
+    glyph by its two joiners, and a heart is red by its selector."""
+    text = "Modified src/nothere.py \U0001f468\u200d\U0001f469\u200d\U0001f467 \u2764\ufe0f for\u00a0now."
+    _, out, summary = gate(act, tmp_path, monkeypatch, capsys, text)
+    assert text + " - " in out and "`" + text + "`" in rows(summary)[0]
