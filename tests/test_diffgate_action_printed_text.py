@@ -24,6 +24,7 @@ import importlib.util
 import json
 import re
 import sys
+import types
 from pathlib import Path
 
 import pytest
@@ -237,7 +238,10 @@ def test_line_is_one_line_with_no_bar_and_no_tag_of_its_own(act):
     ("Modified `src/a.py`", "`` Modified `src/a.py` ``"),       # one backtick more than the longest run, and padded
     ("a `` b ` c", "```a `` b ` c```"),
     ("`", "`` ` ``"),
+    ("`a", "`` `a ``"), ("a`", "`` a` ``"),                     # a backtick at one edge only
+    ("`src/a.py` -- x", "`` `src/a.py` -- x ``"),               # a claim that opens with a path between backticks
     (" a ", "`  a  `"),                                         # a reader takes one pair of spaces off
+    ("\na\n", "`  a  `"), (" a\r", "`  a  `"),                   # a line break at an edge is a space before the padding
     (" a", "` a`"),
     ("a\\", "`a\\`"),
     ("\x1b\u2028\ud800\tz", "`\\x1b\\u2028\\ud800\tz`"),
@@ -373,8 +377,9 @@ def test_the_table_stops_before_the_summary_passes_the_size_github_allows(act, t
     rest = total - len(table)
     assert (f"_{rest} more claim(s) are not in this table, which stops at 524,288 bytes of rows to stay under "
             f"the size GitHub allows a step's summary: 0 CONTRADICTED, {rest} UNCHECKABLE, 0 VERIFIED. "
-            "Its rows are not in the order the claims were read: the CONTRADICTED come before the UNCHECKABLE, "
-            "and those before the VERIFIED. The verdict above counts every claim._") in summary
+            "Its rows are written with the CONTRADICTED before the UNCHECKABLE, and those before the VERIFIED, "
+            "each kind in the order read, which may not be the order the claims were read. "
+            "The verdict above counts every claim._") in summary
     assert out.count("::warning title=styxx diffgate - uncheckable::") == total      # every claim has its command
 
 
@@ -393,7 +398,7 @@ def test_a_table_past_its_budget_has_its_contradicted_rows_before_the_others(act
     assert table[0] == "| ❌ CONTRADICTED | `9 files changed.` | `diff changes 1 files, claim says 9` |"
     assert all(row.startswith("| ❓ UNCHECKABLE | ") for row in table[1:])
     assert sum(len(r.encode("utf-8")) + 1 for r in table) <= act._ROWS_BYTES
-    assert f": 0 CONTRADICTED, {3001 - len(table)} UNCHECKABLE, 0 VERIFIED. Its rows are not in the order" in summary
+    assert f": 0 CONTRADICTED, {3001 - len(table)} UNCHECKABLE, 0 VERIFIED. Its rows are written with" in summary
     assert out.rindex("::warning title=styxx diffgate - uncheckable::") \
         < out.index("::error title=styxx diffgate - contradicted claim::9 files changed.")
 
@@ -424,10 +429,13 @@ def test_a_run_of_80_backticks_in_a_reason_is_written_as_escapes(act, tmp_path, 
 
 @pytest.mark.parametrize("n", [79, 80, 81, 87, 120])
 def test_no_row_holds_more_backticks_in_a_run_than_a_span_opens_with(act, tmp_path, monkeypatch, capsys, n):
-    """Through main(), by the three ways text of the author's reaches a cell. A claim is cut at 80
-    characters and holds words, so its run is under 80. A path of the diff stands in its reason from
-    the 22nd character of the 100, so its run is 79 at the most, the longest a span holds as it is. A
-    declared value stands from the 13th, so its run can be 80 to 87, and is written as escapes."""
+    """Through main(), by three ways text of the author's reaches a cell with room for a run near 80.
+    A claim is cut at 80 characters, so its run is 80 at the most; here the run stands after 18
+    characters, and the test after this one has a claim that opens with it. A path of the diff
+    stands in its reason from the 22nd character of the 100, so its run is 79 at the most, the
+    longest a span holds as `_cell` writes one. A declared value stands from the 13th, so its run can
+    be 80 to 87, and is written as escapes. (A line of a styxx block that is not `key: value` reaches
+    both cells cut at 60 characters, and a path or a name read out of a claim holds no backtick.)"""
     run = "`" * n
     body = f"Modified x.py and {run}.\n\n```styxx\nonly_touches: a{run}<i>y</i>\n```\n"
     _, _, summary = gate(act, tmp_path, monkeypatch, capsys, body, diff=diff_of(f"{run}<b>x</b>/x.py"))
@@ -437,3 +445,115 @@ def test_no_row_holds_more_backticks_in_a_run_than_a_span_opens_with(act, tmp_pa
     assert ("MALFORMED: 'a" + "\\x60" * min(n, 87) in table[1]) == (n >= 80)
     assert ("MALFORMED: 'a" + "`" * 79 + "<i>y</i>" in table[1]) == (n == 79)
     assert max(len(r) for row in table for r in re.findall("`+", row)) == 80
+
+
+def test_a_claim_that_opens_with_80_backticks_is_written_as_escapes(act, tmp_path, monkeypatch, capsys):
+    """A claim is the sentence's leading 80 characters for its cell, and the words the gate matched may
+    stand past them: this cell's text is a run of 80 backticks and nothing else."""
+    _, _, summary = gate(act, tmp_path, monkeypatch, capsys, "`" * 80 + " Modified styxx/x.py.")
+    assert rows(summary) == ["| ✅ VERIFIED | `" + "\\x60" * 80 + "` | `diff status 'M' for 'styxx/x.py'` |"]
+
+
+def test_a_claim_that_opens_with_a_path_between_backticks_is_padded(act, tmp_path, monkeypatch, capsys):
+    """An ordinary shape of claim. Its text begins with a backtick and does not end with one; without
+    the space after the span's two backticks the three would be one run, and the cell no span."""
+    text = "`src/a.py` -- fixed the parser in src/nothere.py <b>bold</b>."
+    _, _, summary = gate(act, tmp_path, monkeypatch, capsys, text)
+    assert rows(summary)[0].startswith("| ❓ UNCHECKABLE | `` " + text + " `` | `'src/a.py' does not appear")
+
+
+# ── a table past its budget, with the gate replaced so that every byte of a row is known ───────────
+
+def claim(verdict, text, why="w"):
+    return types.SimpleNamespace(verdict=verdict, kind="file_touched", text=text, why=why)
+
+
+def row_bytes(c):
+    """The row main() is to write for a claim of plain ASCII text, and its size with its line end."""
+    mark = {"VERIFIED": "✅", "CONTRADICTED": "❌", "UNCHECKABLE": "❓"}[c.verdict]
+    row = f"| {mark} {c.verdict} | `{c.text}` | `{c.why}` |"
+    return row, len(row.encode("utf-8")) + 1
+
+
+def table_of(act, tmp_path, monkeypatch, capsys, claims):
+    gate_result = types.SimpleNamespace(measured=True, why_unmeasured="", verdict="FAIL", claims=claims)
+    monkeypatch.setattr(act, "gate_diff_text", lambda *a, **k: gate_result)
+    _, out, summary = gate(act, tmp_path, monkeypatch, capsys, "anything")
+    return out, summary
+
+
+def as_the_table_is_to_be(claims, budget):
+    """The rows a table past its budget is to hold, and the claims it is to leave out: the contradicted
+    before the uncheckable before the verified, each kind in the order read, up to the row that would
+    take the rows past the budget. Written without the script's code."""
+    ordered = ([c for c in claims if c.verdict == "CONTRADICTED"] + [c for c in claims if c.verdict == "UNCHECKABLE"]
+               + [c for c in claims if c.verdict == "VERIFIED"])
+    shown, used = [], 0
+    for c in ordered:
+        row, size = row_bytes(c)
+        if used + size > budget:
+            break
+        used += size
+        shown.append(row)
+    return shown, ordered[len(shown):], used
+
+
+@pytest.mark.parametrize("contradicted, uncheckable, verified, left_out", [
+    (150, 5000, 900, (False, True, True)),      # the contradicted all shown, the uncheckable in part, no verified
+    (5000, 40, 25, (True, True, True)),         # more contradicted rows than fit: every count in the line is above 0
+    (0, 2500, 2600, (False, False, True)),      # no contradicted claim: the uncheckable, then the verified in part
+])
+def test_a_table_past_its_budget_of_three_verdicts_read_in_turn(act, tmp_path, monkeypatch, capsys, contradicted,
+                                                               uncheckable, verified, left_out):
+    """Claims of the three verdicts, read in turn, each with a text and a reason of its own length. The
+    table holds the contradicted, then the uncheckable, then the verified, each kind in the order
+    read, and stops at the row that would pass the budget though a shorter row after it would fit; the
+    line counts what is left out, by verdict."""
+    kinds = {"CONTRADICTED": contradicted, "UNCHECKABLE": uncheckable, "VERIFIED": verified}
+    claims = []
+    for i in range(max(kinds.values())):
+        for verdict in ("VERIFIED", "UNCHECKABLE", "CONTRADICTED"):          # read with the verified ahead
+            if i < kinds[verdict]:
+                claims.append(claim(verdict, f"{verdict[0]}{i:05d} " + "t" * (i * 7 % 70), "r" * (1 + i * 11 % 97)))
+    shown, left, used = as_the_table_is_to_be(claims, act._ROWS_BYTES)
+    assert sum(row_bytes(c)[1] for c in claims) > act._ROWS_BYTES and shown and left
+    assert any(used + row_bytes(c)[1] <= act._ROWS_BYTES for c in left)   # a later row would fit, and is not written
+    count = {v: sum(1 for c in left if c.verdict == v) for v in kinds}
+    assert tuple(count[v] > 0 for v in ("CONTRADICTED", "UNCHECKABLE", "VERIFIED")) == left_out
+    out, summary = table_of(act, tmp_path, monkeypatch, capsys, claims)
+    assert rows(summary) == shown
+    assert (f"\n\n_{len(left)} more claim(s) are not in this table, which stops at 524,288 bytes of rows to stay "
+            f"under the size GitHub allows a step's summary: {count['CONTRADICTED']} CONTRADICTED, "
+            f"{count['UNCHECKABLE']} UNCHECKABLE, {count['VERIFIED']} VERIFIED. Its rows are written with") in summary
+    assert f"**FAIL** · {len(claims)} claim(s) checked" in summary
+    assert out.count("::error title=styxx diffgate - contradicted claim::") == contradicted   # stdout: every claim
+
+
+def claims_of_exactly(total):
+    """Uncheckable claims and then one contradicted claim, whose rows with their line ends are `total`
+    bytes: the contradicted claim's text and reason take up what the others leave."""
+    one = row_bytes(claim("UNCHECKABLE", "u00000 " + "t" * 40, "r" * 50))[1]
+    least = row_bytes(claim("CONTRADICTED", "c", "w"))[1]
+    n = (total - least - 60) // one
+    claims = [claim("UNCHECKABLE", f"u{i:05d} " + "t" * 40, "r" * 50) for i in range(n)]
+    spare = total - n * one - least                       # what the last row holds past one character in each cell
+    assert 60 <= spare <= 178
+    claims.append(claim("CONTRADICTED", "c" * (1 + min(spare, 79)), "w" * (1 + spare - min(spare, 79))))
+    assert sum(row_bytes(c)[1] for c in claims) == total
+    return claims
+
+
+def test_a_table_of_exactly_its_budget_is_whole_and_in_the_order_read(act, tmp_path, monkeypatch, capsys):
+    claims = claims_of_exactly(act._ROWS_BYTES)
+    _, summary = table_of(act, tmp_path, monkeypatch, capsys, claims)
+    assert rows(summary) == [row_bytes(c)[0] for c in claims]            # the contradicted claim read last: the last row
+    assert "are not in this table" not in summary
+
+
+def test_a_table_one_byte_past_its_budget_leaves_one_claim_out_and_says_so(act, tmp_path, monkeypatch, capsys):
+    claims = claims_of_exactly(act._ROWS_BYTES + 1)
+    _, summary = table_of(act, tmp_path, monkeypatch, capsys, claims)
+    table = rows(summary)
+    assert table == [row_bytes(claims[-1])[0]] + [row_bytes(c)[0] for c in claims[:-2]]
+    assert "\n\n_1 more claim(s) are not in this table" in summary
+    assert ": 0 CONTRADICTED, 1 UNCHECKABLE, 0 VERIFIED. Its rows are written with" in summary

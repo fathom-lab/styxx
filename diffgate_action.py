@@ -311,12 +311,12 @@ def _cell(text: str) -> str:
     own escape, which is read before the span is; the span opens and closes with one backtick more
     than the longest run of them in the text, and is padded with a space where the text begins or
     ends with a backtick, or begins and ends with a space (a reader takes one such pair of spaces
-    off). A run of 80 or more backticks is written as that many ``\\x60``: the span's own string would
-    have to be longer than the 80 the parser opens a span with, and the cell would be read as
-    Markdown and as tags. A text that is empty or all white space as ``str.strip`` reads it (a tab
-    and a no-break space included) gives an empty cell and no span. Rendered with cmark-gfm
-    0.29.0.gfm.2, a cell written so held its text and no element but the span (CHANGELOG, "a claim is
-    shown in its cell as the characters it is"); GitHub's own page was not run."""
+    off). A run of 80 or more backticks is written as that many ``\\x60``: the span's own string,
+    one longer than the run, would be more than the 80 the parser opens a span with, and the cell
+    would be read as Markdown and as tags. A text that is empty or all white space as ``str.strip``
+    reads it (a tab and a no-break space included) gives an empty cell and no span. Rendered with
+    cmark-gfm 0.29.0.gfm.2, a cell written so held its text and no element but the span (CHANGELOG,
+    "a claim is shown in its cell as the characters it is"); GitHub's own page was not run."""
     text = _printable(text).replace("\r", " ").replace("\n", " ").replace("|", "\\|")
     if not text.strip():
         return ""
@@ -436,8 +436,7 @@ def main() -> int:
              f"**{g.verdict}** · {len(g.claims)} claim(s) checked on the {what}", ""]
     if g.claims:
         lines += ["| verdict | claim | evidence |", "|---|---|---|"]
-        written = []
-        for c in g.claims:
+        def row_of(c) -> str:
             mark = {"VERIFIED": "✅", "CONTRADICTED": "❌", "UNCHECKABLE": "❓"}[c.verdict]
             # PATH-2a (NOTE_path2a_second_pass_2026_09_30): a reason the overlay wrote is shown whole, since its
             # leading 100 characters are the withheld verdict and the phrase, and main's reading comes after them.
@@ -457,29 +456,38 @@ def main() -> int:
             # A claim's text is the pull request author's, and a reason can quote it and the diff's paths, so
             # each is written as a code span: a "|" or a line break of theirs cannot end the cell or start a
             # row, and nothing of theirs is read as Markdown or as a tag.
-            written.append((c, f"| {mark} {c.verdict} | {_cell(c.text[:80])} | {_cell(why)} |"))
-        # The rows are in the order the claims were read, unless they do not all fit: then the contradicted
-        # ones come before the uncheckable and those before the verified, each kind in the order read, so that
-        # claims of no weight cannot fill the table ahead of a contradicted one.
-        fits = sum(len(row.encode("utf-8")) + 1 for _, row in written) <= _ROWS_BYTES
-        if not fits:
-            written.sort(key=lambda pair: ("CONTRADICTED", "UNCHECKABLE", "VERIFIED").index(pair[0].verdict))
-        shown = used = 0
-        for _, row in written:
-            used += len(row.encode("utf-8")) + 1
-            if used > _ROWS_BYTES:
-                break
-            lines.append(row)
-            shown += 1
-        if not fits:
-            rest = [c for c, _ in written[shown:]]
-            count = {v: sum(1 for c in rest if c.verdict == v) for v in ("CONTRADICTED", "UNCHECKABLE", "VERIFIED")}
-            lines += ["", f"_{len(rest)} more claim(s) are not in this table, which stops at {_ROWS_BYTES:,} bytes "
+            return f"| {mark} {c.verdict} | {_cell(c.text[:80])} | {_cell(why)} |"
+
+        def rows_that_fit(claims) -> list:
+            """The rows of ``claims``, in that order, up to the one that would take the rows past their
+            budget. No row is written for a claim after it."""
+            rows, used = [], 0
+            for c in claims:
+                row = row_of(c)
+                used += len(row.encode("utf-8")) + 1
+                if used > _ROWS_BYTES:
+                    break
+                rows.append(row)
+            return rows
+
+        # The rows are in the order the claims were read where they all fit. Where they do not, the
+        # contradicted claims are taken before the uncheckable and those before the verified, each kind in
+        # the order read, so that claims of no weight cannot fill the table ahead of a contradicted one.
+        # The rows' bytes are the same in any order, so a table that stopped once stops again.
+        rows, left = rows_that_fit(g.claims), []
+        if len(rows) < len(g.claims):
+            ordered = sorted(g.claims, key=lambda c: {"CONTRADICTED": 0, "UNCHECKABLE": 1}.get(c.verdict, 2))
+            rows = rows_that_fit(ordered)
+            left = ordered[len(rows):]
+        lines += rows
+        if left:
+            count = {v: sum(1 for c in left if c.verdict == v) for v in ("CONTRADICTED", "UNCHECKABLE", "VERIFIED")}
+            lines += ["", f"_{len(left)} more claim(s) are not in this table, which stops at {_ROWS_BYTES:,} bytes "
                           "of rows to stay under the size GitHub allows a step's summary: "
                           f"{count['CONTRADICTED']} CONTRADICTED, {count['UNCHECKABLE']} UNCHECKABLE, "
-                          f"{count['VERIFIED']} VERIFIED. Its rows are not in the order the claims were read: the "
-                          "CONTRADICTED come before the UNCHECKABLE, and those before the VERIFIED. "
-                          "The verdict above counts every claim._"]
+                          f"{count['VERIFIED']} VERIFIED. Its rows are written with the CONTRADICTED before the "
+                          "UNCHECKABLE, and those before the VERIFIED, each kind in the order read, which may not "
+                          "be the order the claims were read. The verdict above counts every claim._"]
     else:
         lines += ["_No diff-shaped claims found. The gate checks a closed template set "
                   "(touched/created/deleted paths, added functions/tests, file counts, "

@@ -68,7 +68,9 @@ def render(markdown: str) -> str:
 class Table(HTMLParser):
     """The rows of the HTML's tables as lists of cells, each [the cell's text, the elements inside it,
     the part of the text that stands inside a `<code>`], the number of tables, and every element that
-    stands outside a cell and is not part of a table."""
+    stands outside a cell and is not part of a table. An element with attributes is named with them,
+    and a comment, a processing instruction or a declaration counts as an element (`!comment`, `?pi`,
+    `!decl`), so none of those is taken for a bare `<code>` or for nothing."""
 
     def __init__(self):
         super().__init__(convert_charrefs=True)
@@ -83,10 +85,28 @@ class Table(HTMLParser):
             self._cell, self._code = True, 0
             self.rows[-1].append(["", [], ""])
         elif self._cell:
-            self.rows[-1][-1][1].append(tag)
+            self.rows[-1][-1][1].append(tag if not attrs else f"{tag} {attrs}")
             self._code += tag == "code"
         elif tag not in ("table", "thead", "tbody"):
             self.outside.append(tag)
+
+    def _other(self, name):
+        if self._cell:
+            self.rows[-1][-1][1].append(name)
+        else:
+            self.outside.append(name)
+
+    def handle_comment(self, data):
+        self._other("!comment")
+
+    def handle_pi(self, data):
+        self._other("?pi")
+
+    def handle_decl(self, decl):
+        self._other("!decl")
+
+    def unknown_decl(self, data):
+        self._other("!decl")
 
     def handle_endtag(self, tag):
         if tag in ("td", "th"):
@@ -159,8 +179,10 @@ def test_the_same_claims_written_as_they_stood_are_not_text(act):
     assert {"elements", "text", "structure", "neighbours"} <= kinds
     forged = read(HEAD + "| X | Created docs/a|b.md | ✅ VERIFIED | forged cell. | the script's reason |\n")
     assert [c[0] for c in forged.rows[1]] == ["X", "Created docs/a", "b.md"]    # the reason is not shown
-    assert problems(act, ["![v](https://e.example/v.png)"], lambda t: t)[0][:2] == ("elements", ["img"])
-    assert problems(act, ["[l](https://e.example)"], lambda t: t)[0][:2] == ("elements", ["a"])
+    image = problems(act, ["![v](https://e.example/v.png)"], lambda t: t)[0]
+    assert image[0] == "elements" and len(image[1]) == 1 and image[1][0].startswith("img [('src', 'https://e.example/v.png')")
+    link = problems(act, ["[l](https://e.example)"], lambda t: t)[0]
+    assert link[:2] == ("elements", ["a [('href', 'https://e.example')]"])
 
 
 def test_the_reading_sees_a_span_that_does_not_hold_the_text_as_it_is(act):
@@ -170,6 +192,10 @@ def test_the_reading_sees_a_span_that_does_not_hold_the_text_as_it_is(act):
     assert [p[0] for p in problems(act, ["a  b"], lambda t: "`a b`")] == ["text"]
     assert [p[0] for p in problems(act, ["a\u00a0b"], lambda t: "`a b`")] == ["text"]
     assert [p[0] for p in problems(act, ["abc"], lambda t: t)] == ["elements", "text"]
+    # and three things beside or on the span that a reading of tag names and text alone does not see
+    assert [p[:2] for p in problems(act, ["abc"], lambda t: "`abc`<!-- beside -->")] == [("elements", ["code", "!comment"])]
+    assert [p[:2] for p in problems(act, ["abc"], lambda t: "`abc`<?beside?>")] == [("elements", ["code", "?pi"])]
+    assert [p[0] for p in problems(act, ["abc"], lambda t: "<code onclick=x>abc</code>")] == ["elements"]
     assert problems(act, ["one two three", "a  b", "a\u00a0b", "abc"], act._cell) == []
 
 
@@ -190,13 +216,22 @@ def test_a_cell_of_one_character_and_of_that_character_round_a_word(act, ch):
     assert problems(act, [ch + "x", "x" + ch, ch + "x" + ch, "a" + ch + "b", ch * 3 + "x" + ch * 2], act._cell) == []
 
 
+def test_a_line_break_at_an_edge_of_the_text_is_a_space_inside_the_span(act):
+    """CR and LF are written as spaces before the padding is decided, so a text with one at each edge
+    keeps both spaces: written after it, a reader would take the pair off."""
+    texts = ["\na\n", " a\r", "\r\nModified x.py\n", "\n`a`\n", "a\nb"]
+    assert problems(act, texts, act._cell) == []
+    assert [as_shown(act, t) for t in texts] == [" a ", " a ", "  Modified x.py ", " `a` ", "a b"]
+
+
 # ── a run of backticks at the most the parser opens a span with ────────────────────────────────────
 
 @pytest.mark.parametrize("n", [1, 2, 3, 40, 78, 79, 80, 81, 100, 160])
 def test_a_run_of_backticks_up_to_and_past_the_longest_a_span_can_hold(act, n):
-    """cmark-gfm opens no code span with a string of more than 80 backticks, and a span's string is one
-    longer than the longest run in its text. A run of 79 is the longest the span holds as it is; a run
-    of 80 or more is written as escapes, and what stands after it is still the span's text."""
+    """cmark-gfm opens no code span with a string of more than 80 backticks, and `_cell` writes a span's
+    string one longer than the longest run in its text. A run of 79 is the longest a span written so
+    holds as it is; a run of 80 or more is written as escapes, and what stands after it is still the
+    span's text."""
     run = "`" * n
     texts = [run, "a" + run, run + "a", "<h1>PASS" + run + "x<b>y</b>", run + "<img src=x>",
              "`" * 79 + " " + run + "<i>z</i>", "a|" + run + "|b", " " + run + " "]
@@ -270,14 +305,16 @@ def test_the_summary_main_writes_is_one_table_whose_cells_are_text(act, tmp_path
     assert table.outside == ordinary.outside
 
 
+def diff_of(path):
+    return f"diff --git a/{path} b/{path}\n--- a/{path}\n+++ b/{path}\n@@ -1 +1,2 @@\n y = 0\n+x = 1\n"
+
+
 def test_a_path_of_the_diff_in_a_reason_is_text_in_its_cell(act, tmp_path, monkeypatch, capsys):
     path = "dev/a|b<i>[l](https://e.example)![v](https://e.example/v.png)/x.py"
-    diff = f"diff --git a/{path} b/{path}\n--- a/{path}\n+++ b/{path}\n@@ -1 +1,2 @@\n y = 0\n+x = 1\n"
-    table = read(summary_of(act, tmp_path, monkeypatch, capsys, "Modified x.py.", diff))
-    rows = table.rows[1:]
-    assert table.tables == 1 and len(rows) == 1 and len(rows[0]) == 3
-    assert rows[0][2][1] == ["code"] and rows[0][2][0] == rows[0][2][2]
-    assert "dev/a|b<i>[l](https://e.example)![v](https://e.example/v.png)/x.py" in rows[0][2][2]
+    table = read(summary_of(act, tmp_path, monkeypatch, capsys, "Modified x.py.", diff_of(path)))
+    claims = act.gate_diff_text("Modified x.py.", diff_of(path), strict=False).claims
+    assert claims[0].why == f"diff status 'M' for '{path}'"        # the path whole, inside the reason's 100 characters
+    assert cells_hold(act, table, claims)
 
 
 def test_a_declared_value_with_a_run_of_80_backticks_is_text_in_its_cell(act, tmp_path, monkeypatch, capsys):
@@ -296,9 +333,11 @@ def test_a_declared_value_with_a_run_of_80_backticks_is_text_in_its_cell(act, tm
 
 
 def test_a_path_of_the_diff_with_a_long_run_of_backticks_is_text_in_its_cell(act, tmp_path, monkeypatch, capsys):
-    path = "dev/" + "`" * 120 + "<b>x</b>/x.py"
-    diff = f"diff --git a/{path} b/{path}\n--- a/{path}\n+++ b/{path}\n@@ -1 +1,2 @@\n y = 0\n+x = 1\n"
-    table = read(summary_of(act, tmp_path, monkeypatch, capsys, "Modified x.py.", diff))
-    rows = table.rows[1:]
-    assert table.tables == 1 and len(rows) == 1 and len(rows[0]) == 3
-    assert rows[0][2][1] == ["code"] and rows[0][2][0] == rows[0][2][2] and "dev/" in rows[0][2][2]
+    """A path stands in its reason from the 22nd character, and the reason is cut at 100: of a path's
+    120 backticks the cell holds 79, the longest run `_cell` writes as it is, between two strings of 80."""
+    path = "`" * 120 + "<b>x</b>/x.py"
+    summary = summary_of(act, tmp_path, monkeypatch, capsys, "Modified x.py.", diff_of(path))
+    claims = act.gate_diff_text("Modified x.py.", diff_of(path), strict=False).claims
+    assert claims[0].why[:100] == "diff status 'M' for '" + "`" * 79
+    assert cells_hold(act, read(summary), claims)
+    assert max(len(run) for run in re.findall("`+", summary)) == 80
