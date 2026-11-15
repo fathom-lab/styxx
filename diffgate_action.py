@@ -358,6 +358,18 @@ def _cell(text: str) -> str:
 _ROWS_BYTES = 512 * 1024
 
 
+# The most workflow commands the script prints for claims. A description gives a claim for each
+# sentence the gate's templates match, so its author sets how many, and each claim the gate does not
+# verify has a command. The most such claims in any description this repository records is 9.
+_COMMANDS = 100
+
+
+def _by_weight(claims) -> list:
+    """``claims`` with the contradicted before the uncheckable and those before the rest, each kind
+    in the order it had: the order of a table, and of the commands, that cannot hold every claim."""
+    return sorted(claims, key=lambda c: {"CONTRADICTED": 0, "UNCHECKABLE": 1}.get(c.verdict, 2))
+
+
 def _write_summary(lines) -> None:
     path = os.environ.get("GITHUB_STEP_SUMMARY")
     if path:
@@ -503,7 +515,7 @@ def main() -> int:
         # The rows' bytes are the same in any order, so a table that stopped once stops again.
         rows, left = rows_that_fit(g.claims), []
         if len(rows) < len(g.claims):
-            ordered = sorted(g.claims, key=lambda c: {"CONTRADICTED": 0, "UNCHECKABLE": 1}.get(c.verdict, 2))
+            ordered = _by_weight(g.claims)
             rows = rows_that_fit(ordered)
             left = ordered[len(rows):]
         lines += rows
@@ -556,17 +568,31 @@ def main() -> int:
               "[styxx README](https://github.com/fathom-lab/styxx/blob/main/README.md)._"]
     _write_summary(lines)
 
-    failing = False
-    for c in g.claims:
+    # Each claim the gate did not verify has a command, in the order the claims were read, where there
+    # are no more than _COMMANDS of them. Where there are more, the contradicted are taken before the
+    # uncheckable, each kind in the order read, and one command says how many have none. Whether the
+    # job fails, and the verdict below, are counted over every claim.
+    failing = any(c.verdict == "CONTRADICTED" or (c.verdict == "UNCHECKABLE" and strict) for c in g.claims)
+    unverified = [c for c in g.claims if c.verdict in ("CONTRADICTED", "UNCHECKABLE")]
+    without = []
+    if len(unverified) > _COMMANDS:
+        unverified = _by_weight(unverified)
+        unverified, without = unverified[:_COMMANDS], unverified[_COMMANDS:]
+    for c in unverified:
         if c.verdict == "CONTRADICTED":
-            failing = True
             print(f"::error title=styxx diffgate - contradicted claim::{_message(c.text[:120])} - {_message(c.why)}")
-        elif c.verdict == "UNCHECKABLE" and strict:
-            failing = True
+        elif strict:
             print(f"::error title=styxx diffgate - uncheckable under strict::{_message(c.text[:120])} - "
                   f"{_message(c.why)}")
-        elif c.verdict == "UNCHECKABLE":
+        else:
             print(f"::warning title=styxx diffgate - uncheckable::{_message(c.text[:120])} - {_message(c.why)}")
+    if without:
+        count = {v: sum(1 for c in without if c.verdict == v) for v in ("CONTRADICTED", "UNCHECKABLE")}
+        print(f"::warning title=styxx diffgate - more claims than commands::{len(without)} more claim(s) that the "
+              f"gate did not verify have no command here, where {_COMMANDS} is the most that are printed: "
+              f"{count['CONTRADICTED']} CONTRADICTED, {count['UNCHECKABLE']} UNCHECKABLE. The CONTRADICTED are "
+              "printed before the UNCHECKABLE, each kind in the order read, which may not be the order the claims "
+              "were read. The verdict below counts every claim.")
     print(f"styxx diffgate: {g.verdict} - {len(g.claims)} claim(s), "
           f"{sum(1 for c in g.claims if c.verdict == 'CONTRADICTED')} contradicted")
     if failing and not soft:
