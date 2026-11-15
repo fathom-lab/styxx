@@ -298,10 +298,11 @@ def _printable(text: str) -> str:
 
 def _failure_text(e) -> str:
     """What a failed fetch says of itself, fit to print. Control characters other than a tab, CR and
-    LF, the two line separators and a lone surrogate are written as escapes (``_printable``); then
-    the token's value is replaced wherever the text holds it (an HTTP reason
-    phrase can carry it back, and an escape can end in the character a token starts with, which is
-    why the escapes are written before the token is looked for); then it is cut at 1,000 characters."""
+    LF, the two line separators, a lone surrogate and the characters of ``_UNSEEN`` are written as
+    escapes (``_printable``); then the token's value is replaced wherever the text holds it (an HTTP
+    reason phrase can carry it back, and an escape can end in the character a token starts with,
+    which is why the escapes are written before the token is looked for); then it is cut at 1,000
+    characters, so an escape that falls on the cut is left in part."""
     return _hide(_printable(str(e)), os.environ.get("GH_TOKEN"))[:1000]
 
 
@@ -363,15 +364,16 @@ def _cell(text: str) -> str:
 _ROWS_BYTES = 512 * 1024
 
 
-# The most workflow commands the script prints for claims. A description gives a claim for each
-# sentence the gate's templates match, so its author sets how many, and each claim the gate does not
-# verify has a command. The most such claims in any description this repository records is 9.
-_COMMANDS = 100
+# The most ``::warning`` commands the script prints for claims the gate could not check. A description
+# gives a claim for each place one of the gate's templates matches, so its author sets how many. An
+# ``::error`` command, which a contradicted claim has, and an uncheckable one under strict, is never
+# left out. The most claims the gate did not verify in any description this repository records is 9.
+_WARNINGS = 100
 
 
 def _by_weight(claims) -> list:
     """``claims`` with the contradicted before the uncheckable and those before the rest, each kind
-    in the order it had: the order of a table, and of the commands, that cannot hold every claim."""
+    in the order it had: the order of a table that cannot hold every claim."""
     return sorted(claims, key=lambda c: {"CONTRADICTED": 0, "UNCHECKABLE": 1}.get(c.verdict, 2))
 
 
@@ -573,31 +575,29 @@ def main() -> int:
               "[styxx README](https://github.com/fathom-lab/styxx/blob/main/README.md)._"]
     _write_summary(lines)
 
-    # Each claim the gate did not verify has a command, in the order the claims were read, where there
-    # are no more than _COMMANDS of them. Where there are more, the contradicted are taken before the
-    # uncheckable, each kind in the order read, and one command says how many have none. Whether the
-    # job fails, and the verdict below, are counted over every claim.
-    failing = any(c.verdict == "CONTRADICTED" or (c.verdict == "UNCHECKABLE" and strict) for c in g.claims)
-    unverified = [c for c in g.claims if c.verdict in ("CONTRADICTED", "UNCHECKABLE")]
-    without = []
-    if len(unverified) > _COMMANDS:
-        unverified = _by_weight(unverified)
-        unverified, without = unverified[:_COMMANDS], unverified[_COMMANDS:]
-    for c in unverified:
+    # Each claim the gate did not verify has a command, in the order the claims were read, but that the
+    # warnings stop at _WARNINGS: an uncheckable claim past that many has none, and one command says how
+    # many there are. An error is never left out, so a contradicted claim always has its command, and
+    # under strict an uncheckable one has too.
+    failing = False
+    warned = unwarned = 0
+    for c in g.claims:
         if c.verdict == "CONTRADICTED":
+            failing = True
             print(f"::error title=styxx diffgate - contradicted claim::{_message(c.text[:120])} - {_message(c.why)}")
-        elif strict:
+        elif c.verdict == "UNCHECKABLE" and strict:
+            failing = True
             print(f"::error title=styxx diffgate - uncheckable under strict::{_message(c.text[:120])} - "
                   f"{_message(c.why)}")
-        else:
+        elif c.verdict == "UNCHECKABLE" and warned < _WARNINGS:
+            warned += 1
             print(f"::warning title=styxx diffgate - uncheckable::{_message(c.text[:120])} - {_message(c.why)}")
-    if without:
-        count = {v: sum(1 for c in without if c.verdict == v) for v in ("CONTRADICTED", "UNCHECKABLE")}
-        print(f"::warning title=styxx diffgate - more claims than commands::{len(without)} more claim(s) that the "
-              f"gate did not verify have no command here, where {_COMMANDS} is the most that are printed: "
-              f"{count['CONTRADICTED']} CONTRADICTED, {count['UNCHECKABLE']} UNCHECKABLE. The CONTRADICTED are "
-              "printed before the UNCHECKABLE, each kind in the order read, which may not be the order the claims "
-              "were read. The verdict below counts every claim.")
+        elif c.verdict == "UNCHECKABLE":
+            unwarned += 1
+    if unwarned:
+        print(f"::warning title=styxx diffgate - more uncheckable claims than warnings::{unwarned} more claim(s) "
+              f"that the gate could not check have no warning here, where {_WARNINGS} is the most that are "
+              "printed. A contradicted claim always has its command. The verdict below counts every claim.")
     print(f"styxx diffgate: {g.verdict} - {len(g.claims)} claim(s), "
           f"{sum(1 for c in g.claims if c.verdict == 'CONTRADICTED')} contradicted")
     if failing and not soft:

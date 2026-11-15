@@ -3,7 +3,8 @@
 
 `diffgate_action.py` prints each claim it read from the pull request's body (or from the head commit's
 message) into a row of the table in the step summary, and each claim it did not verify into a workflow
-command as well (`::error ...::<claim> - <reason>`). The claim's text is the author's, and the reason can
+command as well (`::error ...::<claim> - <reason>`; a warning for at most a hundred of the claims it
+could not check, from the last section of this file on). The claim's text is the author's, and the reason can
 quote it and paths of the diff. The script printed both as they stood. A carriage return in a claim was
 followed on stdout by whatever the author wrote next, where this file takes a runner to start a line. A
 `|` in a claim stood in the row as a bar, so the row had bars of the author's writing. A `<` stood in the
@@ -42,7 +43,7 @@ OWN_LINES = ("::error title=styxx diffgate - contradicted claim::",
              "::error title=styxx diffgate - uncheckable under strict::",
              "::warning title=styxx diffgate - uncheckable::",
              "::warning title=styxx diffgate - UNMEASURED::",
-             "::warning title=styxx diffgate - more claims than commands::",
+             "::warning title=styxx diffgate - more uncheckable claims than warnings::",
              "::warning::styxx diffgate found failures but soft-fail is on",
              "styxx diffgate: ")
 
@@ -431,11 +432,10 @@ def test_the_table_stops_before_the_summary_passes_the_size_github_allows(act, t
             "Its rows are written with the CONTRADICTED before the UNCHECKABLE, and those before the VERIFIED, "
             "each kind in the order read, which may not be the order the claims were read. "
             "The verdict above counts every claim._") in summary
-    # a command for each claim up to the script's most, and one command for the rest
-    assert out.count("::warning title=styxx diffgate - uncheckable::") == act._COMMANDS == 100
-    assert (f"::warning title=styxx diffgate - more claims than commands::{total - 100} more claim(s) that the gate "
-            f"did not verify have no command here, where 100 is the most that are printed: 0 CONTRADICTED, "
-            f"{total - 100} UNCHECKABLE. ") in out
+    # a warning for each claim up to the script's most, and one command for the rest
+    assert out.count("::warning title=styxx diffgate - uncheckable::") == act._WARNINGS == 100
+    assert (f"::warning title=styxx diffgate - more uncheckable claims than warnings::{total - 100} more claim(s) "
+            "that the gate could not check have no warning here, where 100 is the most that are printed. ") in out
 
 
 def test_a_table_within_the_budget_has_every_claim_and_no_such_line(act, tmp_path, monkeypatch, capsys):
@@ -446,8 +446,9 @@ def test_a_table_within_the_budget_has_every_claim_and_no_such_line(act, tmp_pat
 def test_a_table_past_its_budget_has_its_contradicted_rows_before_the_others(act, tmp_path, monkeypatch, capsys):
     """3,000 claims the gate cannot check and then one it contradicts. In the order read, the rows stop
     before the contradicted one; it is the row a reader most needs, so where the rows do not all fit
-    it is written ahead of the others. Its command is ahead of the others too, there being more claims
-    than the script prints commands for."""
+    it is written ahead of the others. The commands on stdout keep the order the claims were read: a
+    hundred warnings, which is the most, and then the contradicted claim's error, which is never left
+    out."""
     _, out, summary = gate(act, tmp_path, monkeypatch, capsys, "fix a|c.c " * 3000 + "\n9 files changed.")
     table = rows(summary)
     assert 0 < len(table) < 3001
@@ -455,8 +456,9 @@ def test_a_table_past_its_budget_has_its_contradicted_rows_before_the_others(act
     assert all(row.startswith("| ❓ UNCHECKABLE | ") for row in table[1:])
     assert sum(len(r.encode("utf-8")) + 1 for r in table) <= act._ROWS_BYTES
     assert f": 0 CONTRADICTED, {3001 - len(table)} UNCHECKABLE, 0 VERIFIED. Its rows are written with" in summary
-    assert lines(out)[0].startswith("::error title=styxx diffgate - contradicted claim::9 files changed. - ")
-    assert out.count("::warning title=styxx diffgate - uncheckable::") == 99
+    assert lines(out)[100].startswith("::error title=styxx diffgate - contradicted claim::9 files changed. - ")
+    assert all(ln.startswith("::warning title=styxx diffgate - uncheckable::") for ln in lines(out)[:100])
+    assert lines(out)[101].startswith("::warning title=styxx diffgate - more uncheckable claims than warnings::2900 ")
 
 
 def test_a_table_within_the_budget_keeps_the_order_the_claims_were_read(act, tmp_path, monkeypatch, capsys):
@@ -582,7 +584,7 @@ def test_a_table_past_its_budget_of_three_verdicts_read_in_turn(act, tmp_path, m
             f"under the size GitHub allows a step's summary: {count['CONTRADICTED']} CONTRADICTED, "
             f"{count['UNCHECKABLE']} UNCHECKABLE, {count['VERIFIED']} VERIFIED. Its rows are written with") in summary
     assert f"**FAIL** · {len(claims)} claim(s) checked" in summary
-    assert out.count("::error title=styxx diffgate - contradicted claim::") == min(contradicted, 100)
+    assert out.count("::error title=styxx diffgate - contradicted claim::") == contradicted    # each has its error
     assert f"**FAIL** · {len(claims)} claim(s) checked" in summary and f"FAIL - {len(claims)} claim(s), " in out
 
 
@@ -688,7 +690,7 @@ def test_the_joiners_a_variation_selector_and_a_no_break_space_in_a_claim_are_le
     assert text + " - " in out and "`" + text + "`" in rows(summary)[0]
 
 
-# ── more claims than the script prints commands for, with the gate replaced ────────────────────────
+# ── more uncheckable claims than the script prints warnings for ────────────────────────────────────
 
 def command(c, strict=False):
     """The command main() is to print for a claim of plain ASCII text that the gate did not verify."""
@@ -714,63 +716,87 @@ def read_in_turn(contradicted, uncheckable, verified):
     return claims
 
 
-@pytest.mark.parametrize("strict", [False, True])
-def test_a_hundred_claims_without_a_verdict_each_have_a_command_in_the_order_read(act, tmp_path, monkeypatch, capsys,
-                                                                                 strict):
-    """Exactly as many unverified claims as the script prints commands for, with verified ones among
-    them (a verified claim has no command): each has its command, in the order read, and no other
-    command is printed."""
-    claims = read_in_turn(30, 70, 40)
-    rc, got = run_claims(act, tmp_path, monkeypatch, capsys, claims, strict=str(strict).lower(), soft="false")
-    assert got == [command(c, strict) for c in claims if c.verdict != "VERIFIED"] \
-        + ["styxx diffgate: FAIL - 140 claim(s), 30 contradicted"]
-    assert rc == 1 and len(got) == 101
+def as_stdout_is_to_be(claims, strict=False):
+    """The lines for claims that main() is to print: each unverified claim's command in the order read,
+    but that an uncheckable claim past the hundredth warning has none, and then, if any has none, the
+    command that counts them. Under strict an uncheckable claim's command is an error and none is left
+    out. Written without the script's code."""
+    out, warned, left = [], 0, 0
+    for c in claims:
+        if c.verdict == "VERIFIED":
+            continue
+        if c.verdict == "UNCHECKABLE" and not strict:
+            if warned == 100:
+                left += 1
+                continue
+            warned += 1
+        out.append(command(c, strict))
+    if left:
+        out.append(f"::warning title=styxx diffgate - more uncheckable claims than warnings::{left} more claim(s) that "
+                   "the gate could not check have no warning here, where 100 is the most that are printed. A "
+                   "contradicted claim always has its command. The verdict below counts every claim.")
+    return out
 
 
-@pytest.mark.parametrize("strict", [False, True])
-def test_one_claim_more_than_the_script_prints_commands_for(act, tmp_path, monkeypatch, capsys, strict):
-    """A hundred uncheckable claims and then a contradicted one. The contradicted claim's command is
-    printed ahead of the others, the last uncheckable claim read has none, and one command says so."""
-    claims = [claim("UNCHECKABLE", f"U{i:04d} text", f"reason {i}") for i in range(100)] \
-        + [claim("CONTRADICTED", "C0000 text", "reason c")]
-    rc, got = run_claims(act, tmp_path, monkeypatch, capsys, claims, strict=str(strict).lower(), soft="false")
-    assert got[:100] == [command(claims[100], strict)] + [command(c, strict) for c in claims[:99]]
-    assert got[100] == ("::warning title=styxx diffgate - more claims than commands::1 more claim(s) that the gate "
-                        "did not verify have no command here, where 100 is the most that are printed: "
-                        "0 CONTRADICTED, 1 UNCHECKABLE. The CONTRADICTED are printed before the UNCHECKABLE, each "
-                        "kind in the order read, which may not be the order the claims were read. The verdict "
-                        "below counts every claim.")
-    assert got[101:] == ["styxx diffgate: FAIL - 101 claim(s), 1 contradicted"] and rc == 1
-
-
-@pytest.mark.parametrize("contradicted, uncheckable, verified, without", [
-    (150, 50, 20, "50 CONTRADICTED, 50 UNCHECKABLE"),      # more contradicted claims than commands
-    (40, 300, 500, "0 CONTRADICTED, 240 UNCHECKABLE"),     # every contradicted claim has its command
-    (0, 101, 0, "0 CONTRADICTED, 1 UNCHECKABLE"),
+@pytest.mark.parametrize("contradicted, uncheckable, verified, strict, counted", [
+    (30, 100, 40, False, None),      # exactly as many uncheckable claims as warnings: each has one, no other command
+    (30, 101, 40, False, 1),         # one more: it has no warning, and one command says so
+    (250, 300, 500, False, 200),     # every contradicted claim has its error, read before or after the hundredth warning
+    (0, 101, 0, False, 1),
+    (250, 0, 10, False, None),       # 250 errors and no warning: none is left out
+    (30, 300, 40, True, None),       # under strict an uncheckable claim's command is an error: none is left out
 ])
-def test_no_contradicted_claim_is_without_a_command_while_an_uncheckable_one_has_one(
-        act, tmp_path, monkeypatch, capsys, contradicted, uncheckable, verified, without):
+def test_warnings_stop_at_a_hundred_and_no_error_is_left_out(act, tmp_path, monkeypatch, capsys, contradicted,
+                                                            uncheckable, verified, strict, counted):
     claims = read_in_turn(contradicted, uncheckable, verified)
+    rc, got = run_claims(act, tmp_path, monkeypatch, capsys, claims, strict=str(strict).lower(), soft="false")
+    assert got == as_stdout_is_to_be(claims, strict) \
+        + [f"styxx diffgate: FAIL - {len(claims)} claim(s), {contradicted} contradicted"]
+    assert sum(ln.startswith("::error title=styxx diffgate - contradicted claim::") for ln in got) == contradicted
+    assert sum(ln.startswith("::error title=styxx diffgate - uncheckable under strict::") for ln in got) \
+        == (uncheckable if strict else 0)
+    assert sum(ln.startswith("::warning title=styxx diffgate - uncheckable::") for ln in got) \
+        == (0 if strict else min(uncheckable, 100))
+    counting = [ln for ln in got if ln.startswith("::warning title=styxx diffgate - more uncheckable claims than")]
+    assert [ln.split("::")[2].split(" ")[0] for ln in counting] == ([str(counted)] if counted else [])
+    assert rc == (1 if contradicted or strict else 0)
+
+
+def test_the_command_that_counts_the_claims_without_a_warning_word_for_word(act, tmp_path, monkeypatch, capsys):
+    """101 uncheckable claims and then a contradicted one. The 101st has no warning; the contradicted
+    claim, read after it, has its error; and the counting command comes after every claim's command."""
+    claims = [claim("UNCHECKABLE", f"U{i:04d} text", f"reason {i}") for i in range(101)] \
+        + [claim("CONTRADICTED", "C0000 text", "reason c")]
     rc, got = run_claims(act, tmp_path, monkeypatch, capsys, claims, soft="false")
-    ordered = [c for c in claims if c.verdict == "CONTRADICTED"] + [c for c in claims if c.verdict == "UNCHECKABLE"]
-    assert got[:100] == [command(c) for c in ordered[:100]]
-    assert got[100].startswith(f"::warning title=styxx diffgate - more claims than commands::{len(ordered) - 100} more "
-                               f"claim(s) that the gate did not verify have no command here")
-    assert f": {without}. The CONTRADICTED are printed before" in got[100]
-    assert got[101:] == [f"styxx diffgate: FAIL - {len(claims)} claim(s), {contradicted} contradicted"]
-    assert rc == (1 if contradicted else 0)
+    assert got[:100] == [command(c) for c in claims[:100]]
+    assert got[100] == "::error title=styxx diffgate - contradicted claim::C0000 text - reason c"
+    assert got[101] == ("::warning title=styxx diffgate - more uncheckable claims than warnings::1 more claim(s) that "
+                        "the gate could not check have no warning here, where 100 is the most that are printed. A "
+                        "contradicted claim always has its command. The verdict below counts every claim.")
+    assert got[102:] == ["styxx diffgate: FAIL - 102 claim(s), 1 contradicted"] and rc == 1
 
 
-def test_a_job_fails_on_a_contradicted_claim_that_has_no_command(act, tmp_path, monkeypatch, capsys):
+def test_a_contradicted_claim_read_after_a_hundred_others_has_its_command(act, tmp_path, monkeypatch, capsys):
+    """The real gate. A hundred contradicted claims and then one more, about a path: with a bound on
+    every command the last one had none. Each of the 101 has its error."""
+    two = ("diff --git a/src/secrets.py b/src/secrets.py\n--- a/src/secrets.py\n+++ b/src/secrets.py\n@@ -1 +1,2 @@\n"
+           " y = 0\n+x = 1\ndiff --git a/docs/a.md b/docs/a.md\n--- a/docs/a.md\n+++ b/docs/a.md\n@@ -1 +1,2 @@\n y\n+x\n")
+    for body in ("9 files changed. " * 100 + "Only touches docs/.", "All tests pass. " * 100 + "9 files changed. Only touches docs/."):
+        _, out, _ = gate(act, tmp_path, monkeypatch, capsys, body, diff=two, soft="false")
+        named = [ln for ln in lines(out) if ln.startswith("::error title=styxx diffgate - contradicted claim::")]
+        assert named[-1].startswith("::error title=styxx diffgate - contradicted claim::Only touches docs/. - "
+                                    "paths outside 'docs': ['src/secrets.py']")
+        assert len(named) == (101 if body.startswith("9") else 2)
+
+
+def test_a_job_fails_on_every_claim_whether_or_not_it_has_a_warning(act, tmp_path, monkeypatch, capsys):
     """Whether the job fails is counted over every claim, and so is the soft-fail line."""
-    claims = [claim("CONTRADICTED", f"C{i:04d} text", "r") for i in range(250)]
-    rc, got = run_claims(act, tmp_path, monkeypatch, capsys, claims, soft="false")
-    assert rc == 1 and len(got) == 102 and got[-1] == "styxx diffgate: FAIL - 250 claim(s), 250 contradicted"
-    rc, got = run_claims(act, tmp_path, monkeypatch, capsys, claims)                       # soft-fail, the default
-    assert rc == 0 and got[-1].startswith("::warning::styxx diffgate found failures but soft-fail is on")
     claims = [claim("UNCHECKABLE", f"U{i:04d} text", "r") for i in range(250)]
-    assert run_claims(act, tmp_path, monkeypatch, capsys, claims, strict="true", soft="false")[0] == 1
     assert run_claims(act, tmp_path, monkeypatch, capsys, claims, strict="false", soft="false")[0] == 0
+    assert run_claims(act, tmp_path, monkeypatch, capsys, claims, strict="true", soft="false")[0] == 1
+    rc, got = run_claims(act, tmp_path, monkeypatch, capsys, claims + [claim("CONTRADICTED", "C text", "r")])
+    assert rc == 0 and got[-1].startswith("::warning::styxx diffgate found failures but soft-fail is on")
+    assert got[-2] == "styxx diffgate: FAIL - 251 claim(s), 1 contradicted"
 
 
 def test_a_filler_in_a_claimed_path_is_an_escape_in_the_reason_too(act, tmp_path, monkeypatch, capsys):
