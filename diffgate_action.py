@@ -299,6 +299,11 @@ def _line(text: str) -> str:
             .replace("|", "&#124;").replace("<", "&lt;"))
 
 
+# cmark-gfm, the Markdown parser GitHub publishes, opens no code span with a string of more than 80
+# backticks: text after such a string is read as Markdown and as tags, not as the span's text.
+_SPAN_TICKS = 80
+
+
 def _cell(text: str) -> str:
     """Text the pull request's author chose, as one cell of the summary's table: a code span, so that
     it is shown as the characters it is and nothing in it is read as Markdown or as a tag. Control
@@ -306,12 +311,16 @@ def _cell(text: str) -> str:
     own escape, which is read before the span is; the span opens and closes with one backtick more
     than the longest run of them in the text, and is padded with a space where the text begins or
     ends with a backtick, or begins and ends with a space (a reader takes one such pair of spaces
-    off). Rendered with cmark-gfm, the parser GitHub publishes, a cell written so held its text and
-    no element but the span (CHANGELOG, "a claim is shown in its cell as the characters it is");
-    GitHub's own page was not run."""
+    off). A run of 80 or more backticks is written as that many ``\\x60``: the span's own string would
+    have to be longer than the 80 the parser opens a span with, and the cell would be read as
+    Markdown and as tags. A text that is empty or all white space as ``str.strip`` reads it (a tab
+    and a no-break space included) gives an empty cell and no span. Rendered with cmark-gfm
+    0.29.0.gfm.2, a cell written so held its text and no element but the span (CHANGELOG, "a claim is
+    shown in its cell as the characters it is"); GitHub's own page was not run."""
     text = _printable(text).replace("\r", " ").replace("\n", " ").replace("|", "\\|")
     if not text.strip():
         return ""
+    text = re.sub("`{%d,}" % _SPAN_TICKS, lambda run: "\\x60" * len(run.group()), text)
     ticks = "`" * (max((len(run) for run in re.findall("`+", text)), default=0) + 1)
     pad = " " if text[0] == "`" or text[-1] == "`" or (text[0] == " " and text[-1] == " ") else ""
     return f"{ticks}{pad}{text}{pad}{ticks}"
@@ -427,7 +436,7 @@ def main() -> int:
              f"**{g.verdict}** · {len(g.claims)} claim(s) checked on the {what}", ""]
     if g.claims:
         lines += ["| verdict | claim | evidence |", "|---|---|---|"]
-        shown = used = 0
+        written = []
         for c in g.claims:
             mark = {"VERIFIED": "✅", "CONTRADICTED": "❌", "UNCHECKABLE": "❓"}[c.verdict]
             # PATH-2a (NOTE_path2a_second_pass_2026_09_30): a reason the overlay wrote is shown whole, since its
@@ -448,19 +457,29 @@ def main() -> int:
             # A claim's text is the pull request author's, and a reason can quote it and the diff's paths, so
             # each is written as a code span: a "|" or a line break of theirs cannot end the cell or start a
             # row, and nothing of theirs is read as Markdown or as a tag.
-            row = f"| {mark} {c.verdict} | {_cell(c.text[:80])} | {_cell(why)} |"
+            written.append((c, f"| {mark} {c.verdict} | {_cell(c.text[:80])} | {_cell(why)} |"))
+        # The rows are in the order the claims were read, unless they do not all fit: then the contradicted
+        # ones come before the uncheckable and those before the verified, each kind in the order read, so that
+        # claims of no weight cannot fill the table ahead of a contradicted one.
+        fits = sum(len(row.encode("utf-8")) + 1 for _, row in written) <= _ROWS_BYTES
+        if not fits:
+            written.sort(key=lambda pair: ("CONTRADICTED", "UNCHECKABLE", "VERIFIED").index(pair[0].verdict))
+        shown = used = 0
+        for _, row in written:
             used += len(row.encode("utf-8")) + 1
             if used > _ROWS_BYTES:
                 break
             lines.append(row)
             shown += 1
-        if shown < len(g.claims):
-            rest = g.claims[shown:]
+        if not fits:
+            rest = [c for c, _ in written[shown:]]
             count = {v: sum(1 for c in rest if c.verdict == v) for v in ("CONTRADICTED", "UNCHECKABLE", "VERIFIED")}
             lines += ["", f"_{len(rest)} more claim(s) are not in this table, which stops at {_ROWS_BYTES:,} bytes "
                           "of rows to stay under the size GitHub allows a step's summary: "
                           f"{count['CONTRADICTED']} CONTRADICTED, {count['UNCHECKABLE']} UNCHECKABLE, "
-                          f"{count['VERIFIED']} VERIFIED. The verdict above counts every claim._"]
+                          f"{count['VERIFIED']} VERIFIED. Its rows are not in the order the claims were read: the "
+                          "CONTRADICTED come before the UNCHECKABLE, and those before the VERIFIED. "
+                          "The verdict above counts every claim._"]
     else:
         lines += ["_No diff-shaped claims found. The gate checks a closed template set "
                   "(touched/created/deleted paths, added functions/tests, file counts, "

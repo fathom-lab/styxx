@@ -202,7 +202,7 @@ def test_a_gate_that_did_not_measure_says_so_as_it_did(act, tmp_path, monkeypatc
     assert "**The gate did not run.** the diff carries no file statuses and no added lines;" in summary
 
 
-# ── the three functions by themselves ──────────────────────────────────────────────────────────────
+# ── the four functions by themselves ───────────────────────────────────────────────────────────────
 
 def test_printable_writes_control_characters_and_line_separators_as_escapes_and_leaves_the_rest(act):
     kept = "a b\tc\r\nd \u00e9 \u4e2d \u00a0 \u200b ~ \U0001f600"
@@ -241,7 +241,11 @@ def test_line_is_one_line_with_no_bar_and_no_tag_of_its_own(act):
     (" a", "` a`"),
     ("a\\", "`a\\`"),
     ("\x1b\u2028\ud800\tz", "`\\x1b\\u2028\\ud800\tz`"),
-    ("", ""), ("   ", ""),
+    ("a\u00a0b  c", "`a\u00a0b  c`"),                           # a no-break space and a run of spaces, as they are
+    ("`" * 79, "`" * 80 + " " + "`" * 79 + " " + "`" * 80),     # the longest run a span holds as it is
+    ("`" * 80, "`" + "\\x60" * 80 + "`"),                       # the parser opens no span with 81 backticks
+    ("<h1>" + "`" * 81 + "x`y", "``<h1>" + "\\x60" * 81 + "x`y``"),
+    ("", ""), ("   ", ""), ("\t", ""), ("\u00a0 \u3000", ""),    # white space as str.strip reads it: an empty cell
 ])
 def test_cell_is_a_code_span_that_holds_the_text(act, text, cell):
     assert act._cell(text) == cell
@@ -369,10 +373,67 @@ def test_the_table_stops_before_the_summary_passes_the_size_github_allows(act, t
     rest = total - len(table)
     assert (f"_{rest} more claim(s) are not in this table, which stops at 524,288 bytes of rows to stay under "
             f"the size GitHub allows a step's summary: 0 CONTRADICTED, {rest} UNCHECKABLE, 0 VERIFIED. "
-            "The verdict above counts every claim._") in summary
+            "Its rows are not in the order the claims were read: the CONTRADICTED come before the UNCHECKABLE, "
+            "and those before the VERIFIED. The verdict above counts every claim._") in summary
     assert out.count("::warning title=styxx diffgate - uncheckable::") == total      # every claim has its command
 
 
 def test_a_table_within_the_budget_has_every_claim_and_no_such_line(act, tmp_path, monkeypatch, capsys):
     _, _, summary = gate(act, tmp_path, monkeypatch, capsys, "fix a.c " * 40)
     assert len(rows(summary)) == 40 and "are not in this table" not in summary
+
+
+def test_a_table_past_its_budget_has_its_contradicted_rows_before_the_others(act, tmp_path, monkeypatch, capsys):
+    """3,000 claims the gate cannot check and then one it contradicts. In the order read, the rows stop
+    before the contradicted one; it is the row a reader most needs, so where the rows do not all fit
+    it is written ahead of the others. The commands on stdout keep the order the claims were read."""
+    _, out, summary = gate(act, tmp_path, monkeypatch, capsys, "fix a|c.c " * 3000 + "\n9 files changed.")
+    table = rows(summary)
+    assert 0 < len(table) < 3001
+    assert table[0] == "| ❌ CONTRADICTED | `9 files changed.` | `diff changes 1 files, claim says 9` |"
+    assert all(row.startswith("| ❓ UNCHECKABLE | ") for row in table[1:])
+    assert sum(len(r.encode("utf-8")) + 1 for r in table) <= act._ROWS_BYTES
+    assert f": 0 CONTRADICTED, {3001 - len(table)} UNCHECKABLE, 0 VERIFIED. Its rows are not in the order" in summary
+    assert out.rindex("::warning title=styxx diffgate - uncheckable::") \
+        < out.index("::error title=styxx diffgate - contradicted claim::9 files changed.")
+
+
+def test_a_table_within_the_budget_keeps_the_order_the_claims_were_read(act, tmp_path, monkeypatch, capsys):
+    _, _, summary = gate(act, tmp_path, monkeypatch, capsys,
+                         "Modified styxx/x.py and added 3 tests. Modified src/nothere.py. 9 files changed.")
+    assert [row.split(" | ")[0] for row in rows(summary)] == \
+        ["| ✅ VERIFIED", "| ❌ CONTRADICTED", "| ❓ UNCHECKABLE", "| ❌ CONTRADICTED"]
+    assert "are not in this table" not in summary
+
+
+# ── a run of backticks longer than a code span can be written round ────────────────────────────────
+
+def test_a_run_of_80_backticks_in_a_reason_is_written_as_escapes(act, tmp_path, monkeypatch, capsys):
+    """A value in a styxx block that is not a path is quoted in its reason, and a run of 80 backticks
+    in it fits inside the 100 characters a reason is cut at. The span round it would need 81, and
+    cmark-gfm opens no span with more than 80, so the run is written as escapes and no row holds a
+    run of backticks longer than 80."""
+    body = "Modified styxx/x.py.\n\n```styxx\nonly_touches: <b>" + "`" * 80 + "<i>y</i>\n```\n"
+    _, _, summary = gate(act, tmp_path, monkeypatch, capsys, body)
+    table = rows(summary)
+    assert len(table) == 2 and all(bars(row) == 4 for row in table)
+    assert table[1].endswith(" | `MALFORMED: '<b>" + "\\x60" * 80 + "<i>y<` |")
+    assert "only_touches: <b>" + "`" * 63 in table[1]            # the claim's cell: 80 characters, a run of 63
+    assert max(len(run) for row in table for run in re.findall("`+", row)) == 64
+
+
+@pytest.mark.parametrize("n", [79, 80, 81, 87, 120])
+def test_no_row_holds_more_backticks_in_a_run_than_a_span_opens_with(act, tmp_path, monkeypatch, capsys, n):
+    """Through main(), by the three ways text of the author's reaches a cell. A claim is cut at 80
+    characters and holds words, so its run is under 80. A path of the diff stands in its reason from
+    the 22nd character of the 100, so its run is 79 at the most, the longest a span holds as it is. A
+    declared value stands from the 13th, so its run can be 80 to 87, and is written as escapes."""
+    run = "`" * n
+    body = f"Modified x.py and {run}.\n\n```styxx\nonly_touches: a{run}<i>y</i>\n```\n"
+    _, _, summary = gate(act, tmp_path, monkeypatch, capsys, body, diff=diff_of(f"{run}<b>x</b>/x.py"))
+    table = rows(summary)
+    assert len(table) == 2 and all(bars(row) == 4 for row in table)
+    assert " | " + "`" * 80 + " diff status 'M' for '" + "`" * 79 + " " + "`" * 80 + " |" in table[0]
+    assert ("MALFORMED: 'a" + "\\x60" * min(n, 87) in table[1]) == (n >= 80)
+    assert ("MALFORMED: 'a" + "`" * 79 + "<i>y</i>" in table[1]) == (n == 79)
+    assert max(len(r) for row in table for r in re.findall("`+", row)) == 80

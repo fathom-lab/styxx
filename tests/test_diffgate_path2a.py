@@ -2011,7 +2011,7 @@ def test_the_action_shows_an_overlay_reason_whole(tmp_path, monkeypatch):
     assert mod.main() == 0
     table = (tmp_path / "sum.md").read_text(encoding="utf-8")
     # each variable cell of the table is a code span (CHANGELOG, "a claim is shown in its cell as the characters
-    # it is"), so a cell's text stands between two backticks
+    # it is"), so a cell's text stands between backticks: one on each side for the texts read here, which hold none
     assert "withheld by PATH-2a (#97)" in table and "main's reading: diff status 'A' for 'readme.md'` |" in table
     # A-2 (NOTE_path2a_third_pass_2026_09_30): a reason that only contains the overlay's words -- a DECLARE-1
     # MALFORMED value a PR author writes -- is cut at 100 characters, as main cuts it.
