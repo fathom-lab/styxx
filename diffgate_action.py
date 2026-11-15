@@ -250,28 +250,33 @@ def api(url: str, accept: str) -> str:
                            "could not read as an address, so it was not followed") from e
 
 
-# Characters that are written as escapes wherever this script prints text it did not write, beside the
-# control characters: they show nothing of their own, and some change the order the text round them
-# is shown in, so a reader of the summary or of an annotation would not see what the text holds. The
-# list is written out here and not asked of ``unicodedata``, whose answer moves with the Python that
-# runs the script. Left as they are, because the characters beside them are drawn by them: the two
-# joiners (U+200C, U+200D), the variation selectors, and the other marks that shape a neighbour.
+# Characters that are written as escapes wherever this script prints a claim, a reason or the text of
+# a failed fetch, beside the control characters. By the Unicode standard's account they have no glyph
+# of their own, and some change the order the text round them is shown in, so a reader of the summary
+# or of an annotation may not see what the text holds. The list is the standard's default ignorable
+# code points (Unicode 15.0) and the three interlinear annotation characters, without the ones the
+# standard gives the drawing of a neighbour to: the two joiners (U+200C, U+200D) and the variation
+# selectors (U+180B to U+180D, U+180F, U+FE00 to U+FE0F, U+E0100 to U+E01EF). It is written out here
+# and not asked of ``unicodedata``, whose answer moves with the Python that runs the script.
 _UNSEEN = frozenset(chr(c) for low, high in (
     (0x00AD, 0x00AD),        # soft hyphen
+    (0x034F, 0x034F),        # combining grapheme joiner
     (0x061C, 0x061C),        # Arabic letter mark
     (0x115F, 0x1160),        # Hangul fillers
+    (0x17B4, 0x17B5),        # Khmer inherent vowels
     (0x180E, 0x180E),        # Mongolian vowel separator
     (0x200B, 0x200B),        # zero width space
     (0x200E, 0x200F),        # left-to-right and right-to-left marks
     (0x202A, 0x202E),        # directional embeddings and overrides, and the pop that ends them
-    (0x2060, 0x206F),        # word joiner, invisible operators, directional isolates, deprecated format characters
+    (0x2060, 0x206F),        # word joiner, invisible operators, directional isolates, deprecated format characters, U+2065
     (0x3164, 0x3164),        # Hangul filler
     (0xFEFF, 0xFEFF),        # zero width no-break space (a byte order mark)
     (0xFFA0, 0xFFA0),        # halfwidth Hangul filler
-    (0xFFF9, 0xFFFB),        # interlinear annotation
+    (0xFFF0, 0xFFFB),        # nine code points not assigned, and interlinear annotation
     (0x1BCA0, 0x1BCA3),      # shorthand format controls
     (0x1D173, 0x1D17A),      # musical format controls
-    (0xE0000, 0xE007F),      # tag characters
+    (0xE0000, 0xE00FF),      # the tag characters, and the code points round them that are not assigned
+    (0xE01F0, 0xE0FFF),      # the rest of that plane's default ignorable code points, none assigned
 ) for c in range(low, high + 1))
 
 

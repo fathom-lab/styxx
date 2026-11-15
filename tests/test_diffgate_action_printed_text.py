@@ -36,7 +36,8 @@ DIFF = ("diff --git a/styxx/x.py b/styxx/x.py\n--- a/styxx/x.py\n+++ b/styxx/x.p
         "+def test_a(): pass\n")
 FORGED = "::error title=styxx diffgate::PASS - every claim VERIFIED (forged)"
 # Every line the script itself starts on stdout in the runs below begins with one of these (its lines for
-# a soft-fail value it does not recognise and for a failed fetch are not reached here).
+# a soft-fail value it does not recognise is not reached here, and its line for a failed fetch only in
+# the test of that text, which does not use this list).
 OWN_LINES = ("::error title=styxx diffgate - contradicted claim::",
              "::error title=styxx diffgate - uncheckable under strict::",
              "::warning title=styxx diffgate - uncheckable::",
@@ -206,12 +207,15 @@ def test_a_gate_that_did_not_measure_says_so_as_it_did(act, tmp_path, monkeypatc
 
 # ── the four functions by themselves ───────────────────────────────────────────────────────────────
 
-# The characters that show nothing or change the order text is shown in, written out here by hand and
-# not taken from the script: every code point `_printable` is to escape beside the control characters,
-# the two line separators and the surrogates.
-UNSEEN = [0x00AD, 0x061C, 0x115F, 0x1160, 0x180E, 0x200B, 0x200E, 0x200F, 0x202A, 0x202B, 0x202C, 0x202D, 0x202E,
-          0x3164, 0xFEFF, 0xFFA0, 0xFFF9, 0xFFFA, 0xFFFB, 0x1BCA0, 0x1BCA1, 0x1BCA2, 0x1BCA3] \
-    + list(range(0x2060, 0x2070)) + list(range(0x1D173, 0x1D17B)) + list(range(0xE0000, 0xE0080))
+# The characters the Unicode standard gives no glyph, or the changing of the order text is shown in,
+# written out here by hand and not taken from the script: every code point `_printable` is to escape
+# beside the control characters, the two line separators and the surrogates.
+UNSEEN = [0x00AD, 0x034F, 0x061C, 0x115F, 0x1160, 0x17B4, 0x17B5, 0x180E, 0x200B, 0x200E, 0x200F,
+          0x202A, 0x202B, 0x202C, 0x202D, 0x202E, 0x3164, 0xFEFF, 0xFFA0, 0x1BCA0, 0x1BCA1, 0x1BCA2, 0x1BCA3] \
+    + list(range(0x2060, 0x2070)) + list(range(0xFFF0, 0xFFFC)) + list(range(0x1D173, 0x1D17B)) \
+    + list(range(0xE0000, 0xE0100)) + list(range(0xE01F0, 0xE1000))
+# Left as they are, by the same hand: the joiners and the variation selectors.
+LEFT = [0x200C, 0x200D, 0x180B, 0x180C, 0x180D, 0x180F] + list(range(0xFE00, 0xFE10)) + list(range(0xE0100, 0xE01F0))
 
 
 def test_printable_writes_control_characters_and_line_separators_as_escapes_and_leaves_the_rest(act):
@@ -226,7 +230,8 @@ def test_printable_writes_control_characters_and_line_separators_as_escapes_and_
     escaped = {c for c in map(chr, range(0x110000)) if act._printable(c) != c}
     assert escaped == ({chr(i) for i in range(0x20)} - {"\t", "\r", "\n"}) | {chr(i) for i in range(0x7f, 0xa0)} \
         | {"\u2028", "\u2029"} | {chr(i) for i in range(0xd800, 0xe000)} | {chr(i) for i in UNSEEN}
-    assert len(UNSEEN) == 175 and len(escaped) == 2287
+    assert len(UNSEEN) == 3915 and len(escaped) == 6027
+    assert len(LEFT) == 262 and not escaped & {chr(i) for i in LEFT}
 
 
 @pytest.mark.parametrize("text, written", [
@@ -242,6 +247,8 @@ def test_printable_writes_control_characters_and_line_separators_as_escapes_and_
     ("a\ufff9b\ufffac\ufffbd", "a\\ufff9b\\ufffac\\ufffbd"),
     ("x\U000e0041\U000e0042\U000e007fy", "x\\U000e0041\\U000e0042\\U000e007fy"),             # tag characters: eight digits
     ("x\U0001bca0y\U0001d173z\U000e0001", "x\\U0001bca0y\\U0001d173z\\U000e0001"),
+    ("a\u034fb\u17b4c\u17b5d", "a\\u034fb\\u17b4c\\u17b5d"),              # three marks the standard gives no glyph
+    ("a\ufff0b\ufff8c\U000e0080d\U000e01f0e\U000e0ffff", "a\\ufff0b\\ufff8c\\U000e0080d\\U000e01f0e\\U000e0ffff"),  # not assigned
 ])
 def test_a_character_that_shows_nothing_or_reorders_text_is_written_as_an_escape(act, text, written):
     """The expectation is written out here, character for character: a backslash, u and four digits, or
@@ -257,6 +264,8 @@ def test_no_unseen_character_leaves_any_of_the_four_functions(act):
         for out in (act._printable(c), act._message("a" + c), act._line(c + "b"), act._cell("a" + c + "b")):
             assert c not in out and chr(92) in out, (hex(code), out)
         assert len(act._printable(c)) == (4 if code < 0x100 else 6 if code < 0x10000 else 10)
+    for code in LEFT:
+        assert act._printable(chr(code)) == chr(code) and act._cell("a" + chr(code) + "b") == "`a" + chr(code) + "b`"
 
 
 def test_message_is_printable_and_then_a_commands_data(act):
@@ -619,9 +628,9 @@ def holds_no_unseen(text):
 ])
 def test_an_override_a_tag_character_and_a_zero_width_space_in_a_claim_are_escapes_in_all_that_is_printed(
         act, tmp_path, monkeypatch, capsys, strict, soft, opens):
-    """A right-to-left override shows what follows it backwards, a tag character shows nothing and can
-    carry text for a reader that is not a person, and a zero width space makes two different paths look
-    the same. Each stood in the command and in the row as it came."""
+    """By the Unicode standard's account a right-to-left override has what follows it shown in the
+    other order, and a tag character and a zero width space have no glyph, so two different paths can
+    look the same; no reader was run for this. Each stood in the command and in the row as it came."""
     text = "Modified src/not\u200bhere.py \u202eDEIFIREV\u202c \U000e0049\U000e0047\U000e004e."
     _, out, summary = gate(act, tmp_path, monkeypatch, capsys, text, strict=strict, soft=soft)
     assert holds_no_unseen(out) and holds_no_unseen(summary)
@@ -642,9 +651,9 @@ def test_a_claim_is_cut_before_an_unseen_character_is_written_out(act, tmp_path,
 
 
 def test_an_unseen_character_in_a_path_of_the_diff_is_an_escape_in_the_reason(act, tmp_path, monkeypatch, capsys):
-    """The gate's reason quotes the path through `repr`, which writes such a character as an escape
-    whatever this script does: this holds that the row and the command carry it so, and passes on the
-    script as it was."""
+    """The gate's reason quotes the path through `repr`, which writes these two characters as escapes
+    whatever this script does: this holds that the row carries them so, and passes on the script as it
+    was. The claim is verified, so no command is printed."""
     path = "dev/a\u200bb\u202ec/x.py"
     _, out, summary = gate(act, tmp_path, monkeypatch, capsys, "Modified x.py.", diff=diff_of(path), strict="true",
                            soft="false")
@@ -762,3 +771,46 @@ def test_a_job_fails_on_a_contradicted_claim_that_has_no_command(act, tmp_path, 
     claims = [claim("UNCHECKABLE", f"U{i:04d} text", "r") for i in range(250)]
     assert run_claims(act, tmp_path, monkeypatch, capsys, claims, strict="true", soft="false")[0] == 1
     assert run_claims(act, tmp_path, monkeypatch, capsys, claims, strict="false", soft="false")[0] == 0
+
+
+def test_a_filler_in_a_claimed_path_is_an_escape_in_the_reason_too(act, tmp_path, monkeypatch, capsys):
+    """`repr`, through which a reason quotes a path, leaves the four fillers as they are (they are
+    letters to it), so for these the reason carried the character too, in the command and in the row."""
+    text = "Modified src/not\u3164here.py. Modified lib/a\u115f\u1160\uffa0b.py."
+    for strict, soft, opens in (("false", None, "::warning title=styxx diffgate - uncheckable::"),
+                                ("true", "false", "::error title=styxx diffgate - uncheckable under strict::")):
+        _, out, summary = gate(act, tmp_path, monkeypatch, capsys, text, strict=strict, soft=soft)
+        assert holds_no_unseen(out) and holds_no_unseen(summary)
+        named = [ln for ln in lines(out) if ln.startswith(opens)]
+        assert len(named) == 2
+        assert " - 'src/not\\u3164here.py' does not appear in the diff" in named[0]
+        assert " - 'lib/a\\u115f\\u1160\\uffa0b.py' does not appear in the diff" in named[1]
+        assert "| `'src/not\\u3164here.py' does not appear in the diff" in rows(summary)[0]
+
+
+@pytest.mark.parametrize("verdict, strict, opens", [
+    ("CONTRADICTED", "false", "::error title=styxx diffgate - contradicted claim::"),
+    ("UNCHECKABLE", "true", "::error title=styxx diffgate - uncheckable under strict::"),
+    ("UNCHECKABLE", "false", "::warning title=styxx diffgate - uncheckable::"),
+])
+def test_a_claim_is_cut_at_120_characters_before_its_escapes_are_written_in_each_command(
+        act, tmp_path, monkeypatch, capsys, verdict, strict, opens):
+    """The gate replaced by one claim of 118 letters and then ten overrides: the command holds 120
+    characters of it, the two overrides among them written out whole, and no part of a third."""
+    one = types.SimpleNamespace(verdict=verdict, kind="file_touched", text="t" * 118 + "\u202e" * 10, why="why")
+    result = types.SimpleNamespace(measured=True, why_unmeasured="", verdict="FAIL", claims=[one])
+    monkeypatch.setattr(act, "gate_diff_text", lambda *a, **k: result)
+    _, out, _ = gate(act, tmp_path, monkeypatch, capsys, "anything", strict=strict, soft="false")
+    assert lines(out)[0] == opens + "t" * 118 + "\\u202e\\u202e - why"
+
+
+def test_a_reason_is_cut_at_100_characters_before_its_escapes_are_written_in_its_cell(act, tmp_path, monkeypatch,
+                                                                                    capsys):
+    """A reason of 98 letters and then ten fillers: the cell holds 100 characters of it, the two fillers
+    among them written out whole; the command holds the reason whole."""
+    one = types.SimpleNamespace(verdict="UNCHECKABLE", kind="file_touched", text="claim", why="r" * 98 + "\u3164" * 10)
+    result = types.SimpleNamespace(measured=True, why_unmeasured="", verdict="PASS", claims=[one])
+    monkeypatch.setattr(act, "gate_diff_text", lambda *a, **k: result)
+    _, out, summary = gate(act, tmp_path, monkeypatch, capsys, "anything")
+    assert rows(summary) == ["| ❓ UNCHECKABLE | `claim` | `" + "r" * 98 + "\\u3164\\u3164` |"]
+    assert lines(out)[0] == "::warning title=styxx diffgate - uncheckable::claim - " + "r" * 98 + "\\u3164" * 10
