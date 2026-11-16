@@ -22,7 +22,10 @@ permissions:
 jobs:
   test:
     name: py${{ matrix.python-version }}
-    runs-on: ubuntu-latest
+    # Pinned, not ubuntu-latest: setup-python offers no Python 3.9 on the
+    # ubuntu-26.04 image that ubuntu-latest now moves to. The pin goes when 3.9
+    # leaves the matrix.
+    runs-on: ubuntu-24.04
     strategy:
       fail-fast: false
       matrix:
