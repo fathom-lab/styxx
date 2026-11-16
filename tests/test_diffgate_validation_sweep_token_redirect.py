@@ -259,3 +259,16 @@ def test_with_no_token_no_request_carries_an_authorization_header(servers, monke
     assert api.auths() == [None, None]
     assert elsewhere.seen == []
 
+
+def test_the_token_is_read_from_gh_token_alone(monkeypatch):
+    """The script names no file of anyone's machine as a token source; it reads GH_TOKEN."""
+    name = "diffgate_validation_sweep_token_source"
+    spec = importlib.util.spec_from_file_location(name, SWEEP)
+    mod = importlib.util.module_from_spec(spec)
+    monkeypatch.setitem(sys.modules, name, mod)
+    spec.loader.exec_module(mod)
+    monkeypatch.setenv("GH_TOKEN", TOKEN)
+    assert mod.token() == TOKEN
+    monkeypatch.delenv("GH_TOKEN")
+    assert mod.token() is None
+    assert "secrets" not in SWEEP.read_text(encoding="utf-8")

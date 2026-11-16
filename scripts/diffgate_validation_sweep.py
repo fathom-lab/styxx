@@ -26,6 +26,8 @@ adjudication. The headline number is only claimable after each has been read.
 Usage:
     python scripts/diffgate_validation_sweep.py            # local only
     python scripts/diffgate_validation_sweep.py --market   # adds the PR sweep
+
+The market sweep sends GH_TOKEN, where it is set, to https://api.github.com and to no other address.
 """
 from __future__ import annotations
 
@@ -48,9 +50,7 @@ MARKER = "Generated with [Claude Code]"
 
 
 def token() -> str | None:
-    p = Path("C:/Users/heyzo/clawd/secrets/fathomlab-github.txt")
-    if p.exists():
-        return p.read_text(encoding="utf-8").strip()
+    """GH_TOKEN, or None (the API is then asked without a token)."""
     return os.environ.get("GH_TOKEN")
 
 
