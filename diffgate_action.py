@@ -380,7 +380,9 @@ def _by_weight(claims) -> list:
 def _write_summary(lines) -> None:
     path = os.environ.get("GITHUB_STEP_SUMMARY")
     if path:
-        with open(path, "a", encoding="utf-8") as f:
+        # newline="\n": the same bytes on every system; text mode on Windows would end each line in
+        # CR LF, one byte more per row than the budget above counts.
+        with open(path, "a", encoding="utf-8", newline="\n") as f:
             f.write("\n".join(lines) + "\n")
 
 
