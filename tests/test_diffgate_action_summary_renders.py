@@ -224,6 +224,16 @@ def test_a_line_break_at_an_edge_of_the_text_is_a_space_inside_the_span(act):
     assert [as_shown(act, t) for t in texts] == [" a ", " a ", "  Modified x.py ", " `a` ", "a b"]
 
 
+def test_a_character_that_reorders_text_or_shows_nothing_is_an_escape_in_the_rendered_span(act):
+    """The span's text, written out here and not taken from the script: the override, the zero width
+    space and the tag character as their escapes, and a joiner, a selector and a no-break space as they
+    are."""
+    table = read(HEAD + "| X | " + act._cell("a\u202eb\u200bc\U000e0041d \U0001f468\u200d\U0001f469 \u2764\ufe0f\u00a0e") + " | why |\n")
+    cell = table.rows[1][1]
+    assert cell[1] == ["code"] and cell[0] == cell[2]
+    assert cell[2] == "a\\u202eb\\u200bc\\U000e0041d \U0001f468\u200d\U0001f469 \u2764\ufe0f\u00a0e"
+
+
 # ── a run of backticks at the most the parser opens a span with ────────────────────────────────────
 
 @pytest.mark.parametrize("n", [1, 2, 3, 40, 78, 79, 80, 81, 100, 160])

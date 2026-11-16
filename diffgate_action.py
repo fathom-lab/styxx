@@ -250,26 +250,59 @@ def api(url: str, accept: str) -> str:
                            "could not read as an address, so it was not followed") from e
 
 
+# Characters that are written as escapes wherever this script prints a claim, a reason or the text of
+# a failed fetch, beside the control characters. By the Unicode standard's account they have no glyph
+# of their own, and some change the order the text round them is shown in, so a reader of the summary
+# or of an annotation may not see what the text holds. The list is the standard's default ignorable
+# code points (Unicode 15.0) and the three interlinear annotation characters, without the ones the
+# standard gives the drawing of a neighbour to: the two joiners (U+200C, U+200D) and the variation
+# selectors (U+180B to U+180D, U+180F, U+FE00 to U+FE0F, U+E0100 to U+E01EF). It is written out here
+# and not asked of ``unicodedata``, whose answer moves with the Python that runs the script.
+_UNSEEN = frozenset(chr(c) for low, high in (
+    (0x00AD, 0x00AD),        # soft hyphen
+    (0x034F, 0x034F),        # combining grapheme joiner
+    (0x061C, 0x061C),        # Arabic letter mark
+    (0x115F, 0x1160),        # Hangul fillers
+    (0x17B4, 0x17B5),        # Khmer inherent vowels
+    (0x180E, 0x180E),        # Mongolian vowel separator
+    (0x200B, 0x200B),        # zero width space
+    (0x200E, 0x200F),        # left-to-right and right-to-left marks
+    (0x202A, 0x202E),        # directional embeddings and overrides, and the pop that ends them
+    (0x2060, 0x206F),        # word joiner, invisible operators, directional isolates, deprecated format characters, U+2065
+    (0x3164, 0x3164),        # Hangul filler
+    (0xFEFF, 0xFEFF),        # zero width no-break space (a byte order mark)
+    (0xFFA0, 0xFFA0),        # halfwidth Hangul filler
+    (0xFFF0, 0xFFFB),        # nine code points not assigned, and interlinear annotation
+    (0x1BCA0, 0x1BCA3),      # shorthand format controls
+    (0x1D173, 0x1D17A),      # musical format controls
+    (0xE0000, 0xE00FF),      # the tag characters, and the code points round them that are not assigned
+    (0xE01F0, 0xE0FFF),      # the rest of that plane's default ignorable code points, none assigned
+) for c in range(low, high + 1))
+
+
 def _printable(text: str) -> str:
     """``text`` with every control character other than a tab, CR and LF written as an escape (ESC
-    as ``\\x1b``), and with them the two Unicode line separators (``\\u2028``) and a surrogate that
+    as ``\\x1b``), and with them the two Unicode line separators (``\\u2028``), a surrogate that
     stands alone (``\\udc80``), which cannot be written as UTF-8 and which some settings of stdout
-    write as a raw byte. A tab ends no line and is left. CR and LF are left for the place the text is
+    write as a raw byte, and the characters of ``_UNSEEN``: the ones that change the order text is
+    shown in (``\\u202e``) and the ones that show nothing (``\\u200b``, a tag character as
+    ``\\U000e0041``). A tab ends no line and is left. CR and LF are left for the place the text is
     printed, which deals with them in its own way."""
     def written(c: str) -> str:
         if c in "\t\r\n" or " " <= c < "\x7f" or ("\x9f" < c and c not in "\u2028\u2029"
-                                                and not "\ud800" <= c <= "\udfff"):
+                                                and not "\ud800" <= c <= "\udfff" and c not in _UNSEEN):
             return c
-        return f"\\x{ord(c):02x}" if c < "\u0100" else f"\\u{ord(c):04x}"
+        return f"\\x{ord(c):02x}" if c < "\u0100" else f"\\u{ord(c):04x}" if c < "\U00010000" else f"\\U{ord(c):08x}"
     return "".join(written(c) for c in text)
 
 
 def _failure_text(e) -> str:
     """What a failed fetch says of itself, fit to print. Control characters other than a tab, CR and
-    LF, the two line separators and a lone surrogate are written as escapes (``_printable``); then
-    the token's value is replaced wherever the text holds it (an HTTP reason
-    phrase can carry it back, and an escape can end in the character a token starts with, which is
-    why the escapes are written before the token is looked for); then it is cut at 1,000 characters."""
+    LF, the two line separators, a lone surrogate and the characters of ``_UNSEEN`` are written as
+    escapes (``_printable``); then the token's value is replaced wherever the text holds it (an HTTP
+    reason phrase can carry it back, and an escape can end in the character a token starts with,
+    which is why the escapes are written before the token is looked for); then it is cut at 1,000
+    characters, so an escape that falls on the cut is left in part."""
     return _hide(_printable(str(e)), os.environ.get("GH_TOKEN"))[:1000]
 
 
@@ -329,6 +362,19 @@ def _cell(text: str) -> str:
 # GitHub documents 1 MiB as the most a step's summary may hold; past it the summary is not shown. The
 # rows of the table are the one part whose size the pull request's author sets, so they stop here.
 _ROWS_BYTES = 512 * 1024
+
+
+# The most ``::warning`` commands the script prints for claims the gate could not check. A description
+# gives a claim for each place one of the gate's templates matches, so its author sets how many. An
+# ``::error`` command, which a contradicted claim has, and an uncheckable one under strict, is never
+# left out. The most claims the gate did not verify in any description this repository records is 9.
+_WARNINGS = 100
+
+
+def _by_weight(claims) -> list:
+    """``claims`` with the contradicted before the uncheckable and those before the rest, each kind
+    in the order it had: the order of a table that cannot hold every claim."""
+    return sorted(claims, key=lambda c: {"CONTRADICTED": 0, "UNCHECKABLE": 1}.get(c.verdict, 2))
 
 
 def _write_summary(lines) -> None:
@@ -476,7 +522,7 @@ def main() -> int:
         # The rows' bytes are the same in any order, so a table that stopped once stops again.
         rows, left = rows_that_fit(g.claims), []
         if len(rows) < len(g.claims):
-            ordered = sorted(g.claims, key=lambda c: {"CONTRADICTED": 0, "UNCHECKABLE": 1}.get(c.verdict, 2))
+            ordered = _by_weight(g.claims)
             rows = rows_that_fit(ordered)
             left = ordered[len(rows):]
         lines += rows
@@ -529,7 +575,12 @@ def main() -> int:
               "[styxx README](https://github.com/fathom-lab/styxx/blob/main/README.md)._"]
     _write_summary(lines)
 
+    # Each claim the gate did not verify has a command, in the order the claims were read, but that the
+    # warnings stop at _WARNINGS: an uncheckable claim past that many has none, and one command says how
+    # many there are. An error is never left out, so a contradicted claim always has its command, and
+    # under strict an uncheckable one has too.
     failing = False
+    warned = unwarned = 0
     for c in g.claims:
         if c.verdict == "CONTRADICTED":
             failing = True
@@ -538,8 +589,15 @@ def main() -> int:
             failing = True
             print(f"::error title=styxx diffgate - uncheckable under strict::{_message(c.text[:120])} - "
                   f"{_message(c.why)}")
-        elif c.verdict == "UNCHECKABLE":
+        elif c.verdict == "UNCHECKABLE" and warned < _WARNINGS:
+            warned += 1
             print(f"::warning title=styxx diffgate - uncheckable::{_message(c.text[:120])} - {_message(c.why)}")
+        elif c.verdict == "UNCHECKABLE":
+            unwarned += 1
+    if unwarned:
+        print(f"::warning title=styxx diffgate - more uncheckable claims than warnings::{unwarned} more claim(s) "
+              f"that the gate could not check have no warning here, where {_WARNINGS} is the most that are "
+              "printed. A contradicted claim always has its command. The verdict below counts every claim.")
     print(f"styxx diffgate: {g.verdict} - {len(g.claims)} claim(s), "
           f"{sum(1 for c in g.claims if c.verdict == 'CONTRADICTED')} contradicted")
     if failing and not soft:

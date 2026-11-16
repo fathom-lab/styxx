@@ -3,7 +3,8 @@
 
 `diffgate_action.py` prints each claim it read from the pull request's body (or from the head commit's
 message) into a row of the table in the step summary, and each claim it did not verify into a workflow
-command as well (`::error ...::<claim> - <reason>`). The claim's text is the author's, and the reason can
+command as well (`::error ...::<claim> - <reason>`; a warning for at most a hundred of the claims it
+could not check, from the last section of this file on). The claim's text is the author's, and the reason can
 quote it and paths of the diff. The script printed both as they stood. A carriage return in a claim was
 followed on stdout by whatever the author wrote next, where this file takes a runner to start a line. A
 `|` in a claim stood in the row as a bar, so the row had bars of the author's writing. A `<` stood in the
@@ -36,11 +37,13 @@ DIFF = ("diff --git a/styxx/x.py b/styxx/x.py\n--- a/styxx/x.py\n+++ b/styxx/x.p
         "+def test_a(): pass\n")
 FORGED = "::error title=styxx diffgate::PASS - every claim VERIFIED (forged)"
 # Every line the script itself starts on stdout in the runs below begins with one of these (its lines for
-# a soft-fail value it does not recognise and for a failed fetch are not reached here).
+# a soft-fail value it does not recognise is not reached here, and its line for a failed fetch only in
+# the test of that text, which does not use this list).
 OWN_LINES = ("::error title=styxx diffgate - contradicted claim::",
              "::error title=styxx diffgate - uncheckable under strict::",
              "::warning title=styxx diffgate - uncheckable::",
              "::warning title=styxx diffgate - UNMEASURED::",
+             "::warning title=styxx diffgate - more uncheckable claims than warnings::",
              "::warning::styxx diffgate found failures but soft-fail is on",
              "styxx diffgate: ")
 
@@ -205,8 +208,21 @@ def test_a_gate_that_did_not_measure_says_so_as_it_did(act, tmp_path, monkeypatc
 
 # ── the four functions by themselves ───────────────────────────────────────────────────────────────
 
+# The characters the Unicode standard gives no glyph, or the changing of the order text is shown in,
+# written out here by hand and not taken from the script: every code point `_printable` is to escape
+# beside the control characters, the two line separators and the surrogates.
+UNSEEN = [0x00AD, 0x034F, 0x061C, 0x115F, 0x1160, 0x17B4, 0x17B5, 0x180E, 0x200B, 0x200E, 0x200F,
+          0x202A, 0x202B, 0x202C, 0x202D, 0x202E, 0x3164, 0xFEFF, 0xFFA0, 0x1BCA0, 0x1BCA1, 0x1BCA2, 0x1BCA3] \
+    + list(range(0x2060, 0x2070)) + list(range(0xFFF0, 0xFFFC)) + list(range(0x1D173, 0x1D17B)) \
+    + list(range(0xE0000, 0xE0100)) + list(range(0xE01F0, 0xE1000))
+# Left as they are, by the same hand: the joiners and the variation selectors.
+LEFT = [0x200C, 0x200D, 0x180B, 0x180C, 0x180D, 0x180F] + list(range(0xFE00, 0xFE10)) + list(range(0xE0100, 0xE01F0))
+
+
 def test_printable_writes_control_characters_and_line_separators_as_escapes_and_leaves_the_rest(act):
-    kept = "a b\tc\r\nd \u00e9 \u4e2d \u00a0 \u200b ~ \U0001f600"
+    # kept: a no-break space, the two joiners (an emoji of three people is one glyph by them), a variation selector
+    kept = ("a b\tc\r\nd \u00e9 \u4e2d \u00a0 ~ \U0001f600 \U0001f468\u200d\U0001f469\u200d\U0001f467 "
+            "\u0645\u06cc\u200c\u062e \u2764\ufe0f a\U000e0100")
     assert act._printable(kept) == kept
     assert act._printable("\x00\x01\x08\x0b\x1b\x1f\x7f\x80\x85\x9f") == \
         "\\x00\\x01\\x08\\x0b\\x1b\\x1f\\x7f\\x80\\x85\\x9f"
@@ -214,7 +230,43 @@ def test_printable_writes_control_characters_and_line_separators_as_escapes_and_
     assert act._printable("a\ud800b\udc80c\udfffd") == "a\\ud800b\\udc80c\\udfffd"
     escaped = {c for c in map(chr, range(0x110000)) if act._printable(c) != c}
     assert escaped == ({chr(i) for i in range(0x20)} - {"\t", "\r", "\n"}) | {chr(i) for i in range(0x7f, 0xa0)} \
-        | {"\u2028", "\u2029"} | {chr(i) for i in range(0xd800, 0xe000)}
+        | {"\u2028", "\u2029"} | {chr(i) for i in range(0xd800, 0xe000)} | {chr(i) for i in UNSEEN}
+    assert len(UNSEEN) == 3915 and len(escaped) == 6027
+    assert len(LEFT) == 262 and not escaped & {chr(i) for i in LEFT}
+
+
+@pytest.mark.parametrize("text, written", [
+    ("Modified a.py \u202etxt.exe", "Modified a.py \\u202etxt.exe"),               # right-to-left override
+    ("a\u202ab\u202bc\u202cd\u202de", "a\\u202ab\\u202bc\\u202cd\\u202de"),        # embeddings, the pop, the other override
+    ("a\u2066b\u2067c\u2068d\u2069e", "a\\u2066b\\u2067c\\u2068d\\u2069e"),        # isolates and their pop
+    ("a\u200eb\u200fc\u061cd", "a\\u200eb\\u200fc\\u061cd"),                       # the three marks
+    ("src/a\u200bb.py", "src/a\\u200bb.py"),                                       # zero width space
+    ("\ufeff13 files", "\\ufeff13 files"),                                         # a byte order mark
+    ("co\u00adoperate", "co" + chr(92) + "xadoperate"),                            # soft hyphen, under U+0100
+    ("a\u2060b\u2061c\u2064d\u206ae\u206ff", "a\\u2060b\\u2061c\\u2064d\\u206ae\\u206ff"),
+    ("a\u115fb\u1160c\u3164d\uffa0e\u180ef", "a\\u115fb\\u1160c\\u3164d\\uffa0e\\u180ef"),   # fillers that show nothing
+    ("a\ufff9b\ufffac\ufffbd", "a\\ufff9b\\ufffac\\ufffbd"),
+    ("x\U000e0041\U000e0042\U000e007fy", "x\\U000e0041\\U000e0042\\U000e007fy"),             # tag characters: eight digits
+    ("x\U0001bca0y\U0001d173z\U000e0001", "x\\U0001bca0y\\U0001d173z\\U000e0001"),
+    ("a\u034fb\u17b4c\u17b5d", "a\\u034fb\\u17b4c\\u17b5d"),              # three marks the standard gives no glyph
+    ("a\ufff0b\ufff8c\U000e0080d\U000e01f0e\U000e0ffff", "a\\ufff0b\\ufff8c\\U000e0080d\\U000e01f0e\\U000e0ffff"),  # not assigned
+])
+def test_a_character_that_shows_nothing_or_reorders_text_is_written_as_an_escape(act, text, written):
+    """The expectation is written out here, character for character: a backslash, u and four digits, or
+    U and eight for a code point past U+FFFF, or x and two for one under U+0100."""
+    assert act._printable(text) == written
+    assert act._message(text) == written and act._line(text) == written
+    assert act._cell(text) == "`" + written + "`"
+
+
+def test_no_unseen_character_leaves_any_of_the_four_functions(act):
+    for code in UNSEEN:
+        c = chr(code)
+        for out in (act._printable(c), act._message("a" + c), act._line(c + "b"), act._cell("a" + c + "b")):
+            assert c not in out and chr(92) in out, (hex(code), out)
+        assert len(act._printable(c)) == (4 if code < 0x100 else 6 if code < 0x10000 else 10)
+    for code in LEFT:
+        assert act._printable(chr(code)) == chr(code) and act._cell("a" + chr(code) + "b") == "`a" + chr(code) + "b`"
 
 
 def test_message_is_printable_and_then_a_commands_data(act):
@@ -380,7 +432,10 @@ def test_the_table_stops_before_the_summary_passes_the_size_github_allows(act, t
             "Its rows are written with the CONTRADICTED before the UNCHECKABLE, and those before the VERIFIED, "
             "each kind in the order read, which may not be the order the claims were read. "
             "The verdict above counts every claim._") in summary
-    assert out.count("::warning title=styxx diffgate - uncheckable::") == total      # every claim has its command
+    # a warning for each claim up to the script's most, and one command for the rest
+    assert out.count("::warning title=styxx diffgate - uncheckable::") == act._WARNINGS == 100
+    assert (f"::warning title=styxx diffgate - more uncheckable claims than warnings::{total - 100} more claim(s) "
+            "that the gate could not check have no warning here, where 100 is the most that are printed. ") in out
 
 
 def test_a_table_within_the_budget_has_every_claim_and_no_such_line(act, tmp_path, monkeypatch, capsys):
@@ -391,7 +446,9 @@ def test_a_table_within_the_budget_has_every_claim_and_no_such_line(act, tmp_pat
 def test_a_table_past_its_budget_has_its_contradicted_rows_before_the_others(act, tmp_path, monkeypatch, capsys):
     """3,000 claims the gate cannot check and then one it contradicts. In the order read, the rows stop
     before the contradicted one; it is the row a reader most needs, so where the rows do not all fit
-    it is written ahead of the others. The commands on stdout keep the order the claims were read."""
+    it is written ahead of the others. The commands on stdout keep the order the claims were read: a
+    hundred warnings, which is the most, and then the contradicted claim's error, which is never left
+    out."""
     _, out, summary = gate(act, tmp_path, monkeypatch, capsys, "fix a|c.c " * 3000 + "\n9 files changed.")
     table = rows(summary)
     assert 0 < len(table) < 3001
@@ -399,8 +456,9 @@ def test_a_table_past_its_budget_has_its_contradicted_rows_before_the_others(act
     assert all(row.startswith("| ❓ UNCHECKABLE | ") for row in table[1:])
     assert sum(len(r.encode("utf-8")) + 1 for r in table) <= act._ROWS_BYTES
     assert f": 0 CONTRADICTED, {3001 - len(table)} UNCHECKABLE, 0 VERIFIED. Its rows are written with" in summary
-    assert out.rindex("::warning title=styxx diffgate - uncheckable::") \
-        < out.index("::error title=styxx diffgate - contradicted claim::9 files changed.")
+    assert lines(out)[100].startswith("::error title=styxx diffgate - contradicted claim::9 files changed. - ")
+    assert all(ln.startswith("::warning title=styxx diffgate - uncheckable::") for ln in lines(out)[:100])
+    assert lines(out)[101].startswith("::warning title=styxx diffgate - more uncheckable claims than warnings::2900 ")
 
 
 def test_a_table_within_the_budget_keeps_the_order_the_claims_were_read(act, tmp_path, monkeypatch, capsys):
@@ -526,7 +584,8 @@ def test_a_table_past_its_budget_of_three_verdicts_read_in_turn(act, tmp_path, m
             f"under the size GitHub allows a step's summary: {count['CONTRADICTED']} CONTRADICTED, "
             f"{count['UNCHECKABLE']} UNCHECKABLE, {count['VERIFIED']} VERIFIED. Its rows are written with") in summary
     assert f"**FAIL** · {len(claims)} claim(s) checked" in summary
-    assert out.count("::error title=styxx diffgate - contradicted claim::") == contradicted   # stdout: every claim
+    assert out.count("::error title=styxx diffgate - contradicted claim::") == contradicted    # each has its error
+    assert f"**FAIL** · {len(claims)} claim(s) checked" in summary and f"FAIL - {len(claims)} claim(s), " in out
 
 
 def claims_of_exactly(total):
@@ -557,3 +616,227 @@ def test_a_table_one_byte_past_its_budget_leaves_one_claim_out_and_says_so(act, 
     assert table == [row_bytes(claims[-1])[0]] + [row_bytes(c)[0] for c in claims[:-2]]
     assert "\n\n_1 more claim(s) are not in this table" in summary
     assert ": 0 CONTRADICTED, 1 UNCHECKABLE, 0 VERIFIED. Its rows are written with" in summary
+
+
+# ── characters that show nothing, or change the order text is shown in ─────────────────────────────
+
+def holds_no_unseen(text):
+    return not any(chr(code) in text for code in UNSEEN)
+
+
+@pytest.mark.parametrize("strict, soft, opens", [
+    ("false", None, "::warning title=styxx diffgate - uncheckable::"),
+    ("true", "false", "::error title=styxx diffgate - uncheckable under strict::"),
+])
+def test_an_override_a_tag_character_and_a_zero_width_space_in_a_claim_are_escapes_in_all_that_is_printed(
+        act, tmp_path, monkeypatch, capsys, strict, soft, opens):
+    """By the Unicode standard's account a right-to-left override has what follows it shown in the
+    other order, and a tag character and a zero width space have no glyph, so two different paths can
+    look the same; no reader was run for this. Each stood in the command and in the row as it came."""
+    text = "Modified src/not\u200bhere.py \u202eDEIFIREV\u202c \U000e0049\U000e0047\U000e004e."
+    _, out, summary = gate(act, tmp_path, monkeypatch, capsys, text, strict=strict, soft=soft)
+    assert holds_no_unseen(out) and holds_no_unseen(summary)
+    shown = "Modified src/not\\u200bhere.py \\u202eDEIFIREV\\u202c \\U000e0049\\U000e0047\\U000e004e."
+    line = [ln for ln in lines(out) if ln.startswith(opens)]
+    assert len(line) == 1 and line[0].startswith(opens + shown + " - ")
+    row = rows(summary)[0]
+    assert row.split(" | ")[1] == "`" + shown + "`"               # the claim is 40 characters: whole in its cell
+    assert bars(row) == 4
+
+
+def test_a_claim_is_cut_before_an_unseen_character_is_written_out(act, tmp_path, monkeypatch, capsys):
+    """80 characters of the claim for its cell, each override among them written as six: no escape is
+    cut in two, and the cell is longer than 80 by five for each."""
+    text = "Modified src/nothere.py " + "\u202e" * 80
+    _, _, summary = gate(act, tmp_path, monkeypatch, capsys, text)
+    assert rows(summary)[0].split(" | ")[1] == "`Modified src/nothere.py " + "\\u202e" * 56 + "`"
+
+
+def test_an_unseen_character_in_a_path_of_the_diff_is_an_escape_in_the_reason(act, tmp_path, monkeypatch, capsys):
+    """The gate's reason quotes the path through `repr`, which writes these two characters as escapes
+    whatever this script does: this holds that the row carries them so, and passes on the script as it
+    was. The claim is verified, so no command is printed."""
+    path = "dev/a\u200bb\u202ec/x.py"
+    _, out, summary = gate(act, tmp_path, monkeypatch, capsys, "Modified x.py.", diff=diff_of(path), strict="true",
+                           soft="false")
+    assert holds_no_unseen(out) and holds_no_unseen(summary)
+    assert "dev/a\\u200bb\\u202ec/x.py" in rows(summary)[0]
+
+
+def test_an_unseen_character_in_the_text_of_a_failed_fetch_is_an_escape(act, tmp_path, monkeypatch, capsys):
+    """What a server sent can stand in the text of a failed fetch."""
+    def refused(url, accept):
+        raise RuntimeError("HTTP Error 502: Bad\u202eyawetaG\u200b\U000e0041")
+    ev, summary = tmp_path / "event.json", tmp_path / "summary.md"
+    ev.write_text(json.dumps({"pull_request": {"number": 7, "body": "Modified x.py.", "url": "https://api.github.test/pr/7"}}),
+                  encoding="utf-8")
+    for name, value in {"GITHUB_EVENT_PATH": str(ev), "GITHUB_EVENT_NAME": "pull_request", "GH_TOKEN": "x",
+                        "GITHUB_STEP_SUMMARY": str(summary), "STYXX_STRICT": "false"}.items():
+        monkeypatch.setenv(name, value)
+    monkeypatch.delenv("STYXX_SOFT_FAIL", raising=False)
+    monkeypatch.setattr(act, "api", refused)
+    assert act.main() == 0
+    out, written = capsys.readouterr().out, summary.read_text(encoding="utf-8")
+    assert holds_no_unseen(out) and holds_no_unseen(written)
+    assert "HTTP Error 502: Bad\\u202eyawetaG\\u200b\\U000e0041" in out
+    assert "HTTP Error 502: Bad\\u202eyawetaG\\u200b\\U000e0041" in written
+
+
+def test_the_joiners_a_variation_selector_and_a_no_break_space_in_a_claim_are_left(act, tmp_path, monkeypatch, capsys):
+    """Left as they are: the characters beside them are drawn by them. An emoji of three people is one
+    glyph by its two joiners, and a heart is red by its selector."""
+    text = "Modified src/nothere.py \U0001f468\u200d\U0001f469\u200d\U0001f467 \u2764\ufe0f for\u00a0now."
+    _, out, summary = gate(act, tmp_path, monkeypatch, capsys, text)
+    assert text + " - " in out and "`" + text + "`" in rows(summary)[0]
+
+
+# ── more uncheckable claims than the script prints warnings for ────────────────────────────────────
+
+def command(c, strict=False):
+    """The command main() is to print for a claim of plain ASCII text that the gate did not verify."""
+    if c.verdict == "CONTRADICTED":
+        return f"::error title=styxx diffgate - contradicted claim::{c.text} - {c.why}"
+    if strict:
+        return f"::error title=styxx diffgate - uncheckable under strict::{c.text} - {c.why}"
+    return f"::warning title=styxx diffgate - uncheckable::{c.text} - {c.why}"
+
+
+def run_claims(act, tmp_path, monkeypatch, capsys, claims, **how):
+    result = types.SimpleNamespace(measured=True, why_unmeasured="", verdict="FAIL", claims=claims)
+    monkeypatch.setattr(act, "gate_diff_text", lambda *a, **k: result)
+    rc, out, _ = gate(act, tmp_path, monkeypatch, capsys, "anything", **how)
+    return rc, lines(out)
+
+
+def read_in_turn(contradicted, uncheckable, verified):
+    """Claims of the three verdicts, read with the verified ahead and the contradicted behind."""
+    kinds, claims = {"VERIFIED": verified, "UNCHECKABLE": uncheckable, "CONTRADICTED": contradicted}, []
+    for i in range(max(kinds.values())):
+        claims += [claim(v, f"{v[0]}{i:04d} text", f"reason {i}") for v in kinds if i < kinds[v]]
+    return claims
+
+
+def as_stdout_is_to_be(claims, strict=False):
+    """The lines for claims that main() is to print: each unverified claim's command in the order read,
+    but that an uncheckable claim past the hundredth warning has none, and then, if any has none, the
+    command that counts them. Under strict an uncheckable claim's command is an error and none is left
+    out. Written without the script's code."""
+    out, warned, left = [], 0, 0
+    for c in claims:
+        if c.verdict == "VERIFIED":
+            continue
+        if c.verdict == "UNCHECKABLE" and not strict:
+            if warned == 100:
+                left += 1
+                continue
+            warned += 1
+        out.append(command(c, strict))
+    if left:
+        out.append(f"::warning title=styxx diffgate - more uncheckable claims than warnings::{left} more claim(s) that "
+                   "the gate could not check have no warning here, where 100 is the most that are printed. A "
+                   "contradicted claim always has its command. The verdict below counts every claim.")
+    return out
+
+
+@pytest.mark.parametrize("contradicted, uncheckable, verified, strict, counted", [
+    (30, 100, 40, False, None),      # exactly as many uncheckable claims as warnings: each has one, no other command
+    (30, 101, 40, False, 1),         # one more: it has no warning, and one command says so
+    (250, 300, 500, False, 200),     # every contradicted claim has its error, read before or after the hundredth warning
+    (0, 101, 0, False, 1),
+    (250, 0, 10, False, None),       # 250 errors and no warning: none is left out
+    (30, 300, 40, True, None),       # under strict an uncheckable claim's command is an error: none is left out
+])
+def test_warnings_stop_at_a_hundred_and_no_error_is_left_out(act, tmp_path, monkeypatch, capsys, contradicted,
+                                                            uncheckable, verified, strict, counted):
+    claims = read_in_turn(contradicted, uncheckable, verified)
+    rc, got = run_claims(act, tmp_path, monkeypatch, capsys, claims, strict=str(strict).lower(), soft="false")
+    assert got == as_stdout_is_to_be(claims, strict) \
+        + [f"styxx diffgate: FAIL - {len(claims)} claim(s), {contradicted} contradicted"]
+    assert sum(ln.startswith("::error title=styxx diffgate - contradicted claim::") for ln in got) == contradicted
+    assert sum(ln.startswith("::error title=styxx diffgate - uncheckable under strict::") for ln in got) \
+        == (uncheckable if strict else 0)
+    assert sum(ln.startswith("::warning title=styxx diffgate - uncheckable::") for ln in got) \
+        == (0 if strict else min(uncheckable, 100))
+    counting = [ln for ln in got if ln.startswith("::warning title=styxx diffgate - more uncheckable claims than")]
+    assert [ln.split("::")[2].split(" ")[0] for ln in counting] == ([str(counted)] if counted else [])
+    assert rc == (1 if contradicted or strict else 0)
+
+
+def test_the_command_that_counts_the_claims_without_a_warning_word_for_word(act, tmp_path, monkeypatch, capsys):
+    """101 uncheckable claims and then a contradicted one. The 101st has no warning; the contradicted
+    claim, read after it, has its error; and the counting command comes after every claim's command."""
+    claims = [claim("UNCHECKABLE", f"U{i:04d} text", f"reason {i}") for i in range(101)] \
+        + [claim("CONTRADICTED", "C0000 text", "reason c")]
+    rc, got = run_claims(act, tmp_path, monkeypatch, capsys, claims, soft="false")
+    assert got[:100] == [command(c) for c in claims[:100]]
+    assert got[100] == "::error title=styxx diffgate - contradicted claim::C0000 text - reason c"
+    assert got[101] == ("::warning title=styxx diffgate - more uncheckable claims than warnings::1 more claim(s) that "
+                        "the gate could not check have no warning here, where 100 is the most that are printed. A "
+                        "contradicted claim always has its command. The verdict below counts every claim.")
+    assert got[102:] == ["styxx diffgate: FAIL - 102 claim(s), 1 contradicted"] and rc == 1
+
+
+def test_a_contradicted_claim_read_after_a_hundred_others_has_its_command(act, tmp_path, monkeypatch, capsys):
+    """The real gate. A hundred contradicted claims and then one more, about a path: with a bound on
+    every command the last one had none. Each of the 101 has its error."""
+    two = ("diff --git a/src/secrets.py b/src/secrets.py\n--- a/src/secrets.py\n+++ b/src/secrets.py\n@@ -1 +1,2 @@\n"
+           " y = 0\n+x = 1\ndiff --git a/docs/a.md b/docs/a.md\n--- a/docs/a.md\n+++ b/docs/a.md\n@@ -1 +1,2 @@\n y\n+x\n")
+    for body in ("9 files changed. " * 100 + "Only touches docs/.", "All tests pass. " * 100 + "9 files changed. Only touches docs/."):
+        _, out, _ = gate(act, tmp_path, monkeypatch, capsys, body, diff=two, soft="false")
+        named = [ln for ln in lines(out) if ln.startswith("::error title=styxx diffgate - contradicted claim::")]
+        assert named[-1].startswith("::error title=styxx diffgate - contradicted claim::Only touches docs/. - "
+                                    "paths outside 'docs': ['src/secrets.py']")
+        assert len(named) == (101 if body.startswith("9") else 2)
+
+
+def test_a_job_fails_on_every_claim_whether_or_not_it_has_a_warning(act, tmp_path, monkeypatch, capsys):
+    """Whether the job fails is counted over every claim, and so is the soft-fail line."""
+    claims = [claim("UNCHECKABLE", f"U{i:04d} text", "r") for i in range(250)]
+    assert run_claims(act, tmp_path, monkeypatch, capsys, claims, strict="false", soft="false")[0] == 0
+    assert run_claims(act, tmp_path, monkeypatch, capsys, claims, strict="true", soft="false")[0] == 1
+    rc, got = run_claims(act, tmp_path, monkeypatch, capsys, claims + [claim("CONTRADICTED", "C text", "r")])
+    assert rc == 0 and got[-1].startswith("::warning::styxx diffgate found failures but soft-fail is on")
+    assert got[-2] == "styxx diffgate: FAIL - 251 claim(s), 1 contradicted"
+
+
+def test_a_filler_in_a_claimed_path_is_an_escape_in_the_reason_too(act, tmp_path, monkeypatch, capsys):
+    """`repr`, through which a reason quotes a path, leaves the four fillers as they are (they are
+    letters to it), so for these the reason carried the character too, in the command and in the row."""
+    text = "Modified src/not\u3164here.py. Modified lib/a\u115f\u1160\uffa0b.py."
+    for strict, soft, opens in (("false", None, "::warning title=styxx diffgate - uncheckable::"),
+                                ("true", "false", "::error title=styxx diffgate - uncheckable under strict::")):
+        _, out, summary = gate(act, tmp_path, monkeypatch, capsys, text, strict=strict, soft=soft)
+        assert holds_no_unseen(out) and holds_no_unseen(summary)
+        named = [ln for ln in lines(out) if ln.startswith(opens)]
+        assert len(named) == 2
+        assert " - 'src/not\\u3164here.py' does not appear in the diff" in named[0]
+        assert " - 'lib/a\\u115f\\u1160\\uffa0b.py' does not appear in the diff" in named[1]
+        assert "| `'src/not\\u3164here.py' does not appear in the diff" in rows(summary)[0]
+
+
+@pytest.mark.parametrize("verdict, strict, opens", [
+    ("CONTRADICTED", "false", "::error title=styxx diffgate - contradicted claim::"),
+    ("UNCHECKABLE", "true", "::error title=styxx diffgate - uncheckable under strict::"),
+    ("UNCHECKABLE", "false", "::warning title=styxx diffgate - uncheckable::"),
+])
+def test_a_claim_is_cut_at_120_characters_before_its_escapes_are_written_in_each_command(
+        act, tmp_path, monkeypatch, capsys, verdict, strict, opens):
+    """The gate replaced by one claim of 118 letters and then ten overrides: the command holds 120
+    characters of it, the two overrides among them written out whole, and no part of a third."""
+    one = types.SimpleNamespace(verdict=verdict, kind="file_touched", text="t" * 118 + "\u202e" * 10, why="why")
+    result = types.SimpleNamespace(measured=True, why_unmeasured="", verdict="FAIL", claims=[one])
+    monkeypatch.setattr(act, "gate_diff_text", lambda *a, **k: result)
+    _, out, _ = gate(act, tmp_path, monkeypatch, capsys, "anything", strict=strict, soft="false")
+    assert lines(out)[0] == opens + "t" * 118 + "\\u202e\\u202e - why"
+
+
+def test_a_reason_is_cut_at_100_characters_before_its_escapes_are_written_in_its_cell(act, tmp_path, monkeypatch,
+                                                                                    capsys):
+    """A reason of 98 letters and then ten fillers: the cell holds 100 characters of it, the two fillers
+    among them written out whole; the command holds the reason whole."""
+    one = types.SimpleNamespace(verdict="UNCHECKABLE", kind="file_touched", text="claim", why="r" * 98 + "\u3164" * 10)
+    result = types.SimpleNamespace(measured=True, why_unmeasured="", verdict="PASS", claims=[one])
+    monkeypatch.setattr(act, "gate_diff_text", lambda *a, **k: result)
+    _, out, summary = gate(act, tmp_path, monkeypatch, capsys, "anything")
+    assert rows(summary) == ["| ❓ UNCHECKABLE | `claim` | `" + "r" * 98 + "\\u3164\\u3164` |"]
+    assert lines(out)[0] == "::warning title=styxx diffgate - uncheckable::claim - " + "r" * 98 + "\\u3164" * 10
