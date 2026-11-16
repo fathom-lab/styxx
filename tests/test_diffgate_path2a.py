@@ -2010,7 +2010,9 @@ def test_the_action_shows_an_overlay_reason_whole(tmp_path, monkeypatch):
     monkeypatch.setattr(mod, "api", lambda url, accept: c["diff"])
     assert mod.main() == 0
     table = (tmp_path / "sum.md").read_text(encoding="utf-8")
-    assert "withheld by PATH-2a (#97)" in table and "main's reading: diff status 'A' for 'readme.md' |" in table
+    # each variable cell of the table is a code span (CHANGELOG, "a claim is shown in its cell as the characters
+    # it is"), so a cell's text stands between backticks: one on each side for the texts read here, which hold none
+    assert "withheld by PATH-2a (#97)" in table and "main's reading: diff status 'A' for 'readme.md'` |" in table
     # A-2 (NOTE_path2a_third_pass_2026_09_30): a reason that only contains the overlay's words -- a DECLARE-1
     # MALFORMED value a PR author writes -- is cut at 100 characters, as main cuts it.
     body = "```styxx\nfiles_changed: 3 withheld by PATH-2a (" + "A" * 300 + "\n```"
@@ -2022,7 +2024,7 @@ def test_the_action_shows_an_overlay_reason_whole(tmp_path, monkeypatch):
     assert mod.main() == 0
     table = (tmp_path / "sum.md").read_text(encoding="utf-8")
     row = next(line for line in table.splitlines() if "MALFORMED" in line)
-    why = row[:-2].rsplit(" | ", 1)[1]
+    why = row[:-2].rsplit(" | ", 1)[1].strip("`")
     assert why.startswith("MALFORMED") and len(why) == 100, row
     assert mod._OVERLAY_KINDS == {kind for kind, _v in N._P2A_REACH}
     # Pass 4 (NOTE_path2a_fourth_pass_2026_09_30, the integration lens): each of the three conditions is needed. A
@@ -2041,8 +2043,8 @@ def test_the_action_shows_an_overlay_reason_whole(tmp_path, monkeypatch):
     (tmp_path / "sum.md").write_text("", encoding="utf-8")
     mod.main()
     table = (tmp_path / "sum.md").read_text(encoding="utf-8")
-    shown = {line.split(" | ")[1]: line[:-2].rsplit(" | ", 1)[1] for line in table.splitlines()
-             if line.startswith("| ") and " | " in line and line.split(" | ")[1] in ("mid", "decided", "ours")}
+    shown = {line.split(" | ")[1].strip("`"): line[:-2].rsplit(" | ", 1)[1].strip("`") for line in table.splitlines()
+             if line.startswith("| ") and " | " in line and line.split(" | ")[1].strip("`") in ("mid", "decided", "ours")}
     assert len(shown["mid"]) == 100 and len(shown["decided"]) == 100, shown
     assert shown["ours"] == rows[2][1].why
     # I-3 (NOTE_path2a_sixth_pass_2026_09_30): an overlay reason with main's reading after its words shows the words
@@ -2056,8 +2058,8 @@ def test_the_action_shows_an_overlay_reason_whole(tmp_path, monkeypatch):
     (tmp_path / "sum.md").write_text("", encoding="utf-8")
     mod.main()
     table = (tmp_path / "sum.md").read_text(encoding="utf-8")
-    row = next(line for line in table.splitlines() if line.startswith("| ") and " | long | " in line)
-    shown_why = row[:-2].rsplit(" | ", 1)[1]
+    row = next(line for line in table.splitlines() if line.startswith("| ") and " | `long` | " in line)
+    shown_why = row[:-2].rsplit(" | ", 1)[1].strip("`")
     head = "VERIFIED withheld by PATH-2a (#97): " + PHRASES["dir"] + ". main's reading: "
     assert shown_why == head + f"diff status 'M' for '{long_path}'"[:100], shown_why
     # I-3 (NOTE_path2a_fifth_pass_2026_09_30): the kind condition. A claim of a kind the overlay never moves, whose
@@ -2068,8 +2070,8 @@ def test_the_action_shows_an_overlay_reason_whole(tmp_path, monkeypatch):
     (tmp_path / "sum.md").write_text("", encoding="utf-8")
     mod.main()
     table = (tmp_path / "sum.md").read_text(encoding="utf-8")
-    row = next(line for line in table.splitlines() if line.startswith("| ") and " | other | " in line)
-    assert len(row[:-2].rsplit(" | ", 1)[1]) == 100, row
+    row = next(line for line in table.splitlines() if line.startswith("| ") and " | `other` | " in line)
+    assert len(row[:-2].rsplit(" | ", 1)[1].strip("`")) == 100, row
 
 
 def test_the_port_differential_reads_mains_corpora_only():
