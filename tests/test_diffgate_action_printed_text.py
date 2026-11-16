@@ -840,3 +840,18 @@ def test_a_reason_is_cut_at_100_characters_before_its_escapes_are_written_in_its
     _, out, summary = gate(act, tmp_path, monkeypatch, capsys, "anything")
     assert rows(summary) == ["| ❓ UNCHECKABLE | `claim` | `" + "r" * 98 + "\\u3164\\u3164` |"]
     assert lines(out)[0] == "::warning title=styxx diffgate - uncheckable::claim - " + "r" * 98 + "\\u3164" * 10
+
+
+# -- the bytes of the step summary ---------------------------------------------------------------------
+
+def test_the_summary_is_written_in_utf_8_with_lf_alone_and_appended_on_every_system(act, tmp_path, monkeypatch):
+    """`_write_summary` appends its lines to the file GITHUB_STEP_SUMMARY names in UTF-8, each ended by
+    LF and by no carriage return, on every system: text mode on Windows would end each in CR LF. What
+    the file held before is kept."""
+    path = tmp_path / "summary.md"
+    path.write_bytes(b"before\n")
+    monkeypatch.setenv("GITHUB_STEP_SUMMARY", str(path))
+    act._write_summary(["## a — b", "", "| ✅ VERIFIED | `x` | `y` |"])
+    written = path.read_bytes()
+    assert b"\r" not in written
+    assert written == b"before\n" + "## a — b\n\n| ✅ VERIFIED | `x` | `y` |\n".encode("utf-8")
