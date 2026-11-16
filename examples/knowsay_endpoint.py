@@ -26,6 +26,10 @@ What the numbers mean (and do not mean):
 
 The protocol constants are imported from `styxx.knowsay` -- byte-identical to every
 receipt in the published arc, so your number is comparable to the published ladder.
+
+The key is sent to the address --base-url names and to no other: the script follows no
+redirect. An endpoint that answers 301, 302, 303, 307 or 308 ends the run at once with a
+message that names the status code; point --base-url at the address the endpoint wants.
 """
 from __future__ import annotations
 
@@ -49,19 +53,52 @@ def mentions(gold: str, text: str) -> bool:
     return bool(g) and re.search(rf"(?<!\w){re.escape(g)}(?!\w)", t) is not None
 
 
+class RedirectRefused(RuntimeError):
+    """The endpoint answered with a redirect, which this script does not follow."""
+
+
+class _NoRedirect(urllib.request.HTTPRedirectHandler):
+    """Follows no redirect. urllib's own handler re-sends a request to the address a 301, 302 or
+    303 names, with its ordinary headers; this one ends the request instead, for 307 and 308 too
+    (before Python 3.11 urllib has no handler for 308, so it is named here for every version)."""
+
+    def _refuse(self, req, fp, code, msg, headers):
+        fp.close()
+        raise RedirectRefused(f"the endpoint answered {code}, a redirect, and this script follows "
+                              "no redirect, so the run stopped")
+
+    http_error_301 = http_error_302 = http_error_303 = _refuse
+    http_error_307 = http_error_308 = _refuse
+
+
+_OPENER = None
+
+
+def _opener():
+    """The script's own opener (one installed with urllib.request.install_opener is not used)."""
+    global _OPENER
+    if _OPENER is None:
+        _OPENER = urllib.request.build_opener(_NoRedirect)
+    return _OPENER
+
+
 def chat(base_url, model, key, messages, max_tokens=32, retries=5):
     body = {"model": model, "messages": messages, "temperature": 0.0,
             "max_tokens": max_tokens}
     req = urllib.request.Request(
         f"{base_url.rstrip('/')}/chat/completions",
         data=json.dumps(body).encode("utf-8"),
-        headers={"Content-Type": "application/json", "Authorization": f"Bearer {key}"})
+        headers={"Content-Type": "application/json"})
+    # an unredirected header: urllib never copies it to a redirected request
+    req.add_unredirected_header("Authorization", f"Bearer {key}")
     delay = 2.0
     for attempt in range(retries):
         try:
-            with urllib.request.urlopen(req, timeout=60) as r:
+            with _opener().open(req, timeout=60) as r:
                 resp = json.loads(r.read())
             return resp["choices"][0]["message"]["content"].strip()
+        except RedirectRefused:
+            raise
         except Exception:
             if attempt == retries - 1:
                 raise
@@ -128,4 +165,7 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except RedirectRefused as e:
+        sys.exit(str(e))
