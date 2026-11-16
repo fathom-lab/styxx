@@ -57,7 +57,7 @@ def token() -> str | None:
     t = (os.environ.get("GH_TOKEN") or "").strip()
     if not t:
         return None
-    if any(c <= " " or c >= "" for c in t):
+    if any(c <= " " or c >= "\x7f" for c in t):
         raise RuntimeError("GH_TOKEN holds a space, a control character or a character past ASCII "
                            "inside it, so it was not sent")
     return t
