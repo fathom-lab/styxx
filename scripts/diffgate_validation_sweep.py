@@ -50,8 +50,17 @@ MARKER = "Generated with [Claude Code]"
 
 
 def token() -> str | None:
-    """GH_TOKEN, or None (the API is then asked without a token)."""
-    return os.environ.get("GH_TOKEN")
+    """GH_TOKEN with the white space around it removed, or None when that leaves nothing (the API is then
+    asked without a token). A value that still holds a space, a control character or a character past
+    ASCII is refused with a RuntimeError that does not quote it: http.client would refuse it as a header
+    value and quote the whole header, token and all, in its own error."""
+    t = (os.environ.get("GH_TOKEN") or "").strip()
+    if not t:
+        return None
+    if any(c <= " " or c >= "" for c in t):
+        raise RuntimeError("GH_TOKEN holds a space, a control character or a character past ASCII "
+                           "inside it, so it was not sent")
+    return t
 
 
 # The one origin the token is sent to. A test points it at a server on 127.0.0.1.
@@ -83,18 +92,24 @@ def _same_origin(url: str) -> bool:
     return here is not None and here == _origin(_API_BASE)
 
 
+class _OffOrigin(RuntimeError):
+    """A redirect off the API's origin, which was not followed."""
+
+
 class _ApiRedirect(urllib.request.HTTPRedirectHandler):
     """Follows a redirect only within the API's origin and puts the token back there. The token
     travels as an unredirected header, which urllib's own redirect handling never copies to a
     redirected request; this is the one place it is copied. A redirect anywhere else is not followed
-    (urllib raises it as an HTTPError). 308 is followed on every Python, as a 307: urllib's handler
-    follows it only from Python 3.11."""
+    and is raised as _OffOrigin. 308 is followed on every Python, as a 307: urllib's handler follows
+    it only from Python 3.11."""
 
     http_error_308 = urllib.request.HTTPRedirectHandler.http_error_302
 
     def redirect_request(self, req, fp, code, msg, headers, newurl):
         if not _same_origin(newurl):
-            return None
+            fp.close()
+            raise _OffOrigin(f"the API answered {code} with a redirect off {_API_BASE}, which was "
+                             "not followed")
         new = super().redirect_request(req, fp, 307 if code == 308 else code, msg, headers, newurl)
         auth = req.unredirected_hdrs.get("Authorization")
         if new is not None and auth is not None:
@@ -128,8 +143,15 @@ def api(url: str, accept: str = "application/vnd.github+json"):
     except urllib.error.HTTPError as e:
         if e.code not in _REDIRECT_CODES:
             raise
-        raise RuntimeError(f"the API answered {e.code} with a redirect off {_API_BASE}, which was "
-                           "not followed") from None
+        # A redirect off the origin is _OffOrigin, raised above; one that reaches here stayed on it.
+        raise RuntimeError(f"the API answered {e.code} and the redirect was not followed: a loop, "
+                           "too many redirects or no Location") from None
+    except ValueError as e:
+        # http.client quotes a refused header whole, token included, and urllib raises ValueError for
+        # a Location it cannot parse: name the kind of error, never its text.
+        raise RuntimeError(f"the request to {url[:200]!r} could not be made, or a redirect it was "
+                           f"answered with could not be read ({type(e).__name__}; its text is not "
+                           "shown, since it can quote a header)") from None
     return raw if accept.endswith("diff") else json.loads(raw)
 
 

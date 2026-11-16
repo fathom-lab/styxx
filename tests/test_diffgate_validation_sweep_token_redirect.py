@@ -24,6 +24,7 @@ import json
 import socket
 import sys
 import threading
+import traceback
 import urllib.parse
 import urllib.request
 from pathlib import Path
@@ -54,7 +55,7 @@ class OffLoopback(OSError):
 
 class Server:
     """A real HTTP server on 127.0.0.1. `routes` maps a path (query included) to (code, Location) to
-    answer with a redirect, or to (200, a JSON-able value) to answer with it; any other path is answered
+    answer with a redirect (with no Location header when it is None), or to (200, a JSON-able value) to answer with it; any other path is answered
     with the diff when the diff is asked for and with {"ok": true} otherwise. Every request is recorded
     as (path, {header: value})."""
 
@@ -69,7 +70,8 @@ class Server:
                 code, value = outer.routes.get(self.path, (200, None))
                 if code != 200:
                     self.send_response(code)
-                    self.send_header("Location", value)
+                    if value is not None:
+                        self.send_header("Location", value)
                     self.send_header("Content-Length", "0")
                     self.end_headers()
                     return
@@ -140,15 +142,17 @@ def servers(monkeypatch):
         elsewhere.close()
 
 
-def load_sweep(monkeypatch, base, tok=TOKEN):
+def load_sweep(monkeypatch, base, tok=TOKEN, keep_token_source=False):
     """The script loaded from its file (scripts/ is not a package), its API pointed at `base` and its
-    token replaced, so the real token source is never read."""
+    token replaced, so the real token source is never read. With `keep_token_source` the script's own
+    `token` stays and the test sets GH_TOKEN itself; every such test has gh_token in its name."""
     name = "diffgate_validation_sweep_under_test"
     spec = importlib.util.spec_from_file_location(name, SWEEP)
     mod = importlib.util.module_from_spec(spec)
     monkeypatch.setitem(sys.modules, name, mod)
     spec.loader.exec_module(mod)
-    monkeypatch.setattr(mod, "token", lambda: tok)
+    if not keep_token_source:
+        monkeypatch.setattr(mod, "token", lambda: tok)
     monkeypatch.setattr(mod, "_API_BASE", base, raising=False)
     monkeypatch.setattr(mod, "_OPENER", None, raising=False)
     return mod
@@ -272,3 +276,144 @@ def test_the_token_is_read_from_gh_token_alone(monkeypatch):
     monkeypatch.delenv("GH_TOKEN")
     assert mod.token() is None
     assert "secrets" not in SWEEP.read_text(encoding="utf-8")
+
+
+def _shown(e) -> str:
+    """Everything a run would print for the exception in `e`: its text and its whole traceback."""
+    return str(e.value) + "".join(traceback.format_exception(e.type, e.value, e.tb))
+
+
+# -- the origin check itself, against the shipped base ----------------------------------------------------
+
+@pytest.mark.parametrize("url, same", [
+    ("https://api.github.com/search/issues", True),
+    ("https://API.GitHub.com/x", True),                   # host names are compared in lower case
+    ("https://api.github.com:443/x", True),               # the scheme's default port written out
+    ("http://api.github.com/x", False),                   # another scheme
+    ("http://api.github.com:443/x", False),               # another scheme on the same port
+    ("https://api.github.com:8443/x", False),             # another port
+    ("https://user@api.github.com/x", False),             # a user part, even before the right host
+    ("https://api.github.com@evil.example/x", False),     # a user part that names the API
+    ("https://api.github.com/x\ty", False),               # a control character
+    ("https://api.github.com/x\n", False),                # a line break
+    ("https://api.github.com/x y", False),                # a space
+    ("https://api.github.com/\u00e9", False),             # a character past ASCII
+    ("ftp://api.github.com/x", False),                    # neither http nor https
+    ("https:///x", False),                                # no host
+])
+def test_the_origin_check_compares_scheme_host_and_port_and_refuses_a_user_part(monkeypatch, url, same):
+    mod = load_sweep(monkeypatch, "https://api.github.com")
+    assert mod._same_origin(url) is same
+
+
+# -- the token never shows in an error -----------------------------------------------------------------------
+
+@pytest.mark.parametrize("bad", ["\n", "\r\nHost: 127.0.0.2", "\nX-Evil: 1"])
+def test_a_token_with_a_line_break_sends_nothing_and_shows_in_no_error(servers, monkeypatch, bad):
+    """http.client refuses such a header value with a ValueError that quotes the header whole; that
+    error must not reach the user with the token in it."""
+    api, elsewhere = servers
+    mod = load_sweep(monkeypatch, api.base, tok=TOKEN + bad)
+    with pytest.raises(RuntimeError) as e:
+        mod.api(api.base + "/repos/o/r/pulls/7")
+    assert TOKEN not in _shown(e)
+    assert api.seen == [] and elsewhere.seen == []
+
+
+def test_gh_token_is_stripped_of_the_white_space_around_it(monkeypatch):
+    mod = load_sweep(monkeypatch, "https://api.github.com", keep_token_source=True)
+    monkeypatch.setenv("GH_TOKEN", "  " + TOKEN + "\r\n")
+    assert mod.token() == TOKEN
+    monkeypatch.setenv("GH_TOKEN", " \n")
+    assert mod.token() is None
+
+
+@pytest.mark.parametrize("inside", [" ", "\n", "\r\nX-Evil: 1", "\t", "\u00e9"])
+def test_gh_token_with_white_space_or_a_control_character_inside_is_refused_without_being_quoted(
+        monkeypatch, inside):
+    mod = load_sweep(monkeypatch, "https://api.github.com", keep_token_source=True)
+    monkeypatch.setenv("GH_TOKEN", TOKEN + inside + "tail")
+    with pytest.raises(RuntimeError) as e:
+        mod.token()
+    assert TOKEN not in _shown(e)
+
+
+def test_a_market_sweep_with_a_broken_gh_token_sends_nothing_and_prints_no_token(servers, monkeypatch,
+                                                                                 capsys):
+    api, elsewhere = servers
+    mod = load_sweep(monkeypatch, api.base, keep_token_source=True)
+    monkeypatch.setenv("GH_TOKEN", TOKEN + "\nX-Evil: 1")
+    assert mod.sweep_market(1) == []
+    out = capsys.readouterr()
+    assert TOKEN not in out.out and TOKEN not in out.err
+    assert "unavailable" in out.err
+    assert api.seen == [] and elsewhere.seen == []
+
+
+def test_a_location_urllib_cannot_parse_is_raised_without_the_token(servers, monkeypatch):
+    api, elsewhere = servers
+    api.routes["/moved"] = (302, f"http://[127.0.0.2]:{elsewhere.port}/x")
+    mod = load_sweep(monkeypatch, api.base)
+    with pytest.raises(RuntimeError) as e:
+        mod.api(api.base + "/moved")
+    assert TOKEN not in _shown(e)
+    assert elsewhere.seen == []
+
+
+# -- what the error says ----------------------------------------------------------------------------------------
+
+def test_the_error_says_off_the_origin_only_for_a_redirect_off_it(servers, monkeypatch):
+    api, elsewhere = servers
+    api.routes["/away"] = (302, elsewhere.base + "/x")
+    api.routes["/loop"] = (302, "/loop")
+    api.routes["/noloc"] = (302, None)
+    mod = load_sweep(monkeypatch, api.base)
+    with pytest.raises(RuntimeError) as away:
+        mod.api(api.base + "/away")
+    assert "redirect off" in str(away.value)
+    for path in ("/loop", "/noloc"):
+        with pytest.raises(RuntimeError) as e:
+            mod.api(api.base + path)
+        assert "redirect off" not in str(e.value)
+        assert "not followed" in str(e.value)
+        assert TOKEN not in _shown(e)
+    assert elsewhere.seen == []
+
+
+# -- the search -----------------------------------------------------------------------------------------------------
+
+def test_a_search_redirected_off_the_origin_is_reported_unavailable_and_sends_nothing_elsewhere(
+        servers, monkeypatch, capsys):
+    api, elsewhere = servers
+    q = urllib.parse.quote('"Generated with [Claude Code]" in:body is:pr is:public')
+    api.routes[f"/search/issues?q={q}&per_page=30&page=1"] = (302, elsewhere.base + "/search")
+    mod = load_sweep(monkeypatch, api.base)
+    assert mod.sweep_market(5) == []
+    out = capsys.readouterr()
+    assert "unavailable" in out.err
+    assert TOKEN not in out.out and TOKEN not in out.err
+    assert elsewhere.seen == []
+
+
+# -- how the token is carried -----------------------------------------------------------------------------------------
+
+def test_the_token_is_carried_as_an_unredirected_header_alone(monkeypatch):
+    """urllib copies a request's ordinary headers to a redirected request and never its unredirected
+    ones; the token must be among the latter only, whatever the redirect handler does."""
+    mod = load_sweep(monkeypatch, "http://127.0.0.1:9")
+    sent = []
+
+    class Stop(Exception):
+        pass
+
+    class Recorder:
+        def open(self, req, timeout=None):
+            sent.append(req)
+            raise Stop()
+
+    monkeypatch.setattr(mod, "_opener", lambda: Recorder())
+    with pytest.raises(Stop):
+        mod.api("http://127.0.0.1:9/repos/o/r/pulls/7")
+    (req,) = sent
+    assert req.unredirected_hdrs.get("Authorization") == f"Bearer {TOKEN}"
+    assert all(k.lower() != "authorization" for k in req.headers)
