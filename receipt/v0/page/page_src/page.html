@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en" translate="no">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="@@CSP_ATTR@@">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<meta name="receipt-v0-checker-sha256" content="@@CHECKER_SHA256@@">
+<title>RECEIPT v0 check</title>
+<style>@@STYLE@@</style>
+</head>
+<body>
+<main>
+<h1>RECEIPT v0 check</h1>
+<div class="status">
+<p><strong>RECEIPT v0 is an unsigned draft.</strong> Fathom Lab wrote it; nothing in it is frozen, and nobody outside the lab implements, emits or checks these objects.</p>
+<p><strong>The checker in this page is lab-written.</strong> It is <code>receipt/v0/check_v0.js</code>, embedded byte for byte. It is not independent of the lab.</p>
+<p>A HELD verdict says one comparison passed. It never says a sentence is true. Read the section on what the verdicts do not show before relying on one.</p>
+<p>This page makes no connection of its own. Its Content-Security-Policy forbids connections in browsers that enforce it. The lab has not yet watched the page run in a browser. Some paths are outside any page's policy; the last section names them.</p>
+</div>
+
+<h2>The embedded checker</h2>
+<div class="integrity">
+<div class="field"><span class="label">sha256 of the embedded checker, computed now by this page</span><code class="value mono" id="sha-now">not computed (scripts did not run)</code></div>
+<div class="field"><span class="label">sha256 recorded when this page was built</span><code class="value mono" id="sha-build">@@CHECKER_SHA256@@</code></div>
+<div class="field"><span class="label">comparison</span><span class="value" id="sha-match">not compared</span></div>
+<div class="field"><span class="label">bytes</span><code class="value mono" id="sha-bytes">-</code></div>
+<div class="field"><span class="label">where the build took it from</span><code class="value mono" id="sha-origin">-</code></div>
+<div class="field"><span class="label">repository (plain text, not a link)</span><code class="value mono">@@REPO@@</code></div>
+<div class="field"><span class="label">is that commit published</span><span class="value">@@COMMIT_PUBLISHED@@</span></div>
+</div>
+<p class="hint">The checker runs only when the two hashes are the same. That catches a damaged or edited checker inside this file. It says nothing about the rest of this file: a copy can keep the checker byte for byte, change the code that draws the verdict, and still show the same checker hash and "the same". What can tie a copy of this page to the lab is the sha256 of the whole page file, compared with a value the lab publishes somewhere other than this page. Compute it on the file you saved, for example with <code>sha256sum receipt_check_v0.html</code>. If you find no such value published outside this file, nothing ties this file to the lab.</p>
+<p class="hint">To compare the checker alone with the lab's, in a copy of the repository named above that holds the commit: <code>git show COMMIT:receipt/v0/check_v0.js | sha256sum</code>. A match ties the checker to that commit; it still says nothing about the rest of this file.</p>
+
+<h2>Check</h2>
+<div class="modes" role="group" aria-label="operation">
+<button type="button" id="mode-check" aria-pressed="true">CHECK a document</button>
+<button type="button" id="mode-recheck" aria-pressed="false">RECHECK a receipt</button>
+</div>
+<p class="hint only-check">CHECK: a document, and optionally a manifest, give the canonical receipt and its digest.</p>
+<p class="hint only-recheck" hidden>RECHECK: a receipt, the document and optionally the manifest give REDERIVES, DOES-NOT-REDERIVE, or a refusal code (RECEIPT_v0.md 11.3).</p>
+
+<h3>Examples</h3>
+<p class="hint">Three lab-written examples, made from the text's worked examples. Each loads a document, a manifest and the receipt the command line checker printed for them.</p>
+<div class="examples" id="examples"></div>
+<p class="note" id="example-note"></p>
+
+<div class="slot only-recheck" hidden>
+<label for="rec-text">receipt</label>
+<textarea id="rec-text" spellcheck="false" autocomplete="off" placeholder="paste a receipt, or choose its file below"></textarea>
+<div class="slotbar"><input type="file" id="rec-file" aria-label="choose a receipt file"><button type="button" id="rec-clear">clear</button></div>
+<span class="info" id="rec-info"></span>
+</div>
+
+<div class="slot">
+<label for="doc-text">document</label>
+<textarea id="doc-text" spellcheck="false" autocomplete="off" placeholder="paste a document, or choose its file below"></textarea>
+<div class="slotbar"><input type="file" id="doc-file" aria-label="choose a document file"><button type="button" id="doc-clear">clear</button></div>
+<span class="info" id="doc-info"></span>
+</div>
+
+<div class="slot">
+<label for="man-text">manifest (optional)</label>
+<textarea id="man-text" spellcheck="false" autocomplete="off" placeholder="paste a manifest, or choose its file below"></textarea>
+<div class="slotbar"><input type="file" id="man-file" aria-label="choose a manifest file"><button type="button" id="man-clear">clear</button></div>
+<span class="info" id="man-info"></span>
+</div>
+
+<div class="line only-check">
+<label for="name">document name (part of the digest)</label>
+<input type="text" id="name" value="document.md" spellcheck="false" autocomplete="off">
+<span class="info" id="name-info"></span>
+</div>
+<div class="line only-check">
+<label for="commit">commit label (optional: empty, or 40 or 64 lowercase hex digits; v0 resolves nothing at it)</label>
+<input type="text" id="commit" value="" spellcheck="false" autocomplete="off">
+</div>
+
+<button type="button" id="run">run the checker</button>
+
+<h2>Result</h2>
+<div id="result" aria-live="polite"><p class="note">No run yet.</p></div>
+
+<h2>How this page reads your inputs</h2>
+<ul>
+<li>A chosen file is read as its exact bytes. For exactness, choose the file.</li>
+<li>Pasted text is encoded as UTF-8. Browsers hand a text box to the page with every line end as LF (CR LF and a lone CR become LF), and a character that has no UTF-8 form (an unpaired surrogate) becomes U+FFFD. The page changes nothing else: no trimming, no Unicode normalisation, no added final line end. <strong>A pasted document can get a different verdict from its file</strong>, not only a different digest: a claim's length or a quoted needle can change with its line ends. Every result made from pasted text says so.</li>
+<li>Each input shows its byte count and sha256, so you can compare them with <code>sha256sum</code> of your own file. Every result lists the byte count and sha256 of each input that run was given, with the name and commit label.</li>
+<li>When an input, the name, the commit label or the mode changes, the result on screen is replaced by a line asking you to run again, and the answer of a run still in progress is dropped. While a chosen file is being read, run waits.</li>
+<li>An empty box is no input. With no document the checker refuses (<code>nothing_to_verify</code>); to check an empty document, choose an empty file.</li>
+<li>The document name is inside the digest (13.6): the same bytes under two names give two digests. Choosing a document file fills the name field from the file's name. The command line checker uses the path it was given unless it gets <code>--name</code>; give it <code>--name</code> with the same text to get the same digest.</li>
+<li>Each run starts a fresh worker made from the embedded checker's text, with a limit of 10 seconds. If it hangs, fails, or answers with anything this page does not accept, the page says "no verdict" and why. If the browser cannot start a worker, nothing runs: the page never runs the checker without a time limit. Some documents take the lab's checker longer than 10 seconds (for example many lines that open a tag and never close it); the command line checker, which has no time limit, can still answer those.</li>
+<li>The page takes a result whose receipt text has at most 2,000,000 characters; above that it says "no verdict: the result is too large for this page". It draws at most 200 span cards and the first 200,000 characters of the receipt; the copy button copies the whole receipt.</li>
+<li>Direction control characters (U+061C, U+200E, U+200F, U+202A to U+202E, U+2066 to U+2069) in anything the page draws are shown as markers such as <code>&lt;U+202E&gt;</code>, so they cannot reverse the text after them. The copy buttons copy the raw text.</li>
+</ul>
+
+<h2>What the verdicts do not show</h2>
+<p>From RECEIPT_v0.md sections 12 and 14 (DRAFT, unsigned).</p>
+<p>A HELD verdict does not show:</p>
+<ol>
+<li><strong>That the sentence is true.</strong> HELD says one comparison passed: a printed number equals a named number at the printed precision; a quoted string occurs in named bytes; a stated hash equals the sha256 the manifest records (and the hash of the bytes, when the entry carries them); a string does not occur in bytes a harness called complete. The words around the number are not read: "Latency fell to r1's 240" holds if r1 says 240, whether or not anything fell.</li>
+<li><strong>That the bytes are not the author's.</strong> The only authorship test reads the manifest. Bytes the author wrote that the harness never digested are not caught.</li>
+<li><strong>That the manifest is honest.</strong> Nothing is signed. The rung is declared, not verified. A manifest minted by the author's own code passes every rule.</li>
+<li><strong>That the right sentences were bound.</strong> The author chooses what to mark. A document can be SWORN-HELD on one trivial span beside any number of unbound claims. The counts are counts of what was marked, not of what mattered.</li>
+<li><strong>That the receipt bytes mean what the sentence suggests.</strong> A number at a JSON pointer is a number at a JSON pointer; whether it is the quantity the sentence talks about is not checked.</li>
+<li><strong>That the span was written before the evidence was seen</strong>, or at any particular time.</li>
+<li><strong>That anything was checked, unless a row reads HELD or FAILED.</strong> MALFORMED and UNRESOLVED rows were not compared. SWORN-UNCHECKED is the word for that case.</li>
+<li><strong>That another checker agrees.</strong> The text's two checkers, <code>check_v0.py</code> and <code>check_v0.js</code>, were both written by the lab, the second with the first open. A mistake they share is invisible to any comparison of the two. Agreement inside one lab is not agreement from outside it.</li>
+<li><strong>That any evidence bytes were read.</strong> A hash span on an entry without bytes compares the sentence with the manifest's own string. A document whose every HELD row is such a span reads SWORN-HELD with no evidence byte opened.</li>
+</ol>
+<p>One HELD span is enough for SWORN-HELD, whatever the number of UNRESOLVED spans beside it (13.11). REDERIVES says a receipt is what this checker computes; it does not say the document held.</p>
+<p>RECEIPT v0 is a lab draft of a format, not a standard and not a specification anyone else has adopted. Nothing in it is claimed to be new: binding statements to digests of evidence is older than this lab. The checker checks bindings an author hands over. It does not find claims, and it does not detect false statements in prose.</p>
+
+<h2>No network</h2>
+<p>The page carries this Content-Security-Policy in a meta tag:</p>
+<pre class="mono">@@CSP_TEXT@@</pre>
+<ul>
+<li><code>default-src 'none'</code>: forbids every kind of load not named below: fetch, XMLHttpRequest, WebSocket, EventSource and sendBeacon connections, images, fonts, media, frames, objects and manifests.</li>
+<li><code>script-src</code> with one hash: only this page's one inline script may run. No other script, no code from strings, no event-handler attributes. The embedded checker sits in a non-running <code>text/plain</code> element and runs only in the worker.</li>
+<li><code>style-src</code> with one hash: only this page's one style block.</li>
+<li><code>worker-src blob:</code>: a worker may start only from a blob: URL, which the page makes from the checker's text. data: and network URLs are refused for workers.</li>
+<li><code>base-uri 'none'</code> and <code>form-action 'none'</code>: default-src does not cover these; they forbid a base element and any form submission.</li>
+<li><code>require-trusted-types-for 'script'</code> and <code>trusted-types receipt-v0-worker</code>: where the browser implements Trusted Types, no string can become markup or a script URL; the one script URL allowed is the blob: URL the page has just made for the worker.</li>
+</ul>
+<p>The CSP Level 3 specification says a worker made from a blob: URL inherits the policy of the page that made it, so the ban on connections should apply inside the worker too. That is the specification's rule; the lab has not tested it in a browser. As a second layer, before it reads any input the worker removes fetch, XMLHttpRequest, WebSocket, EventSource, importScripts, FontFace, fonts and similar globals. That layer is modest: it cannot remove <code>import()</code>, which is syntax, and it runs after the checker's own top-level code; both are left to the inherited policy. The page's own script makes no connection: it has no links, no images, no forms and no outside resource of any kind.</p>
+<p>What no page policy stops:</p>
+<ul>
+<li>browser extensions that can read the page and its text boxes;</li>
+<li>the browser's page translation, which in some browsers sends the page's text to a service (this page asks browsers not to offer it, with <code>translate="no"</code>, which not every browser honours);</li>
+<li>clipboard sync by your operating system after you press a copy button;</li>
+<li>navigation you start yourself: a link or a file dropped onto the page, the address bar;</li>
+<li>a favicon request the browser may make on its own when the page is served over the web (it carries none of your inputs).</li>
+</ul>
+</main>
+<script type="text/plain" id="checker-src">@@CHECKER@@</script>
+<script id="page-main">@@MAIN@@</script>
+</body>
+</html>
