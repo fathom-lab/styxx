@@ -855,3 +855,21 @@ def test_the_summary_is_written_in_utf_8_with_lf_alone_and_appended_on_every_sys
     written = path.read_bytes()
     assert b"\r" not in written
     assert written == b"before\n" + "## a — b\n\n| ✅ VERIFIED | `x` | `y` |\n".encode("utf-8")
+
+
+def test_the_summary_is_opened_with_newline_lf_so_linux_sees_a_reversion_too(act, tmp_path, monkeypatch):
+    """On Linux text mode writes LF whatever `newline` is, so the bytes alone cannot show the argument
+    gone there; the call itself is checked."""
+    path = tmp_path / "summary.md"
+    monkeypatch.setenv("GITHUB_STEP_SUMMARY", str(path))
+    calls = []
+    real_open = open
+
+    def recording_open(file, *args, **kwargs):
+        calls.append((str(file), args, kwargs))
+        return real_open(file, *args, **kwargs)
+
+    monkeypatch.setattr(act, "open", recording_open, raising=False)
+    act._write_summary(["x"])
+    assert [(a, k.get("newline"), k.get("encoding")) for f, a, k in calls if f == str(path)] == [
+        (("a",), "\n", "utf-8")]
