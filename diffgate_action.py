@@ -280,6 +280,28 @@ _UNSEEN = frozenset(chr(c) for low, high in (
 ) for c in range(low, high + 1))
 
 
+# The two joiners and the variation selectors, which the list above leaves out because the character
+# beside them is drawn by them. They are written as themselves only where they have such a character
+# beside them, and as escapes elsewhere: between the letters of a path they have nothing to draw, and
+# by the standard's account they have no glyph there.
+_JOINERS = frozenset("\u200c\u200d")
+_SELECTORS = frozenset(chr(c) for low, high in (
+    (0x180B, 0x180D), (0x180F, 0x180F),   # Mongolian free variation selectors
+    (0xFE00, 0xFE0F),                     # variation selectors 1 to 16
+    (0xE0100, 0xE01EF),                   # variation selectors 17 to 256
+) for c in range(low, high + 1))
+_KEYCAP_BASES = frozenset("#*0123456789")
+
+
+def _plain(c: str) -> bool:
+    """True for a character that is written as itself wherever it stands: not a control character
+    other than a tab, CR and LF, not a line separator, a lone surrogate or a character of
+    ``_UNSEEN``, and not a joiner or a selector, which are written as themselves in some places."""
+    return (c in "\t\r\n" or " " <= c < "\x7f"
+            or ("\x9f" < c and c not in "\u2028\u2029" and not "\ud800" <= c <= "\udfff"
+                and c not in _UNSEEN and c not in _JOINERS and c not in _SELECTORS))
+
+
 def _printable(text: str) -> str:
     """``text`` with every control character other than a tab, CR and LF written as an escape (ESC
     as ``\\x1b``), and with them the two Unicode line separators (``\\u2028``), a surrogate that
@@ -287,23 +309,43 @@ def _printable(text: str) -> str:
     write as a raw byte, and the characters of ``_UNSEEN``: the ones that change the order text is
     shown in (``\\u202e``) and the ones that show nothing (``\\u200b``, a tag character as
     ``\\U000e0041``). A tab ends no line and is left. CR and LF are left for the place the text is
-    printed, which deals with them in its own way."""
-    def written(c: str) -> str:
-        if c in "\t\r\n" or " " <= c < "\x7f" or ("\x9f" < c and c not in "\u2028\u2029"
-                                                and not "\ud800" <= c <= "\udfff" and c not in _UNSEEN):
-            return c
-        return f"\\x{ord(c):02x}" if c < "\u0100" else f"\\u{ord(c):04x}" if c < "\U00010000" else f"\\U{ord(c):08x}"
-    return "".join(written(c) for c in text)
+    printed, which deals with them in its own way.
+
+    A variation selector is written as itself only straight after a character past U+009F that is
+    itself written as itself and is no joiner or selector (an emoji, an ideograph, a Mongolian
+    letter), or between a keycap's base and its U+20E3 (``1``, U+FE0F, U+20E3). A joiner is written
+    as itself only between two such characters, where the one before it may also be a selector that
+    was written as itself. Anywhere else, at an edge of the text, beside an ASCII character or
+    beside a character that is written as an escape, they are written as escapes too
+    (``\\ufe0f``, ``\\u200d``)."""
+    out, before = [], ""            # before: what the character before was, where it was written as itself
+    for i, c in enumerate(text):
+        after = text[i + 1] if i + 1 < len(text) else ""
+        if c in _SELECTORS:
+            kept = before == "wide" or (before == "keycap base" and c in "\ufe0e\ufe0f" and after == "\u20e3")
+            before = "selector" if kept else ""
+        elif c in _JOINERS:
+            kept = before in ("wide", "selector") and after > "\x9f" and _plain(after)
+            before = "joiner" if kept else ""
+        else:
+            kept = _plain(c)
+            before = "" if not kept else "wide" if c > "\x9f" else "keycap base" if c in _KEYCAP_BASES else ""
+        out.append(c if kept else f"\\x{ord(c):02x}" if c < "\u0100" else f"\\u{ord(c):04x}" if c < "\U00010000"
+                   else f"\\U{ord(c):08x}")
+    return "".join(out)
 
 
 def _failure_text(e) -> str:
     """What a failed fetch says of itself, fit to print. Control characters other than a tab, CR and
     LF, the two line separators, a lone surrogate and the characters of ``_UNSEEN`` are written as
-    escapes (``_printable``); then the token's value is replaced wherever the text holds it (an HTTP
-    reason phrase can carry it back, and an escape can end in the character a token starts with,
-    which is why the escapes are written before the token is looked for); then it is cut at 1,000
-    characters, so an escape that falls on the cut is left in part."""
-    return _hide(_printable(str(e)), os.environ.get("GH_TOKEN"))[:1000]
+    escapes, and a joiner or a selector with nothing to draw (``_printable``); then the token's
+    value is replaced wherever the text holds it (an HTTP reason phrase can carry it back, and an
+    escape can end in the character a token starts with, which is why the escapes are written
+    before the token is looked for); then it is cut at 1,000 characters, so an escape that falls on
+    the cut is left in part. A joiner the cut leaves as the last character has lost the character
+    it joined to, and is written as an escape."""
+    text = _hide(_printable(str(e)), os.environ.get("GH_TOKEN"))[:1000]
+    return text[:-1] + _printable(text[-1]) if text[-1:] in _JOINERS else text
 
 
 def _command_data(text: str) -> str:
