@@ -27,7 +27,7 @@ What the numbers mean (and do not mean):
 The protocol constants are imported from `styxx.knowsay` -- byte-identical to every
 receipt in the published arc, so your number is comparable to the published ladder.
 
-The key is sent to the address --base-url names and to no other: the script follows no
+The key is not sent on to any address a redirect names: the script follows no
 redirect. An endpoint that answers 301, 302, 303, 307 or 308 ends the run at once with a
 message that names the status code; point --base-url at the address the endpoint wants.
 """

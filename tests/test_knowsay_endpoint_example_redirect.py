@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""The know-say example sends its API key to the address --base-url names and to no other.
+"""The know-say example follows no redirect, so its API key goes to no address a redirect names.
 
 `examples/knowsay_endpoint.py` (the script the README tells users to run with their own key) put
 ``Authorization: Bearer <key>`` among a request's ordinary headers and sent a POST through
@@ -44,12 +44,14 @@ class OffLoopback(OSError):
 
 
 class Server:
-    """A real HTTP server on 127.0.0.1. `redirect` is (code, Location) to answer every request with a
-    redirect, or None to answer with a chat completion. Every request is recorded as
-    (method, path, {header: value})."""
+    """A real HTTP server on 127.0.0.1. `redirect` is (code, Location) to answer with a redirect
+    (Location None: no Location header at all), or None to answer with a chat completion; the first
+    `redirect_after` requests are answered with a chat completion whatever `redirect` says. Every
+    request is recorded as (method, path, {header: value})."""
 
     def __init__(self):
         self.redirect = None
+        self.redirect_after = 0
         self.seen = []
         outer = self
 
@@ -60,10 +62,11 @@ class Server:
                     self.rfile.read(n)
                 outer.seen.append((self.command, self.path,
                                    {k.lower(): v for k, v in self.headers.items()}))
-                if outer.redirect is not None:
+                if outer.redirect is not None and len(outer.seen) > outer.redirect_after:
                     code, location = outer.redirect
                     self.send_response(code)
-                    self.send_header("Location", location)
+                    if location is not None:
+                        self.send_header("Location", location)
                     self.send_header("Content-Length", "0")
                     self.end_headers()
                     return
@@ -159,6 +162,21 @@ def _shown(e) -> str:
     return str(e.value) + "".join(traceback.format_exception(e.type, e.value, e.tb))
 
 
+def _try_chat(mod, base_url):
+    """chat() called once: (its answer, None), or (None, the exception it raised). The caller checks
+    where the key went before it checks how the call ended, so a leak is reported as a leak."""
+    try:
+        return mod.chat(base_url, "m", KEY, _MSGS), None
+    except Exception as exc:
+        return None, exc
+
+
+def _no_key_reached(server):
+    """`server` received no request, so no header of it holds the key."""
+    assert not any(KEY in v for _, _, h in server.seen for v in h.values()), "the key reached it"
+    assert server.seen == []
+
+
 _MSGS = [{"role": "user", "content": "What is the capital of France?"}]
 
 
@@ -177,12 +195,40 @@ def test_a_redirect_is_not_followed_and_the_key_goes_nowhere_else(servers, monke
     endpoint, elsewhere = servers
     endpoint.redirect = (code, elsewhere.base + "/stolen")
     mod = load_example(monkeypatch)
-    with pytest.raises(Exception) as e:
-        mod.chat(endpoint.base + "/v1", "m", KEY, _MSGS)
-    assert elsewhere.seen == []
-    assert KEY not in _shown(e)
-    assert str(code) in str(e.value)
-    assert "no redirect" in str(e.value)
+    answer, exc = _try_chat(mod, endpoint.base + "/v1")
+    _no_key_reached(elsewhere)
+    assert exc is not None, f"the redirect was followed and chat() answered {answer!r}"
+    shown = str(exc) + "".join(traceback.format_exception(type(exc), exc, exc.__traceback__))
+    assert KEY not in shown
+    assert str(code) in str(exc)
+    assert "no redirect" in str(exc)
+
+
+@pytest.mark.parametrize("code", (302, 307))
+def test_a_redirect_with_no_location_ends_the_call_at_once(servers, monkeypatch, sleeps, code):
+    endpoint, elsewhere = servers
+    endpoint.redirect = (code, None)
+    mod = load_example(monkeypatch)
+    answer, exc = _try_chat(mod, endpoint.base + "/v1")
+    assert exc is not None, f"chat() answered {answer!r}"
+    assert str(code) in str(exc) and "no redirect" in str(exc)
+    assert KEY not in str(exc)
+    assert sleeps == []
+    assert len(endpoint.seen) == 1
+
+
+def test_a_redirect_after_a_good_answer_is_not_followed(servers, monkeypatch, sleeps):
+    endpoint, elsewhere = servers
+    endpoint.redirect = (302, elsewhere.base + "/stolen")
+    endpoint.redirect_after = 1
+    mod = load_example(monkeypatch)
+    assert mod.chat(endpoint.base + "/v1", "m", KEY, _MSGS) == "Paris"
+    answer, exc = _try_chat(mod, endpoint.base + "/v1")
+    _no_key_reached(elsewhere)
+    assert exc is not None, f"the redirect was followed and chat() answered {answer!r}"
+    assert "302" in str(exc) and KEY not in str(exc)
+    assert endpoint.auths() == [f"Bearer {KEY}"] * 2
+    assert sleeps == []
 
 
 @pytest.mark.parametrize("code", CODES)
@@ -265,9 +311,13 @@ def test_a_run_ends_at_once_with_one_sentence_and_writes_no_output(servers, monk
     monkeypatch.setattr(sys, "argv", [str(EXAMPLE), str(questions), "--base-url", endpoint.base + "/v1",
                                       "--model", "m", "--api-key-env", "KNOWSAY_TEST_KEY", "--out", str(out)])
     monkeypatch.setattr(urllib.request, "_opener", None)
-    with pytest.raises(SystemExit) as e:
+    try:
         runpy.run_path(str(EXAMPLE), run_name="__main__")
-    message = e.value.code
+        message = None
+    except SystemExit as stop:
+        message = stop.code
+    _no_key_reached(elsewhere)
+    assert message is not None, "the run ended normally"
     assert isinstance(message, str)
     assert str(code) in message and "no redirect" in message
     assert KEY not in message
