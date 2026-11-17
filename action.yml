@@ -45,9 +45,9 @@ inputs:
     description: >-
       UNCHECKABLE claims (e.g. 'tests pass' with no way to run them) also fail the gate. The job
       fails on them only when soft-fail is "false". With soft-fail "false", strict also fails the
-      job on a diff that could not be fetched or that the gate did not measure, whatever the
-      description holds; without strict a blocking job fails there only when the description holds
-      a claim the gate reads.
+      job on a diff that could not be fetched or that the gate did not measure, whatever a
+      non-empty description holds (an empty one is not gated); without strict a blocking job fails
+      there only when the description holds a claim the gate reads.
     required: false
     default: "false"
   soft-fail:

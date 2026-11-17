@@ -12,7 +12,8 @@
 # GitHub Action and the CLI. The job's exit follows the CLI's, by the gate's verdict; the GitHub
 # Action's blocking rule now differs: with soft-fail "false" it also fails on a claim whose
 # CONTRADICTED reading PATH-2a withholds, and on a diff it could not fetch or did not measure while
-# the description holds a claim the gate reads. This job does neither.
+# the description holds a claim the gate reads. This job does not fail on a withheld claim or on an
+# unmeasured diff; a failed fetch of the diff base fails it in either mode, as before.
 #
 # GitLab hands a description longer than 2,700 characters to that variable as its leading 2,697
 # characters and "...", 2,700 in all, and sets CI_MERGE_REQUEST_DESCRIPTION_IS_TRUNCATED to "true"
