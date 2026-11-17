@@ -285,10 +285,11 @@ _UNSEEN = frozenset(chr(c) for low, high in (
 # turns on the characters beside it, and not on whether the standard lists the pair: one of the 258
 # selectors other than U+FE0E and U+FE0F after any character past U+009F that is written as itself
 # and is no joiner or selector; U+FE0E and U+FE0F after any character of ``_EMOJI`` below, or in a
-# keycap; a joiner between two such characters (``_printable`` says it in full). By the standard's
-# account many of those places have nothing to draw, U+FE00 after an accented letter among them.
-# Elsewhere they are written as escapes: between the letters of a path they have nothing to draw,
-# and by the standard's account they have no glyph there.
+# keycap; a joiner between two such characters, or between a selector written as itself and one
+# such character (``_printable`` says it in full). By the standard's account many of those places
+# have nothing to draw, U+FE00 after an accented letter among them. Elsewhere they are written as
+# escapes: between two ASCII letters of a path they have nothing to draw, and by the standard's
+# account they have no glyph there.
 _JOINERS = frozenset("\u200c\u200d")
 _SELECTORS = frozenset(chr(c) for low, high in (
     (0x180B, 0x180D), (0x180F, 0x180F),   # Mongolian free variation selectors
@@ -354,9 +355,9 @@ def _printable(text: str) -> str:
     A variation selector is written as itself only straight after a character past U+009F that is
     itself written as itself and is no joiner or selector (an ideograph, a Mongolian letter); and
     U+FE0E and U+FE0F, which choose between a text and an emoji form, only after such a character
-    that has the standard's Emoji property (``_EMOJI``), or between a keycap's base and its U+20E3
-    (``1``, U+FE0F, U+20E3). A joiner is written as itself only between two characters past U+009F
-    that are written as themselves, where the one before it may also be a selector that was
+    that has the Emoji property in Unicode 15.0 (``_EMOJI``), or between a keycap's base and its
+    U+20E3 (``1``, U+FE0F, U+20E3). A joiner is written as itself only between two characters past
+    U+009F that are written as themselves, where the one before it may also be a selector that was
     written as itself and the one after it is no joiner or selector. Anywhere else they are written
     as escapes too (``\\ufe0f``, ``\\u200d``): a selector at the start of the text or after an
     ASCII character, an escape, a joiner or another selector; a joiner at an edge, beside an ASCII
