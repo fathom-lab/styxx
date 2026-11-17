@@ -7,8 +7,13 @@ description: >-
   PR body (or push commit message) and verifies each against the actual diff — checkout-free,
   via the GitHub API. By default it reports and does not block: every verdict goes in the job
   summary and a contradicted claim is named as an annotation, but the job fails on it only if
-  you set soft-fail: "false". It does not block by default because no kind of accusation it
-  still makes has been measured clearing the 0.95 precision floor the lab set for accusing.
+  you set soft-fail: "false". With soft-fail: "false" the job also fails on a claim the gate
+  reports UNCHECKABLE because its PATH-2a overlay withheld a CONTRADICTED reading of it, and on a
+  diff it could not fetch or did not measure while the description holds a claim the gate reads
+  (GitHub refuses a diff past its size limit; a push that creates a branch has no base commit
+  to compare with). A push that creates a tag is not gated. It does not block by default because
+  no kind of accusation it still makes has been measured clearing the 0.95 precision floor the
+  lab set for accusing.
   The papers and receipts named here are under papers/closed-model-frontier/. A path claim
   the diff does not show is no longer accused: the 100 accusations EXTERNAL-1 sampled from
   71,016 eligible external agent-authored PRs, 85 of them path claims, measured precision 0.23
@@ -39,7 +44,10 @@ inputs:
   strict:
     description: >-
       UNCHECKABLE claims (e.g. 'tests pass' with no way to run them) also fail the gate. The job
-      fails on them only when soft-fail is "false".
+      fails on them only when soft-fail is "false". With soft-fail "false", strict also fails the
+      job on a diff that could not be fetched or that the gate did not measure, whatever a
+      non-empty description holds (an empty one is not gated); without strict a blocking job fails
+      there only when the description holds a claim the gate reads.
     required: false
     default: "false"
   soft-fail:
@@ -47,8 +55,12 @@ inputs:
       Only an explicit "false" blocks. The value is compared case-insensitively with surrounding
       whitespace stripped. "true" (the default) reports: every verdict goes in the job summary
       and the annotations, and the gate's verdicts never fail the job; an install or runtime
-      error still can. "false" blocks: the job fails on a contradicted claim, and with strict on
-      an UNCHECKABLE one too. Any other value, the empty string included, reports as "true" does
+      error still can. "false" blocks: the job fails on a contradicted claim; on a claim the gate
+      reports UNCHECKABLE because its PATH-2a overlay withheld a CONTRADICTED reading of it (the
+      gate did not judge that claim, and its reading there may be wrong); and on a diff that could
+      not be fetched or that the gate did not measure, while the description holds a claim the gate
+      reads. Every other UNCHECKABLE claim fails it only with strict on. Any other value, the empty
+      string included, reports as "true" does
       and prints a warning naming the value. The default was "false" until the change recorded
       in CHANGELOG.md ("the GitHub Action reports by default"); set soft-fail: "false" to keep a
       blocking check.

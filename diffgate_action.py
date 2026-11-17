@@ -5,12 +5,15 @@ fetches the diff from the GitHub API with the workflow token, gates the summary 
 with ``styxx.diffgate.gate_diff_text``, writes a job-summary table, emits ::error::
 annotations for contradictions, and exits per the gate verdict and the strict/soft-fail
 inputs. Supports ``pull_request`` (body vs PR diff) and ``push`` (head commit message vs
-compare diff). Anything else: reports and passes.
+compare diff); a push that creates a tag is not gated. Anything else: reports and passes.
 
 soft-fail (STYXX_SOFT_FAIL, which action.yml fills from its soft-fail input) is read by
 ``_soft_fail``, and only an explicit "false" blocks. The value is compared case-insensitively
-with surrounding whitespace stripped. "false" blocks: the job fails on a contradicted claim, and
-with strict on an UNCHECKABLE one too. "true" reports: every verdict goes to the job summary and
+with surrounding whitespace stripped. "false" blocks: the job fails on a contradicted claim; on a
+claim the gate reports UNCHECKABLE because its PATH-2a overlay withheld a CONTRADICTED reading of it;
+and on a diff that could not be fetched, or that the gate did not measure, while the text holds a
+claim the gate reads. With strict on it fails on every UNCHECKABLE claim too, and on a diff it did not
+read whatever a non-empty text holds (an empty one is not gated). "true" reports: every verdict goes to the job summary and
 the annotations. Unset reads as "true", the input's default. Every other value, the empty string
 included, reports as "true" does, and the script prints a warning naming the value it did not
 recognise. In report mode the gate's verdicts never fail the job; an error the script does not
@@ -433,7 +436,7 @@ def _line(text: str) -> str:
 _SPAN_TICKS = 80
 
 
-def _cell(text: str) -> str:
+def _cell(text: str, table: bool = True) -> str:
     """Text the pull request's author chose, as one cell of the summary's table: a code span, so that
     it is shown as the characters it is and nothing in it is read as Markdown or as a tag. Control
     characters are written as escapes and CR and LF as spaces; a "|" is written ``\\|``, the table's
@@ -445,8 +448,12 @@ def _cell(text: str) -> str:
     would be read as Markdown and as tags. A text that is empty or all white space as ``str.strip``
     reads it (a tab and a no-break space included) gives an empty cell and no span. Rendered with
     cmark-gfm 0.29.0.gfm.2, a cell written so held its text and no element but the span (CHANGELOG,
-    "a claim is shown in its cell as the characters it is"); GitHub's own page was not run."""
-    text = _printable(text).replace("\r", " ").replace("\n", " ").replace("|", "\\|")
+    "a claim is shown in its cell as the characters it is"); GitHub's own page was not run. With
+    ``table`` false the span stands in a paragraph, not a cell, and a "|" is written as it is: there
+    the escape is not read and its backslash would be shown."""
+    text = _printable(text).replace("\r", " ").replace("\n", " ")
+    if table:
+        text = text.replace("|", "\\|")
     if not text.strip():
         return ""
     text = re.sub("`{%d,}" % _SPAN_TICKS, lambda run: "\\x60" * len(run.group()), text)
@@ -467,10 +474,54 @@ _ROWS_BYTES = 512 * 1024
 _WARNINGS = 100
 
 
-def _by_weight(claims) -> list:
+def _overlay_wrote(c) -> bool:
+    """True for an UNCHECKABLE claim whose reason the PATH-2a overlay wrote: a kind it may move, and a
+    reason that starts with its form."""
+    return (c.verdict == "UNCHECKABLE" and c.kind in _OVERLAY_KINDS
+            and isinstance(c.why, str) and _OVERLAY_WHY.match(c.why) is not None)
+
+
+def _withheld_contradiction(c) -> bool:
+    """True for a claim the gate reports UNCHECKABLE because the overlay withheld a CONTRADICTED
+    reading of it. A blocking check fails on such a claim; one whose VERIFIED reading was withheld
+    passes as any other UNCHECKABLE claim does."""
+    return _overlay_wrote(c) and c.why.startswith("CONTRADICTED withheld")
+
+
+def _by_weight(claims, withheld_first: bool = False) -> list:
     """``claims`` with the contradicted before the uncheckable and those before the rest, each kind
-    in the order it had: the order of a table that cannot hold every claim."""
-    return sorted(claims, key=lambda c: {"CONTRADICTED": 0, "UNCHECKABLE": 1}.get(c.verdict, 2))
+    in the order it had: the order of a table that cannot hold every claim. With ``withheld_first``
+    (a blocking check), a claim whose CONTRADICTED reading the overlay withheld is ranked with the
+    contradicted, since the job fails on it too."""
+    def weight(c) -> int:
+        if withheld_first and _withheld_contradiction(c):
+            return 0
+        return {"CONTRADICTED": 0, "UNCHECKABLE": 1}.get(c.verdict, 2)
+    return sorted(claims, key=weight)
+
+
+_NO_BASE = "0" * 40       # the `before` of a push that created its ref: there is no commit before it
+
+
+def _creates_ref(event) -> bool:
+    """True for a push that created its branch or tag: ``before`` is forty zeros, or ``created`` is
+    true. Such a push has no base commit, so the compare address names none."""
+    return event.get("before") == _NO_BASE or event.get("created") is True
+
+
+def _claims_without_diff(summary: str, strict: bool):
+    """How many claims the gate reads in ``summary`` with no diff to check them against, or None where
+    asking raised. Which claims the gate reads turns on the sentence only, never on the diff, so this
+    is the count it would read with the diff too. None is taken to mean the text holds a claim."""
+    try:
+        return len(gate_diff_text(summary, "", strict=strict).claims)
+    except Exception:  # noqa: BLE001
+        return None
+
+
+def _claims_text(n) -> str:
+    """The claims of a text the gate read with no diff, as a sentence names them."""
+    return "the claims" if n is None else f"{n} claim(s)"
 
 
 def _write_summary(lines) -> None:
@@ -530,6 +581,13 @@ def main() -> int:
             diff_url = tpl.replace("{base}", event.get("before", "")) \
                           .replace("{head}", event.get("after", ""))
         what = "head commit message"
+        ref = event.get("ref")
+        if isinstance(ref, str) and ref.startswith("refs/tags/") and _creates_ref(event):
+            # A push that creates a tag has no base commit to compare with. Not gated in any mode, and
+            # nothing is asked of the API.
+            print("styxx diffgate: a push that creates a tag is not gated (it has no base commit to compare "
+                  "with)")
+            return 0
     else:
         print(f"styxx diffgate: event {event_name!r} not gated (pull_request/push only)")
         return 0
@@ -542,21 +600,71 @@ def main() -> int:
     except Exception as e:  # noqa: BLE001
         # This branch used to `return 0` under a comment saying "a broken fetch
         # must not fake a verdict" — and 0 IS the passing verdict. A gate that
-        # could not read the diff has not cleared anything, so under `strict` it
-        # now fails rather than passing quietly.
+        # could not read the diff has not cleared anything. A blocking check
+        # (soft-fail "false") therefore fails here when the description holds a
+        # claim the gate reads, and under `strict` whatever it holds; a
+        # description with no claim the gate reads has nothing to judge, and
+        # report mode passes, as it always did.
         # The text is urllib's, http.client's or this script's and can quote what a server sent (an
         # address, a reason phrase, a whole status line), so it is escaped for each place it goes: a
         # workflow command, and a code span. The token is looked for once more in each finished text,
         # because "%25" and "%0D" can end in the characters a token starts with, as an escape can.
         why, token = _failure_text(e), os.environ.get("GH_TOKEN")
-        print(f"::warning title=styxx diffgate - could not fetch the diff::"
-              f"{_hide(_command_data(why), token)}. The gate did not run; this is not a pass.")
-        _write_summary(["## styxx diffgate — DID NOT RUN", "",
-                        f"The diff could not be fetched: `{_hide(_code_span(why), token)}`.", "",
-                        "_This is not a clean result. A gate with no diff to read "
-                        "cannot contradict anything, which is true of every "
-                        "summary ever written._"])
-        return 1 if (strict and not soft) else 0
+        clean = ("_This is not a clean result. A gate with no diff to read "
+                 "cannot contradict anything, which is true of every "
+                 "summary ever written._")
+        if soft:
+            print(f"::warning title=styxx diffgate - could not fetch the diff::"
+                  f"{_hide(_command_data(why), token)}. The gate did not run; this is not a pass.")
+            _write_summary(["## styxx diffgate — DID NOT RUN", "",
+                            f"The diff could not be fetched: `{_hide(_code_span(why), token)}`.", "",
+                            clean, "",
+                            f"_A workflow that sets `soft-fail: \"false\"` fails the job here when the {what} "
+                            "holds a claim the gate reads, and with `strict: true` too whatever it holds._"])
+            return 0
+        n = _claims_without_diff(summary, strict)
+        holds = n is None or n > 0
+        no_base = (" A push that creates a branch has no base commit to compare with, so a re-run fails the "
+                   "same way."
+                   if event_name == "push" and _creates_ref(event) else "")
+        again = ("A re-run reads the diff again, which is the remedy where the failure was passing; GitHub "
+                 "refuses a diff past its size limit, and no rewording of the description makes it serve one.")
+        if not holds and not strict:
+            print(f"::warning title=styxx diffgate - could not fetch the diff::"
+                  f"{_hide(_command_data(why), token)}.{no_base} The gate did not run. The {what} holds no claim "
+                  "the gate reads, so there was no claim to judge, and this blocking check passes.")
+            _write_summary(["## styxx diffgate — DID NOT RUN", "",
+                            f"The diff could not be fetched: `{_hide(_code_span(why), token)}`.{no_base}", "",
+                            f"The {what} holds no claim the gate reads, so there was no claim to judge. This "
+                            "workflow sets `soft-fail: \"false\"`; the job passes, as a blocking check does when "
+                            "the diff could not be read and the description holds no claim the gate reads.", "",
+                            clean])
+            print(f"styxx diffgate: DID NOT RUN - the diff could not be fetched; the {what} holds no claim "
+                  "the gate reads, so the job passes")
+            return 0
+        if holds:
+            rule = (f"The gate read no diff, so it judged none of {'the ' if n is not None else ''}"
+                    f"{_claims_text(n)} it reads in the {what}. This check blocks (soft-fail: \"false\"), and a "
+                    f"blocking check fails when the diff could not be read and the {what} holds a claim the gate "
+                    "reads. Nothing was found contradicted.")
+            remedy = (f"{again} A {what} that holds no claim the gate reads passes. The maintainer can set "
+                      "soft-fail: \"true\" to report instead of block.")
+        else:
+            rule = ("The gate read no diff. This check blocks (soft-fail: \"false\") with strict on, and then a "
+                    f"diff that could not be read fails the job whatever the {what} holds. Nothing was found "
+                    "contradicted.")
+            remedy = again
+        print(f"::error title=styxx diffgate - diff not read so the check fails::"
+              f"{_hide(_command_data(why), token)}.{no_base} {rule} {remedy}")
+        _write_summary(["## styxx diffgate — DID NOT RUN, and the check fails", "",
+                        f"The diff could not be fetched: `{_hide(_code_span(why), token)}`.{no_base}", "",
+                        rule.replace('(soft-fail: "false")', '(`soft-fail: "false"`)') + " " + remedy, "",
+                        clean])
+        print("styxx diffgate: DID NOT RUN - the diff could not be fetched; "
+              + (f"{_claims_text(n)} not judged; the job fails because soft-fail is \"false\"" if holds else
+                 f"the {what} holds no claim the gate reads; the job fails because soft-fail is \"false\" and "
+                 "strict is on"))
+        return 1
 
     g = gate_diff_text(summary, diff, strict=strict)
 
@@ -564,20 +672,81 @@ def main() -> int:
     # added lines — an empty diff, an error payload served with HTTP 200, an
     # HTML interstitial. PASS/FAIL cannot carry "this gate did not run".
     if not g.measured:
-        print(f"::warning title=styxx diffgate - UNMEASURED::"
-              f"{_message(g.why_unmeasured)}. The gate did not run; this is not a pass.")
-        _write_summary(["## styxx diffgate — UNMEASURED", "",
-                        f"**The gate did not run.** {_line(g.why_unmeasured)}", "",
-                        f"Every claim in the {what} is reported UNCHECKABLE, not "
-                        "verified. A PASS here would mean *nothing contradicted "
-                        "the summary* — which is true of any summary when there "
-                        "is no diff to read.", "",
-                        "_Set `strict: true` and `soft-fail: \"false\"` to fail the job "
-                        "on this._"])
-        return 1 if (strict and not soft) else 0
+        # A blocking check fails here when the description holds a claim the gate reads (the gate
+        # judged none of them), and under `strict` whatever it holds; report mode passes.
+        n = len(g.claims)
+        fails = not soft and (n > 0 or strict)
+        head = ["## styxx diffgate — UNMEASURED", "",
+                f"**The gate did not run.** {_line(g.why_unmeasured)}", "",
+                f"Every claim in the {what} is reported UNCHECKABLE, not "
+                "verified. A PASS here would mean *nothing contradicted "
+                "the summary* — which is true of any summary when there "
+                "is no diff to read.", ""]
+        if soft:
+            print(f"::warning title=styxx diffgate - UNMEASURED::"
+                  f"{_message(g.why_unmeasured)}. The gate did not run; this is not a pass.")
+            _write_summary(head + [f"_A workflow that sets `soft-fail: \"false\"` fails the job on this when the "
+                                   f"{what} holds a claim the gate reads, and with `strict: true` too whatever "
+                                   "it holds._"])
+            return 0
+        if not fails:
+            print(f"::warning title=styxx diffgate - UNMEASURED::"
+                  f"{_message(g.why_unmeasured)}. The gate did not run. The {what} holds no claim the gate "
+                  "reads, so there was no claim to judge, and this blocking check passes.")
+            _write_summary(head + [f"_The {what} holds no claim the gate reads, so there was no claim to judge. "
+                                   "This workflow sets `soft-fail: \"false\"`; the job passes, as a blocking check "
+                                   "does when the gate did not measure the diff and the description holds no "
+                                   "claim the gate reads._"])
+            print(f"styxx diffgate: UNMEASURED - gate verdict {g.verdict}; the {what} holds no claim the gate "
+                  "reads, so the job passes")
+            return 0
+        if n:
+            rule = (f"The gate read no file and no added line, so it judged none of the {n} claim(s) in the "
+                    f"{what}. This check blocks (soft-fail: \"false\"), and a blocking check fails when the gate "
+                    f"did not measure the diff and the {what} holds a claim the gate reads. The gate's own "
+                    f"verdict is {g.verdict}; nothing was found contradicted.")
+            remedy = ("A re-run reads the diff again, which is the remedy where the failure was passing. A "
+                      f"{what} that holds no claim the gate reads passes. The maintainer can set soft-fail: "
+                      "\"true\" to report instead of block.")
+        else:
+            rule = ("The gate read no file and no added line. This check blocks (soft-fail: \"false\") with "
+                    f"strict on, and then a diff the gate did not measure fails the job whatever the {what} "
+                    f"holds. The gate's own verdict is {g.verdict}; nothing was found contradicted.")
+            remedy = "A re-run reads the diff again, which is the remedy where the failure was passing."
+        print(f"::error title=styxx diffgate - UNMEASURED so the check fails::"
+              f"{_message(g.why_unmeasured)}. {rule} {remedy}")
+        _write_summary(head + ["_" + rule.replace('(soft-fail: "false")', '(`soft-fail: "false"`)') + " "
+                               + remedy + "_"])
+        print(f"styxx diffgate: UNMEASURED - gate verdict {g.verdict}; "
+              + (f"{n} claim(s) not judged; the job fails because soft-fail is \"false\"" if n else
+                 f"the {what} holds no claim the gate reads; the job fails because soft-fail is \"false\" and "
+                 "strict is on"))
+        return 1
 
-    lines = ["## styxx diffgate — the summary vs the diff", "",
-             f"**{g.verdict}** · {len(g.claims)} claim(s) checked on the {what}", ""]
+    # A blocking check fails on a claim whose CONTRADICTED reading the PATH-2a overlay withheld: the gate
+    # did not judge it, and a blocking check does not pass that one. The claim stays UNCHECKABLE and is never
+    # called contradicted here; the gate's verdict word is the gate's and is not changed.
+    withheld = [c for c in g.claims if _withheld_contradiction(c)] if not soft else []
+    if withheld and g.verdict == "PASS":
+        verdict_line = (f"**{g.verdict}** is the gate's verdict, and the job fails · {len(g.claims)} claim(s) "
+                        f"checked on the {what}")
+    else:
+        verdict_line = f"**{g.verdict}** · {len(g.claims)} claim(s) checked on the {what}"
+    lines = ["## styxx diffgate — the summary vs the diff", "", verdict_line, ""]
+    if withheld:
+        # Written above the table and outside its byte budget, so the reason the job fails is never cut.
+        # At most ten of the claims are named, each cut at 80 characters, so these lines stay small.
+        shown = ", ".join(_cell(c.text[:80], table=False) or "(empty)" for c in withheld[:10])
+        more = f", and {len(withheld) - 10} more" if len(withheld) > 10 else ""
+        although = ", although the gate's verdict is PASS" if g.verdict == "PASS" else ""
+        lines += [f"**The job fails on {len(withheld)} claim(s) the gate did not judge{although}:** the gate's "
+                  "overlay (PATH-2a) withheld "
+                  "a CONTRADICTED reading of each, because the gate's reading in that place may be wrong. They "
+                  "are marked ❓ UNCHECKABLE below, and they are not found contradicted. This workflow sets "
+                  "`soft-fail: \"false\"`, and a blocking check fails on a claim withheld this way. To pass, "
+                  "remove the claim or reword it; where the overlay's reason names a character in the summary, "
+                  "writing the claim in plain ASCII lets both of the gate's readers read it alike. The "
+                  f"maintainer can set `soft-fail: \"true\"`. The claim(s): {shown}{more}.", ""]
     if g.claims:
         lines += ["| verdict | claim | evidence |", "|---|---|---|"]
         def row_of(c) -> str:
@@ -590,9 +759,7 @@ def main() -> int:
             # I-3 (NOTE_path2a_sixth_pass_2026_09_30): the overlay's own words whole, and main's reading after them cut
             # as main cuts a reason, at 100 characters, so a long path cannot carry the table past GitHub's step
             # summary limit.
-            ours = (c.verdict == "UNCHECKABLE" and c.kind in _OVERLAY_KINDS
-                    and _OVERLAY_WHY.match(c.why) is not None)
-            if ours:
+            if _overlay_wrote(c):
                 head, sep, mains = c.why.partition(_OVERLAY_MAIN)
                 why = head + sep + mains[:100]
             else:
@@ -620,7 +787,7 @@ def main() -> int:
         # The rows' bytes are the same in any order, so a table that stopped once stops again.
         rows, left = rows_that_fit(g.claims), []
         if len(rows) < len(g.claims):
-            ordered = _by_weight(g.claims)
+            ordered = _by_weight(g.claims, withheld_first=bool(withheld))
             rows = rows_that_fit(ordered)
             left = ordered[len(rows):]
         lines += rows
@@ -631,7 +798,10 @@ def main() -> int:
                           f"{count['CONTRADICTED']} CONTRADICTED, {count['UNCHECKABLE']} UNCHECKABLE, "
                           f"{count['VERIFIED']} VERIFIED. Its rows are written with the CONTRADICTED before the "
                           "UNCHECKABLE, and those before the VERIFIED, each kind in the order read, which may not "
-                          "be the order the claims were read. The verdict above counts every claim._"]
+                          "be the order the claims were read. "
+                          + ("In this blocking check an UNCHECKABLE claim whose CONTRADICTED reading the overlay "
+                             "withheld is written with the CONTRADICTED. " if withheld else "")
+                          + "The verdict above counts every claim._"]
     else:
         lines += ["_No diff-shaped claims found. The gate checks a closed template set "
                   "(touched/created/deleted paths, added functions/tests, file counts, "
@@ -643,17 +813,18 @@ def main() -> int:
     # Which of the two the job did is said here, because the default changed: soft-fail reports
     # unless the workflow sets it to "false" (action.yml; CHANGELOG "the GitHub Action reports by
     # default"). The figures are the receipts' own; the CHANGELOG entry says where each comes from.
+    rule = ("on a ❌; on a ❓ whose CONTRADICTED reading the gate's overlay withheld; and on a diff it could "
+            "not read or did not measure while the description holds a claim the gate reads. On every other ❓ "
+            "it fails only with `strict: true`. ")
     if not soft:
-        mode = ("_This workflow sets `soft-fail: \"false\"`, so the job fails on a ❌, and on a ❓ "
-                "only with `strict: true`. ")
+        mode = "_This workflow sets `soft-fail: \"false\"`, so the job fails " + rule
     elif unrecognised is not None:
         mode = ("_soft-fail has a value this Action does not recognise (the warning annotation names "
                 "it), so this check reports and does not fail the job, as it does by default; only "
-                "`soft-fail: \"false\"` fails it on a ❌, and on a ❓ only with `strict: true`. ")
+                "`soft-fail: \"false\"` fails it, " + rule)
     else:
         mode = ("_soft-fail is on, as it is by default, so this check reports and does not fail the "
-                "job; a workflow that sets `soft-fail: \"false\"` fails it on a ❌, and on a ❓ only "
-                "with `strict: true`. ")
+                "job; a workflow that sets `soft-fail: \"false\"` fails it " + rule)
     p = "https://github.com/fathom-lab/styxx/blob/main/papers/closed-model-frontier/"
     lines += ["", mode + "A path claim the diff does not show is reported ❓ UNCHECKABLE, not "
               "accused: the 100 accusations EXTERNAL-1 sampled from 71,016 external agent-authored "
@@ -683,6 +854,17 @@ def main() -> int:
         if c.verdict == "CONTRADICTED":
             failing = True
             print(f"::error title=styxx diffgate - contradicted claim::{_message(c.text[:120])} - {_message(c.why)}")
+        elif not soft and _withheld_contradiction(c):
+            # Blocking only: the claim is not called contradicted; the overlay's own reason is quoted as it is.
+            failing = True
+            print(f"::error title=styxx diffgate - withheld so the check fails::{_message(c.text[:120])} - The "
+                  "gate did not judge this claim: its overlay (PATH-2a) withheld a CONTRADICTED reading of it, "
+                  "because the gate's reading in this place may be wrong. This check blocks (soft-fail: "
+                  "\"false\"), and a blocking check fails on a claim withheld this way; every other UNCHECKABLE "
+                  "claim passes unless strict is on. To pass, remove the claim or reword it; where the overlay's "
+                  "reason names a character in the summary, writing the claim in plain ASCII lets both of the "
+                  "gate's readers read it alike. The maintainer can set soft-fail: \"true\". The overlay's "
+                  f"reason: {_message(c.why)}")
         elif c.verdict == "UNCHECKABLE" and strict:
             failing = True
             print(f"::error title=styxx diffgate - uncheckable under strict::{_message(c.text[:120])} - "
@@ -696,8 +878,13 @@ def main() -> int:
         print(f"::warning title=styxx diffgate - more uncheckable claims than warnings::{unwarned} more claim(s) "
               f"that the gate could not check have no warning here, where {_WARNINGS} is the most that are "
               "printed. A contradicted claim always has its command. The verdict below counts every claim.")
-    print(f"styxx diffgate: {g.verdict} - {len(g.claims)} claim(s), "
-          f"{sum(1 for c in g.claims if c.verdict == 'CONTRADICTED')} contradicted")
+    last = (f"styxx diffgate: {g.verdict} - {len(g.claims)} claim(s), "
+            f"{sum(1 for c in g.claims if c.verdict == 'CONTRADICTED')} contradicted")
+    if withheld:
+        last += (f"; {len(withheld)} not judged (a CONTRADICTED reading withheld by the overlay), so the job "
+                 + ("fails although the gate's verdict is PASS" if g.verdict == "PASS" else "fails")
+                 + " because soft-fail is \"false\"")
+    print(last)
     if failing and not soft:
         return 1
     if failing and soft:

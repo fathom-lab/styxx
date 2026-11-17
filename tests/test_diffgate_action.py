@@ -78,9 +78,22 @@ def test_unreadable_diff_never_passes_under_strict(env, monkeypatch, body):
 
 
 @pytest.mark.parametrize("body", ["", "Sorry, I could not produce a diff."])
-def test_unreadable_diff_is_reported_even_when_not_strict(env, monkeypatch, body, tmp_path):
-    code = run(monkeypatch, body, strict=False)
-    assert code == 0                       # the documented non-strict contract
+def test_unreadable_diff_fails_a_blocking_check_when_not_strict(env, monkeypatch, capsys, body, tmp_path):
+    """This expected 0: with soft-fail "false" and strict off, a diff the gate did not measure passed
+    while the description held claims. A blocking check now fails there, and says why in an ::error."""
+    code = run(monkeypatch, body, strict=False)            # run() blocks: soft-fail "false"
+    assert code == 1
+    assert "::error title=styxx diffgate - UNMEASURED so the check fails::" in capsys.readouterr().out
+    written = (env / "sum.md").read_text(encoding="utf-8")
+    assert "UNMEASURED" in written
+    assert "did not run" in written.lower()
+
+
+@pytest.mark.parametrize("body", ["", "Sorry, I could not produce a diff."])
+def test_unreadable_diff_is_reported_and_passes_in_report_mode(env, monkeypatch, capsys, body, tmp_path):
+    code = run(monkeypatch, body, strict=False, soft=True)
+    assert code == 0                       # report mode never fails the job on a verdict
+    assert "::error" not in capsys.readouterr().out
     written = (env / "sum.md").read_text(encoding="utf-8")
     assert "UNMEASURED" in written
     assert "did not run" in written.lower()
@@ -92,8 +105,18 @@ def test_fetch_failure_fails_under_strict(env, monkeypatch):
     assert run(monkeypatch, RuntimeError("connection reset"), strict=True) == 1
 
 
-def test_fetch_failure_is_reported_when_not_strict(env, monkeypatch):
-    assert run(monkeypatch, RuntimeError("connection reset")) == 0
+def test_fetch_failure_fails_a_blocking_check_when_not_strict(env, monkeypatch, capsys):
+    """This expected 0: with soft-fail "false" and strict off, a diff that could not be fetched passed
+    while the description held claims, so a diff GitHub refuses turned a red check green."""
+    assert run(monkeypatch, RuntimeError("connection reset")) == 1          # run() blocks: soft-fail "false"
+    assert "::error title=styxx diffgate - diff not read so the check fails::" in capsys.readouterr().out
+    written = (env / "sum.md").read_text(encoding="utf-8")
+    assert "DID NOT RUN" in written
+
+
+def test_fetch_failure_is_reported_and_passes_in_report_mode(env, monkeypatch, capsys):
+    assert run(monkeypatch, RuntimeError("connection reset"), soft=True) == 0
+    assert "::error" not in capsys.readouterr().out
     written = (env / "sum.md").read_text(encoding="utf-8")
     assert "DID NOT RUN" in written
 
@@ -205,6 +228,10 @@ def test_how_the_soft_fail_value_is_read(env, monkeypatch, capsys, value, blocks
         assert 'sets `soft-fail: "false"`' in written
     else:
         assert "this check reports and does not fail the job" in written
+    # the rule, in either mode, names the three cases a blocking check fails on beside a contradiction
+    assert "on a ❓ whose CONTRADICTED reading the gate's overlay withheld" in written
+    assert "on a diff it could not read or did not measure while the description holds a claim" in written
+    assert "On every other ❓ it fails only with `strict: true`." in written
 
 
 def _indent(line: str) -> int:
