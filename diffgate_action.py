@@ -13,7 +13,7 @@ with surrounding whitespace stripped. "false" blocks: the job fails on a contrad
 claim the gate reports UNCHECKABLE because its PATH-2a overlay withheld a CONTRADICTED reading of it;
 and on a diff that could not be fetched, or that the gate did not measure, while the text holds a
 claim the gate reads. With strict on it fails on every UNCHECKABLE claim too, and on a diff it did not
-read whatever the text holds. "true" reports: every verdict goes to the job summary and
+read whatever a non-empty text holds (an empty one is not gated). "true" reports: every verdict goes to the job summary and
 the annotations. Unset reads as "true", the input's default. Every other value, the empty string
 included, reports as "true" does, and the script prints a warning naming the value it did not
 recognise. In report mode the gate's verdicts never fail the job; an error the script does not
@@ -436,7 +436,7 @@ def _line(text: str) -> str:
 _SPAN_TICKS = 80
 
 
-def _cell(text: str) -> str:
+def _cell(text: str, table: bool = True) -> str:
     """Text the pull request's author chose, as one cell of the summary's table: a code span, so that
     it is shown as the characters it is and nothing in it is read as Markdown or as a tag. Control
     characters are written as escapes and CR and LF as spaces; a "|" is written ``\\|``, the table's
@@ -448,8 +448,12 @@ def _cell(text: str) -> str:
     would be read as Markdown and as tags. A text that is empty or all white space as ``str.strip``
     reads it (a tab and a no-break space included) gives an empty cell and no span. Rendered with
     cmark-gfm 0.29.0.gfm.2, a cell written so held its text and no element but the span (CHANGELOG,
-    "a claim is shown in its cell as the characters it is"); GitHub's own page was not run."""
-    text = _printable(text).replace("\r", " ").replace("\n", " ").replace("|", "\\|")
+    "a claim is shown in its cell as the characters it is"); GitHub's own page was not run. With
+    ``table`` false the span stands in a paragraph, not a cell, and a "|" is written as it is: there
+    the escape is not read and its backslash would be shown."""
+    text = _printable(text).replace("\r", " ").replace("\n", " ")
+    if table:
+        text = text.replace("|", "\\|")
     if not text.strip():
         return ""
     text = re.sub("`{%d,}" % _SPAN_TICKS, lambda run: "\\x60" * len(run.group()), text)
@@ -579,10 +583,10 @@ def main() -> int:
         what = "head commit message"
         ref = event.get("ref")
         if isinstance(ref, str) and ref.startswith("refs/tags/") and _creates_ref(event):
-            # A tag names a commit that is already there; the push describes nothing new, and it has no
-            # base commit to compare with. Not gated in any mode, and nothing is asked of the API.
-            print("styxx diffgate: a push that creates a tag is not gated (a tag names a commit and "
-                  "describes nothing new)")
+            # A push that creates a tag has no base commit to compare with. Not gated in any mode, and
+            # nothing is asked of the API.
+            print("styxx diffgate: a push that creates a tag is not gated (it has no base commit to compare "
+                  "with)")
             return 0
     else:
         print(f"styxx diffgate: event {event_name!r} not gated (pull_request/push only)")
@@ -656,7 +660,7 @@ def main() -> int:
                         f"The diff could not be fetched: `{_hide(_code_span(why), token)}`.{no_base}", "",
                         rule.replace('(soft-fail: "false")', '(`soft-fail: "false"`)') + " " + remedy, "",
                         clean])
-        print(f"styxx diffgate: DID NOT RUN - the diff could not be fetched; "
+        print("styxx diffgate: DID NOT RUN - the diff could not be fetched; "
               + (f"{_claims_text(n)} not judged; the job fails because soft-fail is \"false\"" if holds else
                  f"the {what} holds no claim the gate reads; the job fails because soft-fail is \"false\" and "
                  "strict is on"))
@@ -732,7 +736,7 @@ def main() -> int:
     if withheld:
         # Written above the table and outside its byte budget, so the reason the job fails is never cut.
         # At most ten of the claims are named, each cut at 80 characters, so these lines stay small.
-        shown = ", ".join(_cell(c.text[:80]) or "(empty)" for c in withheld[:10])
+        shown = ", ".join(_cell(c.text[:80], table=False) or "(empty)" for c in withheld[:10])
         more = f", and {len(withheld) - 10} more" if len(withheld) > 10 else ""
         although = ", although the gate's verdict is PASS" if g.verdict == "PASS" else ""
         lines += [f"**The job fails on {len(withheld)} claim(s) the gate did not judge{although}:** the gate's "
@@ -740,8 +744,9 @@ def main() -> int:
                   "a CONTRADICTED reading of each, because the gate's reading in that place may be wrong. They "
                   "are marked ❓ UNCHECKABLE below, and they are not found contradicted. This workflow sets "
                   "`soft-fail: \"false\"`, and a blocking check fails on a claim withheld this way. To pass, "
-                  "reword the claim in plain ASCII so both of the gate's readers read it alike, or remove it; "
-                  f"the maintainer can set `soft-fail: \"true\"`. The claim(s): {shown}{more}.", ""]
+                  "remove the claim or reword it; where the overlay's reason names a character in the summary, "
+                  "writing the claim in plain ASCII lets both of the gate's readers read it alike. The "
+                  f"maintainer can set `soft-fail: \"true\"`. The claim(s): {shown}{more}.", ""]
     if g.claims:
         lines += ["| verdict | claim | evidence |", "|---|---|---|"]
         def row_of(c) -> str:
@@ -856,9 +861,10 @@ def main() -> int:
                   "gate did not judge this claim: its overlay (PATH-2a) withheld a CONTRADICTED reading of it, "
                   "because the gate's reading in this place may be wrong. This check blocks (soft-fail: "
                   "\"false\"), and a blocking check fails on a claim withheld this way; every other UNCHECKABLE "
-                  "claim passes unless strict is on. To pass, reword the claim in plain ASCII so both of the "
-                  "gate's readers read it alike, or remove it; the maintainer can set soft-fail: \"true\". The "
-                  f"overlay's reason: {_message(c.why)}")
+                  "claim passes unless strict is on. To pass, remove the claim or reword it; where the overlay's "
+                  "reason names a character in the summary, writing the claim in plain ASCII lets both of the "
+                  "gate's readers read it alike. The maintainer can set soft-fail: \"true\". The overlay's "
+                  f"reason: {_message(c.why)}")
         elif c.verdict == "UNCHECKABLE" and strict:
             failing = True
             print(f"::error title=styxx diffgate - uncheckable under strict::{_message(c.text[:120])} - "
