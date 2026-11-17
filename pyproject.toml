@@ -157,6 +157,11 @@ test = [
     "matplotlib>=3.7",
     "langchain-core>=0.1",
     "psutil>=5.9",
+    # GitHub's Markdown parser, for tests/test_diffgate_action_summary_renders.py, which skips
+    # without it and so ran in no CI job. An exact pin: the file's assertions are about one
+    # parser's rendering. The marker keeps the extra installable on a system PyPI has no wheel of
+    # this release for (it has none for macOS on x86_64 or Windows on arm64).
+    "cmarkgfm==2025.10.22; sys_platform == 'linux' and (platform_machine == 'x86_64' or platform_machine == 'aarch64')",
 ]
 
 [project.urls]
