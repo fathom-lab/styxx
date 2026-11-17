@@ -654,7 +654,7 @@ def main() -> int:
                     f"diff that could not be read fails the job whatever the {what} holds. Nothing was found "
                     "contradicted.")
             remedy = again
-        print(f"::error title=styxx diffgate - diff not read, so the check fails::"
+        print(f"::error title=styxx diffgate - diff not read so the check fails::"
               f"{_hide(_command_data(why), token)}.{no_base} {rule} {remedy}")
         _write_summary(["## styxx diffgate — DID NOT RUN, and the check fails", "",
                         f"The diff could not be fetched: `{_hide(_code_span(why), token)}`.{no_base}", "",
@@ -713,7 +713,7 @@ def main() -> int:
                     f"strict on, and then a diff the gate did not measure fails the job whatever the {what} "
                     f"holds. The gate's own verdict is {g.verdict}; nothing was found contradicted.")
             remedy = "A re-run reads the diff again, which is the remedy where the failure was passing."
-        print(f"::error title=styxx diffgate - UNMEASURED, so the check fails::"
+        print(f"::error title=styxx diffgate - UNMEASURED so the check fails::"
               f"{_message(g.why_unmeasured)}. {rule} {remedy}")
         _write_summary(head + ["_" + rule.replace('(soft-fail: "false")', '(`soft-fail: "false"`)') + " "
                                + remedy + "_"])
@@ -857,7 +857,7 @@ def main() -> int:
         elif not soft and _withheld_contradiction(c):
             # Blocking only: the claim is not called contradicted; the overlay's own reason is quoted as it is.
             failing = True
-            print(f"::error title=styxx diffgate - withheld, so the check fails::{_message(c.text[:120])} - The "
+            print(f"::error title=styxx diffgate - withheld so the check fails::{_message(c.text[:120])} - The "
                   "gate did not judge this claim: its overlay (PATH-2a) withheld a CONTRADICTED reading of it, "
                   "because the gate's reading in this place may be wrong. This check blocks (soft-fail: "
                   "\"false\"), and a blocking check fails on a claim withheld this way; every other UNCHECKABLE "

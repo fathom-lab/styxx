@@ -83,7 +83,7 @@ def test_unreadable_diff_fails_a_blocking_check_when_not_strict(env, monkeypatch
     while the description held claims. A blocking check now fails there, and says why in an ::error."""
     code = run(monkeypatch, body, strict=False)            # run() blocks: soft-fail "false"
     assert code == 1
-    assert "::error title=styxx diffgate - UNMEASURED, so the check fails::" in capsys.readouterr().out
+    assert "::error title=styxx diffgate - UNMEASURED so the check fails::" in capsys.readouterr().out
     written = (env / "sum.md").read_text(encoding="utf-8")
     assert "UNMEASURED" in written
     assert "did not run" in written.lower()
@@ -109,7 +109,7 @@ def test_fetch_failure_fails_a_blocking_check_when_not_strict(env, monkeypatch, 
     """This expected 0: with soft-fail "false" and strict off, a diff that could not be fetched passed
     while the description held claims, so a diff GitHub refuses turned a red check green."""
     assert run(monkeypatch, RuntimeError("connection reset")) == 1          # run() blocks: soft-fail "false"
-    assert "::error title=styxx diffgate - diff not read, so the check fails::" in capsys.readouterr().out
+    assert "::error title=styxx diffgate - diff not read so the check fails::" in capsys.readouterr().out
     written = (env / "sum.md").read_text(encoding="utf-8")
     assert "DID NOT RUN" in written
 

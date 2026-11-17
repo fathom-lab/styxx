@@ -53,14 +53,14 @@ def _file(path, added):
 DIFF = _file("config/evil.yml", "b: 2") + _file("src/a.py", "y = 1")      # one file outside src/
 DIFF_SRC = _file("src/a.py", "y = 1")                                     # every file under src/
 DIFF_SEP = _file("config/evil.yml", "b: 2") + _file("src/a.py", "y = 1  #\u2028--- note")
-# A path holding a separator character: the overlay withholds a CONTRADICTED file count.
+# The diff the file-count case (C8) gates against.
 DIFF_SEP_PATH = _file("config/evil.yml", "b: 2") + _file("src/a\u2028b.py", "y = 1")
 
 # The workflow commands this change adds; each blocking exit 1 below prints one of them or the
 # contradicted-claim and strict ones it had.
-E_FETCH = "::error title=styxx diffgate - diff not read, so the check fails::"
-E_UNMEASURED = "::error title=styxx diffgate - UNMEASURED, so the check fails::"
-E_WITHHELD = "::error title=styxx diffgate - withheld, so the check fails::"
+E_FETCH = "::error title=styxx diffgate - diff not read so the check fails::"
+E_UNMEASURED = "::error title=styxx diffgate - UNMEASURED so the check fails::"
+E_WITHHELD = "::error title=styxx diffgate - withheld so the check fails::"
 E_CONTRA = "::error title=styxx diffgate - contradicted claim::"
 E_STRICT = "::error title=styxx diffgate - uncheckable under strict::"
 NEW_ERRORS = (E_FETCH, E_UNMEASURED, E_WITHHELD)
@@ -231,7 +231,9 @@ def test_a_withheld_contradiction_says_both_verdicts(act, tmp_path, monkeypatch,
     assert "the job fails although the gate's verdict is PASS" in last
     assert "**PASS** is the gate's verdict, and the job fails" in summary
     error = [ln for ln in out.splitlines() if ln.startswith(E_WITHHELD)][0]
-    assert "may be wrong" in error and "plain ASCII" in error and 'soft-fail: "true"' in error
+    assert "may be wrong" in error and "remove the claim or reword it" in error
+    assert "where the overlay's reason names a character" in error and "plain ASCII" in error
+    assert 'soft-fail: "true"' in error
     assert "every other UNCHECKABLE claim passes unless strict is on" in error
     assert "The overlay's reason: CONTRADICTED withheld by PATH-2a" in error
     # the reason the job fails stands above the table
@@ -256,6 +258,16 @@ def test_a_withheld_reason_counts_only_where_the_overlay_wrote_it(act):
     why = "CONTRADICTED withheld by PATH-2a (#121): x. main's reading: y"
     assert act._withheld_contradiction(SimpleNamespace(verdict="UNCHECKABLE", kind="only_touches", why=why))
     assert not act._withheld_contradiction(SimpleNamespace(verdict="UNCHECKABLE", kind="tests_pass", why=why))
+
+
+def test_no_annotation_title_holds_a_comma():
+    """GitHub's runner splits the properties of a workflow command at each comma and keeps the pieces
+    that hold "=", so a title with a comma in it is shown cut at the comma. Read from the script's
+    source: every title it can print, the three this change adds among them."""
+    titles = re.findall(r"::(?:error|warning|notice) title=(.*?)::", ACTION.read_text(encoding="utf-8"))
+    assert {e.split("title=")[1][:-2] for e in NEW_ERRORS} <= set(titles)
+    for title in titles:
+        assert "," not in title and "%" not in title and "{" not in title, title
 
 
 def test_a_failed_fetch_names_the_remedies(act, tmp_path, monkeypatch, capsys):
