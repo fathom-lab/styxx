@@ -57,9 +57,9 @@ https://api.github.com where the variable is unset or empty. ``api`` asks nothin
 that origin, follows a redirect only within it, and refuses any other; a refusal is a fetch that
 failed, so the gate reports that it did not run. Where the environment names a proxy, urllib hands
 it the request as it does any other, so a proxy in front of a plain-http origin reads the token.
-A request answered 429, 500 to 599, or 403 with a rate limit's headers is asked again, to the same
-address: at most three requests for one address and at most 120 seconds of waiting in a run
-(``api`` and ``_retry_wait`` say when and how long).
+A request answered 429, 500 to 599, or 403 that says when its rate limit ends is asked again, to
+the same address: at most three requests for one address, no single wait above 60 seconds, and at
+most 120 seconds of waiting in a run (``api`` and ``_retry_wait`` say when and how long).
 The CHANGELOG entry "the GitHub Action sends the workflow token in a request addressed to the API's
 origin and to no other" says what was sent where before.
 """
@@ -272,11 +272,13 @@ def _retry_wait(code: int, headers, made: int):
     """The seconds to wait before asking again after an answer of ``code`` to request number ``made``
     of a call, or None where that answer is not asked again.
 
-    A 500 to 599 waits 2 seconds, then 8. A 403 or a 429 waits what GitHub's pages on rate limits
-    say: the seconds of ``retry-after`` where the header is a whole number; else, where
-    ``x-ratelimit-remaining`` is 0 and ``x-ratelimit-reset`` is a whole number, the seconds until
-    that time (never fewer than 0); else, for a 429, 60 seconds ("wait for at least one minute"). A
-    403 with neither is a refusal and is not asked again. Any other code is not asked again."""
+    A 500 to 599 waits 2 seconds, then 8. A 403 or a 429 waits the seconds of ``retry-after``
+    where that header is one to six ASCII digits; else, where ``x-ratelimit-remaining`` is 0 and
+    ``x-ratelimit-reset`` is one to twelve ASCII digits, the seconds until that time (never fewer
+    than 0). A 429 with neither waits 60 seconds: GitHub's page on rate limits says of a 403 or a
+    429 with neither, "wait for at least one minute before retrying". A 403 with neither is not
+    asked again here, because a 403 is also how GitHub refuses a request for want of a permission.
+    Any other code is not asked again."""
     if 500 <= code <= 599:
         return (2, 8)[made - 1] if made <= 2 else None
     if code not in (403, 429):
@@ -304,12 +306,12 @@ def api(url: str, accept: str) -> str:
     ``repr``, and the token's value is replaced wherever an address a server named carries it back.
     Where more than one applies, the origin's comes before the address's and the token's last.
 
-    An answer of 429, of 500 to 599, or of 403 with a ``retry-after`` header or with
-    ``x-ratelimit-remaining: 0``, is asked again after the wait ``_retry_wait`` gives: at most
+    An answer of 429, of 500 to 599, or of 403 that says when its rate limit ends (``_retry_wait``
+    gives the two forms it reads), is asked again after the wait ``_retry_wait`` gives: at most
     ``_TRIES`` requests for one call, no single wait above ``_WAIT_MOST`` seconds, and no more than
     ``_WAIT_RUN`` seconds of waiting in one run. Each request is built anew, to the same address on
     the origin, with the token as an unredirected header and a redirect handler of its own, so
-    asking again reaches no address the request before it did not. Before each wait one line is
+    asking again sends the token to no origin but the API's. Before each wait one line is
     printed, of this script's own words and whole numbers. Where the wait would be longer than
     those bounds allow, the request is not made again and a RuntimeError says how long the wait
     would have been. A timeout and a dropped connection are not asked again."""
@@ -317,7 +319,9 @@ def api(url: str, accept: str) -> str:
     shown_token = os.environ.get("GH_TOKEN") or ""      # for the refusals below, which come before the token is checked
     origin = _api_origin()
     if origin is None:
-        value, cut = _without_user_part(os.environ.get("GITHUB_API_URL") or "")
+        # The token is replaced before the cut, so that a token with an "@" of its own cannot lose its
+        # head to the cut and be shown from there on.
+        value, cut = _without_user_part(_hide(os.environ.get("GITHUB_API_URL") or "", shown_token))
         left_out = (' (what stood before its last "@" is left out here, because a user part can hold a '
                     'password)' if cut else "")
         raise RuntimeError(f"GITHUB_API_URL is {_shown(value, shown_token)}{left_out}, which is "
@@ -714,7 +718,8 @@ def main() -> int:
         shown = repr(strict_unrecognised).replace("%", "%25")
         print(f"::warning title=styxx diffgate - strict value not recognised::strict is {shown}, which is "
               "neither \"true\" nor \"false\" (compared case-insensitively, surrounding whitespace stripped), so "
-              "strict is off: a claim the gate could not check does not fail the job on that account. Set "
+              "strict is off: a claim the gate could not check does not fail the job on that account, and a "
+              "diff that was not read fails a blocking job only where the text holds a claim the gate reads. Set "
               "strict: \"true\" to turn it on.")
     event_name = os.environ.get("GITHUB_EVENT_NAME", "")
     event = json.loads(open(os.environ["GITHUB_EVENT_PATH"], encoding="utf-8").read())

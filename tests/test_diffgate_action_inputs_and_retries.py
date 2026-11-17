@@ -78,7 +78,7 @@ def _run(act, tmp_path, monkeypatch, capsys, case, soft, strict_raw):
     ("true", True, False), ("TRUE", True, False), ("True", True, False),
     (" true", True, False), ("true ", True, False), ("\ttrue\n", True, False), (" true", True, False),
     ("", False, True), ("yes", False, True), ("1", False, True), ("on", False, True), ("tru e", False, True),
-    ("truefalse", False, True),
+    ("truefalse", False, True), (" YES ", False, True),
 ])
 def test_how_the_strict_value_is_read(act, raw, strict, unrecognised):
     assert act._strict(raw) == (strict, raw if unrecognised else None)
@@ -86,7 +86,7 @@ def test_how_the_strict_value_is_read(act, raw, strict, unrecognised):
 
 @pytest.mark.parametrize("value, strict, warned", [
     ("true", True, False), (" true", True, False), ("TRUE ", True, False), ("false", False, False),
-    ("yes", False, True), ("", False, True), ("1", False, True),
+    ("yes", False, True), ("", False, True), ("1", False, True), (" YES ", False, True),
 ])
 def test_strict_in_a_blocking_job(act, tmp_path, monkeypatch, capsys, value, strict, warned):
     """An UNCHECKABLE claim in a blocking job: it fails the job where strict is on and passes where it
@@ -386,3 +386,60 @@ def test_a_diff_served_on_the_second_request_is_gated_as_any_other(act, servers,
     assert out[0] == "styxx diffgate: GitHub answered 503; asking again in 2 s (request 2 of 3)"
     assert any(ln.startswith(FC.E_CONTRA) for ln in out)
     assert waits == [2] and len(handler.seen) == 2
+
+
+# -- five more, each for a changed script a reviewer showed the tests above let pass ------------------------------
+
+@pytest.mark.parametrize("status", [429, 403])
+def test_a_rate_limit_answered_three_times_ends_in_the_answer_itself(act, servers, waits, monkeypatch, status):
+    """The wait rule would give a wait after the third answer too; no wait is made after the last request."""
+    handler, base = servers((status, {"Retry-After": "1"}, ""))
+    with pytest.raises(urllib.error.HTTPError) as e:
+        _ask(act, monkeypatch, base)
+    assert e.value.code == status and waits == [1, 1] and len(handler.seen) == 3
+
+
+def test_the_token_is_hidden_in_a_refused_github_api_url(act, monkeypatch):
+    monkeypatch.setenv("GH_TOKEN", TOKEN)
+    monkeypatch.setenv("GITHUB_API_URL", "ftp://h/" + TOKEN)
+    with pytest.raises(RuntimeError) as e:
+        act.api("https://api.github.com/repos/o/r/pulls/7", DIFF_ACCEPT)
+    assert TOKEN not in str(e.value) and "GITHUB_API_URL is 'ftp://h/***'" in str(e.value)
+    odd = "made-up@tok-0123456789"                  # no token GitHub issues holds an "@"; one that did is hidden whole
+    monkeypatch.setenv("GH_TOKEN", odd)
+    monkeypatch.setenv("GITHUB_API_URL", "https://h x@" + odd)
+    with pytest.raises(RuntimeError) as e:
+        act.api("https://api.github.com/repos/o/r/pulls/7", DIFF_ACCEPT)
+    assert "0123456789" not in str(e.value)
+
+
+def test_a_request_is_asked_again_at_the_address_it_was_asked_at(act, servers, waits, monkeypatch):
+    """A redirect within the origin, then a 503 at the address it led to: the next request goes to the
+    address `api` was given, and follows the redirect anew."""
+    moved = (302, {"Location": "/moved"}, "")
+    handler, base = servers(moved, (503, {}, ""), moved, OK)
+    assert _ask(act, monkeypatch, base) == "the diff"
+    assert [seen[0] for seen in handler.seen] == ["/repos/o/r/pulls/7", "/moved", "/repos/o/r/pulls/7", "/moved"]
+    assert waits == [2]
+
+
+def test_the_wait_until_a_reset_is_rounded_up(act, servers, waits, monkeypatch):
+    monkeypatch.setattr(act, "_now", lambda: 1000.5)
+    handler, base = servers((429, {"X-RateLimit-Remaining": "0", "X-RateLimit-Reset": "1007"}, ""), OK)
+    assert _ask(act, monkeypatch, base) == "the diff"
+    assert waits == [7]                              # 6.5 seconds to go: a wait of 6 would end before the reset
+
+
+def test_the_texts_say_how_strict_is_read_and_when_a_request_is_asked_again():
+    import re
+    yml = re.sub(r"\s+", " ", (ROOT / "action.yml").read_text(encoding="utf-8"))
+    assert ('The value is read as soft-fail\'s is: compared case-insensitively with surrounding whitespace stripped. '
+            '"true" is strict and "false" (the default) is not. Any other value, the empty string included, is not '
+            'strict and prints a warning naming the value.') in yml
+    assert ("A request that GitHub answers with 429, with 500 to 599, or with a 403 that says when its rate limit "
+            "ends (a retry-after of digits, or x-ratelimit-remaining 0 with a reset time) is asked again, to the "
+            "same address: at most three requests for one address, no single wait above 60 seconds, and at most "
+            "120 seconds of waiting in a run.") in yml
+    readme = (ROOT / "README.md").read_text(encoding="utf-8")
+    assert ("(`strict` is read as `soft-fail` is: case-insensitively, surrounding whitespace stripped; a value that "
+            "is neither `true` nor `false` means not strict and is named in a warning)") in readme

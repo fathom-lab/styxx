@@ -13,8 +13,9 @@ description: >-
   code fence are read like any other sentence. Where the runner's environment names a proxy for
   the API's host the request goes through it, and a proxy in front of a plain-http API origin
   reads the workflow token. A request that GitHub answers with 429, with 500 to 599, or with a
-  403 that carries a rate limit's headers is asked again, to the same address: at most three
-  requests for one address and at most 120 seconds of waiting in a run. By default it reports
+  403 that says when its rate limit ends (a retry-after of digits, or x-ratelimit-remaining 0
+  with a reset time) is asked again, to the same address: at most three requests for one
+  address, no single wait above 60 seconds, and at most 120 seconds of waiting in a run. By default it reports
   and does not block: where the gate read the
   diff, each claim has a row in the job summary's table (up to 524,288 bytes of rows; the claims
   past that are counted by verdict), an error command is printed for every contradicted claim
