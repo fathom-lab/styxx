@@ -10,8 +10,8 @@ description: >-
   you set soft-fail: "false". With soft-fail: "false" the job also fails on a claim the gate
   reports UNCHECKABLE because its PATH-2a overlay withheld a CONTRADICTED reading of it, and on a
   diff it could not fetch or did not measure while the description holds a claim the gate reads
-  (GitHub refuses a diff past its size limit; the first push of a branch has no base commit to
-  compare with). A push that creates a tag is not gated. It does not block by default because
+  (GitHub refuses a diff past its size limit; a push that creates a branch has no base commit
+  to compare with). A push that creates a tag is not gated. It does not block by default because
   no kind of accusation it still makes has been measured clearing the 0.95 precision floor the
   lab set for accusing.
   The papers and receipts named here are under papers/closed-model-frontier/. A path claim
