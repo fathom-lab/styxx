@@ -384,7 +384,12 @@ def test_a_github_api_url_that_cannot_be_read_names_no_origin_and_nothing_is_ask
         with pytest.raises(RuntimeError) as e:
             act.api(url, DIFF_ACCEPT)
         msg = str(e.value)
-        assert f"GITHUB_API_URL is {value!r}, which is not an http or https address" in msg
+        if "@" in value:        # nothing that stands before the last "@" is shown: a user part can hold a password
+            assert "GITHUB_API_URL is 'https://ghe.example/api/v3' (what stood before its last \"@\" is left " \
+                   "out here, because a user part can hold a password), which is not an http or https address" in msg
+            assert "user@" not in msg
+        else:
+            assert f"GITHUB_API_URL is {value!r}, which is not an http or https address" in msg
         assert "the workflow token is sent nowhere" in msg
         assert_no_token(msg)
     assert api.seen == [] and elsewhere.seen == []
