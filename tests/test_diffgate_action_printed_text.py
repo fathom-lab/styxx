@@ -41,6 +41,9 @@ FORGED = "::error title=styxx diffgate::PASS - every claim VERIFIED (forged)"
 # the test of that text, which does not use this list).
 OWN_LINES = ("::error title=styxx diffgate - contradicted claim::",
              "::error title=styxx diffgate - uncheckable under strict::",
+             "::error title=styxx diffgate - withheld, so the check fails::",
+             "::error title=styxx diffgate - UNMEASURED, so the check fails::",
+             "::error title=styxx diffgate - diff not read, so the check fails::",
              "::warning title=styxx diffgate - uncheckable::",
              "::warning title=styxx diffgate - UNMEASURED::",
              "::warning title=styxx diffgate - more uncheckable claims than warnings::",
