@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-"""A blocking check fails when the gate could not judge; report mode is as it was.
+"""A blocking check fails on an unread or unmeasured diff under a claim, and on a withheld
+contradiction; report mode exits 0 as it did.
 
 With soft-fail "false" and strict off, `diffgate_action.py` returned 0 on a diff it could not fetch
 (GitHub refuses a diff past its size limit), on a diff the gate did not measure, and on a claim whose
@@ -14,7 +15,8 @@ now fails in exactly those three cases:
 Every other UNCHECKABLE claim passes unless strict is on, as before; a withheld VERIFIED reading
 passes; strict fails what it failed; a push that creates a tag is not gated and asks nothing of the
 API. Report mode (soft-fail "true", the default, or a value the script does not recognise) exits 0
-on every path, and its annotations are the ones it printed before.
+on every path, and its annotations are the ones it printed before, but on a push that creates a tag, which is
+no longer gated.
 
 The table below is every path through `main()` by soft-fail and strict, run in the test's own
 process with `api` replaced. The process tests at the end run the script as `action.yml` does,
@@ -50,7 +52,9 @@ def _file(path, added):
 
 DIFF = _file("config/evil.yml", "b: 2") + _file("src/a.py", "y = 1")      # one file outside src/
 DIFF_SRC = _file("src/a.py", "y = 1")                                     # every file under src/
-DIFF_SEP = _file("config/evil.yml", "b: 2") + _file("src/a.py", "y = 1  # --- note")
+DIFF_SEP = _file("config/evil.yml", "b: 2") + _file("src/a.py", "y = 1  #\u2028--- note")
+# A path holding a separator character: the overlay withholds a CONTRADICTED file count.
+DIFF_SEP_PATH = _file("config/evil.yml", "b: 2") + _file("src/a\u2028b.py", "y = 1")
 
 # The workflow commands this change adds; each blocking exit 1 below prints one of them or the
 # contradicted-claim and strict ones it had.
@@ -98,11 +102,20 @@ PATHS = {
                                                              words=(E_WITHHELD,)),
     "C7 withheld CONTRADICTED and a VERIFIED": dict(body=ACCENTED + " Modifies config/evil.yml.", block=(1, 1),
                                                     errors=(1, 1), words=(E_WITHHELD,)),
+    "C8 withheld CONTRADICTED, a file count": dict(body="5 files changed.", api=DIFF_SEP_PATH, block=(1, 1),
+                                                   errors=(1, 1), words=(E_WITHHELD,)),
     "T1 push creating a tag, before is zeros": dict(event="push", body=FALSE, created="tag", api=Refused("asked"),
                                                     block=(0, 0), errors=(0, 0), words=("creates a tag is not gated",)),
     "T2 push creating a tag, created is true": dict(event="push", body=FALSE, created="tag-flag", api=Refused("asked"),
                                                     block=(0, 0), errors=(0, 0), words=("creates a tag is not gated",)),
+    "T3 push moving a tag": dict(event="push", body=FALSE, created="tag-moved", block=(1, 1), errors=(1, 1),
+                                 words=(E_CONTRA,)),
+    "T4 push creating a tag, before only": dict(event="push", body=FALSE, created="tag-zeros", api=Refused("asked"),
+                                                block=(0, 0), errors=(0, 0), words=("creates a tag is not gated",)),
 }
+
+# The pushes that create a tag, which are not gated; a push that moves a tag is.
+TAG_CREATES = ("tag", "tag-flag", "tag-zeros")
 
 SOFT = [("true", False), ("maybe", False), (None, False), ("false", True)]      # (STYXX_SOFT_FAIL, blocks)
 
@@ -125,6 +138,10 @@ def payload(event, body, created=None):
             p.update(before="0" * 40, created=True, ref="refs/tags/v1")
         elif created == "tag-flag":
             p.update(created=True, ref="refs/tags/v1")
+        elif created == "tag-zeros":
+            p.update(before="0" * 40, ref="refs/tags/v1")             # no `created` key
+        elif created == "tag-moved":
+            p.update(created=False, ref="refs/tags/v1")
         return p
     return {"pull_request": {"number": 7, "body": body, "url": "https://api.github.test/repos/o/r/pulls/7"}}
 
@@ -186,7 +203,7 @@ def test_every_path_by_soft_fail_and_strict(act, tmp_path, monkeypatch, capsys, 
             assert w in out, (w, out)
         if rc == 1:
             assert errors, "a blocking check that fails says why in an ::error"
-    if case.get("created", "").startswith("tag"):
+    if case.get("created", "") in TAG_CREATES:
         assert asked == [], "a push that creates a tag asks nothing of the API"
         assert summary == ""
     # a withheld claim is never called contradicted by the script's own words: its row stays UNCHECKABLE
@@ -197,7 +214,8 @@ def test_every_path_by_soft_fail_and_strict(act, tmp_path, monkeypatch, capsys, 
 
 def test_the_three_routes_named_in_the_change(act, tmp_path, monkeypatch, capsys):
     """The routes a reviewer found, each in blocking mode with strict off: a diff the API refuses, an
-    accented word after the claim, and one line of content holding U+2028 and a header word. Each was 0."""
+    accented word in the claim's sentence, and a separator character in one line of content (the diff
+    DIFF_SEP builds). Each was 0."""
     for case in (PATHS["F1 fetch refused, a claim"], PATHS["C4 withheld CONTRADICTED, an accented word"],
                  PATHS["C6 withheld CONTRADICTED, a separator in content"]):
         assert run_main(act, tmp_path, monkeypatch, capsys, case, "false", False)[0] == 1
@@ -218,6 +236,26 @@ def test_a_withheld_contradiction_says_both_verdicts(act, tmp_path, monkeypatch,
     assert "The overlay's reason: CONTRADICTED withheld by PATH-2a" in error
     # the reason the job fails stands above the table
     assert summary.index("**The job fails on 1 claim(s) the gate did not judge") < summary.index("| verdict |")
+
+
+def test_a_pipe_in_a_withheld_claim_is_shown_as_it_is_above_the_table(act, tmp_path, monkeypatch, capsys):
+    """Above the table the claims are named in a paragraph, where the table's escape for "|" is not read and
+    its backslash would be shown; in the claim's row the escape stands."""
+    rc, out, summary, _ = run_main(act, tmp_path, monkeypatch, capsys, dict(body=ACCENTED[:-1] + " a|b."), "false",
+                                   False)
+    assert rc == 1
+    above, table = summary.split("| verdict |", 1)
+    assert "a|b.`" in above and "a\\|b" not in above
+    assert "a\\|b.`" in table
+
+
+def test_a_withheld_reason_counts_only_where_the_overlay_wrote_it(act):
+    """A claim counts as a withheld contradiction only where the overlay wrote its reason: a kind the overlay
+    may move. The same words in the reason of a kind it never moves do not count."""
+    from types import SimpleNamespace
+    why = "CONTRADICTED withheld by PATH-2a (#121): x. main's reading: y"
+    assert act._withheld_contradiction(SimpleNamespace(verdict="UNCHECKABLE", kind="only_touches", why=why))
+    assert not act._withheld_contradiction(SimpleNamespace(verdict="UNCHECKABLE", kind="tests_pass", why=why))
 
 
 def test_a_failed_fetch_names_the_remedies(act, tmp_path, monkeypatch, capsys):
@@ -312,7 +350,7 @@ def test_report_mode_prints_what_it_printed(act, tmp_path, monkeypatch, capsys, 
     out (they are no longer gated in any mode)."""
     old = load("diffgate_action_base", _base_script(tmp_path))
     for name, case in PATHS.items():
-        if case.get("created", "").startswith("tag"):
+        if case.get("created", "") in TAG_CREATES:
             continue
         new_run = run_main(act, tmp_path, monkeypatch, capsys, case, soft, strict)
         old_run = run_main(old, tmp_path, monkeypatch, capsys, case, soft, strict)
@@ -326,8 +364,8 @@ def test_report_mode_prints_what_it_printed(act, tmp_path, monkeypatch, capsys, 
 # Run in a child as `action.yml` runs it: `python <path>/diffgate_action.py` puts the script's directory first
 # on sys.path, so it imports the styxx beside it. The wrapper does the same and runs the file as __main__, so
 # `sys.exit(main())` sets the exit code. A developer install of styxx (an "editable" import finder) is no part
-# of a runner and would serve another styxx ahead of the tree's, so the wrapper drops it; at exit the child
-# names the styxx it imported, and the test skips where that is not the tree's.
+# of a runner, so the wrapper drops it, so that it cannot be the one imported; at exit the child names the
+# styxx it imported, and the test skips where that is not the tree's.
 _WRAPPER = """\
 import atexit, os, runpy, sys
 script = sys.argv[1]
