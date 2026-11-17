@@ -5,12 +5,15 @@ fetches the diff from the GitHub API with the workflow token, gates the summary 
 with ``styxx.diffgate.gate_diff_text``, writes a job-summary table, emits ::error::
 annotations for contradictions, and exits per the gate verdict and the strict/soft-fail
 inputs. Supports ``pull_request`` (body vs PR diff) and ``push`` (head commit message vs
-compare diff). Anything else: reports and passes.
+compare diff); a push that creates a tag is not gated. Anything else: reports and passes.
 
 soft-fail (STYXX_SOFT_FAIL, which action.yml fills from its soft-fail input) is read by
 ``_soft_fail``, and only an explicit "false" blocks. The value is compared case-insensitively
-with surrounding whitespace stripped. "false" blocks: the job fails on a contradicted claim, and
-with strict on an UNCHECKABLE one too. "true" reports: every verdict goes to the job summary and
+with surrounding whitespace stripped. "false" blocks: the job fails on a contradicted claim; on a
+claim the gate reports UNCHECKABLE because its PATH-2a overlay withheld a CONTRADICTED reading of it;
+and on a diff that could not be fetched, or that the gate did not measure, while the text holds a
+claim the gate reads. With strict on it fails on every UNCHECKABLE claim too, and on a diff it did not
+read whatever the text holds. "true" reports: every verdict goes to the job summary and
 the annotations. Unset reads as "true", the input's default. Every other value, the empty string
 included, reports as "true" does, and the script prints a warning naming the value it did not
 recognise. In report mode the gate's verdicts never fail the job; an error the script does not

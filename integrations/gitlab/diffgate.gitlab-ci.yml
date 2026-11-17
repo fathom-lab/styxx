@@ -9,7 +9,10 @@
 # merge request's diff base and its head. A sentence outside the closed template set is never
 # judged, "tests pass" is UNCHECKABLE without evidence, and a path the diff does not show is
 # UNCHECKABLE, never accused (EXTERNAL-1). Same instrument, same verdicts, same withholding as the
-# GitHub Action and the CLI.
+# GitHub Action and the CLI. The job's exit follows the CLI's, by the gate's verdict; the GitHub
+# Action's blocking rule now differs: with soft-fail "false" it also fails on a claim whose
+# CONTRADICTED reading PATH-2a withholds, and on a diff it could not fetch or did not measure while
+# the description holds a claim the gate reads. This job does neither.
 #
 # GitLab hands a description longer than 2,700 characters to that variable as its leading 2,697
 # characters and "...", 2,700 in all, and sets CI_MERGE_REQUEST_DESCRIPTION_IS_TRUNCATED to "true"
@@ -24,7 +27,8 @@
 # whole text the gate is handed, so the text the cut drops can change how the gate reads a whole
 # sentence before it: when the gate FAILs over a cut, the job runs it again over the text GitLab
 # handed it, only to hold a claim back, and does not fail on a CONTRADICTED claim that run withholds
-# or does not read; it names each one in the log and under "held_back". The job cannot see --strict:
+# or does not read (the GitHub Action's blocking check fails on a claim whose CONTRADICTED reading is
+# withheld; this job does not); it names each one in the log and under "held_back". The job cannot see --strict:
 # a FAIL whose every CONTRADICTED claim is held back does not fail the job with --strict either, and
 # the log names the UNCHECKABLE claims --strict would fail on. Text past GitLab's cut never reaches
 # the job, so a claim the gate would withhold, or not read, over the whole description can still be
