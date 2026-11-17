@@ -5,9 +5,22 @@ description: >-
   preregistered 0.95 floor, and its preregistration (PREREG_external1_aidev_2026_08_31.md)
   committed the lab to say so in those words. The Action extracts diff-shaped claims from the
   PR body (or push commit message) and verifies each against the actual diff — checkout-free,
-  via the GitHub API. By default it reports and does not block: every verdict goes in the job
-  summary and a contradicted claim is named as an annotation, but the job fails on it only if
-  you set soft-fail: "false". With soft-fail: "false" the job also fails on a claim the gate
+  via the GitHub API. It gates two events: pull_request (the description against the pull
+  request's diff) and push (the head commit's message against the compare diff). On any other
+  event, pull_request_target and merge_group among them, it reads no claim, prints a line saying
+  the event is not gated, and the job passes whatever soft-fail and strict are set to. The text
+  is read in its Markdown source, so an HTML comment, a task-list item and a sentence inside a
+  code fence are read like any other sentence. Where the runner's environment names a proxy for
+  the API's host the request goes through it, and a proxy in front of a plain-http API origin
+  reads the workflow token. By default it reports and does not block: where the gate read the
+  diff, each claim has a row in the job summary's table (up to 524,288 bytes of rows; the claims
+  past that are counted by verdict), an error command is printed for every contradicted claim
+  (with strict, for every claim the gate could not check too), and a warning command for at most
+  100 of the other claims the gate could not check. GitHub's documentation of its checks API says
+  "GitHub Actions are limited to 10 warning annotations and 10 error annotations per step", so a
+  command past the tenth of its kind may be shown as no annotation: read the table. The job fails on a
+  contradicted claim only if you set soft-fail: "false". With soft-fail: "false" the job also
+  fails on a claim the gate
   reports UNCHECKABLE because its PATH-2a overlay withheld a CONTRADICTED reading of it, and on a
   diff it could not fetch or did not measure while the description holds a claim the gate reads
   (GitHub refuses a diff past its size limit; a push that creates a branch has no base commit
@@ -53,8 +66,9 @@ inputs:
   soft-fail:
     description: >-
       Only an explicit "false" blocks. The value is compared case-insensitively with surrounding
-      whitespace stripped. "true" (the default) reports: every verdict goes in the job summary
-      and the annotations, and the gate's verdicts never fail the job; an install or runtime
+      whitespace stripped. "true" (the default) reports: the verdicts go in the job summary's
+      table and in workflow commands, within the limits the description above gives, and the
+      gate's verdicts never fail the job; an install or runtime
       error still can. "false" blocks: the job fails on a contradicted claim; on a claim the gate
       reports UNCHECKABLE because its PATH-2a overlay withheld a CONTRADICTED reading of it (the
       gate did not judge that claim, and its reading there may be wrong); and on a diff that could
@@ -68,12 +82,17 @@ inputs:
     default: "true"
   styxx-version:
     description: >-
-      styxx version spec to install. The floor is deliberate. Every release before
-      7.44.0 contained a bypass in this very gate — `only touches <prefix>` was
-      VERIFIED against an unreadable diff, because "is any path outside the prefix?"
-      is vacuously false when no paths were parsed. 7.44.2 additionally closes three
-      false-accusation classes found by re-sweeping 150 commits and 40 public agent
-      PRs. Do not pin below it.
+      styxx version spec that `pip install` is given before the script runs. It does
+      NOT choose the gate. The gate that runs is the styxx package in this Action's own
+      checkout, at the ref the workflow names in `uses:`, because the script imports the
+      package beside it; what is installed supplies the one package that code imports
+      from outside the standard library (numpy). To run another version of the gate,
+      name another ref in `uses:`. A ref before v7.44.0 runs a gate with a bypass —
+      `only touches <prefix>` was VERIFIED against an unreadable diff, because "is any
+      path outside the prefix?" is vacuously false when no paths were parsed — and
+      v7.44.2 additionally closes three false-accusation classes found by re-sweeping
+      150 commits and 40 public agent PRs, so name no ref below v7.44.2. The default
+      spec keeps that version as its floor.
     required: false
     default: "styxx>=7.44.2"
 
