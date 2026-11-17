@@ -45,6 +45,11 @@ catch (an unreadable event file, for one) still does.
 The reason the default reports, with its receipts, is in action.yml's description and the
 CHANGELOG entry "the GitHub Action reports by default".
 
+strict (STYXX_STRICT, which action.yml fills from its strict input) is read by ``_strict`` the same
+way: compared case-insensitively with surrounding whitespace stripped, "true" is strict and "false"
+is not. Unset reads as "false", the input's default. Every other value, the empty string included,
+is not strict, and the script prints a warning naming the value.
+
 The workflow token (GH_TOKEN, which action.yml fills from github.token) goes in a request addressed
 to one origin and to no other: the origin of GITHUB_API_URL, which the runner sets
 (https://api.github.com on github.com; a GitHub Enterprise Server names its own), or that of
@@ -52,15 +57,20 @@ https://api.github.com where the variable is unset or empty. ``api`` asks nothin
 that origin, follows a redirect only within it, and refuses any other; a refusal is a fetch that
 failed, so the gate reports that it did not run. Where the environment names a proxy, urllib hands
 it the request as it does any other, so a proxy in front of a plain-http origin reads the token.
+A request answered 429, 500 to 599, or 403 with a rate limit's headers is asked again, to the same
+address: at most three requests for one address and at most 120 seconds of waiting in a run
+(``api`` and ``_retry_wait`` say when and how long).
 The CHANGELOG entry "the GitHub Action sends the workflow token in a request addressed to the API's
 origin and to no other" says what was sent where before.
 """
 from __future__ import annotations
 
 import json
+import math
 import os
 import re
 import sys
+import time
 import urllib.error
 import urllib.parse
 import urllib.request
@@ -160,6 +170,23 @@ def _shown(value, token: str = "") -> str:
     return shown if len(shown) <= 400 else shown[:399] + shown[0]
 
 
+_SCHEME = re.compile(r"[A-Za-z][A-Za-z0-9+.-]*://")
+
+
+def _without_user_part(value: str) -> tuple[str, bool]:
+    """``value`` with everything before its last "@" left out, after a leading ``scheme://`` where it
+    has one; and whether anything was left out. Used for a GITHUB_API_URL this script could not read
+    as an address, so no parser's account of where a user part ends is relied on: nothing that stands
+    before an "@" is shown, because a user part can hold a password. A value whose path holds an "@"
+    loses more than its user part, and the sentence that shows it says what was left out."""
+    m = _SCHEME.match(value)
+    head = m.group() if m else ""
+    rest = value[len(head):]
+    if "@" not in rest:
+        return value, False
+    return head + rest[rest.rindex("@") + 1:], True
+
+
 class _ApiRedirect(urllib.request.HTTPRedirectHandler):
     """Follows a redirect only to the API's origin (GitHub answers a renamed or moved repository
     with one, to another path there), and puts the token back on that one only. A redirect anywhere
@@ -217,6 +244,53 @@ def _token() -> str:
     return token
 
 
+_TRIES = 3          # the most requests one call of ``api`` makes
+_WAIT_MOST = 60     # the longest single wait before asking again, in seconds
+_WAIT_RUN = 120     # the most one run of the script waits in all, in seconds
+_waited = 0         # the seconds this run has waited so far
+
+
+def _now() -> float:
+    return time.time()
+
+
+def _sleep(seconds: int) -> None:
+    time.sleep(seconds)
+
+
+def _header_number(headers, name: str, digits: int):
+    """The whole number a response header holds, or None: only a value of one to ``digits`` ASCII
+    digits and nothing else is a number here (``int`` alone would also read " 5", "+5", "5_0" and
+    digits of other scripts)."""
+    value = headers.get(name) if headers is not None else None
+    if isinstance(value, str) and re.fullmatch("[0-9]{1,%d}" % digits, value):
+        return int(value)
+    return None
+
+
+def _retry_wait(code: int, headers, made: int):
+    """The seconds to wait before asking again after an answer of ``code`` to request number ``made``
+    of a call, or None where that answer is not asked again.
+
+    A 500 to 599 waits 2 seconds, then 8. A 403 or a 429 waits what GitHub's pages on rate limits
+    say: the seconds of ``retry-after`` where the header is a whole number; else, where
+    ``x-ratelimit-remaining`` is 0 and ``x-ratelimit-reset`` is a whole number, the seconds until
+    that time (never fewer than 0); else, for a 429, 60 seconds ("wait for at least one minute"). A
+    403 with neither is a refusal and is not asked again. Any other code is not asked again."""
+    if 500 <= code <= 599:
+        return (2, 8)[made - 1] if made <= 2 else None
+    if code not in (403, 429):
+        return None
+    after = _header_number(headers, "Retry-After", 6)
+    if after is not None:
+        return after
+    remaining = headers.get("X-RateLimit-Remaining") if headers is not None else None
+    reset = _header_number(headers, "X-RateLimit-Reset", 12)
+    if remaining == "0" and reset is not None:
+        return max(0, math.ceil(reset - _now()))
+    return 60 if code == 429 else None
+
+
 def api(url: str, accept: str) -> str:
     """The body GitHub's API serves at ``url``, asked with the workflow token.
 
@@ -228,53 +302,86 @@ def api(url: str, accept: str) -> str:
     follows a redirect only within the origin and refuses any other. Each refusal is raised as a
     RuntimeError of one sentence, in which an address is cut at 200 characters and quoted with
     ``repr``, and the token's value is replaced wherever an address a server named carries it back.
-    Where more than one applies, the origin's comes before the address's and the token's last."""
+    Where more than one applies, the origin's comes before the address's and the token's last.
+
+    An answer of 429, of 500 to 599, or of 403 with a ``retry-after`` header or with
+    ``x-ratelimit-remaining: 0``, is asked again after the wait ``_retry_wait`` gives: at most
+    ``_TRIES`` requests for one call, no single wait above ``_WAIT_MOST`` seconds, and no more than
+    ``_WAIT_RUN`` seconds of waiting in one run. Each request is built anew, to the same address on
+    the origin, with the token as an unredirected header and a redirect handler of its own, so
+    asking again reaches no address the request before it did not. Before each wait one line is
+    printed, of this script's own words and whole numbers. Where the wait would be longer than
+    those bounds allow, the request is not made again and a RuntimeError says how long the wait
+    would have been. A timeout and a dropped connection are not asked again."""
+    global _waited
+    shown_token = os.environ.get("GH_TOKEN") or ""      # for the refusals below, which come before the token is checked
     origin = _api_origin()
     if origin is None:
-        raise RuntimeError(f"GITHUB_API_URL is {_shown(os.environ.get('GITHUB_API_URL') or '')}, which is "
+        value, cut = _without_user_part(os.environ.get("GITHUB_API_URL") or "")
+        left_out = (' (what stood before its last "@" is left out here, because a user part can hold a '
+                    'password)' if cut else "")
+        raise RuntimeError(f"GITHUB_API_URL is {_shown(value, shown_token)}{left_out}, which is "
                            "not an http or https address this script can read, so the workflow token "
                            "is sent nowhere and the diff was not asked for")
     base = _origin_text(origin)
     read = _origin(url)
     if read is None or read[0] not in _DEFAULT_PORT:    # no scheme, or another: the same sentence on every Python
-        raise RuntimeError(f"the diff's address {_shown(url)} is not one this script can read (it "
+        raise RuntimeError(f"the diff's address {_shown(url, shown_token)} is not one this script can read (it "
                            "reads an http or https address in printable ASCII with a plain host and "
                            "port), so it was not asked for")
     target = _on_origin(url, origin)
     if target is None:
-        raise RuntimeError(f"the diff's address {_shown(url)} is not on {base}, the one origin the "
+        raise RuntimeError(f"the diff's address {_shown(url, shown_token)} is not on {base}, the one origin the "
                            "workflow token is sent to, so it was not asked for")
     token = _token()
-    req = urllib.request.Request(target, headers={
-        "Accept": accept, "User-Agent": "styxx-diffgate-action",
-        "X-GitHub-Api-Version": "2022-11-28"})
-    req.add_unredirected_header("Authorization", f"Bearer {token}")
-    handler = _ApiRedirect(origin)
-    opener = urllib.request.build_opener(handler)
-    try:
-        with opener.open(req, timeout=60) as r:
-            return r.read().decode("utf-8", errors="replace")
-    except urllib.error.HTTPError as e:
-        if e.code not in _REDIRECT_CODES:
-            raise
-        named = handler.answer[1] if handler.answer else None
-        shown = _shown(named, token) if named is not None else "(none given)"
-        if handler.verdict == "followed":   # urllib stops a loop after this handler has agreed to the hop
-            why = (f"within {base}, which was not followed: the redirects loop or are more than "
-                   "urllib follows")
-        else:
-            why = (f"which was not followed: only a redirect within {base} is, and the workflow "
-                   "token is sent nowhere else")
-        raise RuntimeError(f"GitHub answers {e.code}, a redirect to {shown}, {why}") from e
-    except ValueError as e:
-        # urllib reads the address a redirect names before it asks the handler, and raises a ValueError
-        # for one it cannot read, in words of its own: "Invalid IPv6 URL" for an unbalanced bracket, and
-        # for other bracketed text a sentence that quotes what stands in the brackets, uncut.
-        if handler.answer is None or handler.verdict is not None:
-            raise
-        code, named = handler.answer
-        raise RuntimeError(f"GitHub answers {code}, a redirect to {_shown(named, token)}, which urllib "
-                           "could not read as an address, so it was not followed") from e
+    for made in range(1, _TRIES + 1):
+        # Built anew for every request: urllib writes what it followed onto the Request it was given,
+        # and the handler keeps the last redirecting answer.
+        req = urllib.request.Request(target, headers={
+            "Accept": accept, "User-Agent": "styxx-diffgate-action",
+            "X-GitHub-Api-Version": "2022-11-28"})
+        req.add_unredirected_header("Authorization", f"Bearer {token}")
+        handler = _ApiRedirect(origin)
+        opener = urllib.request.build_opener(handler)
+        try:
+            with opener.open(req, timeout=60) as r:
+                return r.read().decode("utf-8", errors="replace")
+        except urllib.error.HTTPError as e:
+            if e.code in _REDIRECT_CODES:
+                named = handler.answer[1] if handler.answer else None
+                shown = _shown(named, token) if named is not None else "(none given)"
+                if handler.verdict == "followed":   # urllib stops a loop after this handler has agreed to the hop
+                    why = (f"within {base}, which was not followed: the redirects loop or are more than "
+                           "urllib follows")
+                else:
+                    why = (f"which was not followed: only a redirect within {base} is, and the workflow "
+                           "token is sent nowhere else")
+                raise RuntimeError(f"GitHub answers {e.code}, a redirect to {shown}, {why}") from e
+            wait = _retry_wait(e.code, e.headers, made) if made < _TRIES else None
+            if wait is None:
+                raise
+            if wait > _WAIT_MOST or _waited + wait > _WAIT_RUN:
+                raise RuntimeError(f"GitHub answers {e.code}, and the wait before the next request would be "
+                                   f"{wait} seconds; this script waits at most {_WAIT_MOST} seconds at a time and "
+                                   f"{_WAIT_RUN} in one run (it has waited {_waited}), so it was not asked "
+                                   "again") from e
+            code = e.code
+            e.close()
+        except ValueError as e:
+            # urllib reads the address a redirect names before it asks the handler, and raises a ValueError
+            # for one it cannot read, in words of its own: "Invalid IPv6 URL" for an unbalanced bracket, and
+            # for other bracketed text a sentence that quotes what stands in the brackets, uncut.
+            if handler.answer is None or handler.verdict is not None:
+                raise
+            code, named = handler.answer
+            raise RuntimeError(f"GitHub answers {code}, a redirect to {_shown(named, token)}, which urllib "
+                               "could not read as an address, so it was not followed") from e
+        # Outside the try, so that nothing a wait raises is taken for an answer. The line holds this
+        # script's own words and whole numbers, and no text a server sent.
+        print(f"styxx diffgate: GitHub answered {code}; asking again in {wait} s (request {made + 1} of {_TRIES})")
+        _waited += wait
+        _sleep(wait)
+    raise RuntimeError("the diff was not asked for")      # not reached: the last request returns or raises
 
 
 # Characters that are written as escapes wherever this script prints a claim, a reason or the text of
@@ -576,8 +683,26 @@ def _soft_fail(raw: str | None) -> tuple[bool, str | None]:
     return True, raw
 
 
+def _strict(raw: str | None) -> tuple[bool, str | None]:
+    """Read the strict input, the way ``_soft_fail`` reads its own. Returns ``(strict, unrecognised)``.
+
+    The value is compared case-insensitively with surrounding whitespace stripped: "true" gives
+    ``(True, None)`` and "false" gives ``(False, None)``. Unset (``None``) is the input's default,
+    "false". Every other value, the empty string included, is not strict and comes back as
+    ``unrecognised`` so the caller can name it in a warning.
+    """
+    if raw is None:
+        return False, None
+    value = raw.strip().lower()
+    if value == "true":
+        return True, None
+    if value == "false":
+        return False, None
+    return False, raw
+
+
 def main() -> int:
-    strict = os.environ.get("STYXX_STRICT", "false").lower() == "true"
+    strict, strict_unrecognised = _strict(os.environ.get("STYXX_STRICT"))
     # Only an explicit "false" blocks (see _soft_fail); any value it does not recognise reports, and is named here.
     soft, unrecognised = _soft_fail(os.environ.get("STYXX_SOFT_FAIL"))
     if unrecognised is not None:
@@ -585,6 +710,12 @@ def main() -> int:
         print(f"::warning title=styxx diffgate - soft-fail value not recognised::soft-fail is {shown}, which is "
               "neither \"true\" nor \"false\" (compared case-insensitively, surrounding whitespace stripped), so "
               "this check reports and does not fail the job. Set soft-fail: \"false\" to fail it.")
+    if strict_unrecognised is not None:
+        shown = repr(strict_unrecognised).replace("%", "%25")
+        print(f"::warning title=styxx diffgate - strict value not recognised::strict is {shown}, which is "
+              "neither \"true\" nor \"false\" (compared case-insensitively, surrounding whitespace stripped), so "
+              "strict is off: a claim the gate could not check does not fail the job on that account. Set "
+              "strict: \"true\" to turn it on.")
     event_name = os.environ.get("GITHUB_EVENT_NAME", "")
     event = json.loads(open(os.environ["GITHUB_EVENT_PATH"], encoding="utf-8").read())
 
