@@ -7,17 +7,18 @@ description: >-
   PR body (or push commit message) and verifies each against the actual diff — checkout-free,
   via the GitHub API. It gates two events: pull_request (the description against the pull
   request's diff) and push (the head commit's message against the compare diff). On any other
-  event, pull_request_target and merge_group among them, it prints one line, reads no claim, and
-  the job passes whatever soft-fail and strict are set to. The text is read in its Markdown
-  source, so an HTML comment, a task-list item and a sentence inside a code fence are read like
-  any other sentence. Where the runner's environment names a proxy the request goes through it,
-  and a proxy in front of a plain-http API origin reads the workflow token. By default it reports
-  and does not block: each claim has a row in the job summary's table (up to 524,288 bytes of
-  rows; the claims past that are counted by verdict), an error command is printed for every
-  contradicted claim, and a warning command for at most 100 of the claims the gate could not
-  check. GitHub's documentation of its checks API says "GitHub Actions are limited to 10 warning
-  annotations and 10 error annotations per step", so a claim past the tenth of its kind has its
-  row in the table and its line in the job's log, and may have no annotation. The job fails on a
+  event, pull_request_target and merge_group among them, it reads no claim, prints a line saying
+  the event is not gated, and the job passes whatever soft-fail and strict are set to. The text
+  is read in its Markdown source, so an HTML comment, a task-list item and a sentence inside a
+  code fence are read like any other sentence. Where the runner's environment names a proxy for
+  the API's host the request goes through it, and a proxy in front of a plain-http API origin
+  reads the workflow token. By default it reports and does not block: where the gate read the
+  diff, each claim has a row in the job summary's table (up to 524,288 bytes of rows; the claims
+  past that are counted by verdict), an error command is printed for every contradicted claim
+  (with strict, for every claim the gate could not check too), and a warning command for at most
+  100 of the other claims the gate could not check. GitHub's documentation of its checks API says
+  "GitHub Actions are limited to 10 warning annotations and 10 error annotations per step", so a
+  command past the tenth of its kind may be shown as no annotation: read the table. The job fails on a
   contradicted claim only if you set soft-fail: "false". With soft-fail: "false" the job also
   fails on a claim the gate
   reports UNCHECKABLE because its PATH-2a overlay withheld a CONTRADICTED reading of it, and on a

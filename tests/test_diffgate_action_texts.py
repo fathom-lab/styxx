@@ -57,10 +57,12 @@ def test_the_events_the_texts_name_are_the_ones_main_gates():
     assert gated == {"pull_request", "push"}
     yml = _flat((ROOT / "action.yml").read_text(encoding="utf-8"))
     assert "It gates two events: pull_request (the description against the pull request's diff) and push" in yml
-    assert "On any other event, pull_request_target and merge_group among them, it prints one line" in yml
+    assert ("On any other event, pull_request_target and merge_group among them, it reads no claim, prints a "
+            "line saying the event is not gated") in yml
     readme = (ROOT / "README.md").read_text(encoding="utf-8")
     assert "It gates `pull_request` and `push` events" in readme
-    assert "on any other event, `pull_request_target` and `merge_group` among them, it prints one line" in readme
+    assert ("on any other event, `pull_request_target` and `merge_group` among them, it reads no claim, prints "
+            "a line saying the event is not gated") in readme
     assert "types: [opened, edited, synchronize, reopened]" in readme
 
 
@@ -113,6 +115,11 @@ PUSH = {
                              "did not measure the diff and the head commit message holds no claim the gate reads"),
     "measured, a claim": (dict(event="push", body=FC.FALSE),
                           "did not measure while the head commit message holds a claim the gate reads"),
+    # paths that print none of the four sentences in every mode, and must not say "description" in any
+    "unmeasured, a claim": (dict(event="push", body=FC.FALSE, api=""), None),
+    "a withheld contradiction": (dict(event="push", body=FC.ACCENTED), None),
+    "creating a branch, a claim": (FC.PATHS["F3 push creating a branch, a claim"], None),
+    "creating a branch, no claim": (FC.PATHS["F4 push creating a branch, no claim"], None),
 }
 
 
@@ -120,8 +127,9 @@ PUSH = {
 def test_on_a_push_the_text_is_the_head_commit_message(act, tmp_path, monkeypatch, capsys, name):
     case, sentence = PUSH[name]
     rc, out, summary, _ = FC.run_main(act, tmp_path, monkeypatch, capsys, case, "false", False)
-    assert sentence in out + summary, out + summary
-    for soft in ("false", "true"):
+    if sentence is not None:
+        assert sentence in out + summary, out + summary
+    for soft in ("false", "true", "maybe", None):
         for strict in (False, True):
             _, out, summary, _ = FC.run_main(act, tmp_path, monkeypatch, capsys, case, soft, strict)
             assert "description" not in out + summary, (soft, strict, out + summary)

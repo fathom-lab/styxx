@@ -7,8 +7,9 @@ annotations for contradictions, and exits per the gate verdict and the strict/so
 inputs. Two events are gated: ``pull_request`` (the description against the pull request's
 diff) and ``push`` (the head commit's message against the compare diff); a push that creates a
 tag is not gated. On every other event (``pull_request_target`` and ``merge_group`` among them)
-the script prints one line saying the event is not gated, reads no claim, writes no summary and
-exits 0, whatever strict and soft-fail are set to.
+the script reads no claim and writes no summary; it prints a line saying the event is not gated
+(after its warning for a soft-fail value it does not recognise, where there is one) and exits 0,
+whatever strict and soft-fail are set to.
 
 The text is read as it was written. A description is read in its Markdown source, so an HTML
 comment, a task-list item and a sentence inside a code fence are read like any other sentence.
@@ -19,14 +20,16 @@ import below finds ``styxx`` in the Action's checkout, at the ref the workflow n
 What ``action.yml``'s styxx-version input installs supplies the one package that code imports from
 outside the standard library (numpy); it does not choose the gate.
 
-What is printed for the claims: a row of the summary's table for each, up to 524,288 bytes of rows
-(a line under the table counts the claims past that by verdict); an ``::error`` command for every
-contradicted claim, under strict for every UNCHECKABLE one, and in a blocking check for every claim
-whose CONTRADICTED reading the overlay withheld; and a ``::warning`` command for at most 100 of the
-other claims the gate could not check, with one more that counts the rest where there are more.
-GitHub's documentation of its checks API says "GitHub Actions are limited to 10 warning annotations
-and 10 error annotations per step", so a claim past the tenth of its kind in the step has its row
-in the table and its line in the job's log, and may have no annotation.
+What is printed for the claims, where the gate read the diff (a diff that was not fetched, or that
+the gate did not measure, has a summary with no table and one command for the run): a row of the
+summary's table for each claim, up to 524,288 bytes of rows (a line under the table counts the
+claims past that by verdict); an ``::error`` command for every contradicted claim, under strict
+for every UNCHECKABLE one, and in a blocking check for every claim whose CONTRADICTED reading the
+overlay withheld; and a ``::warning`` command for at most 100 of the other claims the gate could
+not check, with one more that counts the rest where there are more. GitHub's documentation of its
+checks API says "GitHub Actions are limited to 10 warning annotations and 10 error annotations per
+step", so a command past the tenth of its kind in the step may be shown as no annotation, and the
+table is the place to read the claims.
 
 soft-fail (STYXX_SOFT_FAIL, which action.yml fills from its soft-fail input) is read by
 ``_soft_fail``, and only an explicit "false" blocks. The value is compared case-insensitively
@@ -34,8 +37,8 @@ with surrounding whitespace stripped. "false" blocks: the job fails on a contrad
 claim the gate reports UNCHECKABLE because its PATH-2a overlay withheld a CONTRADICTED reading of it;
 and on a diff that could not be fetched, or that the gate did not measure, while the text holds a
 claim the gate reads. With strict on it fails on every UNCHECKABLE claim too, and on a diff it did not
-read whatever a non-empty text holds (an empty one is not gated). "true" reports: every verdict goes to the job summary and
-the annotations. Unset reads as "true", the input's default. Every other value, the empty string
+read whatever a non-empty text holds (an empty one is not gated). "true" reports: the verdicts go to the job summary and
+to workflow commands, within the limits given above. Unset reads as "true", the input's default. Every other value, the empty string
 included, reports as "true" does, and the script prints a warning naming the value it did not
 recognise. In report mode the gate's verdicts never fail the job; an error the script does not
 catch (an unreadable event file, for one) still does.
