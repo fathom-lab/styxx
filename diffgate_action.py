@@ -11,6 +11,14 @@ the script reads no claim and writes no summary; it prints a line saying the eve
 (after its warning for a soft-fail value it does not recognise, where there is one) and exits 0,
 whatever strict and soft-fail are set to.
 
+Two cases have a reading of their own. A push that creates a branch has no commit before it, so
+the compare address names no base: the head commit's one parent is looked up and the head commit is
+read against it, which is that commit's own diff, and the earlier commits of the push are not read
+(``_own_diff_address``; a head commit with no parent, or a merge, is not read). A pull request whose
+diff GitHub refuses with HTTP 406 is read against GitHub's list of its files, written as a diff of
+headers and no content, where every claim the gate reads is about which files changed and the list
+is whole (``_list_reading`` gives each condition); otherwise the diff was not fetched, as before.
+
 The text is read as it was written. A description is read in its Markdown source, so an HTML
 comment, a task-list item and a sentence inside a code fence are read like any other sentence.
 
@@ -659,6 +667,177 @@ def _claims_text(n) -> str:
     return "the claims" if n is None else f"{n} claim(s)"
 
 
+_SHA = re.compile("[0-9a-f]{40}(?:[0-9a-f]{24})?")      # a commit's id as GitHub writes it: SHA-1, or SHA-256
+
+
+def _json(text: str, of: str):
+    try:
+        return json.loads(text)
+    except ValueError:
+        raise RuntimeError(f"GitHub's answer for {of} is not JSON") from None
+
+
+class _NoOneParent(RuntimeError):
+    """The head commit of a push that created its branch has no parent, or more than one."""
+
+
+def _own_diff_address(event):
+    """For a push that created its branch: the address of the head commit's own diff, which is the
+    compare of its one parent with it; or None where the event does not carry what the lookup needs
+    (``after`` as a commit id that is also the ``id`` of the head commit, whose message is the text
+    gated; ``repository.git_commits_url`` and ``repository.compare_url`` as the templates GitHub
+    sends), and then nothing is looked up.
+
+    Such a push has no commit before it, so the address the event's compare template gives names no
+    base and the API answers 404. The parent is read from the Git database endpoint, whose answer
+    holds the commit's parents and no file. A commit with no parent, or with more than one (a merge),
+    is not read against one of them: ``_NoOneParent``. A lookup that fails raises what ``api`` raised."""
+    repo = event.get("repository") or {}
+    after, commits, compare = event.get("after"), repo.get("git_commits_url"), repo.get("compare_url")
+    if not (isinstance(after, str) and _SHA.fullmatch(after) and (event.get("head_commit") or {}).get("id") == after
+            and isinstance(commits, str) and "{/sha}" in commits
+            and isinstance(compare, str) and "{base}" in compare and "{head}" in compare):
+        return None
+    answer = _json(api(commits.replace("{/sha}", "/" + after), "application/vnd.github+json"), "the head commit")
+    parents = answer.get("parents") if isinstance(answer, dict) else None
+    if not isinstance(parents, list):
+        raise RuntimeError("GitHub's answer for the head commit holds no list of parents")
+    if not parents:
+        raise _NoOneParent("the head commit has no parent to read it against")
+    if len(parents) > 1:
+        raise _NoOneParent(f"the head commit is a merge of {len(parents)} parents, and this script reads a commit "
+                           "against one parent only")
+    sha = parents[0].get("sha") if isinstance(parents[0], dict) else None
+    if not (isinstance(sha, str) and _SHA.fullmatch(sha)):
+        raise RuntimeError("GitHub's answer for the head commit names a parent that is not a commit id")
+    return compare.replace("{base}", sha).replace("{head}", after)
+
+
+# The kinds of claim whose verdict turns on which files changed and on no line of content, and the one
+# kind that reads nothing of the diff in the Action (``tests_pass``, UNCHECKABLE there whatever the diff
+# holds). A claim of any other kind, one the gate may gain later included, needs the diff's content.
+_LIST_KINDS = frozenset({"file_created", "file_deleted", "file_touched", "files_changed_count", "only_touches",
+                         "tests_pass"})
+_LIST_STATUSES = ("added", "removed", "modified", "renamed")
+_LIST_PAGE = 100            # the most files GitHub puts on one page of the list
+_LIST_PAGES = 30            # GitHub lists at most 3,000 files of a pull request
+# A file name this script writes a diff header for: printable ASCII without a double quote and a
+# backslash, with no space at either end. git writes such a name into a header as it is; any other it
+# writes in quotes with escapes, and a space at an end is read apart by the gate's reader.
+_LIST_NAME = re.compile(r"[!#-\[\]-~](?:[ !#-\[\]-~]*[!#-\[\]-~])?")
+
+
+class _ListNotUsed(Exception):
+    """GitHub's list of a pull request's files was not asked for, or was asked for and not used.
+    ``before`` and ``after`` are this script's own words; ``text`` is what a failed request said of
+    itself, which a server can choose, and is escaped for the place it is printed. A ``before`` that
+    is empty means there was no claim to judge, and nothing is said of the list."""
+
+    def __init__(self, before: str, text: str = "", after: str = ""):
+        super().__init__(before + text + after)
+        self.before, self.text, self.after = before, text, after
+
+
+def _headers_only(entries) -> str:
+    """A diff of headers and no content, from entries of (status, name, previous name): for each file
+    the lines git writes before a file's hunks, and no hunk."""
+    out = []
+    for status, name, previous in entries:
+        if status == "renamed":
+            out += [f"diff --git a/{previous} b/{name}", "similarity index 100%", f"rename from {previous}",
+                    f"rename to {name}"]
+            continue
+        out.append(f"diff --git a/{name} b/{name}")
+        if status == "added":
+            out.append("new file mode 100644")
+        elif status == "removed":
+            out.append("deleted file mode 100644")
+    return "\n".join(out) + "\n"
+
+
+def _list_reading(event, summary: str, strict: bool, text_name: str):
+    """For a pull request whose diff GitHub refused: ``(diff, files)``, a diff of headers only written
+    from GitHub's list of the pull request's files, and how many files it holds; or ``_ListNotUsed``.
+
+    The list carries every path and whether it was added, removed, modified or renamed. It carries
+    content for some files only, so it stands in for the diff only where every claim the gate reads
+    is of a kind in ``_LIST_KINDS``; no line of content is handed to the gate, even where the list
+    has one. It is used only where it is whole and is the pull request the event names: as many
+    entries as the event's ``changed_files``, every status and name of a kind this script writes a
+    header for, and, read again after the last page, the same head commit and the same count."""
+    listed = "GitHub's list of the pull request's files"
+    try:
+        claims = list(gate_diff_text(summary, "", strict=strict).claims)
+    except Exception:  # noqa: BLE001
+        raise _ListNotUsed(f"{listed} was not asked for, because the gate could not say which claims the "
+                           f"{text_name} holds.") from None
+    if not claims:
+        raise _ListNotUsed("")
+    other = sum(1 for c in claims if c.kind not in _LIST_KINDS)
+    if other:
+        raise _ListNotUsed(f"{listed} was not asked for: it carries the files' paths and not all of their "
+                           f"content, and {other} of the {len(claims)} claim(s) the gate reads in the {text_name} "
+                           f"need the diff's content. A {text_name} whose claims are all about which files changed "
+                           "is read against that list.")
+    pr = event.get("pull_request") or {}
+    count, head, url = pr.get("changed_files"), (pr.get("head") or {}).get("sha"), pr.get("url")
+    if type(count) is not int or not isinstance(head, str) or not isinstance(url, str):
+        raise _ListNotUsed(f"{listed} was not asked for: the event does not carry the pull request's count of "
+                           "changed files and its head commit, which the list is checked against.")
+    entries = []
+    for page in range(1, _LIST_PAGES + 1):
+        try:
+            got = _json(api(f"{url}/files?per_page={_LIST_PAGE}&page={page}", "application/vnd.github+json"),
+                        "the list of files")
+        except Exception as e:  # noqa: BLE001
+            needs = (" The list needs the permission `pull-requests: read`."
+                     if isinstance(e, urllib.error.HTTPError) and e.code in (403, 404) else "")
+            raise _ListNotUsed(f"{listed} could not be fetched: ", _failure_text(e), f".{needs}") from e
+        if not isinstance(got, list) or not all(isinstance(x, dict) for x in got):
+            raise _ListNotUsed(f"{listed} was not used: a page of it is not a list of files.")
+        entries += got
+        if len(got) < _LIST_PAGE:
+            break
+    if len(entries) != count:
+        raise _ListNotUsed(f"{listed} was not used: it holds {len(entries)} file(s) and the event says {count} "
+                           f"changed (GitHub lists at most {_LIST_PAGE * _LIST_PAGES:,}). A re-run reads it again.")
+    read, names = [], set()
+    for x in entries:
+        status, name, previous = x.get("status"), x.get("filename"), x.get("previous_filename")
+        ok = (status in _LIST_STATUSES and isinstance(name, str) and _LIST_NAME.fullmatch(name) is not None
+              and name not in names
+              and (status != "renamed" or (isinstance(previous, str) and _LIST_NAME.fullmatch(previous) is not None)))
+        if ok:
+            names.add(name)
+            read.append((status, name, previous))
+    if len(read) != count:
+        raise _ListNotUsed(f"{listed} was not used: {count - len(read)} of its {count} file(s) have a status "
+                           "other than added, removed, modified or renamed, or a name this script writes no diff "
+                           "header for (a character outside printable ASCII, a double quote, a backslash, a space "
+                           "at either end, or a name listed twice).")
+    try:
+        now = _json(api(url, "application/vnd.github+json"), "the pull request")
+    except Exception as e:  # noqa: BLE001
+        raise _ListNotUsed(f"{listed} was not used, because the pull request could not be read again after it: ",
+                           _failure_text(e), ". A re-run reads it again.") from e
+    if not (isinstance(now, dict) and isinstance(now.get("head"), dict) and now["head"].get("sha") == head
+            and type(now.get("changed_files")) is int and now["changed_files"] == count):
+        raise _ListNotUsed(f"{listed} was not used: the pull request changed while the list was read (its head "
+                           "commit or its count of changed files is no longer the event's). A re-run reads it "
+                           "again.")
+    return _headers_only(read), count
+
+
+def _github_says(e) -> str:
+    """The message in the body of an HTTP error GitHub answered, or "": the string at ``message`` of
+    a JSON object, read from at most 4,096 bytes and cut at 300 characters."""
+    try:
+        message = json.loads(e.read(4096).decode("utf-8", errors="replace")).get("message")
+    except Exception:  # noqa: BLE001
+        return ""
+    return message[:300] if isinstance(message, str) else ""
+
+
 def _write_summary(lines) -> None:
     path = os.environ.get("GITHUB_STEP_SUMMARY")
     if path:
@@ -756,9 +935,59 @@ def main() -> int:
     if not summary.strip():
         print(f"styxx diffgate: empty {what} — nothing to gate")
         return 0
+    read_note = ""          # where the diff read is not the event's own: what was read in its place, for the summary
+    read_last = ""          # the same, for the last line the gate prints
+    looking_up = False      # the head commit's parent was being looked up when the fetch failed
+    list_note = None        # why GitHub's list of files was not used, where it refused the diff
+    says = ""               # GitHub's own message, where it refused the diff
+    listed_files = None     # how many files GitHub's list held, where it was read in a refused diff's place
+    failure = None
     try:
+        if (event_name == "push" and _creates_ref(event) and isinstance(event.get("ref"), str)
+                and event["ref"].startswith("refs/heads/")):
+            # A push that creates a branch has no commit before it. Its head commit is read against its
+            # one parent: the message gated is that commit's, and so is the diff.
+            looking_up = True
+            own = _own_diff_address(event)
+            looking_up = False
+            if own is not None:
+                diff_url = own
+                read_note = ("_This push created its branch, so there is no commit before it to compare with. "
+                             "The diff read is the head commit's own, against its one parent; the earlier "
+                             "commits of the same push were not read._")
+                read_last = ("; the diff read is the head commit's own against its one parent (the push created "
+                             "its branch)")
         diff = api(diff_url, "application/vnd.github.diff")
     except Exception as e:  # noqa: BLE001
+        failure = e
+    if (failure is not None and event_name == "pull_request" and isinstance(failure, urllib.error.HTTPError)
+            and failure.code == 406):
+        # GitHub refuses a pull request's diff past its size limit. Where every claim in the description
+        # is about which files changed, its list of the pull request's files is read in the diff's place.
+        token = os.environ.get("GH_TOKEN")
+        says = _github_says(failure)
+        refusal = _failure_text(failure)
+        if says:
+            refusal = _hide(f"{refusal} (GitHub says: {_printable(says)})", token)
+        try:
+            diff, files = _list_reading(event, summary, strict, text_name)
+        except _ListNotUsed as unused:
+            list_note = unused
+        else:
+            failure, listed_files = None, files
+            read_note = (f"_GitHub refused this pull request's diff: `{_hide(_code_span(refusal), token)}`. Every "
+                         f"claim the gate reads in the {text_name} is about which files changed, so the gate read "
+                         f"GitHub's list of the pull request's files in the diff's place: {files} file(s), each "
+                         "with its path and whether it was added, removed, modified or renamed, and no line of "
+                         "content._")
+            read_last = f"; read against GitHub's list of {files} file(s), the diff being refused"
+            print("::notice title=styxx diffgate - list of files read for a refused diff::GitHub refused this "
+                  f"pull request's diff ({_hide(_command_data(refusal), token)}). Every claim the gate reads in "
+                  f"the {text_name} is about which files changed, so the gate read GitHub's list of the pull "
+                  f"request's {files} file(s) in the diff's place: paths and whether each was added, removed, "
+                  "modified or renamed, and no line of content.")
+    if failure is not None:
+        e = failure
         # This branch used to `return 0` under a comment saying "a broken fetch
         # must not fake a verdict" — and 0 IS the passing verdict. A gate that
         # could not read the diff has not cleared anything. A blocking check
@@ -771,25 +1000,46 @@ def main() -> int:
         # workflow command, and a code span. The token is looked for once more in each finished text,
         # because "%25" and "%0D" can end in the characters a token starts with, as an escape can.
         why, token = _failure_text(e), os.environ.get("GH_TOKEN")
+        if says:                # GitHub's own message for a diff it refused, after urllib's words for the answer
+            why = _hide(f"{why} (GitHub says: {_printable(says)})", token)
+        # Why GitHub's list of files did not stand in for a refused diff, as a command carries it and as
+        # the summary does; empty where the diff was not refused, and where there was no claim to judge.
+        list_cmd = list_md = ""
+        if list_note is not None and list_note.before:
+            list_cmd = " " + list_note.before + _hide(_command_data(list_note.text), token) + list_note.after
+            list_md = list_note.before + (f"`{_hide(_code_span(list_note.text), token)}`" if list_note.text
+                                          else "") + list_note.after
         clean = ("_This is not a clean result. A gate with no diff to read "
                  "cannot contradict anything, which is true of every "
                  "summary ever written._")
         if soft:
             print(f"::warning title=styxx diffgate - could not fetch the diff::"
-                  f"{_hide(_command_data(why), token)}. The gate did not run; this is not a pass.")
+                  f"{_hide(_command_data(why), token)}.{list_cmd} The gate did not run; this is not a pass.")
             _write_summary(["## styxx diffgate — DID NOT RUN", "",
-                            f"The diff could not be fetched: `{_hide(_code_span(why), token)}`.", "",
-                            clean, "",
-                            f"_A workflow that sets `soft-fail: \"false\"` fails the job here when the {what} "
-                            "holds a claim the gate reads, and with `strict: true` too whatever it holds._"])
+                            f"The diff could not be fetched: `{_hide(_code_span(why), token)}`.", ""]
+                           + ([list_md, ""] if list_md else [])
+                           + [clean, "",
+                              f"_A workflow that sets `soft-fail: \"false\"` fails the job here when the {what} "
+                              "holds a claim the gate reads, and with `strict: true` too whatever it holds._"])
             return 0
         n = _claims_without_diff(summary, strict)
         holds = n is None or n > 0
-        no_base = (" A push that creates a branch has no base commit to compare with, so a re-run fails the "
-                   "same way."
-                   if event_name == "push" and _creates_ref(event) else "")
-        again = ("A re-run reads the diff again, which is the remedy where the failure was passing; GitHub "
-                 f"refuses a diff past its size limit, and no rewording of the {text_name} makes it serve one.")
+        if not (event_name == "push" and _creates_ref(event)) or read_last:
+            no_base = ""        # not a push that created its ref, or its parent was found and the compare failed
+        elif looking_up and not isinstance(e, _NoOneParent):
+            no_base = (" A push that creates a branch has no base commit to compare with, so the head commit's "
+                       "parent was looked up, and the lookup failed; a re-run asks again.")
+        else:
+            no_base = (" A push that creates a branch has no base commit to compare with, so a re-run fails the "
+                       "same way.")
+        if list_cmd:
+            # GitHub refused the diff and its list of files was not used: the sentence above says why, and
+            # what would have let the list be read.
+            again = ("A re-run asks for the diff again; while GitHub refuses it, the gate reads at most the list "
+                     "of files.")
+        else:
+            again = ("A re-run reads the diff again, which is the remedy where the failure was passing; GitHub "
+                     f"refuses a diff past its size limit, and no rewording of the {text_name} makes it serve one.")
         if not holds and not strict:
             print(f"::warning title=styxx diffgate - could not fetch the diff::"
                   f"{_hide(_command_data(why), token)}.{no_base} The gate did not run. The {what} holds no claim "
@@ -816,11 +1066,12 @@ def main() -> int:
                     "contradicted.")
             remedy = again
         print(f"::error title=styxx diffgate - diff not read so the check fails::"
-              f"{_hide(_command_data(why), token)}.{no_base} {rule} {remedy}")
+              f"{_hide(_command_data(why), token)}.{no_base}{list_cmd} {rule} {remedy}")
         _write_summary(["## styxx diffgate — DID NOT RUN, and the check fails", "",
-                        f"The diff could not be fetched: `{_hide(_code_span(why), token)}`.{no_base}", "",
-                        rule.replace('(soft-fail: "false")', '(`soft-fail: "false"`)') + " " + remedy, "",
-                        clean])
+                        f"The diff could not be fetched: `{_hide(_code_span(why), token)}`.{no_base}", ""]
+                       + ([list_md, ""] if list_md else [])
+                       + [rule.replace('(soft-fail: "false")', '(`soft-fail: "false"`)') + " " + remedy, "",
+                          clean])
         print("styxx diffgate: DID NOT RUN - the diff could not be fetched; "
               + (f"{_claims_text(n)} not judged; the job fails because soft-fail is \"false\"" if holds else
                  f"the {what} holds no claim the gate reads; the job fails because soft-fail is \"false\" and "
@@ -842,7 +1093,7 @@ def main() -> int:
                 f"Every claim in the {what} is reported UNCHECKABLE, not "
                 "verified. A PASS here would mean *nothing contradicted "
                 "the summary* — which is true of any summary when there "
-                "is no diff to read.", ""]
+                "is no diff to read.", ""] + ([read_note, ""] if read_note else [])
         if soft:
             print(f"::warning title=styxx diffgate - UNMEASURED::"
                   f"{_message(g.why_unmeasured)}. The gate did not run; this is not a pass.")
@@ -893,7 +1144,9 @@ def main() -> int:
                         f"checked on the {what}")
     else:
         verdict_line = f"**{g.verdict}** · {len(g.claims)} claim(s) checked on the {what}"
-    lines = ["## styxx diffgate — the summary vs the diff", "", verdict_line, ""]
+    heading = ("## styxx diffgate — the summary vs GitHub's list of the changed files" if listed_files is not None
+               else "## styxx diffgate — the summary vs the diff")
+    lines = [heading, "", verdict_line, ""] + ([read_note, ""] if read_note else [])
     if withheld:
         # Written above the table and outside its byte budget, so the reason the job fails is never cut.
         # At most ten of the claims are named, each cut at 80 characters, so these lines stay small.
@@ -1045,7 +1298,7 @@ def main() -> int:
         last += (f"; {len(withheld)} not judged (a CONTRADICTED reading withheld by the overlay), so the job "
                  + ("fails although the gate's verdict is PASS" if g.verdict == "PASS" else "fails")
                  + " because soft-fail is \"false\"")
-    print(last)
+    print(last + read_last)
     if failing and not soft:
         return 1
     if failing and soft:
