@@ -280,6 +280,69 @@ _UNSEEN = frozenset(chr(c) for low, high in (
 ) for c in range(low, high + 1))
 
 
+# The two joiners and the variation selectors, which the list above leaves out because by the
+# standard's account the character beside them can be drawn by them. Whether one is written as itself
+# turns on the characters beside it, and not on whether the standard lists the pair: one of the 258
+# selectors other than U+FE0E and U+FE0F after any character past U+009F that is written as itself
+# and is no joiner or selector; U+FE0E and U+FE0F after any character of ``_EMOJI`` below, or in a
+# keycap; a joiner between two such characters, or between a selector written as itself and one
+# such character (``_printable`` says it in full). By the standard's account many of those places
+# have nothing to draw, U+FE00 after an accented letter among them. Elsewhere they are written as
+# escapes: between two ASCII letters of a path they have nothing to draw, and by the standard's
+# account they have no glyph there.
+_JOINERS = frozenset("\u200c\u200d")
+_SELECTORS = frozenset(chr(c) for low, high in (
+    (0x180B, 0x180D), (0x180F, 0x180F),   # Mongolian free variation selectors
+    (0xFE00, 0xFE0F),                     # variation selectors 1 to 16
+    (0xE0100, 0xE01EF),                   # variation selectors 17 to 256
+) for c in range(low, high + 1))
+_KEYCAP_BASES = frozenset("#*0123456789")
+# U+FE0E and U+FE0F choose between the text form and the emoji form of the character before them. The
+# standard gives them that work only after a character with its Emoji property, and of those only
+# after the ones emoji-variation-sequences.txt lists (UTS #51, ED-8a and ED-9a); in Unicode 15.0 that
+# file lists 342 past U+009F. They are written as themselves after any character of the table below,
+# or in a keycap. So after 1,070 of its characters, U+1F600 among them, they are written as
+# themselves where the standard lists no sequence. The table holds the characters past U+009F with
+# the Emoji property in Unicode 15.0, written out here: 1,412 code points.
+_STYLE_SELECTORS = frozenset("\ufe0e\ufe0f")
+_EMOJI = frozenset(chr(c) for item in (
+    0x00A9, 0x00AE, 0x203C, 0x2049, 0x2122, 0x2139, (0x2194, 0x2199), (0x21A9, 0x21AA),
+    (0x231A, 0x231B), 0x2328, 0x23CF, (0x23E9, 0x23F3), (0x23F8, 0x23FA), 0x24C2, (0x25AA, 0x25AB),
+    0x25B6, 0x25C0, (0x25FB, 0x25FE), (0x2600, 0x2604), 0x260E, 0x2611, (0x2614, 0x2615), 0x2618,
+    0x261D, 0x2620, (0x2622, 0x2623), 0x2626, 0x262A, (0x262E, 0x262F), (0x2638, 0x263A), 0x2640,
+    0x2642, (0x2648, 0x2653), (0x265F, 0x2660), 0x2663, (0x2665, 0x2666), 0x2668, 0x267B,
+    (0x267E, 0x267F), (0x2692, 0x2697), 0x2699, (0x269B, 0x269C), (0x26A0, 0x26A1), 0x26A7,
+    (0x26AA, 0x26AB), (0x26B0, 0x26B1), (0x26BD, 0x26BE), (0x26C4, 0x26C5), 0x26C8,
+    (0x26CE, 0x26CF), 0x26D1, (0x26D3, 0x26D4), (0x26E9, 0x26EA), (0x26F0, 0x26F5),
+    (0x26F7, 0x26FA), 0x26FD, 0x2702, 0x2705, (0x2708, 0x270D), 0x270F, 0x2712, 0x2714, 0x2716,
+    0x271D, 0x2721, 0x2728, (0x2733, 0x2734), 0x2744, 0x2747, 0x274C, 0x274E, (0x2753, 0x2755),
+    0x2757, (0x2763, 0x2764), (0x2795, 0x2797), 0x27A1, 0x27B0, 0x27BF, (0x2934, 0x2935),
+    (0x2B05, 0x2B07), (0x2B1B, 0x2B1C), 0x2B50, 0x2B55, 0x3030, 0x303D, 0x3297, 0x3299, 0x1F004,
+    0x1F0CF, (0x1F170, 0x1F171), (0x1F17E, 0x1F17F), 0x1F18E, (0x1F191, 0x1F19A),
+    (0x1F1E6, 0x1F1FF), (0x1F201, 0x1F202), 0x1F21A, 0x1F22F, (0x1F232, 0x1F23A),
+    (0x1F250, 0x1F251), (0x1F300, 0x1F321), (0x1F324, 0x1F393), (0x1F396, 0x1F397),
+    (0x1F399, 0x1F39B), (0x1F39E, 0x1F3F0), (0x1F3F3, 0x1F3F5), (0x1F3F7, 0x1F4FD),
+    (0x1F4FF, 0x1F53D), (0x1F549, 0x1F54E), (0x1F550, 0x1F567), (0x1F56F, 0x1F570),
+    (0x1F573, 0x1F57A), 0x1F587, (0x1F58A, 0x1F58D), 0x1F590, (0x1F595, 0x1F596),
+    (0x1F5A4, 0x1F5A5), 0x1F5A8, (0x1F5B1, 0x1F5B2), 0x1F5BC, (0x1F5C2, 0x1F5C4),
+    (0x1F5D1, 0x1F5D3), (0x1F5DC, 0x1F5DE), 0x1F5E1, 0x1F5E3, 0x1F5E8, 0x1F5EF, 0x1F5F3,
+    (0x1F5FA, 0x1F64F), (0x1F680, 0x1F6C5), (0x1F6CB, 0x1F6D2), (0x1F6D5, 0x1F6D7),
+    (0x1F6DC, 0x1F6E5), 0x1F6E9, (0x1F6EB, 0x1F6EC), 0x1F6F0, (0x1F6F3, 0x1F6FC),
+    (0x1F7E0, 0x1F7EB), 0x1F7F0, (0x1F90C, 0x1F93A), (0x1F93C, 0x1F945), (0x1F947, 0x1F9FF),
+    (0x1FA70, 0x1FA7C), (0x1FA80, 0x1FA88), (0x1FA90, 0x1FABD), (0x1FABF, 0x1FAC5),
+    (0x1FACE, 0x1FADB), (0x1FAE0, 0x1FAE8), (0x1FAF0, 0x1FAF8),
+) for c in (range(item[0], item[1] + 1) if isinstance(item, tuple) else (item,)))
+
+
+def _plain(c: str) -> bool:
+    """True for a character that is written as itself wherever it stands: not a control character
+    other than a tab, CR and LF, not a line separator, a lone surrogate or a character of
+    ``_UNSEEN``, and not a joiner or a selector, which are written as themselves in some places."""
+    return (c in "\t\r\n" or " " <= c < "\x7f"
+            or ("\x9f" < c and c not in "\u2028\u2029" and not "\ud800" <= c <= "\udfff"
+                and c not in _UNSEEN and c not in _JOINERS and c not in _SELECTORS))
+
+
 def _printable(text: str) -> str:
     """``text`` with every control character other than a tab, CR and LF written as an escape (ESC
     as ``\\x1b``), and with them the two Unicode line separators (``\\u2028``), a surrogate that
@@ -287,23 +350,56 @@ def _printable(text: str) -> str:
     write as a raw byte, and the characters of ``_UNSEEN``: the ones that change the order text is
     shown in (``\\u202e``) and the ones that show nothing (``\\u200b``, a tag character as
     ``\\U000e0041``). A tab ends no line and is left. CR and LF are left for the place the text is
-    printed, which deals with them in its own way."""
-    def written(c: str) -> str:
-        if c in "\t\r\n" or " " <= c < "\x7f" or ("\x9f" < c and c not in "\u2028\u2029"
-                                                and not "\ud800" <= c <= "\udfff" and c not in _UNSEEN):
-            return c
-        return f"\\x{ord(c):02x}" if c < "\u0100" else f"\\u{ord(c):04x}" if c < "\U00010000" else f"\\U{ord(c):08x}"
-    return "".join(written(c) for c in text)
+    printed, which deals with them in its own way.
+
+    A variation selector is written as itself only straight after a character past U+009F that is
+    itself written as itself and is no joiner or selector (an ideograph, a Mongolian letter); and
+    U+FE0E and U+FE0F, which choose between a text and an emoji form, only after such a character
+    that has the Emoji property in Unicode 15.0 (``_EMOJI``), or between a keycap's base and its
+    U+20E3 (``1``, U+FE0F, U+20E3). A joiner is written as itself only between two characters past
+    U+009F that are written as themselves, where the one before it may also be a selector that was
+    written as itself and the one after it is no joiner or selector. Anywhere else they are written
+    as escapes too (``\\ufe0f``, ``\\u200d``): a selector at the start of the text or after an
+    ASCII character, an escape, a joiner or another selector; a joiner at an edge, beside an ASCII
+    character or an escape, before a selector or beside another joiner."""
+    out, before = [], ""            # before: what the character before was, where it was written as itself
+    for i, c in enumerate(text):
+        after = text[i + 1] if i + 1 < len(text) else ""
+        if c in _STYLE_SELECTORS:
+            kept = before == "emoji" or (before == "keycap base" and after == "\u20e3")
+            before = "selector" if kept else ""
+        elif c in _SELECTORS:
+            kept = before in ("wide", "emoji")
+            before = "selector" if kept else ""
+        elif c in _JOINERS:
+            kept = before in ("wide", "emoji", "selector") and after > "\x9f" and _plain(after)
+            before = "joiner" if kept else ""
+        else:
+            kept = _plain(c)
+            before = ("" if not kept else "emoji" if c in _EMOJI else "wide" if c > "\x9f"
+                      else "keycap base" if c in _KEYCAP_BASES else "")
+        out.append(c if kept else f"\\x{ord(c):02x}" if c < "\u0100" else f"\\u{ord(c):04x}" if c < "\U00010000"
+                   else f"\\U{ord(c):08x}")
+    return "".join(out)
 
 
 def _failure_text(e) -> str:
     """What a failed fetch says of itself, fit to print. Control characters other than a tab, CR and
     LF, the two line separators, a lone surrogate and the characters of ``_UNSEEN`` are written as
-    escapes (``_printable``); then the token's value is replaced wherever the text holds it (an HTTP
-    reason phrase can carry it back, and an escape can end in the character a token starts with,
-    which is why the escapes are written before the token is looked for); then it is cut at 1,000
-    characters, so an escape that falls on the cut is left in part."""
-    return _hide(_printable(str(e)), os.environ.get("GH_TOKEN"))[:1000]
+    escapes, and a joiner or a selector that ``_printable``'s rule does not keep; then the token's
+    value is replaced wherever the text holds it (an HTTP reason phrase can carry it back, and an
+    escape can end in the character a token starts with, which is why the escapes are written
+    before the token is looked for); then it is cut at 1,000 characters, so an escape that falls on
+    the cut is left in part. ``_printable`` looks at the character after in two places, and the cut
+    can take that character: a joiner the cut leaves as the last character has lost the one it
+    joined to, and U+FE0E or U+FE0F left last after a keycap's base has lost its U+20E3. Either is
+    written as an escape then, which makes the text 1,005 characters, and the token is looked for
+    once more."""
+    token = os.environ.get("GH_TOKEN")
+    text = _hide(_printable(str(e)), token)[:1000]
+    if text[-1:] in _JOINERS or (text[-1:] in _STYLE_SELECTORS and text[-2:-1] in _KEYCAP_BASES):
+        text = _hide(text[:-1] + _printable(text[-1]), token)
+    return text
 
 
 def _command_data(text: str) -> str:

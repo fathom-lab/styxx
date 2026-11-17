@@ -234,6 +234,15 @@ def test_a_character_that_reorders_text_or_shows_nothing_is_an_escape_in_the_ren
     assert cell[2] == "a\\u202eb\\u200bc\\U000e0041d \U0001f468\u200d\U0001f469 \u2764\ufe0f\u00a0e"
 
 
+def test_a_joiner_or_a_selector_with_nothing_to_draw_is_an_escape_in_the_rendered_span(act):
+    """The span's text written out by hand: a selector after a digit of a path and a joiner between
+    two letters as their escapes, and an emoji of two people, a heart and a keycap as they are."""
+    table = read(HEAD + "| X | " + act._cell("src/v1\ufe0fhere.py a\u200db \U0001f468\u200d\U0001f469 \u2764\ufe0f 1\ufe0f\u20e3") + " | why |\n")
+    cell = table.rows[1][1]
+    assert cell[1] == ["code"] and cell[0] == cell[2]
+    assert cell[2] == "src/v1\\ufe0fhere.py a\\u200db \U0001f468\u200d\U0001f469 \u2764\ufe0f 1\ufe0f\u20e3"
+
+
 # ── a run of backticks at the most the parser opens a span with ────────────────────────────────────
 
 @pytest.mark.parametrize("n", [1, 2, 3, 40, 78, 79, 80, 81, 100, 160])

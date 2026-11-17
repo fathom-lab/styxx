@@ -81,6 +81,8 @@ def gate(act, tmp_path, monkeypatch, capsys, text, *, event="pull_request", diff
     else:
         monkeypatch.setenv("STYXX_SOFT_FAIL", soft)
     monkeypatch.setattr(act, "api", lambda url, accept: diff)
+    if summary.exists():
+        summary.unlink()                                        # the script adds to the file; one run to a reading
     rc = act.main()
     # as the file holds it: read_text would hand a lone carriage return back as a line feed
     return rc, capsys.readouterr().out, summary.read_bytes().decode("utf-8") if summary.exists() else ""
@@ -215,14 +217,17 @@ UNSEEN = [0x00AD, 0x034F, 0x061C, 0x115F, 0x1160, 0x17B4, 0x17B5, 0x180E, 0x200B
           0x202A, 0x202B, 0x202C, 0x202D, 0x202E, 0x3164, 0xFEFF, 0xFFA0, 0x1BCA0, 0x1BCA1, 0x1BCA2, 0x1BCA3] \
     + list(range(0x2060, 0x2070)) + list(range(0xFFF0, 0xFFFC)) + list(range(0x1D173, 0x1D17B)) \
     + list(range(0xE0000, 0xE0100)) + list(range(0xE01F0, 0xE1000))
-# Left as they are, by the same hand: the joiners and the variation selectors.
-LEFT = [0x200C, 0x200D, 0x180B, 0x180C, 0x180D, 0x180F] + list(range(0xFE00, 0xFE10)) + list(range(0xE0100, 0xE01F0))
+# By the same hand, the two joiners and the variation selectors: written as themselves only beside a
+# character the rule lets them stand by, and as escapes elsewhere.
+JOINERS = [0x200C, 0x200D]
+SELECTORS = [0x180B, 0x180C, 0x180D, 0x180F] + list(range(0xFE00, 0xFE10)) + list(range(0xE0100, 0xE01F0))
 
 
 def test_printable_writes_control_characters_and_line_separators_as_escapes_and_leaves_the_rest(act):
-    # kept: a no-break space, the two joiners (an emoji of three people is one glyph by them), a variation selector
+    # kept: a no-break space, the two joiners (by the standard's account an emoji of three people is one
+    # glyph by them), a variation selector
     kept = ("a b\tc\r\nd \u00e9 \u4e2d \u00a0 ~ \U0001f600 \U0001f468\u200d\U0001f469\u200d\U0001f467 "
-            "\u0645\u06cc\u200c\u062e \u2764\ufe0f a\U000e0100")
+            "\u0645\u06cc\u200c\u062e \u2764\ufe0f \u8fba\U000e0100 \u1820\u180b 1\ufe0f\u20e3")
     assert act._printable(kept) == kept
     assert act._printable("\x00\x01\x08\x0b\x1b\x1f\x7f\x80\x85\x9f") == \
         "\\x00\\x01\\x08\\x0b\\x1b\\x1f\\x7f\\x80\\x85\\x9f"
@@ -230,9 +235,11 @@ def test_printable_writes_control_characters_and_line_separators_as_escapes_and_
     assert act._printable("a\ud800b\udc80c\udfffd") == "a\\ud800b\\udc80c\\udfffd"
     escaped = {c for c in map(chr, range(0x110000)) if act._printable(c) != c}
     assert escaped == ({chr(i) for i in range(0x20)} - {"\t", "\r", "\n"}) | {chr(i) for i in range(0x7f, 0xa0)} \
-        | {"\u2028", "\u2029"} | {chr(i) for i in range(0xd800, 0xe000)} | {chr(i) for i in UNSEEN}
-    assert len(UNSEEN) == 3915 and len(escaped) == 6027
-    assert len(LEFT) == 262 and not escaped & {chr(i) for i in LEFT}
+        | {"\u2028", "\u2029"} | {chr(i) for i in range(0xd800, 0xe000)} | {chr(i) for i in UNSEEN} \
+        | {chr(i) for i in JOINERS + SELECTORS}
+    assert len(UNSEEN) == 3915 and len(JOINERS + SELECTORS) == 262
+    # alone, a joiner or a selector has nothing beside it to draw, so each of the 262 is escaped too
+    assert len(escaped) == 6027 + 262 and {chr(i) for i in JOINERS + SELECTORS} <= escaped
 
 
 @pytest.mark.parametrize("text, written", [
@@ -265,8 +272,19 @@ def test_no_unseen_character_leaves_any_of_the_four_functions(act):
         for out in (act._printable(c), act._message("a" + c), act._line(c + "b"), act._cell("a" + c + "b")):
             assert c not in out and chr(92) in out, (hex(code), out)
         assert len(act._printable(c)) == (4 if code < 0x100 else 6 if code < 0x10000 else 10)
-    for code in LEFT:
-        assert act._printable(chr(code)) == chr(code) and act._cell("a" + chr(code) + "b") == "`a" + chr(code) + "b`"
+    for code in JOINERS + SELECTORS:
+        c, escape = chr(code), act._printable(chr(code))
+        assert escape == chr(92) + ("u%04x" % code if code < 0x10000 else "U%08x" % code)
+        # alone, at the start, between two ASCII letters and after a character that is written as an escape
+        assert act._printable("a" + c + "b") == "a" + escape + "b" and act._cell("a" + c + "b") == "`a" + escape + "b`"
+        assert act._printable(c + "\u2764") == escape + "\u2764"
+        assert act._printable("\u200b" + c + "\u2764") == "\\u200b" + escape + "\u2764"
+        # at the end of a text a joiner is escaped, and a selector after a character it may follow is not
+        assert act._printable("\u2764" + c) == ("\u2764" + escape if code in JOINERS else "\u2764" + c)
+        # written as itself between two characters past U+009F, here an emoji's
+        assert act._printable("\u2764" + c + "\u2764") == "\u2764" + c + "\u2764"
+        # after a letter past U+009F: U+FE0E and U+FE0F are escaped, the other selectors and the joiners are not
+        assert act._printable("\u00e9" + c + "\u00e9") == "\u00e9" + (escape if code in (0xFE0E, 0xFE0F) else c) + "\u00e9"
 
 
 def test_message_is_printable_and_then_a_commands_data(act):
@@ -683,11 +701,268 @@ def test_an_unseen_character_in_the_text_of_a_failed_fetch_is_an_escape(act, tmp
 
 
 def test_the_joiners_a_variation_selector_and_a_no_break_space_in_a_claim_are_left(act, tmp_path, monkeypatch, capsys):
-    """Left as they are: the characters beside them are drawn by them. An emoji of three people is one
-    glyph by its two joiners, and a heart is red by its selector."""
+    """Left as they are: by the standard's account the characters beside them are drawn by them, an
+    emoji of three people as one glyph by its two joiners and a heart as red by its selector. No
+    reader was run for this."""
     text = "Modified src/nothere.py \U0001f468\u200d\U0001f469\u200d\U0001f467 \u2764\ufe0f for\u00a0now."
     _, out, summary = gate(act, tmp_path, monkeypatch, capsys, text)
     assert text + " - " in out and "`" + text + "`" in rows(summary)[0]
+
+
+# ── a joiner or a selector is written as itself only beside a character it may stand by ───────────
+
+# Characters of each kind the rule tells apart, with the kind of each. "wide" is a character past
+# U+009F that is always written as itself and has no Emoji property: a letter, a no-break space, a
+# combining mark, a private-use character, one past U+FFFF. "emoji" is one that has the property.
+# "mark" is the keycap mark U+20E3, which is wide. The escaped ones end their escapes in b, 0, 5 and d.
+KINDS = {"a": "ascii", " ": "ascii", "1": "keycap", "#": "keycap",
+         "\u00e9": "wide", "\u00a0": "wide", "\u0301": "wide", "\ue000": "wide", "\U00010000": "wide",
+         "\u2764": "emoji", "\U0001f468": "emoji", "\u20e3": "mark",
+         "\u200d": "joiner", "\u200c": "joiner", "\ufe0f": "style selector", "\ufe0e": "style selector",
+         "\U000e0100": "selector", "\u180b": "selector", "\ufe00": "selector",
+         "\u200b": "escaped", "\u2060": "escaped", "\u0085": "escaped", "\u00ad": "escaped"}
+
+
+def as_the_rule_says(text):
+    """What `_printable` is to write for a text over the characters of KINDS, worked out here from
+    the rule as the CHANGELOG states it, each character by a look at the ones beside it, with nothing
+    carried from one to the next and none of the script's code."""
+    kind = [KINDS[c] for c in text]
+
+    def wide(i):
+        return 0 <= i < len(text) and kind[i] in ("wide", "emoji", "mark")
+
+    def selector_kept(i):
+        if "selector" not in kind[i] or i == 0:
+            return False
+        if kind[i] == "selector":
+            return wide(i - 1)
+        return kind[i - 1] == "emoji" or (kind[i - 1] == "keycap" and i + 1 < len(text) and kind[i + 1] == "mark")
+
+    def kept(i):
+        if kind[i] == "escaped":
+            return False
+        if "selector" in kind[i]:
+            return selector_kept(i)
+        if kind[i] == "joiner":
+            return wide(i + 1) and (wide(i - 1) or (i > 0 and selector_kept(i - 1)))
+        return True
+
+    def escape(c):
+        return chr(92) + ("x%02x" % ord(c) if ord(c) < 0x100 else "u%04x" % ord(c) if ord(c) < 0x10000 else "U%08x" % ord(c))
+    return "".join(c if kept(i) else escape(c) for i, c in enumerate(text))
+
+
+def beside_nothing_to_draw(out, emoji):
+    """The places in a text the script wrote where a joiner or a selector stands as itself where the
+    rule lets none stand: a selector at the start, or straight after an ASCII character (an escape
+    is ASCII), a joiner or another selector, and U+FE0E or U+FE0F after a character that is not in
+    `emoji`; a joiner at an edge, beside an ASCII character or another joiner, or before a selector.
+    The keycap form, a base, U+FE0E or U+FE0F and U+20E3, is not one. Read from the written text
+    alone. `emoji` is what U+FE0E and U+FE0F may follow, and the tests pass the script's own table,
+    `_EMOJI`. The standard's list of variation sequences is not read here, so U+FE0F after U+1F600,
+    for which the standard lists none, is not found; nor is one of the other selectors after a
+    letter for which the standard lists none."""
+    special = {chr(i) for i in JOINERS + SELECTORS}
+    found = []
+    for k, c in enumerate(out):
+        if c not in special:
+            continue
+        before, after = (out[k - 1] if k else ""), (out[k + 1] if k + 1 < len(out) else "")
+        wide_before = before > "\u009f" and before not in special
+        wide_after = after > "\u009f" and after not in special
+        if ord(c) in JOINERS:
+            ok = wide_after and (wide_before or (before != "" and ord(before) in SELECTORS))
+        elif c in "\ufe0e\ufe0f":
+            ok = before in emoji or (before != "" and before in "#*0123456789" and after == "\u20e3")
+        else:
+            ok = wide_before
+        if not ok:
+            found.append((k, hex(ord(c))))
+    return found
+
+
+def test_the_table_of_emoji_is_the_standards(act):
+    """The characters past U+009F with the Emoji property in Unicode 15.0, as Perl 5.38.2 gives
+    them: their number, one digest over them in order, and some that are in it and some that are not."""
+    import hashlib
+    codes = sorted(ord(c) for c in act._EMOJI)
+    assert len(codes) == 1412 and codes[0] == 0xA9 and codes[-1] == 0x1FAF8
+    assert hashlib.sha256(",".join("%X" % c for c in codes).encode()).hexdigest() == "16028a249718b430903257845a9e45207fe39d5747fdeff6263906a95adbb863"
+    for inside in (0x00A9, 0x2122, 0x2139, 0x2764, 0x2714, 0x26A0, 0x1F468, 0x1F3FB, 0x1F1E6, 0x1F6E0, 0x1F441):
+        assert chr(inside) in act._EMOJI
+    for outside in (0x00E9, 0x043E, 0xFF11, 0x20E3, 0x0301, 0x8FBA, 0x1820, 0xE000, 0x200D, 0xFE0F, 0x00A0, 0x10000, 0x31):
+        assert chr(outside) not in act._EMOJI
+
+
+def test_printable_is_what_the_rule_says_for_every_text_of_up_to_four_of_twenty_three_characters(act):
+    import itertools
+    alphabet, wrong, n = list(KINDS), [], 0
+    for size in range(0, 5):
+        for chars in itertools.product(alphabet, repeat=size):
+            text = "".join(chars)
+            n += 1
+            if act._printable(text) != as_the_rule_says(text):
+                wrong.append(text)
+    assert n == 292561 and wrong == []
+
+
+def test_the_reading_of_a_written_text_sees_a_joiner_or_a_selector_with_nothing_to_draw(act):
+    """The check used below finds each of these, so that finding nothing says something."""
+    for bad in ("a\ufe0f", "\ufe0f", "\u00e9\u200d", "\u200d\u00e9", "\u00e9\u200da", "a\u200d\u00e9", "\u2764\ufe0f\ufe0f",
+                "1\ufe0f\u00e9", "1\U000e0100\u20e3", "\u00e9\u200d\u200d\u00e9", "x\\u200b\ufe0f", "\u00e9\ufe0f", "n\u043e\ufe0eh",
+                "\uff11\ufe0f2", "i\u0301\ufe0f"):
+        assert beside_nothing_to_draw(bad, act._EMOJI), ascii(bad)
+    for good in ("\u2764\ufe0f", "\U0001f468\u200d\U0001f469", "\U0001f441\ufe0f\u200d\U0001f5e8\ufe0f", "1\ufe0f\u20e3", "#\ufe0e\u20e3",
+                 "\u8fba\U000e0100", "\u1820\u180b", "\u0645\u06cc\u200c\u062e", "\u2229\ufe00", "plain text"):
+        assert beside_nothing_to_draw(good, act._EMOJI) == [], ascii(good)
+
+
+# Sequences written by hand, each to come out as it went in: emoji joined by U+200D, emoji with a
+# selector, keycaps with and without one, a Persian word with U+200C, a Devanagari conjunct with
+# U+200D, an ideograph with a selector of the larger range, a Mongolian letter with one of its own,
+# a mathematical sign with U+FE00.
+DRAWN = ["\U0001f468\u200d\U0001f469\u200d\U0001f467\u200d\U0001f466", "\U0001f469\U0001f3fd\u200d\U0001f4bb", "\U0001f9d1\u200d\U0001f91d\u200d\U0001f9d1",
+         "\U0001f441\ufe0f\u200d\U0001f5e8\ufe0f", "\U0001f3f3\ufe0f\u200d\U0001f308", "\U0001f3f4\u200d\u2620\ufe0f", "\u2764\ufe0f\u200d\U0001f525",
+         "\U0001f468\u200d\u2695\ufe0f", "\U0001f9d4\u200d\u2642\ufe0f", "\u2764\ufe0f", "\u26a0\ufe0f", "\u2714\ufe0f", "\U0001f6e0\ufe0f", "\u2139\ufe0f",
+         "\u00a9\ufe0f", "\u2122\ufe0f", "\u263a\ufe0e", "1\ufe0f\u20e3", "#\ufe0f\u20e3", "*\ufe0f\u20e3", "0\u20e3", "9\ufe0e\u20e3",
+         "\u0645\u06cc\u200c\u062e\u0648\u0627\u0647\u0645", "\u0915\u094d\u200d\u0937", "\u8fba\U000e0100", "\u845b\U000e0101", "\u1820\u180b", "\u1828\u180c",
+         "\u2229\ufe00"]
+
+
+@pytest.mark.parametrize("sequence", DRAWN)
+def test_a_sequence_written_by_hand_comes_out_as_it_went_in(act, sequence):
+    for text in (sequence, "Modified a.py " + sequence + " and b.py", "done " + sequence + ".", sequence + sequence, "(" + sequence + ")"):
+        assert act._printable(text) == text and act._message(text) == text and act._cell(text) == "`" + text + "`"
+        assert beside_nothing_to_draw(act._cell(text), act._EMOJI) == []
+
+
+@pytest.mark.parametrize("base", list("0123456789#*"))
+def test_a_keycap_keeps_its_selector_and_a_base_without_the_mark_does_not(act, base):
+    for selector, escape in (("\ufe0f", "\\ufe0f"), ("\ufe0e", "\\ufe0e")):
+        assert act._printable("x" + base + selector + "\u20e3y") == "x" + base + selector + "\u20e3y"
+        assert act._printable("x" + base + selector + "y") == "x" + base + escape + "y"
+        assert act._printable("x" + base + selector) == "x" + base + escape
+        assert act._printable(base + "\U000e0100\u20e3") == base + "\\U000e0100\u20e3"      # the form takes these two selectors only
+
+
+@pytest.mark.parametrize("text, written", [
+    ("src/not\u200dhere.py", "src/not\\u200dhere.py"),                      # a joiner between the letters of a path
+    ("src/not\u200chere.py", "src/not\\u200chere.py"),
+    ("src/not\ufe0fhere.py", "src/not\\ufe0fhere.py"),                      # a selector after a letter
+    ("src/v1\ufe0fhere.py", "src/v1\\ufe0fhere.py"),                        # after a digit with no keycap mark
+    ("src/v1\U000e0100\u20e3here.py", "src/v1\\U000e0100\u20e3here.py"),            # the keycap form takes U+FE0E or U+FE0F only
+    ("src/n\u043e\ufe0fhere.py", "src/n\u043e\\ufe0fhere.py"),                # U+FE0F after a Cyrillic letter: no emoji
+    ("src/n\u00e9\ufe0ehere.py", "src/n\u00e9\\ufe0ehere.py"),                # U+FE0E after an accented letter
+    ("\uff11\ufe0f2 files", "\uff11\\ufe0f2 files"),                          # after a fullwidth digit
+    ("docs/api\u0307\ufe0fndex.md", "docs/api\u0307\\ufe0fndex.md"),          # after a combining mark
+    ("a\u00a0\ufe0fb\ue000\ufe0fc\U00010000\ufe0e", "a\u00a0\\ufe0fb\ue000\\ufe0fc\U00010000\\ufe0e"),   # a space, private use, past U+FFFF
+    ("\u00e9\U000e0100\u043e\ufe00\u00a0\u180b", "\u00e9\U000e0100\u043e\ufe00\u00a0\u180b"),        # the other selectors after any of them: kept
+    ("src/n\u2714\ufe0fhere.py", "src/n\u2714\ufe0fhere.py"),                # after an emoji: kept, and the emoji is there to see
+    ("a\ufe0f\u200d\u00e9", "a\\ufe0f\\u200d\u00e9"),                         # a joiner beside a selector that was escaped
+    ("\u2764\ufe0f\ufe0f\ufe00", "\u2764\ufe0f\\ufe0f\\ufe00"),                   # one selector to a character
+    ("\u00e9\u200d\u200d\u00e9", "\u00e9\\u200d\\u200d\u00e9"),                   # two joiners join nothing
+    ("\U0001f468\u200d", "\U0001f468\\u200d"), ("\u200d\U0001f468", "\\u200d\U0001f468"),                # at an edge
+    ("\U0001f468\u200d \U0001f469", "\U0001f468\\u200d \U0001f469"),                      # a space is ASCII
+    ("\u00e9\u200d\u2028", "\u00e9\\u200d\\u2028"), ("\u00e9\u200d\u00ad", "\u00e9\\u200d" + chr(92) + "xad"),   # before a character that is escaped
+    ("\u0085\ufe00\u2028\U000e0100", chr(92) + "x85\\ufe00\\u2028\\U000e0100"),            # after a character that is escaped
+    ("\u200b\ufe0f", "\\u200b\\ufe0f"), ("\u2061\ufe0f\u20e3", "\\u2061\\ufe0f\u20e3"),       # after an escape, even one that ends in a digit
+    ("\ud800\ufe0f\u20e3", "\\ud800\\ufe0f\u20e3"),
+    ("x" + "".join(chr(0xFE00 + b % 16) for b in b"PASS: every claim VERIFIED"),
+     "x" + "".join(chr(92) + "ufe0%x" % (b % 16) for b in b"PASS: every claim VERIFIED")),                 # 26 selectors after a letter
+])
+def test_a_joiner_or_a_selector_with_nothing_to_draw_is_written_as_an_escape(act, text, written):
+    assert act._printable(text) == written
+    assert act._message(text) == written and act._line(text) == written and act._cell(text) == "`" + written + "`"
+    assert beside_nothing_to_draw(written, act._EMOJI) == []
+
+
+def test_no_joiner_or_selector_stands_with_nothing_to_draw_in_generated_text(act):
+    """20,000 strings of the characters above and some more, from a fixed seed, through the four
+    functions. In what is written, no selector stands at the start of the text or straight after an
+    ASCII character (a keycap's base before U+20E3 apart), an escape, a joiner or another selector,
+    U+FE0E and U+FE0F stand only after an emoji or in a keycap, and no joiner stands at an edge,
+    beside an ASCII character, an escape or another joiner, or before a selector."""
+    import random
+    rnd = random.Random(20261116)
+    alphabet = list(KINDS) + ["\u8fba", "\u0645", "\u1820", "\u043e", "\uff11", "*", "9", "%", "|", "`", "\u000d", "\u000a", "\ud800", "\U000e0041", "\U000e01ef",
+                              "\u180f", "\u2028", "\u202e"]
+    for _ in range(20000):
+        text = "".join(rnd.choice(alphabet) for _ in range(rnd.randint(0, 12)))
+        for out in (act._printable(text), act._message(text), act._line(text), act._cell(text)):
+            assert beside_nothing_to_draw(out, act._EMOJI) == [], (ascii(text), ascii(out))
+
+
+def test_a_claim_the_gate_verifies_past_a_selector_shows_the_selector(act, tmp_path, monkeypatch, capsys):
+    """The gate reads `Modified src/not`, U+FE0F, `here.py.` as a claim about `here.py`, and where the
+    diff changes a file of that name it verifies it. The row said VERIFIED beside the characters of
+    `src/nothere.py` and one more that by the standard's account has no glyph there; it says it
+    beside the escape now. The same with a Cyrillic letter before the selector, which is no emoji,
+    and with a fullwidth digit before it in a count of files."""
+    _, out, summary = gate(act, tmp_path, monkeypatch, capsys, "Modified src/not\ufe0fhere.py.", diff=diff_of("here.py"))
+    assert rows(summary) == ["| ✅ VERIFIED | `Modified src/not\\ufe0fhere.py.` | `diff status 'M' for 'here.py'` |"]
+    assert lines(out) == ["styxx diffgate: PASS - 1 claim(s), 0 contradicted"]
+    _, _, summary = gate(act, tmp_path, monkeypatch, capsys, "Modified src/n\u043e\ufe0fhere.py.", diff=diff_of("here.py"))
+    assert rows(summary) == ["| ✅ VERIFIED | `Modified src/n\u043e\\ufe0fhere.py.` | `diff status 'M' for 'here.py'` |"]
+    _, _, summary = gate(act, tmp_path, monkeypatch, capsys, "\uff11\ufe0f2 files changed.", diff=diff_of("a.py") + diff_of("b.py"))
+    assert rows(summary) == ["| ✅ VERIFIED | `\uff11\\ufe0f2 files changed.` | `diff changes 2 files, claim says 2` |"]
+
+
+def test_two_rows_the_gate_verifies_past_a_character_that_is_still_written_as_itself(act, tmp_path, monkeypatch, capsys):
+    """What this file's rule leaves, held as it is so that it is seen: the gate reads past a selector
+    that follows an emoji, where the emoji stands in the row, and past a joiner between two letters
+    past U+009F, where nothing stands for it. The reading is the gate's."""
+    _, _, summary = gate(act, tmp_path, monkeypatch, capsys, "Modified src/n\u2714\ufe0fhere.py.", diff=diff_of("here.py"))
+    assert rows(summary) == ["| ✅ VERIFIED | `Modified src/n\u2714\ufe0fhere.py.` | `diff status 'M' for 'here.py'` |"]
+    _, _, summary = gate(act, tmp_path, monkeypatch, capsys, "Modified src/caf\u00e9\u200d\u00e9here.py.", diff=diff_of("\u00e9here.py"))
+    assert rows(summary) == ["| ✅ VERIFIED | `Modified src/caf\u00e9\u200d\u00e9here.py.` | `diff status 'M' for '\u00e9here.py'` |"]
+
+
+@pytest.mark.parametrize("inside", ["\u200d", "\u200c", "\ufe0f", "\ufe0e", "\U000e0100", "\u180b"])
+def test_a_joiner_or_a_selector_in_a_claimed_path_is_an_escape_in_all_that_is_printed(act, tmp_path, monkeypatch, capsys,
+                                                                                       inside):
+    text = "Modified src/v1" + inside + "here.py and \U0001f468\u200d\U0001f469 \u2764\ufe0f."
+    for strict, soft in (("false", None), ("true", "false")):
+        _, out, summary = gate(act, tmp_path, monkeypatch, capsys, text, strict=strict, soft=soft)
+        escape = chr(92) + ("u%04x" % ord(inside) if ord(inside) < 0x10000 else "U%08x" % ord(inside))
+        assert "Modified src/v1" + escape + "here.py and \U0001f468\u200d\U0001f469 \u2764\ufe0f." in out
+        assert "| `Modified src/v1" + escape + "here.py and \U0001f468\u200d\U0001f469 \u2764\ufe0f.` |" in rows(summary)[0]
+        assert beside_nothing_to_draw(out, act._EMOJI) == [] and beside_nothing_to_draw(summary, act._EMOJI) == []
+
+
+def test_a_claim_cut_at_a_joiner_has_the_joiner_written_out(act, tmp_path, monkeypatch, capsys):
+    """The cell holds 80 characters of the claim. Where the 80th is a joiner, the character it joined
+    to is past the cut, so in the cell it is an escape; the command, cut at 120, still holds the pair.
+    The same for a keycap's selector whose mark is past the cut."""
+    text = "Modified src/nothere.py " + "x" * 54 + "\U0001f468\u200d\U0001f469 in it."
+    _, out, summary = gate(act, tmp_path, monkeypatch, capsys, text)
+    assert rows(summary)[0].split(" | ")[1] == "`Modified src/nothere.py " + "x" * 54 + "\U0001f468\\u200d`"
+    assert "x" * 54 + "\U0001f468\u200d\U0001f469 in it. - " in out
+    text = "Modified src/nothere.py " + "x" * 54 + "1\ufe0f\u20e3 in it."
+    _, out, summary = gate(act, tmp_path, monkeypatch, capsys, text)
+    assert rows(summary)[0].split(" | ")[1] == "`Modified src/nothere.py " + "x" * 54 + "1\\ufe0f`"
+    assert "x" * 54 + "1\ufe0f\u20e3 in it. - " in out
+
+
+@pytest.mark.parametrize("tail, written", [
+    ("\U0001f468\u200d\U0001f469", "\U0001f468\\u200d"), ("\u0645\u200c\u062e", "\u0645\\u200c"),      # either joiner
+    ("1\ufe0f\u20e3", "1\\ufe0f"), ("#\ufe0e\u20e3", "#\\ufe0e"),                      # a keycap's selector
+    ("\u2764\ufe0fx", "\u2764\ufe0f"), ("\u8fba\U000e0100x", "\u8fba\U000e0100"),              # a selector that looked at nothing after it
+])
+def test_the_text_of_a_failed_fetch_cut_where_a_character_looked_ahead(act, monkeypatch, tail, written):
+    """`_failure_text` alone. The cut at 1,000 comes after the text is written out, and it can take
+    the character a joiner or a keycap's selector was kept for; that one is written as an escape then.
+    A selector kept for the character before it is left."""
+    monkeypatch.setenv("GH_TOKEN", "q9")
+    text = act._failure_text(RuntimeError("e" * 998 + tail))
+    assert text == "e" * 998 + written and beside_nothing_to_draw(text, act._EMOJI) == []
+    assert act._failure_text(RuntimeError("e" * 990 + tail)) == "e" * 990 + tail      # under the cut: as it came
+
+
+def test_the_escape_added_at_the_cut_of_a_failed_fetch_is_looked_through_for_the_token(act, monkeypatch):
+    monkeypatch.setenv("GH_TOKEN", "u200d")
+    text = act._failure_text(RuntimeError("e" * 998 + "\U0001f468\u200d\U0001f469"))
+    assert "u200d" not in text and text.endswith("\U0001f468" + chr(92) + "***")
 
 
 # ── more uncheckable claims than the script prints warnings for ────────────────────────────────────
