@@ -1,0 +1,5 @@
+# what the builder and the proof write when run here; never committed
+old/
+src/
+runs/
+*.tmp
