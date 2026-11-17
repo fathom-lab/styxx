@@ -444,15 +444,18 @@ def _process(tmp_path, api_server, body, *, status=200, diff=DIFF, soft="false")
 
 @pytest.mark.parametrize("body, status, diff, soft, code", [
     (FALSE, 200, DIFF, "false", 1),                 # contradicted, blocking
+    (FALSE, 200, DIFF, "true", 0),                  # contradicted, report: the error is printed and the job passes
     (ACCENTED, 200, DIFF, "false", 1),              # withheld contradiction, blocking
     (ACCENTED, 200, DIFF, "true", 0),               # withheld contradiction, report
     (FALSE, 406, DIFF, "false", 1),                 # a diff GitHub refuses, blocking
     (FALSE, 406, DIFF, "true", 0),                  # a diff GitHub refuses, report
     (FALSE, 200, DIFF_SRC, "false", 0),             # clean
-], ids=["contradicted-blocking", "withheld-blocking", "withheld-report", "refused-blocking", "refused-report",
-        "clean-blocking"])
+], ids=["contradicted-blocking", "contradicted-report", "withheld-blocking", "withheld-report", "refused-blocking",
+        "refused-report", "clean-blocking"])
 def test_the_exit_code_of_the_process(tmp_path, api_server, body, status, diff, soft, code):
     rc, out = _process(tmp_path, api_server, body, status=status, diff=diff, soft=soft)
     assert rc == code, out
     if code == 1:
         assert "::error" in out
+    if body == FALSE and status == 200 and diff == DIFF:
+        assert E_CONTRA in out          # in report mode too: the claim is named, and only the exit code differs
