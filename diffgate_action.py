@@ -281,9 +281,14 @@ _UNSEEN = frozenset(chr(c) for low, high in (
 
 
 # The two joiners and the variation selectors, which the list above leaves out because by the
-# standard's account the character beside them is drawn by them. They are written as themselves only
-# where they have such a character beside them, and as escapes elsewhere: between the letters of a
-# path they have nothing to draw, and by the standard's account they have no glyph there.
+# standard's account the character beside them can be drawn by them. Whether one is written as itself
+# turns on the characters beside it, and not on whether the standard lists the pair: one of the 258
+# selectors other than U+FE0E and U+FE0F after any character past U+009F that is written as itself
+# and is no joiner or selector; U+FE0E and U+FE0F after any character of ``_EMOJI`` below, or in a
+# keycap; a joiner between two such characters (``_printable`` says it in full). By the standard's
+# account many of those places have nothing to draw, U+FE00 after an accented letter among them.
+# Elsewhere they are written as escapes: between the letters of a path they have nothing to draw,
+# and by the standard's account they have no glyph there.
 _JOINERS = frozenset("\u200c\u200d")
 _SELECTORS = frozenset(chr(c) for low, high in (
     (0x180B, 0x180D), (0x180F, 0x180F),   # Mongolian free variation selectors
@@ -291,10 +296,13 @@ _SELECTORS = frozenset(chr(c) for low, high in (
     (0xE0100, 0xE01EF),                   # variation selectors 17 to 256
 ) for c in range(low, high + 1))
 _KEYCAP_BASES = frozenset("#*0123456789")
-# U+FE0E and U+FE0F choose between the text form and the emoji form of the character before them, and
-# the standard gives them that work only after a character with its Emoji property. They are written
-# as themselves only after one of those, or in a keycap. The characters past U+009F with that property
-# in Unicode 15.0, written out here: 1,412 code points.
+# U+FE0E and U+FE0F choose between the text form and the emoji form of the character before them. The
+# standard gives them that work only after a character with its Emoji property, and of those only
+# after the ones emoji-variation-sequences.txt lists (UTS #51, ED-8a and ED-9a); in Unicode 15.0 that
+# file lists 342 past U+009F. They are written as themselves after any character of the table below,
+# or in a keycap. So after 1,070 of its characters, U+1F600 among them, they are written as
+# themselves where the standard lists no sequence. The table holds the characters past U+009F with
+# the Emoji property in Unicode 15.0, written out here: 1,412 code points.
 _STYLE_SELECTORS = frozenset("\ufe0e\ufe0f")
 _EMOJI = frozenset(chr(c) for item in (
     0x00A9, 0x00AE, 0x203C, 0x2049, 0x2122, 0x2139, (0x2194, 0x2199), (0x21A9, 0x21AA),
@@ -377,7 +385,7 @@ def _printable(text: str) -> str:
 def _failure_text(e) -> str:
     """What a failed fetch says of itself, fit to print. Control characters other than a tab, CR and
     LF, the two line separators, a lone surrogate and the characters of ``_UNSEEN`` are written as
-    escapes, and a joiner or a selector with nothing to draw (``_printable``); then the token's
+    escapes, and a joiner or a selector that ``_printable``'s rule does not keep; then the token's
     value is replaced wherever the text holds it (an HTTP reason phrase can carry it back, and an
     escape can end in the character a token starts with, which is why the escapes are written
     before the token is looked for); then it is cut at 1,000 characters, so an escape that falls on
