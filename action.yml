@@ -12,7 +12,10 @@ description: >-
   is read in its Markdown source, so an HTML comment, a task-list item and a sentence inside a
   code fence are read like any other sentence. Where the runner's environment names a proxy for
   the API's host the request goes through it, and a proxy in front of a plain-http API origin
-  reads the workflow token. By default it reports and does not block: where the gate read the
+  reads the workflow token. A request that GitHub answers with 429, with 500 to 599, or with a
+  403 that carries a rate limit's headers is asked again, to the same address: at most three
+  requests for one address and at most 120 seconds of waiting in a run. By default it reports
+  and does not block: where the gate read the
   diff, each claim has a row in the job summary's table (up to 524,288 bytes of rows; the claims
   past that are counted by verdict), an error command is printed for every contradicted claim
   (with strict, for every claim the gate could not check too), and a warning command for at most
@@ -60,7 +63,10 @@ inputs:
       fails on them only when soft-fail is "false". With soft-fail "false", strict also fails the
       job on a diff that could not be fetched or that the gate did not measure, whatever a
       non-empty description holds (an empty one is not gated); without strict a blocking job fails
-      there only when the description holds a claim the gate reads.
+      there only when the description holds a claim the gate reads. The value is read as
+      soft-fail's is: compared case-insensitively with surrounding whitespace stripped. "true"
+      is strict and "false" (the default) is not. Any other value, the empty string included, is
+      not strict and prints a warning naming the value.
     required: false
     default: "false"
   soft-fail:
