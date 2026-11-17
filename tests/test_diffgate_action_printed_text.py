@@ -218,7 +218,7 @@ UNSEEN = [0x00AD, 0x034F, 0x061C, 0x115F, 0x1160, 0x17B4, 0x17B5, 0x180E, 0x200B
     + list(range(0x2060, 0x2070)) + list(range(0xFFF0, 0xFFFC)) + list(range(0x1D173, 0x1D17B)) \
     + list(range(0xE0000, 0xE0100)) + list(range(0xE01F0, 0xE1000))
 # By the same hand, the two joiners and the variation selectors: written as themselves only beside a
-# character they have to draw, and as escapes elsewhere.
+# character the rule lets them stand by, and as escapes elsewhere.
 JOINERS = [0x200C, 0x200D]
 SELECTORS = [0x180B, 0x180C, 0x180D, 0x180F] + list(range(0xFE00, 0xFE10)) + list(range(0xE0100, 0xE01F0))
 
@@ -279,7 +279,7 @@ def test_no_unseen_character_leaves_any_of_the_four_functions(act):
         assert act._printable("a" + c + "b") == "a" + escape + "b" and act._cell("a" + c + "b") == "`a" + escape + "b`"
         assert act._printable(c + "\u2764") == escape + "\u2764"
         assert act._printable("\u200b" + c + "\u2764") == "\\u200b" + escape + "\u2764"
-        # at the end of a text a joiner is escaped, and a selector after a character it can draw is not
+        # at the end of a text a joiner is escaped, and a selector after a character it may follow is not
         assert act._printable("\u2764" + c) == ("\u2764" + escape if code in JOINERS else "\u2764" + c)
         # written as itself between two characters past U+009F, here an emoji's
         assert act._printable("\u2764" + c + "\u2764") == "\u2764" + c + "\u2764"
@@ -709,7 +709,7 @@ def test_the_joiners_a_variation_selector_and_a_no_break_space_in_a_claim_are_le
     assert text + " - " in out and "`" + text + "`" in rows(summary)[0]
 
 
-# ── a joiner or a selector is written as itself only beside a character it has to draw ────────────
+# ── a joiner or a selector is written as itself only beside a character it may stand by ───────────
 
 # Characters of each kind the rule tells apart, with the kind of each. "wide" is a character past
 # U+009F that is always written as itself and has no Emoji property: a letter, a no-break space, a
@@ -754,12 +754,15 @@ def as_the_rule_says(text):
 
 
 def beside_nothing_to_draw(out, emoji):
-    """The places in a text the script wrote where a joiner or a selector stands as itself with
-    nothing before it that it could draw: a selector at the start, or straight after an ASCII
-    character (an escape is ASCII), a joiner or another selector, and U+FE0E or U+FE0F after a
-    character that is not in `emoji`; a joiner at an edge, beside an ASCII character or another
-    joiner, or before a selector. The keycap form, a base, U+FE0E or U+FE0F and U+20E3, is not one.
-    Read from the written text alone; `emoji` is the set of characters with the Emoji property."""
+    """The places in a text the script wrote where a joiner or a selector stands as itself where the
+    rule lets none stand: a selector at the start, or straight after an ASCII character (an escape
+    is ASCII), a joiner or another selector, and U+FE0E or U+FE0F after a character that is not in
+    `emoji`; a joiner at an edge, beside an ASCII character or another joiner, or before a selector.
+    The keycap form, a base, U+FE0E or U+FE0F and U+20E3, is not one. Read from the written text
+    alone. `emoji` is what U+FE0E and U+FE0F may follow, and the tests pass the script's own table,
+    `_EMOJI`. The standard's list of variation sequences is not read here, so U+FE0F after U+1F600,
+    for which the standard lists none, is not found; nor is one of the other selectors after a
+    letter for which the standard lists none."""
     special = {chr(i) for i in JOINERS + SELECTORS}
     found = []
     for k, c in enumerate(out):
