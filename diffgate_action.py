@@ -4,8 +4,29 @@ Reads the event payload from GITHUB_EVENT_PATH (the summary text never touches a
 fetches the diff from the GitHub API with the workflow token, gates the summary against it
 with ``styxx.diffgate.gate_diff_text``, writes a job-summary table, emits ::error::
 annotations for contradictions, and exits per the gate verdict and the strict/soft-fail
-inputs. Supports ``pull_request`` (body vs PR diff) and ``push`` (head commit message vs
-compare diff); a push that creates a tag is not gated. Anything else: reports and passes.
+inputs. Two events are gated: ``pull_request`` (the description against the pull request's
+diff) and ``push`` (the head commit's message against the compare diff); a push that creates a
+tag is not gated. On every other event (``pull_request_target`` and ``merge_group`` among them)
+the script prints one line saying the event is not gated, reads no claim, writes no summary and
+exits 0, whatever strict and soft-fail are set to.
+
+The text is read as it was written. A description is read in its Markdown source, so an HTML
+comment, a task-list item and a sentence inside a code fence are read like any other sentence.
+
+The gate that runs is the ``styxx`` package beside this file. ``action.yml`` starts the script by
+its path, Python then looks in the script's own folder before any installed package, and the
+import below finds ``styxx`` in the Action's checkout, at the ref the workflow names in ``uses:``.
+What ``action.yml``'s styxx-version input installs supplies the one package that code imports from
+outside the standard library (numpy); it does not choose the gate.
+
+What is printed for the claims: a row of the summary's table for each, up to 524,288 bytes of rows
+(a line under the table counts the claims past that by verdict); an ``::error`` command for every
+contradicted claim, under strict for every UNCHECKABLE one, and in a blocking check for every claim
+whose CONTRADICTED reading the overlay withheld; and a ``::warning`` command for at most 100 of the
+other claims the gate could not check, with one more that counts the rest where there are more.
+GitHub's documentation of its checks API says "GitHub Actions are limited to 10 warning annotations
+and 10 error annotations per step", so a claim past the tenth of its kind in the step has its row
+in the table and its line in the job's log, and may have no annotation.
 
 soft-fail (STYXX_SOFT_FAIL, which action.yml fills from its soft-fail input) is read by
 ``_soft_fail``, and only an explicit "false" blocks. The value is compared case-insensitively
@@ -570,6 +591,7 @@ def main() -> int:
         number = (event.get("pull_request") or {}).get("number")
         # GitHub documents the number as an integer; anything else in the event file is shown as "?"
         what = f"PR #{number if type(number) is int else '?'} body"
+        text_name = "description"
     elif event_name == "push":
         summary = (event.get("head_commit") or {}).get("message") or ""
         diff_url = (event.get("compare", "")
@@ -580,7 +602,7 @@ def main() -> int:
         if tpl:
             diff_url = tpl.replace("{base}", event.get("before", "")) \
                           .replace("{head}", event.get("after", ""))
-        what = "head commit message"
+        what = text_name = "head commit message"
         ref = event.get("ref")
         if isinstance(ref, str) and ref.startswith("refs/tags/") and _creates_ref(event):
             # A push that creates a tag has no base commit to compare with. Not gated in any mode, and
@@ -628,7 +650,7 @@ def main() -> int:
                    "same way."
                    if event_name == "push" and _creates_ref(event) else "")
         again = ("A re-run reads the diff again, which is the remedy where the failure was passing; GitHub "
-                 "refuses a diff past its size limit, and no rewording of the description makes it serve one.")
+                 f"refuses a diff past its size limit, and no rewording of the {text_name} makes it serve one.")
         if not holds and not strict:
             print(f"::warning title=styxx diffgate - could not fetch the diff::"
                   f"{_hide(_command_data(why), token)}.{no_base} The gate did not run. The {what} holds no claim "
@@ -637,7 +659,7 @@ def main() -> int:
                             f"The diff could not be fetched: `{_hide(_code_span(why), token)}`.{no_base}", "",
                             f"The {what} holds no claim the gate reads, so there was no claim to judge. This "
                             "workflow sets `soft-fail: \"false\"`; the job passes, as a blocking check does when "
-                            "the diff could not be read and the description holds no claim the gate reads.", "",
+                            f"the diff could not be read and the {text_name} holds no claim the gate reads.", "",
                             clean])
             print(f"styxx diffgate: DID NOT RUN - the diff could not be fetched; the {what} holds no claim "
                   "the gate reads, so the job passes")
@@ -695,7 +717,7 @@ def main() -> int:
                   "reads, so there was no claim to judge, and this blocking check passes.")
             _write_summary(head + [f"_The {what} holds no claim the gate reads, so there was no claim to judge. "
                                    "This workflow sets `soft-fail: \"false\"`; the job passes, as a blocking check "
-                                   "does when the gate did not measure the diff and the description holds no "
+                                   f"does when the gate did not measure the diff and the {text_name} holds no "
                                    "claim the gate reads._"])
             print(f"styxx diffgate: UNMEASURED - gate verdict {g.verdict}; the {what} holds no claim the gate "
                   "reads, so the job passes")
@@ -814,7 +836,7 @@ def main() -> int:
     # unless the workflow sets it to "false" (action.yml; CHANGELOG "the GitHub Action reports by
     # default"). The figures are the receipts' own; the CHANGELOG entry says where each comes from.
     rule = ("on a ❌; on a ❓ whose CONTRADICTED reading the gate's overlay withheld; and on a diff it could "
-            "not read or did not measure while the description holds a claim the gate reads. On every other ❓ "
+            f"not read or did not measure while the {text_name} holds a claim the gate reads. On every other ❓ "
             "it fails only with `strict: true`. ")
     if not soft:
         mode = "_This workflow sets `soft-fail: \"false\"`, so the job fails " + rule
