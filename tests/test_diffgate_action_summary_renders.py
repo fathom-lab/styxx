@@ -11,9 +11,10 @@ of the author's that reached the page would be seen as one. The tags the parser'
 as text whatever the option (`<script>`, `<iframe>` and `<title>` among them) would be seen as text
 beside the span, which the reading also reports.
 
-`cmarkgfm` is not among this project's test dependencies, so where it is not installed every test here
-is skipped, and that is the case in CI unless it is added. cmark-gfm is the parser and not the page:
-what GitHub does after it (the filters it runs over the HTML, mentions, emoji) is not run here either.
+`cmarkgfm` is in this project's `test` extra on Linux (x86_64 and aarch64), so a CI job that installs
+that extra runs these tests; where the package is not installed every test here is skipped. cmark-gfm
+is the parser and not the page: what GitHub does after it (the filters it runs over the HTML, mentions,
+emoji) is not run here either.
 """
 from __future__ import annotations
 
