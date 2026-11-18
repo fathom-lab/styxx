@@ -713,9 +713,11 @@ def _own_diff_address(event):
     pushed = event.get("commits")
     if not (isinstance(pushed, list) and len(pushed) == 1 and isinstance(pushed[0], dict)
             and pushed[0].get("id") == after):
-        held = f"{len(pushed)} commits" if isinstance(pushed, list) and len(pushed) != 1 else "other commits than its head commit"
-        raise _NotReadAlone(f"the push that created this branch holds {held}, and a created branch is read only "
-                            "where its push is the head commit alone")
+        if isinstance(pushed, list) and len(pushed) != 1:
+            said = f"the push that created this branch holds {len(pushed)} commits"
+        else:                   # no list, or one entry that is not the head commit
+            said = "the event does not list the push's commits as the head commit alone"
+        raise _NotReadAlone(f"{said}, and a created branch is read only where its push is the head commit alone")
     try:
         answer = _json(api(commits.replace("{/sha}", "/" + after), "application/vnd.github+json",
                            "the head commit's address"), "the head commit")

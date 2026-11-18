@@ -526,11 +526,15 @@ def test_a_lookup_that_fails_or_cannot_be_used(act, server, tmp_path, monkeypatc
     assert all("/compare/" not in p for p, _, _ in handler.seen)
 
 
+NOT_LISTED = "the event does not list the push's commits as the head commit alone"
+
+
 @pytest.mark.parametrize("commits, held", [
-    ([{"id": OTHER}, {"id": AFTER}], "2 commits"),
-    ([], "0 commits"),
-    ([{"id": OTHER}], "other commits than its head commit"),
-    (None, "other commits than its head commit"),
+    ([{"id": OTHER}, {"id": AFTER}], "the push that created this branch holds 2 commits"),
+    ([], "the push that created this branch holds 0 commits"),
+    ([{"id": OTHER}], NOT_LISTED),
+    ([{"id": AFTER.upper()}], NOT_LISTED),
+    (None, NOT_LISTED),
 ])
 def test_a_created_branch_whose_push_is_not_its_head_commit_alone_is_not_read(act, server, tmp_path, monkeypatch,
                                                                              capsys, commits, held):
@@ -542,12 +546,11 @@ def test_a_created_branch_whose_push_is_not_its_head_commit_alone_is_not_read(ac
     payload = push_payload(base, FC.FALSE, commits=commits)
     rc, out, summary = run(act, tmp_path, monkeypatch, capsys, base, "push", payload)
     assert rc == 1 and FC.E_FETCH in out
-    assert (f"the push that created this branch holds {held}, and a created branch is read only where its push is "
-            "the head commit alone") in out
+    assert f"{held}, and a created branch is read only where its push is the head commit alone" in out
     assert NO_BASE + ", so a re-run fails the same way." in out
     assert handler.seen == [] and OWN not in summary
     rc, out, _ = run(act, tmp_path, monkeypatch, capsys, base, "push", payload, "true")
-    assert rc == 0 and "::error" not in out and "holds " + held in out
+    assert rc == 0 and "::error" not in out and held in out
 
 
 def test_a_lookup_address_off_the_origin_is_refused_by_its_own_name(act, server, tmp_path, monkeypatch, capsys):
