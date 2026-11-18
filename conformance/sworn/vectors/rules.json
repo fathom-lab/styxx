@@ -4,35 +4,6 @@
  "count": 22,
  "vectors": [
   {
-   "id": "00060948cac07cb3b58b48e7d1317ae1279a1e04064f2b2d799ca73523649b9a",
-   "family": "rules",
-   "sources": [
-    "tests/test_sworn_attacks.py::TestRules::test_r9_the_v1_receipt_re_derives_without_its_coverage_block"
-   ],
-   "rules": [
-    "R9"
-   ],
-   "mode": "receipt_check",
-   "requires": [
-    "manifest"
-   ],
-   "inputs": {
-    "receipt": "83158df686c6eef16a72793dc8feb932df51e82262042d659d8facef97d6e9ef",
-    "document": "865d799015c13bf8a06fee0e93ac2e96713ce2b5445ca5b2eae5199f3a194bd6",
-    "sidecar": null,
-    "manifest": "e0d4a7cbe05c86d8878887ea871a1e1b252c4f4cf21d343daf8b1d9c0dc26c0c",
-    "tree": null
-   },
-   "expect": {
-    "outcome": "check",
-    "check": {
-     "status": "FAILED",
-     "digest_match": false,
-     "verdict_reproduces": false
-    }
-   }
-  },
-  {
    "id": "001e1731923a1f0ef3b3903c6e057cfb0e54e90f828194618173d7a76ac4e58e",
    "family": "rules",
    "sources": [
@@ -85,7 +56,7 @@
    }
   },
   {
-   "id": "07dcdf584f8ac0c3757159ca4cf29d728c726483e54fd3f61b42f52e95d4762f",
+   "id": "0055c41bd09f1763a6011b85c9eaf436d3c351360fd07b7b6ee5c580922051d9",
    "family": "rules",
    "sources": [
     "tests/test_sworn_attacks.py::TestRules::test_r9_the_v1_receipt_re_derives_without_its_coverage_block"
@@ -98,7 +69,7 @@
     "manifest"
    ],
    "inputs": {
-    "receipt": "842370d160bcdb2e50236dffd1f9e8fd4f6233f3f094086582f4fbaec03a2b4a",
+    "receipt": "2577364206467c74bdcb7497650b6971ec8851e8a00dfa0b415f8e62b5a814c0",
     "document": "865d799015c13bf8a06fee0e93ac2e96713ce2b5445ca5b2eae5199f3a194bd6",
     "sidecar": null,
     "manifest": "e0d4a7cbe05c86d8878887ea871a1e1b252c4f4cf21d343daf8b1d9c0dc26c0c",
@@ -107,9 +78,9 @@
    "expect": {
     "outcome": "check",
     "check": {
-     "status": "FAILED",
-     "digest_match": false,
-     "verdict_reproduces": false
+     "status": "VERIFIED",
+     "digest_match": true,
+     "verdict_reproduces": true
     }
    }
   },
@@ -214,6 +185,35 @@
      "sworn_total": 1,
      "narrative_sentences": 0,
      "sentence_share": 1.0
+    }
+   }
+  },
+  {
+   "id": "2466214e3c36034009dec89b2d4499e8bc823f2646d80bde790f721663dda98f",
+   "family": "rules",
+   "sources": [
+    "tests/test_sworn_attacks.py::TestRules::test_r9_the_v1_receipt_re_derives_without_its_coverage_block"
+   ],
+   "rules": [
+    "R9"
+   ],
+   "mode": "receipt_check",
+   "requires": [
+    "manifest"
+   ],
+   "inputs": {
+    "receipt": "cbd3366b986f656673e54acaaa0b0d062e1a2885a5b252c960928273dde4b18c",
+    "document": "865d799015c13bf8a06fee0e93ac2e96713ce2b5445ca5b2eae5199f3a194bd6",
+    "sidecar": null,
+    "manifest": "e0d4a7cbe05c86d8878887ea871a1e1b252c4f4cf21d343daf8b1d9c0dc26c0c",
+    "tree": null
+   },
+   "expect": {
+    "outcome": "check",
+    "check": {
+     "status": "FAILED",
+     "digest_match": false,
+     "verdict_reproduces": false
     }
    }
   },
@@ -551,6 +551,35 @@
    }
   },
   {
+   "id": "92b31f70f3d45de3c82aa815c7664ae1b958f4a533bd774a6478ef38270a664b",
+   "family": "rules",
+   "sources": [
+    "tests/test_sworn_attacks.py::TestRules::test_r9_the_v1_receipt_re_derives_without_its_coverage_block"
+   ],
+   "rules": [
+    "R9"
+   ],
+   "mode": "receipt_check",
+   "requires": [
+    "manifest"
+   ],
+   "inputs": {
+    "receipt": "8ac028166176f919045f80b183e4ca86fb88def6f26a49cbcf05d051daef0e50",
+    "document": "865d799015c13bf8a06fee0e93ac2e96713ce2b5445ca5b2eae5199f3a194bd6",
+    "sidecar": null,
+    "manifest": "e0d4a7cbe05c86d8878887ea871a1e1b252c4f4cf21d343daf8b1d9c0dc26c0c",
+    "tree": null
+   },
+   "expect": {
+    "outcome": "check",
+    "check": {
+     "status": "FAILED",
+     "digest_match": false,
+     "verdict_reproduces": false
+    }
+   }
+  },
+  {
    "id": "947e03f6dfea280fb561f3c3b5cf77866196305b966ed4cd9fb703df52a7e4e2",
    "family": "rules",
    "sources": [
@@ -802,35 +831,6 @@
      "sworn_total": 1,
      "narrative_sentences": 0,
      "sentence_share": 1.0
-    }
-   }
-  },
-  {
-   "id": "e5d05727149531c3b19923142ab233d248599defe35ef022973efcd20f8a8203",
-   "family": "rules",
-   "sources": [
-    "tests/test_sworn_attacks.py::TestRules::test_r9_the_v1_receipt_re_derives_without_its_coverage_block"
-   ],
-   "rules": [
-    "R9"
-   ],
-   "mode": "receipt_check",
-   "requires": [
-    "manifest"
-   ],
-   "inputs": {
-    "receipt": "eafcd4bf4b2522e019768bca72e34e02650740a689c08c8f67485cf64bc36d1b",
-    "document": "865d799015c13bf8a06fee0e93ac2e96713ce2b5445ca5b2eae5199f3a194bd6",
-    "sidecar": null,
-    "manifest": "e0d4a7cbe05c86d8878887ea871a1e1b252c4f4cf21d343daf8b1d9c0dc26c0c",
-    "tree": null
-   },
-   "expect": {
-    "outcome": "check",
-    "check": {
-     "status": "VERIFIED",
-     "digest_match": true,
-     "verdict_reproduces": true
     }
    }
   },
