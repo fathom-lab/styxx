@@ -120,7 +120,8 @@ def pr_payload(base, body, files=FILES, **pr):
     return {"pull_request": {k: v for k, v in fields.items() if v is not None}}
 
 
-def refusing(files=FILES, *, list_status=200, now=None, diff_status=406, diff_body=TOO_LARGE, pages=None):
+def refusing(files=FILES, *, list_status=200, now=None, diff_status=406, diff_body=TOO_LARGE, pages=None,
+             now_status=200):
     """A route for a pull request whose diff is refused: the diff request answers 406, the list is
     served 100 files a page, and the pull request read again answers `now` (by default what the
     event said)."""
@@ -128,6 +129,8 @@ def refusing(files=FILES, *, list_status=200, now=None, diff_status=406, diff_bo
         if path == "/repos/o/r/pulls/7":
             if accept == DIFF_ACCEPT:
                 return diff_status, diff_body
+            if now_status != 200:
+                return now_status, "{}"
             return 200, json.dumps(now if now is not None else {"head": {"sha": HEAD}, "changed_files": len(files)})
         if path.startswith("/repos/o/r/pulls/7/files?per_page=100&page="):
             if list_status != 200:
@@ -148,8 +151,8 @@ def test_path_claims_that_hold_are_read_against_the_list(act, server, tmp_path, 
     assert rc == 0, out
     lines = out.splitlines()
     assert lines[0].startswith(N_LIST + "GitHub refused this pull request's diff (HTTP Error 406: Not Acceptable "
-                               "(GitHub says: Sorry, the diff exceeded the maximum number of lines (20000))). Every "
-                               "claim the gate reads in the description is about which files changed")
+                               "(GitHub says: Sorry, the diff exceeded the maximum number of lines (20000))). No claim "
+                               "the gate reads in the description needs the diff's content")
     assert lines[-1] == ("styxx diffgate: PASS - 2 claim(s), 0 contradicted; read against GitHub's list of 3 file(s), "
                          "the diff being refused")
     assert summary.startswith(LIST_HEADING + "\n\n**PASS** · 2 claim(s) checked on the PR #7 body\n\n_GitHub refused "
@@ -287,6 +290,7 @@ def test_with_no_claim_the_list_is_not_asked_for_and_the_job_does_what_it_did(ac
 NOT_ASKED = "GitHub's list of the pull request's files was not asked for: the event does not carry"
 NOT_USED = "GitHub's list of the pull request's files was not used: "
 NAMES = NOT_USED + "1 of its 3 file(s) have a status other than added, removed, modified or renamed, or a name"
+RENAME = "or for a renamed file an earlier name that is missing or is such a name)."
 
 
 def _with(i, **change):
@@ -313,8 +317,8 @@ def _with(i, **change):
     ({}, dict(files=_with(0, filename="")), NAMES),
     ({}, dict(files=_with(0, filename=7)), NAMES),
     ({}, dict(files=_with(0, filename="src/new.py")), NAMES),                       # listed twice
-    ({}, dict(files=_with(0, status="renamed")), NAMES),                            # a rename with no previous name
-    ({}, dict(files=_with(0, status="renamed", previous_filename="oldé.py")), NAMES),
+    ({}, dict(files=_with(0, status="renamed")), RENAME),                           # a rename with no previous name
+    ({}, dict(files=_with(0, status="renamed", previous_filename="oldé.py")), RENAME),
     ({}, dict(pages=['{"message": "x"}']), NOT_USED + "a page of it is not a list of files."),
     ({}, dict(pages=['["a", "b", "c"]']), NOT_USED + "a page of it is not a list of files."),
     ({}, dict(pages=["not json"]), "GitHub's list of the pull request's files could not be fetched: GitHub's answer "
@@ -328,7 +332,15 @@ def _with(i, **change):
                                                                             "was read"),
     ({}, dict(now={"head": {"sha": HEAD}, "changed_files": 4}), NOT_USED + "the pull request changed while the list "
                                                                            "was read"),
-    ({}, dict(now=["x"]), NOT_USED + "the pull request changed while the list was read"),
+    ({}, dict(now={"head": {"sha": HEAD}, "changed_files": 3.0}), NOT_USED + "the pull request changed while the "
+                                                                             "list was read"),
+    ({}, dict(now=["x"]), NOT_USED + "read again after the list, the pull request's address did not answer with a "
+                                     "pull request. A re-run reads it again."),
+    ({}, dict(now_status=410), "GitHub's list of the pull request's files was not used, because the pull request "
+                               "could not be read again after it: HTTP Error 410: Gone. A re-run reads it again."),
+    (dict(changed_files=3001), {}, NOT_USED + "it holds 3 file(s) and the event says 3001 changed (GitHub lists at "
+                                              "most 3,000). A pull request of more files than that is not read from "
+                                              "the list, so a re-run fails the same way."),
 ])
 def test_a_list_that_is_not_whole_or_not_this_pull_request_is_not_used(act, server, tmp_path, monkeypatch, capsys,
                                                                       payload_change, route_change, sentence):
@@ -406,12 +418,15 @@ def test_another_error_than_406_does_not_ask_for_the_list(act, server, tmp_path,
 
 # -- a push that creates a branch ---------------------------------------------------------------------------------
 
-def push_payload(base, message, *, after=AFTER, git_commits=True, ref="refs/heads/new", head_id=None):
+def push_payload(base, message, *, after=AFTER, git_commits=True, ref="refs/heads/new", head_id=None, commits="one"):
     repo = {"compare_url": base + "/repos/o/r/compare/{base}...{head}"}
     if git_commits:
         repo["git_commits_url"] = base + "/repos/o/r/git/commits{/sha}"
-    return {"head_commit": {"id": after if head_id is None else head_id, "message": message}, "before": "0" * 40,
-            "after": after, "created": True, "ref": ref, "repository": repo}
+    payload = {"head_commit": {"id": after if head_id is None else head_id, "message": message}, "before": "0" * 40,
+               "after": after, "created": True, "ref": ref, "repository": repo}
+    if commits is not None:                 # the commits of the push: by default the head commit and no other
+        payload["commits"] = [{"id": after}] if commits == "one" else commits
+    return payload
 
 
 def branching(parents, *, lookup_status=200, compare_status=200, diff=FC.DIFF, lookup_body=None):
@@ -427,8 +442,10 @@ def branching(parents, *, lookup_status=200, compare_status=200, diff=FC.DIFF, l
     return route
 
 
-OWN = "The diff read is the head commit's own, against its one parent; the earlier commits of the same push were not read."
-OWN_LAST = "; the diff read is the head commit's own against its one parent (the push created its branch)"
+OWN = ("_This push created its branch with one commit, so there is no commit before it to compare with. The diff read "
+       "is that commit's own, against its one parent._")
+OWN_LAST = ("; the diff read is the head commit's own against its one parent (the push created its branch with that "
+            "one commit)")
 NO_BASE = "A push that creates a branch has no base commit to compare with"
 
 
@@ -462,6 +479,7 @@ def test_a_head_commit_with_an_empty_diff_is_unmeasured_and_says_what_was_read(a
     handler.route = staticmethod(branching([PARENT], diff=""))
     rc, out, summary = run(act, tmp_path, monkeypatch, capsys, base, "push", push_payload(base, FC.FALSE))
     assert rc == 1 and FC.E_UNMEASURED in out and OWN in summary
+    assert out.strip().endswith(OWN_LAST)
 
 
 @pytest.mark.parametrize("parents, said", [
@@ -479,21 +497,78 @@ def test_a_head_commit_without_exactly_one_parent_is_not_read(act, server, tmp_p
     assert rc == 0 and said in out and "::error" not in out
 
 
-@pytest.mark.parametrize("change, said", [
-    (dict(lookup_status=404), "HTTP Error 404: Not Found"),
-    (dict(lookup_body="not json"), "GitHub's answer for the head commit is not JSON"),
-    (dict(lookup_body='{"sha": "x"}'), "GitHub's answer for the head commit holds no list of parents"),
-    (dict(lookup_body='{"parents": [{"sha": "zz"}]}'), "names a parent that is not a commit id"),
-    (dict(lookup_body='{"parents": ["x"]}'), "names a parent that is not a commit id"),
+ASKS_AGAIN = NO_BASE + ", so the head commit's parent was looked up, and the lookup failed; a re-run asks again."
+NOT_USABLE = NO_BASE + ", so the head commit's parent was looked up, and GitHub's answer could not be used."
+
+
+@pytest.mark.parametrize("change, said, ending", [
+    (dict(lookup_status=404), "HTTP Error 404: Not Found", ASKS_AGAIN),
+    (dict(lookup_status=410), "HTTP Error 410: Gone", ASKS_AGAIN),
+    (dict(lookup_body="not json"), "GitHub's answer for the head commit is not JSON", NOT_USABLE),
+    (dict(lookup_body='["x"]'), "GitHub's answer for the head commit is not for that commit", NOT_USABLE),
+    (dict(lookup_body=json.dumps({"sha": OTHER, "parents": [{"sha": PARENT}]})),
+     "GitHub's answer for the head commit is not for that commit", NOT_USABLE),
+    (dict(lookup_body=json.dumps({"sha": AFTER})), "holds no list of parents", NOT_USABLE),
+    (dict(lookup_body=json.dumps({"sha": AFTER, "parents": [{"sha": "zz"}]})),
+     "names a parent that is not a commit id", NOT_USABLE),
+    (dict(lookup_body=json.dumps({"sha": AFTER, "parents": ["x"]})), "names a parent that is not a commit id",
+     NOT_USABLE),
 ])
-def test_a_lookup_that_fails_says_a_rerun_asks_again(act, server, tmp_path, monkeypatch, capsys, change, said):
+def test_a_lookup_that_fails_or_cannot_be_used(act, server, tmp_path, monkeypatch, capsys, change, said, ending):
+    """A request that failed can be asked again and the text says so; an answer that cannot be used is
+    said to be that. Neither is read, and the compare is never asked."""
     handler, base = server
     handler.route = staticmethod(branching([PARENT], **change))
     rc, out, _ = run(act, tmp_path, monkeypatch, capsys, base, "push", push_payload(base, FC.FALSE))
     assert rc == 1 and FC.E_FETCH in out and said in out
-    assert NO_BASE + ", so the head commit's parent was looked up, and the lookup failed; a re-run asks again." in out
+    assert ending in out
     assert "fails the same way" not in out
     assert all("/compare/" not in p for p, _, _ in handler.seen)
+
+
+@pytest.mark.parametrize("commits, held", [
+    ([{"id": OTHER}, {"id": AFTER}], "2 commits"),
+    ([], "0 commits"),
+    ([{"id": OTHER}], "other commits than its head commit"),
+    (None, "other commits than its head commit"),
+])
+def test_a_created_branch_whose_push_is_not_its_head_commit_alone_is_not_read(act, server, tmp_path, monkeypatch,
+                                                                             capsys, commits, held):
+    """The head commit's own diff is the diff of the push only where the push holds that one commit.
+    A push of more commits (or one that names none, or another) is not read as its head commit: it
+    fails a blocking check when the message holds a claim, as before, and nothing is asked."""
+    handler, base = server
+    handler.route = staticmethod(branching([PARENT], diff=FC.DIFF_SRC))        # the head commit's own diff would pass
+    payload = push_payload(base, FC.FALSE, commits=commits)
+    rc, out, summary = run(act, tmp_path, monkeypatch, capsys, base, "push", payload)
+    assert rc == 1 and FC.E_FETCH in out
+    assert (f"the push that created this branch holds {held}, and a created branch is read only where its push is "
+            "the head commit alone") in out
+    assert NO_BASE + ", so a re-run fails the same way." in out
+    assert handler.seen == [] and OWN not in summary
+    rc, out, _ = run(act, tmp_path, monkeypatch, capsys, base, "push", payload, "true")
+    assert rc == 0 and "::error" not in out and "holds " + held in out
+
+
+def test_a_lookup_address_off_the_origin_is_refused_by_its_own_name(act, server, tmp_path, monkeypatch, capsys):
+    handler, base = server
+    handler.route = staticmethod(branching([PARENT]))
+    payload = push_payload(base, FC.FALSE)
+    payload["repository"]["git_commits_url"] = "http://127.0.0.1:9/repos/o/r/git/commits{/sha}"
+    rc, out, _ = run(act, tmp_path, monkeypatch, capsys, base, "push", payload)
+    assert rc == 1 and FC.E_FETCH in out and handler.seen == []
+    assert f"the head commit's address 'http://127.0.0.1:9/repos/o/r/git/commits/{AFTER}' is not on {base}" in out
+    assert ASKS_AGAIN in out
+
+
+def test_a_token_that_the_cut_of_githubs_message_falls_inside_is_hidden_whole(act, server, tmp_path, monkeypatch,
+                                                                             capsys):
+    said = "x" * 290 + TOKEN + " and more"
+    handler, base = server
+    handler.route = staticmethod(refusing(diff_body=json.dumps({"message": said})))
+    for body in (HOLDS, CONTENT):
+        rc, out, summary = run(act, tmp_path, monkeypatch, capsys, base, "pull_request", pr_payload(base, body), "true")
+        assert rc == 0 and TOKEN[:12] not in out + summary and "x" * 290 + "***" in out
 
 
 def test_a_parent_that_is_found_and_a_compare_that_fails_is_a_failed_fetch_like_any_other(act, server, tmp_path,
@@ -579,3 +654,12 @@ def test_a_created_ref_that_is_no_branch_is_not_looked_up(act, server, tmp_path,
                      push_payload(base, FC.FALSE, ref="refs/notes/commits"))
     assert rc == 1 and FC.E_FETCH in out
     assert all("/git/commits/" not in p for p, _, _ in handler.seen)
+
+
+def test_an_unmeasured_head_commit_with_no_claim_passes_and_says_what_was_read(act, server, tmp_path, monkeypatch,
+                                                                              capsys):
+    handler, base = server
+    handler.route = staticmethod(branching([PARENT], diff=""))
+    rc, out, summary = run(act, tmp_path, monkeypatch, capsys, base, "push", push_payload(base, FC.PROSE))
+    assert rc == 0 and OWN in summary
+    assert out.strip().endswith("reads, so the job passes" + OWN_LAST)

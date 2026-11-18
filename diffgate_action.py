@@ -12,12 +12,13 @@ the script reads no claim and writes no summary; it prints a line saying the eve
 whatever strict and soft-fail are set to.
 
 Two cases have a reading of their own. A push that creates a branch has no commit before it, so
-the compare address names no base: the head commit's one parent is looked up and the head commit is
-read against it, which is that commit's own diff, and the earlier commits of the push are not read
-(``_own_diff_address``; a head commit with no parent, or a merge, is not read). A pull request whose
-diff GitHub refuses with HTTP 406 is read against GitHub's list of its files, written as a diff of
-headers and no content, where every claim the gate reads is about which files changed and the list
-is whole (``_list_reading`` gives each condition); otherwise the diff was not fetched, as before.
+the compare address has no commit for its base. Where the push holds its head commit and no other,
+that commit's one parent is looked up and the commit is read against it, which is the commit's own
+diff (``_own_diff_address``; a push of more commits, a commit with no parent, and a merge are not
+read). A pull request whose diff GitHub refuses with HTTP 406 is read against GitHub's list of its
+files, written as a diff of headers and no content, where no claim the gate reads needs the diff's
+content and the list is whole (``_list_reading`` gives each condition); otherwise the diff was not
+fetched, as before.
 
 The text is read as it was written. A description is read in its Markdown source, so an HTML
 comment, a task-list item and a sentence inside a code fence are read like any other sentence.
@@ -301,8 +302,9 @@ def _retry_wait(code: int, headers, made: int):
     return 60 if code == 429 else None
 
 
-def api(url: str, accept: str) -> str:
-    """The body GitHub's API serves at ``url``, asked with the workflow token.
+def api(url: str, accept: str, address: str = "the diff's address") -> str:
+    """The body GitHub's API serves at ``url``, asked with the workflow token. ``address`` is how a
+    refusal names the address, for a request that is not for the diff.
 
     The request, token included, is addressed to the API's origin (``_api_origin``) and to no other;
     where the environment names a proxy, urllib hands the request to it as it does any other, so for
@@ -338,12 +340,12 @@ def api(url: str, accept: str) -> str:
     base = _origin_text(origin)
     read = _origin(url)
     if read is None or read[0] not in _DEFAULT_PORT:    # no scheme, or another: the same sentence on every Python
-        raise RuntimeError(f"the diff's address {_shown(url, shown_token)} is not one this script can read (it "
+        raise RuntimeError(f"{address} {_shown(url, shown_token)} is not one this script can read (it "
                            "reads an http or https address in printable ASCII with a plain host and "
                            "port), so it was not asked for")
     target = _on_origin(url, origin)
     if target is None:
-        raise RuntimeError(f"the diff's address {_shown(url, shown_token)} is not on {base}, the one origin the "
+        raise RuntimeError(f"{address} {_shown(url, shown_token)} is not on {base}, the one origin the "
                            "workflow token is sent to, so it was not asked for")
     token = _token()
     for made in range(1, _TRIES + 1):
@@ -677,8 +679,14 @@ def _json(text: str, of: str):
         raise RuntimeError(f"GitHub's answer for {of} is not JSON") from None
 
 
-class _NoOneParent(RuntimeError):
-    """The head commit of a push that created its branch has no parent, or more than one."""
+class _NotReadAlone(RuntimeError):
+    """A push that created its branch is not read as its head commit against one parent: the push
+    holds more than that one commit, or the commit has no parent, or more than one. Nothing a
+    re-run asks would differ."""
+
+
+class _LookupUnusable(RuntimeError):
+    """GitHub answered the lookup of the head commit with something this script cannot use."""
 
 
 def _own_diff_address(event):
@@ -688,28 +696,46 @@ def _own_diff_address(event):
     gated; ``repository.git_commits_url`` and ``repository.compare_url`` as the templates GitHub
     sends), and then nothing is looked up.
 
-    Such a push has no commit before it, so the address the event's compare template gives names no
-    base and the API answers 404. The parent is read from the Git database endpoint, whose answer
-    holds the commit's parents and no file. A commit with no parent, or with more than one (a merge),
-    is not read against one of them: ``_NoOneParent``. A lookup that fails raises what ``api`` raised."""
+    Such a push has no commit before it, so the address the event's compare template gives has forty
+    zeros for its base and the API answers 404. Only a push that holds its head commit and no other
+    is read so (the event's ``commits`` is that one commit): the diff of the push is then that
+    commit's own, and no commit of the push goes unread. The parent is read from the Git database
+    endpoint, whose answer holds the commit's parents and no file. A push of more commits, or of
+    none, a commit with no parent, and one with more than one (a merge) are not read:
+    ``_NotReadAlone``. An answer that is not for that commit, or that cannot be read, is
+    ``_LookupUnusable``. A lookup that fails raises what ``api`` raised."""
     repo = event.get("repository") or {}
     after, commits, compare = event.get("after"), repo.get("git_commits_url"), repo.get("compare_url")
     if not (isinstance(after, str) and _SHA.fullmatch(after) and (event.get("head_commit") or {}).get("id") == after
             and isinstance(commits, str) and "{/sha}" in commits
             and isinstance(compare, str) and "{base}" in compare and "{head}" in compare):
         return None
-    answer = _json(api(commits.replace("{/sha}", "/" + after), "application/vnd.github+json"), "the head commit")
-    parents = answer.get("parents") if isinstance(answer, dict) else None
+    pushed = event.get("commits")
+    if not (isinstance(pushed, list) and len(pushed) == 1 and isinstance(pushed[0], dict)
+            and pushed[0].get("id") == after):
+        held = f"{len(pushed)} commits" if isinstance(pushed, list) and len(pushed) != 1 else "other commits than its head commit"
+        raise _NotReadAlone(f"the push that created this branch holds {held}, and a created branch is read only "
+                            "where its push is the head commit alone")
+    try:
+        answer = _json(api(commits.replace("{/sha}", "/" + after), "application/vnd.github+json",
+                           "the head commit's address"), "the head commit")
+    except RuntimeError as e:
+        if str(e).endswith("is not JSON"):
+            raise _LookupUnusable(str(e)) from None
+        raise
+    if not isinstance(answer, dict) or answer.get("sha") != after:
+        raise _LookupUnusable("GitHub's answer for the head commit is not for that commit")
+    parents = answer.get("parents")
     if not isinstance(parents, list):
-        raise RuntimeError("GitHub's answer for the head commit holds no list of parents")
+        raise _LookupUnusable("GitHub's answer for the head commit holds no list of parents")
     if not parents:
-        raise _NoOneParent("the head commit has no parent to read it against")
+        raise _NotReadAlone("the head commit has no parent to read it against")
     if len(parents) > 1:
-        raise _NoOneParent(f"the head commit is a merge of {len(parents)} parents, and this script reads a commit "
-                           "against one parent only")
+        raise _NotReadAlone(f"the head commit is a merge of {len(parents)} parents, and this script reads a commit "
+                            "against one parent only")
     sha = parents[0].get("sha") if isinstance(parents[0], dict) else None
     if not (isinstance(sha, str) and _SHA.fullmatch(sha)):
-        raise RuntimeError("GitHub's answer for the head commit names a parent that is not a commit id")
+        raise _LookupUnusable("GitHub's answer for the head commit names a parent that is not a commit id")
     return compare.replace("{base}", sha).replace("{head}", after)
 
 
@@ -787,8 +813,8 @@ def _list_reading(event, summary: str, strict: bool, text_name: str):
     entries = []
     for page in range(1, _LIST_PAGES + 1):
         try:
-            got = _json(api(f"{url}/files?per_page={_LIST_PAGE}&page={page}", "application/vnd.github+json"),
-                        "the list of files")
+            got = _json(api(f"{url}/files?per_page={_LIST_PAGE}&page={page}", "application/vnd.github+json",
+                            "the address of the list of files"), "the list of files")
         except Exception as e:  # noqa: BLE001
             needs = (" The list needs the permission `pull-requests: read`."
                      if isinstance(e, urllib.error.HTTPError) and e.code in (403, 404) else "")
@@ -799,8 +825,11 @@ def _list_reading(event, summary: str, strict: bool, text_name: str):
         if len(got) < _LIST_PAGE:
             break
     if len(entries) != count:
+        most = _LIST_PAGE * _LIST_PAGES
         raise _ListNotUsed(f"{listed} was not used: it holds {len(entries)} file(s) and the event says {count} "
-                           f"changed (GitHub lists at most {_LIST_PAGE * _LIST_PAGES:,}). A re-run reads it again.")
+                           f"changed (GitHub lists at most {most:,}). "
+                           + ("A pull request of more files than that is not read from the list, so a re-run "
+                              "fails the same way." if count > most else "A re-run reads it again."))
     read, names = [], set()
     for x in entries:
         status, name, previous = x.get("status"), x.get("filename"), x.get("previous_filename")
@@ -814,13 +843,17 @@ def _list_reading(event, summary: str, strict: bool, text_name: str):
         raise _ListNotUsed(f"{listed} was not used: {count - len(read)} of its {count} file(s) have a status "
                            "other than added, removed, modified or renamed, or a name this script writes no diff "
                            "header for (a character outside printable ASCII, a double quote, a backslash, a space "
-                           "at either end, or a name listed twice).")
+                           "at either end, a name listed twice, or for a renamed file an earlier name that is "
+                           "missing or is such a name).")
     try:
-        now = _json(api(url, "application/vnd.github+json"), "the pull request")
+        now = _json(api(url, "application/vnd.github+json", "the pull request's address"), "the pull request")
     except Exception as e:  # noqa: BLE001
         raise _ListNotUsed(f"{listed} was not used, because the pull request could not be read again after it: ",
                            _failure_text(e), ". A re-run reads it again.") from e
-    if not (isinstance(now, dict) and isinstance(now.get("head"), dict) and now["head"].get("sha") == head
+    if not (isinstance(now, dict) and isinstance(now.get("head"), dict)):
+        raise _ListNotUsed(f"{listed} was not used: read again after the list, the pull request's address did not "
+                           "answer with a pull request. A re-run reads it again.")
+    if not (now["head"].get("sha") == head
             and type(now.get("changed_files")) is int and now["changed_files"] == count):
         raise _ListNotUsed(f"{listed} was not used: the pull request changed while the list was read (its head "
                            "commit or its count of changed files is no longer the event's). A re-run reads it "
@@ -830,12 +863,13 @@ def _list_reading(event, summary: str, strict: bool, text_name: str):
 
 def _github_says(e) -> str:
     """The message in the body of an HTTP error GitHub answered, or "": the string at ``message`` of
-    a JSON object, read from at most 4,096 bytes and cut at 300 characters."""
+    a JSON object, read from at most 4,096 bytes and cut at 300 characters. The token's value is
+    replaced before the cut, so a token the cut would fall inside cannot be left in part."""
     try:
         message = json.loads(e.read(4096).decode("utf-8", errors="replace")).get("message")
     except Exception:  # noqa: BLE001
         return ""
-    return message[:300] if isinstance(message, str) else ""
+    return _hide(message, os.environ.get("GH_TOKEN"))[:300] if isinstance(message, str) else ""
 
 
 def _write_summary(lines) -> None:
@@ -945,18 +979,18 @@ def main() -> int:
     try:
         if (event_name == "push" and _creates_ref(event) and isinstance(event.get("ref"), str)
                 and event["ref"].startswith("refs/heads/")):
-            # A push that creates a branch has no commit before it. Its head commit is read against its
-            # one parent: the message gated is that commit's, and so is the diff.
+            # A push that creates a branch has no commit before it. Where the push is its head commit
+            # alone, that commit is read against its one parent: the message gated is that commit's, and
+            # the diff of the push is that commit's own.
             looking_up = True
             own = _own_diff_address(event)
             looking_up = False
             if own is not None:
                 diff_url = own
-                read_note = ("_This push created its branch, so there is no commit before it to compare with. "
-                             "The diff read is the head commit's own, against its one parent; the earlier "
-                             "commits of the same push were not read._")
+                read_note = ("_This push created its branch with one commit, so there is no commit before it to "
+                             "compare with. The diff read is that commit's own, against its one parent._")
                 read_last = ("; the diff read is the head commit's own against its one parent (the push created "
-                             "its branch)")
+                             "its branch with that one commit)")
         diff = api(diff_url, "application/vnd.github.diff")
     except Exception as e:  # noqa: BLE001
         failure = e
@@ -975,15 +1009,15 @@ def main() -> int:
             list_note = unused
         else:
             failure, listed_files = None, files
-            read_note = (f"_GitHub refused this pull request's diff: `{_hide(_code_span(refusal), token)}`. Every "
-                         f"claim the gate reads in the {text_name} is about which files changed, so the gate read "
+            read_note = (f"_GitHub refused this pull request's diff: `{_hide(_code_span(refusal), token)}`. No "
+                         f"claim the gate reads in the {text_name} needs the diff's content, so the gate read "
                          f"GitHub's list of the pull request's files in the diff's place: {files} file(s), each "
                          "with its path and whether it was added, removed, modified or renamed, and no line of "
                          "content._")
             read_last = f"; read against GitHub's list of {files} file(s), the diff being refused"
             print("::notice title=styxx diffgate - list of files read for a refused diff::GitHub refused this "
-                  f"pull request's diff ({_hide(_command_data(refusal), token)}). Every claim the gate reads in "
-                  f"the {text_name} is about which files changed, so the gate read GitHub's list of the pull "
+                  f"pull request's diff ({_hide(_command_data(refusal), token)}). No claim the gate reads in "
+                  f"the {text_name} needs the diff's content, so the gate read GitHub's list of the pull "
                   f"request's {files} file(s) in the diff's place: paths and whether each was added, removed, "
                   "modified or renamed, and no line of content.")
     if failure is not None:
@@ -1026,7 +1060,10 @@ def main() -> int:
         holds = n is None or n > 0
         if not (event_name == "push" and _creates_ref(event)) or read_last:
             no_base = ""        # not a push that created its ref, or its parent was found and the compare failed
-        elif looking_up and not isinstance(e, _NoOneParent):
+        elif looking_up and isinstance(e, _LookupUnusable):
+            no_base = (" A push that creates a branch has no base commit to compare with, so the head commit's "
+                       "parent was looked up, and GitHub's answer could not be used.")
+        elif looking_up and not isinstance(e, _NotReadAlone):
             no_base = (" A push that creates a branch has no base commit to compare with, so the head commit's "
                        "parent was looked up, and the lookup failed; a re-run asks again.")
         else:
@@ -1110,7 +1147,7 @@ def main() -> int:
                                    f"does when the gate did not measure the diff and the {text_name} holds no "
                                    "claim the gate reads._"])
             print(f"styxx diffgate: UNMEASURED - gate verdict {g.verdict}; the {what} holds no claim the gate "
-                  "reads, so the job passes")
+                  "reads, so the job passes" + read_last)
             return 0
         if n:
             rule = (f"The gate read no file and no added line, so it judged none of the {n} claim(s) in the "
@@ -1132,7 +1169,7 @@ def main() -> int:
         print(f"styxx diffgate: UNMEASURED - gate verdict {g.verdict}; "
               + (f"{n} claim(s) not judged; the job fails because soft-fail is \"false\"" if n else
                  f"the {what} holds no claim the gate reads; the job fails because soft-fail is \"false\" and "
-                 "strict is on"))
+                 "strict is on") + read_last)
         return 1
 
     # A blocking check fails on a claim whose CONTRADICTED reading the PATH-2a overlay withheld: the gate
