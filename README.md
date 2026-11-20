@@ -41,7 +41,7 @@ Numbers and detail for the EXTERNAL-1, V14 and `only_touches` items are in the V
 - [REPLICATIONS.md](https://github.com/fathom-lab/styxx/blob/main/REPLICATIONS.md) lists each target with its command and its bar. Its ledger has no entry from outside the lab. A rerun that does not match is recorded too.
 - With no lab code imported: [rerun_ungated.py](https://github.com/fathom-lab/styxx/blob/main/papers/real-convergence/artifact_2026_11_10/rerun_ungated.py) needs torch, transformers and numpy, downloads Qwen2.5-0.5B (about 1 GB), and prints your numbers beside the lab's. It checks the start-of-input finding on ungated models; it was written after the two sealed tests and is not part of them. The lab has run it on Windows alone.
 
-### install, status on 2026-11-18
+### install, status at release 8.0.3
 
 ```bash
 pip install styxx                                      # 8.0.3 from PyPI
