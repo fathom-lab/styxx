@@ -42,17 +42,17 @@
  "families": {
   "check_v0": {
    "file": "vectors/check_v0.json",
-   "sha256": "ccb3200afcdc63ca56e474ff55b9bc70479444939a582ba106d72ba86c15e8a7",
+   "sha256": "33f123e044b7218c539a5ce03c58558f56f1e7768165af99f9d0284000f4bbd8",
    "count": 5
   },
   "check_v1": {
    "file": "vectors/check_v1.json",
-   "sha256": "9f561c14d7cf08058fa69749f0dc794366af8ee18f0aa755612b147bb334c249",
+   "sha256": "c9f0e779d861199377ac11b473fb8457d78d2a6684dc3caafca49a934876d23c",
    "count": 5
   },
   "check_v2": {
    "file": "vectors/check_v2.json",
-   "sha256": "b93fcb0fad37c7bb8b33256f0579f8c3d2259e906d32562e8a90d16945aa3feb",
+   "sha256": "667e86e900b8a634471b4a261a5c32ca27ba8f1322c4566eebff58fe933af1ce",
    "count": 4
   },
   "core_v2": {
@@ -63,7 +63,7 @@
  },
  "blobs": {
   "file": "blobs.json",
-  "sha256": "753e21a346d36da16eace11b1bb683c7a0da07d3bfceeec100b6d33363ef73ac",
+  "sha256": "96e5d66a19e8d83cb754524c905ca38aade29577f23a29144adf93cfb0a17a58",
   "count": 92
  },
  "observer": {
@@ -282,8 +282,8 @@
   },
   "python": "3.12.10",
   "platform": "win32",
-  "styxx_version": "8.0.2",
+  "styxx_version": "8.0.3",
   "pytest_summary": "32 passed"
  },
- "set_sha256": "1c8a807b4abdf0c08f5ddbe1ffb73354dc813490f50fb74aab40117392434bba"
+ "set_sha256": "2ac828f634a66b8b3bbfeee05fdf538e743b9e6b89f680514191bd2e083bae95"
 }

@@ -4,7 +4,7 @@
  "count": 5,
  "vectors": [
   {
-   "id": "22742ae71626a3fbfd398f4b97c53a9de5010d164889469b8010ab01852c38e2",
+   "id": "09826275dccc6b5ebb32b46654dd8113844686dc0b5972414f96865a9071de9e",
    "family": "check_v1",
    "sources": [
     "tests/test_sworn_receipt_v2.py::TestReceiptV1UnderV2::test_a_v1_receipt_re_derives_with_its_own_strings"
@@ -15,7 +15,7 @@
     "manifest"
    ],
    "inputs": {
-    "receipt": "ac1e8a22826ab6e52027e881c0ef6f128f40ec72a5faa221621e8afd7533a104",
+    "receipt": "f8acaa66d101d87e319780d5ceb5f5c8905ed356172aaa84c065e2569ba9bdcd",
     "document": "913cb5d94e6ea43ab00705d33886fb07c02ccb75291ed69a02bf60a2926c8fc6",
     "sidecar": null,
     "manifest": "f2691bc34a7df7293db04f871cae25eccbc38d3d483b2916b2bc88503c376863",
@@ -31,7 +31,7 @@
    }
   },
   {
-   "id": "2a3619ae20a39b9387ab1f1bd3e825fab79b806fb272d92c1361eb04e3b88fa8",
+   "id": "28d0698bc2c7d7d4fc6b8d4e13445fd1bae72c3f0538a079dcc593c9e6b833c6",
    "family": "check_v1",
    "sources": [
     "tests/test_sworn_receipt_v2.py::TestReceiptV1UnderV2::test_a_v1_receipt_carrying_the_v2_sentence_fails"
@@ -42,7 +42,7 @@
     "manifest"
    ],
    "inputs": {
-    "receipt": "fdc9ea40d5795952e6937a1adf7e468c69bc679d75496597c2533192f91afe29",
+    "receipt": "9394bbf945bb92fee42a9b18bcde98d1c8fd7257c19a0d64a21e5912deed7a52",
     "document": "913cb5d94e6ea43ab00705d33886fb07c02ccb75291ed69a02bf60a2926c8fc6",
     "sidecar": null,
     "manifest": "f2691bc34a7df7293db04f871cae25eccbc38d3d483b2916b2bc88503c376863",
@@ -58,7 +58,7 @@
    }
   },
   {
-   "id": "643cbf3496378a0fc9d2b0d85fd109f26cce6c9c1b8eac1a7fddd424e8e3bf16",
+   "id": "8fecfa7cab92580e46d830328939990166cd6cf2c8d853fc87793ec0a50c782f",
    "family": "check_v1",
    "sources": [
     "tests/test_sworn_receipt_v2.py::TestReceiptV1UnderV2::test_a_v1_receipt_whose_certifies_was_edited_and_re_digested_fails"
@@ -69,7 +69,7 @@
     "manifest"
    ],
    "inputs": {
-    "receipt": "32d53ff08e547fad1d4e9d40e6e5d54bccd9cf55bfd9d83a8c1a151d40b296d2",
+    "receipt": "94c3055efe333ab6c64570727b419c34411693ecf9626bfa4b0a42b34d1797b6",
     "document": "913cb5d94e6ea43ab00705d33886fb07c02ccb75291ed69a02bf60a2926c8fc6",
     "sidecar": null,
     "manifest": "f2691bc34a7df7293db04f871cae25eccbc38d3d483b2916b2bc88503c376863",
@@ -85,7 +85,7 @@
    }
   },
   {
-   "id": "81f8dcf73d123390d7f7d231d1835f715c1c8fa9b753d2da0c9b8d3c6de47b82",
+   "id": "e3d4af664954b71085d68bc0a753962f0bbfebe1306e3e1fe42d3e23ea09a8d4",
    "family": "check_v1",
    "sources": [
     "tests/test_sworn_receipt_v2.py::TestReceiptV1UnderV2::test_a_v1_receipt_with_no_certifies_fails"
@@ -96,7 +96,7 @@
     "manifest"
    ],
    "inputs": {
-    "receipt": "fdd22162de14ef9ef53e0b77d0e67d6cfe944411afef94d3e6b51051b3b63463",
+    "receipt": "fbb8c442c44cf07120716cfe7f5ec75ca47dbb6747223af18bd7b9faead01a1d",
     "document": "913cb5d94e6ea43ab00705d33886fb07c02ccb75291ed69a02bf60a2926c8fc6",
     "sidecar": null,
     "manifest": "f2691bc34a7df7293db04f871cae25eccbc38d3d483b2916b2bc88503c376863",
@@ -112,7 +112,7 @@
    }
   },
   {
-   "id": "d0fb72ce9cedd839dc9fb5cd4671b743252f36a04f13553fce9da87ba4139ba5",
+   "id": "fe3cd122cb8bd688b8d62df255e143d090dd4b275d124f961c9f81b4a378f850",
    "family": "check_v1",
    "sources": [
     "tests/test_sworn_receipt_v2.py::TestReceiptV1UnderV2::test_a_v1_receipt_whose_coverage_moved_still_verifies_and_says_so"
@@ -123,7 +123,7 @@
     "manifest"
    ],
    "inputs": {
-    "receipt": "79e755ff0599d506f5c731af34d0fcb13d4282d7dd00e0f1d43327c022e094b7",
+    "receipt": "3038e02f4797003125ac846a9cb577b9f4f734ea1df758fe87f26b50c2fd8181",
     "document": "913cb5d94e6ea43ab00705d33886fb07c02ccb75291ed69a02bf60a2926c8fc6",
     "sidecar": null,
     "manifest": "f2691bc34a7df7293db04f871cae25eccbc38d3d483b2916b2bc88503c376863",
